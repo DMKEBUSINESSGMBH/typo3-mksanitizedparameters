@@ -29,6 +29,13 @@
 require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 
 /**
+ * Class to sanitize an array through the filter_var method.
+ * Therefore the configuration is based on the one for
+ * filter_var_array.
+ * In difference to filter_var_array this class supports 
+ * multi dimensional arrays, default values for unconfigured
+ * parameters and multiple filters per value.
+ * 
  * @package TYPO3
  * @subpackage tx_mksanitizedparameters
  * @author Hannes Bochmann <hannes.bochmann@das-mediekombinat.de>
