@@ -37,13 +37,13 @@ tx_rnbase::load('tx_mksanitizedparameters');
 class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx_phpunit_testcase {
 	
 	protected function setUp() {
-		$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mksanitizedparameters']['BE']['testParameter'] = 
+		$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mksanitizedparameters']['parameterRules']['BE']['testParameter'] = 
 			FILTER_SANITIZE_NUMBER_INT;
 	}
 	
 	protected function tearDown() {
 		unset(
-			$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mksanitizedparameters']['BE']['testParameter']
+			$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mksanitizedparameters']['parameterRules']['BE']['testParameter']
 		);
 		unset($_REQUEST['testParameter']);
 		unset($_POST['testParameter']);

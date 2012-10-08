@@ -49,12 +49,12 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests {
 		$typo3Mode = (TYPO3_MODE == 'BE')  ? TYPO3_MODE : 'FE';
 		
 		//@todo config serialisiert speichern?		
-		$config = 
-			$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mksanitizedparameters'][$typo3Mode];
-			
+		$parameterRules = 
+			$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mksanitizedparameters']['parameterRules'][$typo3Mode];
+
 		$arraysToSanitize = array(&$_REQUEST, &$_POST, &$_GET);
 		tx_mksanitizedparameters::sanitizeArraysByConfig(
-			$arraysToSanitize, $config
+			$arraysToSanitize, $parameterRules
 		);
 	}
 }
