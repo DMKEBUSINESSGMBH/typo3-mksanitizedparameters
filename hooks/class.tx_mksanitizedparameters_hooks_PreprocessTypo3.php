@@ -34,20 +34,23 @@ tx_rnbase::load('tx_mksanitizedparameters');
  * @subpackage tx_mksanitizedparameters
  * @author Hannes Bochmann <hannes.bochmann@das-mediekombinat.de>
  */
-class tx_mksanitizedparameters_hooks_Backend {
+class tx_mksanitizedparameters_hooks_PreprocessTypo3 {
 
 	/**
-	 * sanitize $_REQUEST, $_POST, $_GET before Backend Actions start
+	 * sanitize $_REQUEST, $_POST, $_GET before 
+	 * Frontend/Backend Actions start.
 	 * 
 	 * @param array $parameters
-	 * @param template $parent
+	 * @param $parent
 	 * 
 	 * @return void
 	 */
-	public function preStartPageHook(array $parameters, template $parent) {
+	public function sanitizeGlobalInputArrays(array $parameters, $parent) {
+		$typo3Mode = (TYPO3_MODE == 'BE')  ? TYPO3_MODE : 'FE';
+		
 		//@todo config serialisiert speichern?		
 		$config = 
-			$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mksanitizedparameters']['BE'];
+			$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mksanitizedparameters'][$typo3Mode];
 			
 		$arraysToSanitize = array(&$_REQUEST, &$_POST, &$_GET);
 		tx_mksanitizedparameters::sanitizeArraysByConfig(
@@ -56,6 +59,6 @@ class tx_mksanitizedparameters_hooks_Backend {
 	}
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/hooks/class.tx_mksanitizedparameters_hooks_Backend.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/hooks/class.tx_mksanitizedparameters_hooks_Backend.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/hooks/class.tx_mksanitizedparameters_hooks_PreprocessTypo3.php'])	{
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/hooks/class.tx_mksanitizedparameters_hooks_PreprocessTypo3.php']);
 }
