@@ -34,7 +34,7 @@ tx_rnbase::load('tx_mksanitizedparameters');
  * @subpackage tx_mksanitizedparameters
  * @author Hannes Bochmann <hannes.bochmann@das-mediekombinat.de>
  */
-class tx_mksanitizedparameters_hooks_PreprocessTypo3 {
+class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests {
 
 	/**
 	 * sanitize $_REQUEST, $_POST, $_GET before 
@@ -59,6 +59,6 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3 {
 	}
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/hooks/class.tx_mksanitizedparameters_hooks_PreprocessTypo3.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/hooks/class.tx_mksanitizedparameters_hooks_PreprocessTypo3.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/hooks/class.tx_mksanitizedparameters_hooks_PreprocessTypo3Requests.php'])	{
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/hooks/class.tx_mksanitizedparameters_hooks_PreprocessTypo3Requests.php']);
 }

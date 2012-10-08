@@ -34,7 +34,7 @@ tx_rnbase::load('tx_mksanitizedparameters');
  * @subpackage tx_mksanitizedparameters
  * @author Hannes Bochmann <hannes.bochmann@das-mediekombinat.de>
  */
-class tx_mksanitizedparameters_hooks_PreprocessTypo3_testcase extends tx_phpunit_testcase {
+class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx_phpunit_testcase {
 	
 	protected function setUp() {
 		$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mksanitizedparameters']['BE']['testParameter'] = 

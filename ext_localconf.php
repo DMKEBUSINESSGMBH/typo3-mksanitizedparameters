@@ -6,11 +6,11 @@ $_EXTKEY = 'mksanitizedparameters';
 
 // sanitize in FE including eID
 $TYPO3_CONF_VARS['SC_OPTIONS']['tslib/index_ts.php']['preprocessRequest'][] = 
-	'EXT:'.$_EXTKEY.'/hooks/class.tx_mksanitizedparameters_hooks_PreprocessTypo3.php:tx_mksanitizedparameters_hooks_PreprocessTypo3->sanitizeGlobalInputArrays';
+	'EXT:'.$_EXTKEY.'/hooks/class.tx_mksanitizedparameters_hooks_PreprocessTypo3Requests.php:tx_mksanitizedparameters_hooks_PreprocessTypo3Requests->sanitizeGlobalInputArrays';
 
 // sanitize in BE
 $TYPO3_CONF_VARS['SC_OPTIONS']['typo3/template.php']['preStartPageHook'][] = 
-	'EXT:'.$_EXTKEY.'/hooks/class.tx_mksanitizedparameters_hooks_PreprocessTypo3.php:tx_mksanitizedparameters_hooks_PreprocessTypo3->sanitizeGlobalInputArrays';
+	'EXT:'.$_EXTKEY.'/hooks/class.tx_mksanitizedparameters_hooks_PreprocessTypo3Requests.php:tx_mksanitizedparameters_hooks_PreprocessTypo3Requests->sanitizeGlobalInputArrays';
 
 $TYPO3_CONF_VARS['EXTCONF'][$_EXTKEY]['FE'] = array(
 	'default'	=> FILTER_SANITIZE_STRING
