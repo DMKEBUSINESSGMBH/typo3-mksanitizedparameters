@@ -31,7 +31,8 @@ require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 /**
  * Class to sanitize an array through the filter_var method.
  * Therefore the configuration is based on the one for
- * filter_var_array.
+ * filter_var_array. The config array mirrors the array
+ * to be sanitized.
  * In difference to filter_var_array this class supports 
  * multi dimensional arrays, default values for unconfigured
  * parameters and multiple filters per value.
@@ -78,6 +79,18 @@ class tx_mksanitizedparameters {
 	 * 		)
 	 * 	)
 	 * )
+	 * 
+	 * for the following array:
+	 * 
+	 * array(
+	 * 	'myParameterQualifier' => array(
+	 * 		'uid' => 1
+	 * 		'searchWord' => 'johndoe',
+	 * 		'subArray' => array(
+	 * 			'someOtherValue' => ...
+	 * 		)
+	 * 	)
+	 * )
 	 */
 	public static function sanitizeArrayByConfig(
 		array $arrayToSanitize, array $config
@@ -86,15 +99,14 @@ class tx_mksanitizedparameters {
 			return $arrayToSanitize;
 		}
 			
-		$defaultConfig = $config['default'];
-			
 		foreach ($arrayToSanitize as $nameToSanitize => &$valueToSanitize) {
-			$configForValue = !empty($config[$nameToSanitize]) ? 
-				$config[$nameToSanitize] : $defaultConfig;
+			$configForValue = self::getConfigForValue(
+				$config, $nameToSanitize
+			);
 				
 			if(is_array($valueToSanitize)) {
 				$configForValue = self::injectDefaultConfigIfNeccessary(
-					(array) $configForValue, $defaultConfig
+					(array) $configForValue, $config['default']
 				);
 				
 				$valueToSanitize = self::sanitizeArrayByConfig(
@@ -108,6 +120,19 @@ class tx_mksanitizedparameters {
 		}
 		
 		return $arrayToSanitize;
+	}
+	
+	/**
+	 * @param mixed $config
+	 * @param string $nameToSanitize
+	 * 
+	 * @return mixed
+	 */
+	private static function getConfigForValue($config, $nameToSanitize) {
+		$configForValue = !empty($config[$nameToSanitize]) ?
+			$config[$nameToSanitize] : $config['default'];
+		
+		return $configForValue;
 	}
 	
 	/**
