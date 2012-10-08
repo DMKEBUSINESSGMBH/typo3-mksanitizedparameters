@@ -32,5 +32,5 @@ $defaultExtConfig = array(
 
 $TYPO3_CONF_VARS['EXTCONF'][$_EXTKEY] = 
 	t3lib_div::array_merge_recursive_overrule(
-		$defaultExtConfig, $TYPO3_CONF_VARS['EXTCONF'][$_EXTKEY]
+		$defaultExtConfig, (array) $TYPO3_CONF_VARS['EXTCONF'][$_EXTKEY]
 	);
