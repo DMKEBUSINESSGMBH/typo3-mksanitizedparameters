@@ -30,7 +30,7 @@ require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 tx_rnbase::load('tx_mksanitizedparameters');
 	
 //otherwise we get an output already started error when the test is excuted
-//via CLI
+//via CLI. caused by $template->startPage('testPage');
 ob_start();
 
 /**
