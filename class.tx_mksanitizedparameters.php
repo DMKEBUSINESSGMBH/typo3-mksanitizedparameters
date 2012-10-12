@@ -75,7 +75,15 @@ class tx_mksanitizedparameters {
 	 * 		'subArray' => array(
 	 * 			//so all unconfigured parameters inside subArray will get
 	 * 			//the following default sanitization
-	 * 			'default' => FILTER_SANITIZE_NUMBER_INT
+	 * 			'default' 	=> FILTER_SANITIZE_NUMBER_INT
+	 * 
+	 * 			//that's the way to call a custom filter!
+	 * 			'someValue'	=> array(
+	 *				'filter'    => FILTER_CALLBACK,
+	 *             	'options' 	=> array(
+	 *             		'tx_mksanitizedparameters_sanitizer_Alpha','sanitizeValue'
+	 *				)
+	 *			)
 	 * 		)
 	 * 	)
 	 * )

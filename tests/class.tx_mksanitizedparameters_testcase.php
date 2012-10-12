@@ -286,4 +286,34 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 			'The array wasn\'t sanitized correct!'
 		);
 	}
+	
+	/**
+	 * @group unit
+	 */
+	public function testSanitizeArrayByConfigWorksCorrectWithCustomFilter(){
+		$arrayToSanitize = array(
+			'parameterNameToBeSanitized' 	=> 
+			"abc123",
+		);
+		$config = array(
+			'parameterNameToBeSanitized'	=> array(
+				'filter'    => FILTER_CALLBACK,
+               	'options' 	=> array(
+               		'tx_mksanitizedparameters_sanitizer_Alpha','sanitizeValue'
+				)
+			)
+		);
+		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByConfig(
+			$arrayToSanitize, $config
+		);
+		
+		$this->assertEquals(
+			array(
+				'parameterNameToBeSanitized'	=> 
+				'abc',
+			),
+			$sanitizedArray, 
+			'The array wasn\'t sanitized correct!'
+		);
+	}
 }
