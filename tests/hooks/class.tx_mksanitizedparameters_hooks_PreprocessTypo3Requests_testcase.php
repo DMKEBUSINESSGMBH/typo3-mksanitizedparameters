@@ -29,6 +29,10 @@
 require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 tx_rnbase::load('tx_mksanitizedparameters');
 	
+//otherwise we get an output already started error when the test is excuted
+//via CLI
+ob_start();
+
 /**
  * @package TYPO3
  * @subpackage tx_mksanitizedparameters
@@ -54,37 +58,21 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx
 	/**
 	 * @group integration
 	 */
-	public function testHookIsCalledInBackendAndSanitizesRequestGlobals(){
+	public function testHookIsCalledInBackendAndSanitizesRequestPostAndGetGlobals(){
 		$_REQUEST['testParameter'] = '2WithString';
+		$_POST['testParameter'] = '2WithString';
+		$_GET['testParameter'] = '2WithString';
+		
 		$template = tx_rnbase::makeInstance('template');
 		$template->startPage('testPage');
+		ob_end_flush();
 		
 		$this->assertEquals(
 			2,$_REQUEST['testParameter'], 'Parameter nicht bereinigt'
 		);
-	}
-	
-	/**
-	 * @group integration
-	 */
-	public function testHookIsCalledInBackendAndSanitizesPostGlobals(){
-		$_POST['testParameter'] = '2WithString';
-		$template = tx_rnbase::makeInstance('template');
-		$template->startPage('testPage');
-		
 		$this->assertEquals(
 			2,$_POST['testParameter'], 'Parameter nicht bereinigt'
 		);
-	}
-	
-	/**
-	 * @group integration
-	 */
-	public function testHookIsCalledInBackendAndSanitizesGetGlobals(){
-		$_GET['testParameter'] = '2WithString';
-		$template = tx_rnbase::makeInstance('template');
-		$template->startPage('testPage');
-		
 		$this->assertEquals(
 			2,$_GET['testParameter'], 'Parameter nicht bereinigt'
 		);
