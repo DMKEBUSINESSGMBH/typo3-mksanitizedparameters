@@ -53,7 +53,7 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx
 	/**
 	 * @group integration
 	 */
-	public function testHookIsCalledAndSanitizesRequestGlobals(){
+	public function testHookIsCalledInBackendAndSanitizesRequestGlobals(){
 		$_REQUEST['testParameter'] = '2WithString';
 		$template = tx_rnbase::makeInstance('template');
 		$template->startPage('testPage');
@@ -66,7 +66,7 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx
 	/**
 	 * @group integration
 	 */
-	public function testHookIsCalledAndSanitizesPostGlobals(){
+	public function testHookIsCalledInBackendAndSanitizesPostGlobals(){
 		$_POST['testParameter'] = '2WithString';
 		$template = tx_rnbase::makeInstance('template');
 		$template->startPage('testPage');
@@ -79,13 +79,40 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx
 	/**
 	 * @group integration
 	 */
-	public function testHookIsCalledAndSanitizesGetGlobals(){
+	public function testHookIsCalledInBackendAndSanitizesGetGlobals(){
 		$_GET['testParameter'] = '2WithString';
 		$template = tx_rnbase::makeInstance('template');
 		$template->startPage('testPage');
 		
 		$this->assertEquals(
 			2,$_GET['testParameter'], 'Parameter nicht bereinigt'
+		);
+	}
+	
+	/**
+	 * we can't check if the hook is called correctly in FE as 
+	 * including PATH_site.TYPO3_mainDir.'sysext/cms/tslib/index_ts.php'
+	 * results in an fatal error. so we test at least if the hook
+	 * is offered in PATH_site.TYPO3_mainDir.'sysext/cms/tslib/index_ts.php'
+	 * and if the hook is configured correctly.
+	 * 
+	 * @group integration
+	 */
+	public function testHookIsCalledInFrontendAndSanitizesRequestGlobals(){
+		$indexTs = 
+			file_get_contents(PATH_site.TYPO3_mainDir.'sysext/cms/tslib/index_ts.php');
+
+		$callHookLine = 
+			strstr($indexTs, 'foreach ($TYPO3_CONF_VARS[\'SC_OPTIONS\'][\'tslib/index_ts.php\'][\'preprocessRequest\'] as $hookFunction) {');
+			
+		$this->assertNotEmpty($callHookLine, 'The line calling the FE hook wasn\'t found in '.PATH_site.TYPO3_mainDir.'sysext/cms/tslib/index_ts.php');
+		
+		$this->assertTrue(
+			in_array(
+				'EXT:mksanitizedparameters/hooks/class.tx_mksanitizedparameters_hooks_PreprocessTypo3Requests.php:tx_mksanitizedparameters_hooks_PreprocessTypo3Requests->sanitizeGlobalInputArrays', 
+				$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/index_ts.php']['preprocessRequest']
+			),
+			'The FE Hook is not configured'
 		);
 	}
 }
