@@ -49,12 +49,28 @@ class tx_mksanitizedparameters_StealthMode {
 	 * @return void
 	 */
 	public static function monitorArrays(array $arraysToMonitor) {
+		self::loadTca();
+		
 		self::$storagePid = tx_rnbase_configurations::getExtensionCfgValue(
 			'mksanitizedparameters', 'stealthModeStoragePid'
 		);
 		
 		foreach ($arraysToMonitor as $arrayKey => $arrayToMonitor) {
 			self::monitorArray($arrayKey, $arrayToMonitor);
+		}
+	}
+	
+	/**
+	 * its possible that this script is used in an eID which
+	 * causes no TCA to be available. We fix this!
+	 * 
+	 * @return void
+	 */
+	private function loadTca() {
+		global $TYPO3_CONF_VARS, $TCA;
+		if(empty($TCA['tx_mksanitizedparameters'])) {
+			t3lib_div::makeInstance('tslib_fe',$TYPO3_CONF_VARS)->includeTCA(0);
+			t3lib_div::loadTCA('tx_mksanitizedparameters');
 		}
 	}
 	
