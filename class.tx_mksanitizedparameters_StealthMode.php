@@ -39,6 +39,7 @@ require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 class tx_mksanitizedparameters_StealthMode {
 	
 	private static $storagePid;
+	private static $storageDbTableName = 'tx_mksanitizedparameters';
 	
 	/**
 	 * Stores the given arrays to the DB so it can be checked
@@ -68,9 +69,9 @@ class tx_mksanitizedparameters_StealthMode {
 	 */
 	private function loadTca() {
 		global $TYPO3_CONF_VARS, $TCA;
-		if(empty($TCA['tx_mksanitizedparameters'])) {
+		if(empty($TCA[self::$storageDbTableName])) {
 			t3lib_div::makeInstance('tslib_fe',$TYPO3_CONF_VARS)->includeTCA(0);
-			t3lib_div::loadTCA('tx_mksanitizedparameters');
+			t3lib_div::loadTCA(self::$storageDbTableName);
 		}
 	}
 	
@@ -89,17 +90,19 @@ class tx_mksanitizedparameters_StealthMode {
 		} 
 		
 		$dataToInsert = array(
-			'tx_mksanitizedparameters' => array(
-				'NEW_123' => array(
-					'pid' 	=> self::$storagePid,
-					'name'  => $arrayKey,
-					'value' => self::getArrayAsStringOutput($arrayValues),
-					'hash'	=> self::getHashByArrayToMonitor($arrayKey, $arrayValues)
-				)
-			)
+			'pid' 		=> self::$storagePid,
+			'name'  	=> $arrayKey,
+			'value' 	=> self::getArrayAsStringOutput(
+				$arrayValues
+			),
+			'hash'		=> self::getHashByArrayToMonitor(
+				$arrayKey, $arrayValues
+			),
+			'crdate'	=> time()
 		);
-		$tceMain = tx_rnbase_util_DB::getTCEmain($dataToInsert);
-		$tceMain->process_datamap();
+		tx_rnbase_util_DB::doInsert(
+			self::$storageDbTableName, $dataToInsert
+		);
 	}
 	
 	/**
@@ -119,7 +122,7 @@ class tx_mksanitizedparameters_StealthMode {
 		
 		$selectResult = tx_rnbase_util_DB::doSelect(
 			'*', 
-			'tx_mksanitizedparameters', 
+			self::$storageDbTableName, 
 			array(
 				'where' => $where,
 				'enablefieldsfe' => true
