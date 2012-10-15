@@ -15,5 +15,6 @@ CREATE TABLE tx_mksanitizedparameters (
 	hash text,
 	
 	PRIMARY KEY (uid),
-	KEY parent (pid)
+	KEY parent (pid),
+	KEY parent (hash)
 );
