@@ -17,6 +17,9 @@ $TYPO3_CONF_VARS['SC_OPTIONS']['typo3/template.php']['preStartPageHook'][] =
 // config below or overwrite them. examples for the config possibilities  
 // can be found in class.tx_mksanitizedparameters.php. You can also check
 // the testcases in /tests to see how the classes work.
+// NOTE: teh config should be stored serialized for performance reasons.
+// the config would be then something like:
+// $TYPO3_CONF_VARS['EXTCONF']['mksanitizedparameters'] = unserialize(HERE_COMES_YOU_SERIALIZED_ARRAY)
 $defaultExtConfig = array(
 	'parameterRules' => array(
 		'FE' => array(
