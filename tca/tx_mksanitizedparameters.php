@@ -4,7 +4,7 @@ if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 $TCA['tx_mksanitizedparameters'] = array (
 	'ctrl' => $TCA['tx_mksanitizedparameters']['ctrl'],
 	'interface' => array (
-		'showRecordFieldList' => 'hidden,name,value'
+		'showRecordFieldList' => 'hidden,name,value,hash'
 	),
 	'feInterface' => $TCA['tx_mksanitizedparameters']['feInterface'],
 	'columns' => array (
@@ -24,6 +24,7 @@ $TCA['tx_mksanitizedparameters'] = array (
 				'size' => '30',
 				'max' => '255',
 			),
+			'readOnly' => 1
 		),
 		'value' => array (
 			'label' => 'LLL:EXT:mksanitizedparameters/locallang.xml:tx_mksanitizedparameters.value',
@@ -33,6 +34,7 @@ $TCA['tx_mksanitizedparameters'] = array (
 				'cols' => '30',
 				'rows' => '3',
 			),
+			'readOnly' => 1
 		),
 		'hash' => array(
 			'label' => 'LLL:EXT:mksanitizedparameters/locallang.xml:tx_mksanitizedparameters.hash',
@@ -44,7 +46,7 @@ $TCA['tx_mksanitizedparameters'] = array (
 		)
 	),
 	'types' => array (
-		'0' => array('showitem' => 'hidden;;1;;1-1-1, name, value'
+		'0' => array('showitem' => 'hidden;;1;;1-1-1, name, value, hash'
 					)
 	),
 	'palettes' => array (
