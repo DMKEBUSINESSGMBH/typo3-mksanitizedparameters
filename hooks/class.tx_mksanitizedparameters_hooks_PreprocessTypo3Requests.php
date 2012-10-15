@@ -46,16 +46,30 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests {
 	 * @return void
 	 */
 	public function sanitizeGlobalInputArrays(array $parameters, $parent) {
-		$typo3Mode = (TYPO3_MODE == 'BE')  ? TYPO3_MODE : 'FE';
-		
-		//@todo config serialisiert speichern?		
-		$parameterRules = 
-			$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mksanitizedparameters']['parameterRules'][$typo3Mode];
-
-		$arraysToSanitize = array(&$_REQUEST, &$_POST, &$_GET);
-		tx_mksanitizedparameters::sanitizeArraysByConfig(
-			$arraysToSanitize, $parameterRules
+		$isStealthMode = tx_rnbase_configurations::getExtensionCfgValue(
+			'mksanitizedparameters', 'stealthMode'
 		);
+		$arraysToSanitize = array(
+			'$_REQUEST' => &$_REQUEST,
+			'$_POST' => &$_POST,
+			'$_GET' => &$_GET 
+		);
+		
+		if($isStealthMode) {
+			tx_rnbase::load('tx_mksanitizedparameters_StealthMode');
+			tx_mksanitizedparameters_StealthMode::monitorArrays(
+				$arraysToSanitize
+			);
+		} else {
+			$typo3Mode = (TYPO3_MODE == 'BE')  ? TYPO3_MODE : 'FE';
+			
+			$parameterRules = 
+				$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mksanitizedparameters']['parameterRules'][$typo3Mode];
+	
+			tx_mksanitizedparameters::sanitizeArraysByConfig(
+				$arraysToSanitize, $parameterRules
+			);
+		}
 	}
 }
 

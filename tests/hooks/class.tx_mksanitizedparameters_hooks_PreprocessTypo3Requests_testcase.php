@@ -40,13 +40,46 @@ ob_start();
  */
 class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx_phpunit_testcase {
 	
+	private $storedExtConfig;
+	
+	/**
+	 * (non-PHPdoc)
+	 * @see PHPUnit_Framework_TestCase::setUp()
+	 */
 	protected function setUp() {
+		$this->storedExtConfig =  
+			$GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mksanitizedparameters'];
+		$this->deactivateStealthMode($this->storedExtConfig);
+		
 		$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mksanitizedparameters']['parameterRules']['BE']['testParameter'] = 
 			FILTER_SANITIZE_NUMBER_INT;
 		require_once PATH_site.TYPO3_mainDir.'template.php';
 	}
 	
+	/**
+	 * @param string $serializedExtConfig
+	 * 
+	 * @return void
+	 */
+	private function deactivateStealthMode($serializedExtConfig) {
+		$extConfig = 
+			unserialize($serializedExtConfig);
+		
+		if(!is_array($extConfig)) {
+			$extConfig = array();
+		}
+		$extConfig['stealthMode'] = 0;
+		$GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mksanitizedparameters'] = serialize($extConfig);
+	}
+	
+	/**
+	 * (non-PHPdoc)
+	 * @see PHPUnit_Framework_TestCase::tearDown()
+	 */
 	protected function tearDown() {
+		$GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mksanitizedparameters'] = 
+			$this->storedExtConfig;
+			
 		unset(
 			$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mksanitizedparameters']['parameterRules']['BE']['testParameter']
 		);

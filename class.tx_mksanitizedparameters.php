@@ -205,7 +205,7 @@ class tx_mksanitizedparameters {
 	public static function sanitizeArraysByConfig(
 		array &$arraysToSanitize, array $config
 	) {
-		foreach ($arraysToSanitize as &$arrayToSanitize) {
+		foreach ($arraysToSanitize as $arrayName => &$arrayToSanitize) {
 			$arrayToSanitize = self::sanitizeArrayByConfig(
 				$arrayToSanitize, $config
 			);
