@@ -15,7 +15,7 @@
 
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'MK Sanitized Parameters',
-	'description' => 'Sanitize $_REQUEST, $_POST and $_GET before the processing of TYPO3 in backend or frontend starts.',
+	'description' => 'Sanitize $_REQUEST, $_POST and $_GET before the processing of TYPO3 in backend or frontend starts. Take a look into ext_localconf.php how to configure.',
 	'category' => 'misc',
 	'author' => 'das MedienKombinat GmbH',
 	'author_email' => 'kontakt@das-medienkombinat.de',
