@@ -23,7 +23,10 @@ $TYPO3_CONF_VARS['SC_OPTIONS']['typo3/template.php']['preStartPageHook'][] =
 $defaultExtConfig = array(
 	'parameterRules' => array(
 		'FE' => array(
-			'default'	=> array(FILTER_SANITIZE_STRING, FILTER_SANITIZE_ENCODED)
+			'default'	=> array(FILTER_SANITIZE_STRING, FILTER_SANITIZE_ENCODED),
+			// post parameters from carataker
+			'd' 		=> FILTER_SANITIZE_URL,
+			's'			=> FILTER_SANITIZE_URL
 		),
 		'BE' => array(
 			'default'	=> array(FILTER_SANITIZE_STRING, FILTER_SANITIZE_ENCODED)
