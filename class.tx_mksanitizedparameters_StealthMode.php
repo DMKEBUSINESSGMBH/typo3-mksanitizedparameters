@@ -28,6 +28,7 @@
  */
 require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 tx_rnbase::load('tx_rnbase_util_DB');
+tx_rnbase::load('tx_rnbase_util_TYPO3');
 
 /**
  * Stores the given arrays to the DB so it can be checked
@@ -71,7 +72,7 @@ class tx_mksanitizedparameters_StealthMode {
 	private function loadTca() {
 		global $TYPO3_CONF_VARS, $TCA;
 		if(empty($TCA[self::$storageDbTableName])) {
-			t3lib_div::makeInstance('tslib_fe',$TYPO3_CONF_VARS)->includeTCA(0);
+			tx_rnbase_util_TYPO3::getTSFE()->includeTCA(0);
 			t3lib_div::loadTCA(self::$storageDbTableName);
 		}
 	}
