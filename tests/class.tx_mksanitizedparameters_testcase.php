@@ -260,7 +260,7 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 	/**
 	 * @group unit
 	 */
-	public function testSanitizeArrayByConfigWorksCorrectWithSeveralConfiguredFilters(){
+	public function testSanitizeArrayByConfigWorksCorrectWithSeveralConfiguredFiltersInVersion1(){
 		$arrayToSanitize = array(
 			'parameterNameToBeSanitized' 	=> 
 			"<span>Is your name O'reilly & are sure about that?</span>",
@@ -281,6 +281,33 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 			array(
 				'parameterNameToBeSanitized'	=> 
 				'Is your name O&#39;reilly &#38; are sure about that?',
+			),
+			$sanitizedArray, 
+			'The array wasn\'t sanitized correct!'
+		);
+	}
+	
+	/**
+	 * @group unit
+	 */
+	public function testSanitizeArrayByConfigWorksCorrectWithSeveralConfiguredFiltersInVersion2(){
+		$arrayToSanitize = array(
+			'parameterNameToBeSanitized' 	=> 
+			"<span>Is your name O'reilly & are sure about that?</span>",
+		);
+		$config = array(
+			'parameterNameToBeSanitized'	=> array(
+				FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES
+			)
+		);
+		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByConfig(
+			$arrayToSanitize, $config
+		);
+		
+		$this->assertEquals(
+			array(
+				'parameterNameToBeSanitized'	=> 
+				'Is your name O&#39;reilly & are sure about that?',
 			),
 			$sanitizedArray, 
 			'The array wasn\'t sanitized correct!'

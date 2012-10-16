@@ -62,6 +62,10 @@ class tx_mksanitizedparameters {
 	 * 			FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES	
 	 * 		),
 	 * 		'flags'	=> FILTER_FLAG_ENCODE_AMP
+	 * 	)
+	 *  //OR
+	 * 	'default' => array(
+ 	 *		FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES	
 	 * 	) 
 	 * 
 	 * 	'myParameterQualifier' => array(
@@ -184,9 +188,13 @@ class tx_mksanitizedparameters {
 	private static function sanitizeValueByFilterConfig(
 		$valueToSanitize, array $filterConfig
 	) {
-		$filters = $filterConfig['filter'];
-		unset($filterConfig['filter']);
-		$filters = !is_array($filters) ? array($filters) : $filters;
+		if(isset($filterConfig['filter'])) {
+			$filters = $filterConfig['filter'];
+			unset($filterConfig['filter']);
+			$filters = !is_array($filters) ? array($filters) : $filters;
+		} else {
+			$filters = $filterConfig;
+		}
 		
 		foreach ($filters as $filter) {
 			$valueToSanitize = 
