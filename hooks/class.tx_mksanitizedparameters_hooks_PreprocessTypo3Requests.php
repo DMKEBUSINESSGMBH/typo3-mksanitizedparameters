@@ -65,16 +65,10 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests {
 			
 			$parameterRules = 
 				$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mksanitizedparameters']['parameterRules'][$typo3Mode];
-	t3lib_div::debug(array(
-		$arraysToSanitize
-		),__METHOD__.' Line: '.__LINE__); // @TODO: remove me
+	
 			tx_mksanitizedparameters::sanitizeArraysByConfig(
 				$arraysToSanitize, $parameterRules
 			);
-			t3lib_div::debug(array(
-		$arraysToSanitize
-		),__METHOD__.' Line: '.__LINE__); // @TODO: remove me
-		exit;
 		}
 	}
 }
