@@ -25,8 +25,9 @@ $defaultExtConfig = array(
 		'FE' => array(
 			'default'	=> array(FILTER_SANITIZE_STRING, FILTER_SANITIZE_ENCODED),
 			// post parameters from carataker
-			'd' 		=> FILTER_SANITIZE_URL,
-			's'			=> FILTER_SANITIZE_URL
+			'st'		=> FILTER_SANITIZE_STRING,
+			'd' 		=> FILTER_UNSAFE_RAW,
+			's'			=> FILTER_UNSAFE_RAW
 		),
 		'BE' => array(
 			'default'	=> array(FILTER_SANITIZE_STRING, FILTER_SANITIZE_ENCODED)
