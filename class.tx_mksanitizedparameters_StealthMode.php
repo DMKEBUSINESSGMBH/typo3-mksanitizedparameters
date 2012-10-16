@@ -52,7 +52,8 @@ class tx_mksanitizedparameters_StealthMode {
 	 * @return void
 	 */
 	public static function monitorArrays(array $arraysToMonitor) {
-		self::loadTca();
+		
+		self::prepareTcaAndDatabaseIfNotAvailable();
 		
 		self::$storagePid = tx_rnbase_configurations::getExtensionCfgValue(
 			'mksanitizedparameters', 'stealthModeStoragePid'
@@ -65,14 +66,22 @@ class tx_mksanitizedparameters_StealthMode {
 	
 	/**
 	 * its possible that this script is used in an eID which
-	 * causes no TCA to be available. We fix this!
+	 * causes no TCA or DB to be available. We fix this!
 	 * 
 	 * @return void
 	 */
-	private function loadTca() {
+	private static function prepareTcaAndDatabaseIfNotAvailable() {
+		self::loadTca();
+		tslib_eidtools::connectDB();
+	}
+	
+	/**
+	 * @return void
+	 */
+	private static function loadTca() {
 		global $TYPO3_CONF_VARS, $TCA;
 		if(empty($TCA[self::$storageDbTableName])) {
-			tx_rnbase_util_TYPO3::getTSFE()->includeTCA(0);
+			tslib_eidtools::initTCA();
 			t3lib_div::loadTCA(self::$storageDbTableName);
 		}
 	}
@@ -139,7 +148,7 @@ class tx_mksanitizedparameters_StealthMode {
 	 * 
 	 * @return string
 	 */
-	private function getArrayAsStringOutput(array $array) {
+	private static function getArrayAsStringOutput(array $array) {
 		return var_export($array,true);
 	}
 	
