@@ -27,6 +27,7 @@
  * include required classes
  */
 require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
+tx_rnbase::load('tx_rnbase_util_DB');
 
 /**
  * Stores the given arrays to the DB so it can be checked
