@@ -1,4 +1,4 @@
-# cat=base; type=boolean; label=Stealth Mode enabled? If, than all parameters which would be sanitized are only stored to the DB table tx_mksanitizedparameters. Never use this feature in production as it costs performance.
+# cat=base; type=boolean; label=Stealth Mode enabled? If, than all parameters which would be sanitized are only stored to the DB table tx_mksanitizedparameters for monitoring purpose. Never use this feature in production as can cost alot performance. NOTE: Please set the stealthModeStoragePid before activating stealth mode as the monitoring will start immediately.  
 stealthMode = 0
 
 # cat=base; type=string; label=The storage folder where the data is stored in stealth mode.
