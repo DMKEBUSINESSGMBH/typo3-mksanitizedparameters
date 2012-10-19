@@ -10,6 +10,7 @@ defined('TYPO3_MODE') || die('Access denied.');
 // the rules would be then something like:
 // $rulesForFrontend = unserialize(HERE_COMES_YOU_SERIALIZED_ARRAY)
 // tx_mksanitizedparameters_Rules::addRulesForFrontend($rulesForFrontend);
+require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 tx_rnbase::load('tx_mksanitizedparameters_Rules');
 
 $rulesForCaretaker = array();
