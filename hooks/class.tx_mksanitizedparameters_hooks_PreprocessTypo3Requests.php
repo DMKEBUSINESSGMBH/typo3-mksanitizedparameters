@@ -61,13 +61,10 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests {
 				$arraysToSanitize
 			);
 		} else {
-			$typo3Mode = (TYPO3_MODE == 'BE')  ? TYPO3_MODE : 'FE';
-			
-			$parameterRules = 
-				$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mksanitizedparameters']['parameterRules'][$typo3Mode];
-	
+			tx_rnbase::load('tx_mksanitizedparameters_util_Configuration');
 			tx_mksanitizedparameters::sanitizeArraysByConfig(
-				$arraysToSanitize, $parameterRules
+				$arraysToSanitize, 
+				tx_mksanitizedparameters_util_Configuration::getParameterConfigurationForCurrentEnvironment()
 			);
 		}
 	}
