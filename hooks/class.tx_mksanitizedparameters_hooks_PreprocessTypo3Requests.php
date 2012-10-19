@@ -64,7 +64,7 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests {
 			tx_rnbase::load('tx_mksanitizedparameters_Rules');
 			tx_mksanitizedparameters::sanitizeArraysByConfiguration(
 				$arraysToSanitize, 
-				tx_mksanitizedparameters_Rules::getParameterConfigurationForCurrentEnvironment()
+				tx_mksanitizedparameters_Rules::getRulesForCurrentEnvironment()
 			);
 		}
 	}

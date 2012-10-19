@@ -43,16 +43,16 @@ class tx_mksanitizedparameters_Rules {
 	 * 
 	 * @return array
 	 */
-	public static function getParameterConfigurationForCurrentEnvironment() {
+	public static function getRulesForCurrentEnvironment() {
 		switch (TYPO3_MODE) {
 			case 'FE':
 			default:
 				$parameterRulesForCurrentEnvironment =
-					tx_mksanitizedparameters_Rules::getParameterConfigurationForFrontend();
+					tx_mksanitizedparameters_Rules::getRulesForFrontend();
 				break;
 			case 'BE':
 				$parameterRulesForCurrentEnvironment =
-					tx_mksanitizedparameters_Rules::getParameterConfigurationForBackend();
+					tx_mksanitizedparameters_Rules::getRulesForBackend();
 				break;
 		}
 		
@@ -62,7 +62,7 @@ class tx_mksanitizedparameters_Rules {
 	/**
 	 * @return array
 	 */
-	public static function getParameterConfigurationForFrontend() {
+	public static function getRulesForFrontend() {
 		return 
 			$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mksanitizedparameters']['parameterRules']['FE'];
 	}
@@ -70,7 +70,7 @@ class tx_mksanitizedparameters_Rules {
 	/**
 	* @return array
 	*/
-	public static function getParameterConfigurationForBackend() {
+	public static function getRulesForBackend() {
 		return
 			$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mksanitizedparameters']['parameterRules']['BE'];
 	}
