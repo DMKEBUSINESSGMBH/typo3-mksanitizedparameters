@@ -13,29 +13,8 @@ defined('TYPO3_MODE') || die('Access denied.');
 require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 tx_rnbase::load('tx_mksanitizedparameters_Rules');
 
-$rulesForCaretaker = array();
+require_once(t3lib_extMgm::extPath($_EXTKEY).'rules/default.php');
+
 if(t3lib_extMgm::isLoaded('caretaker_instance')){
-// 	$rulesForCaretaker = array(
-// 		'st'		=> FILTER_SANITIZE_STRING,
-// 		'd' 		=> FILTER_UNSAFE_RAW,
-// 		's'
-// 	);
-	$rulesForCaretaker = 
-		unserialize('a:3:{s:2:"st";i:513;s:1:"d";i:516;i:0;s:1:"s";}');
+	require_once(t3lib_extMgm::extPath($_EXTKEY).'rules/caretaker_instance.php');
 }
-
-// $defaultRules = array(
-// 	'default'	=> array(FILTER_SANITIZE_STRING, FILTER_SANITIZE_ENCODED)
-// );
-$defaultRulesForFrontend = 
-	unserialize('a:1:{s:7:"default";a:2:{i:0;i:513;i:1;i:514;}}');
-
-$rulesForFrontend = 
-	array_merge_recursive($defaultRulesForFrontend,$rulesForCaretaker);
-tx_mksanitizedparameters_Rules::addRulesForFrontend($rulesForFrontend);
-
-// $rulesForBackend =  array(
-// 	'default'	=> array(FILTER_SANITIZE_STRING, FILTER_SANITIZE_ENCODED)
-// );
-$rulesForBackend = unserialize('a:1:{s:7:"default";a:2:{i:0;i:513;i:1;i:514;}}');
-tx_mksanitizedparameters_Rules::addRulesForBackend($rulesForBackend);
