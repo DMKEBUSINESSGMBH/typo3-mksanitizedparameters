@@ -52,7 +52,6 @@ class tx_mksanitizedparameters_StealthMode {
 	 * @return void
 	 */
 	public static function monitorArrays(array $arraysToMonitor) {
-		
 		self::prepareTcaAndDatabaseIfNotAvailable();
 		
 		self::$storagePid = tx_rnbase_configurations::getExtensionCfgValue(
