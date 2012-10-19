@@ -36,7 +36,7 @@ require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
  * @subpackage tx_mksanitizedparameters
  * @author Hannes Bochmann <hannes.bochmann@das-mediekombinat.de>
  */
-class tx_mksanitizedparameters_util_Configuration {
+class tx_mksanitizedparameters_Configuration {
 	
 	/**
 	 * the default environment is Frontend
@@ -48,11 +48,11 @@ class tx_mksanitizedparameters_util_Configuration {
 			case 'FE':
 			default:
 				$parameterRulesForCurrentEnvironment =
-					tx_mksanitizedparameters_util_Configuration::getParameterConfigurationForFrontend();
+					tx_mksanitizedparameters_Configuration::getParameterConfigurationForFrontend();
 				break;
 			case 'BE':
 				$parameterRulesForCurrentEnvironment =
-					tx_mksanitizedparameters_util_Configuration::getParameterConfigurationForBackend();
+					tx_mksanitizedparameters_Configuration::getParameterConfigurationForBackend();
 				break;
 		}
 		
@@ -76,6 +76,6 @@ class tx_mksanitizedparameters_util_Configuration {
 	}
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/util/class.tx_mksanitizedparameters_util_Configuration.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/util/class.tx_mksanitizedparameters_util_Configuration.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/util/class.tx_mksanitizedparameters_Configuration.php']) {
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/util/class.tx_mksanitizedparameters_Configuration.php']);
 }
