@@ -165,7 +165,7 @@ class tx_mksanitizedparameters {
 	
 	/**
 	 * @param mixed $valueToSanitize
-	 * @param mixed $rules
+	 * @param mixed $rule
 	 * 
 	 * @return mixed
 	 */
