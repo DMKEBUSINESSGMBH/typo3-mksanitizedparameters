@@ -104,7 +104,7 @@ class tx_mksanitizedparameters {
 	 * 	)
 	 * )
 	 */
-	public static function sanitizeArrayByConfig(
+	public static function sanitizeArrayByConfiguration(
 		array $arrayToSanitize, array $config
 	) {
 		if(empty($config)) {
@@ -121,11 +121,11 @@ class tx_mksanitizedparameters {
 					(array) $configForValue, $config['default']
 				);
 				
-				$valueToSanitize = self::sanitizeArrayByConfig(
+				$valueToSanitize = self::sanitizeArrayByConfiguration(
 					$valueToSanitize, $configForValue
 				);
 			} elseif(!empty($configForValue)) {
-				$valueToSanitize = self::sanitizeValueByConfig(
+				$valueToSanitize = self::sanitizeValueByConfiguration(
 					$valueToSanitize,$configForValue
 				);	
 			} 
@@ -169,7 +169,7 @@ class tx_mksanitizedparameters {
 	 * 
 	 * @return mixed
 	 */
-	private static function sanitizeValueByConfig($valueToSanitize, $config) {
+	private static function sanitizeValueByConfiguration($valueToSanitize, $config) {
 		$valueToSanitize = trim($valueToSanitize);
 		
 		if(!is_array($config)) {
@@ -210,11 +210,11 @@ class tx_mksanitizedparameters {
 	 * 
 	 * @return void
 	 */
-	public static function sanitizeArraysByConfig(
+	public static function sanitizeArraysByConfiguration(
 		array &$arraysToSanitize, array $config
 	) {
 		foreach ($arraysToSanitize as $arrayName => &$arrayToSanitize) {
-			$arrayToSanitize = self::sanitizeArrayByConfig(
+			$arrayToSanitize = self::sanitizeArrayByConfiguration(
 				$arrayToSanitize, $config
 			);
 		}	
