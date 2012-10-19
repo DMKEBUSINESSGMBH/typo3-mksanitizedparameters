@@ -120,7 +120,7 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx
 	 * 
 	 * @group integration
 	 */
-	public function testHookIsCalledInFrontendAndSanitizesRequestGlobals(){
+	public function testHookInFrontendIsAvailableAndConfigured(){
 		$indexTs = 
 			file_get_contents(PATH_site.TYPO3_mainDir.'sysext/cms/tslib/index_ts.php');
 
