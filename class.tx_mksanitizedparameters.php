@@ -45,7 +45,7 @@ class tx_mksanitizedparameters {
 	
 	/**
 	 * @param array $arrayToSanitize
-	 * @param array $config
+	 * @param array $rules
 	 * 
 	 * @return array
 	 * 
@@ -66,7 +66,7 @@ class tx_mksanitizedparameters {
 	 *  //OR
 	 * 	'default' => array(
  	 *		FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES	
-	 * 	) 
+	 * 	), 
 	 * 
 	 * 	'myParameterQualifier' => array(
 	 * 		'uid' => FILTER_SANITIZE_NUMBER_INT
@@ -104,29 +104,29 @@ class tx_mksanitizedparameters {
 	 * 	)
 	 * )
 	 */
-	public static function sanitizeArrayByConfiguration(
-		array $arrayToSanitize, array $config
+	public static function sanitizeArrayByRules(
+		array $arrayToSanitize, array $rules
 	) {
-		if(empty($config)) {
+		if(empty($rules)) {
 			return $arrayToSanitize;
 		}
 			
 		foreach ($arrayToSanitize as $nameToSanitize => &$valueToSanitize) {
-			$configForValue = self::getConfigForValue(
-				$config, $nameToSanitize
+			$rulesForValue = self::getConfigForValue(
+				$rules, $nameToSanitize
 			);
 				
 			if(is_array($valueToSanitize)) {
-				$configForValue = self::injectDefaultConfigIfNeccessary(
-					(array) $configForValue, $config['default']
+				$rulesForValue = self::injectDefaultConfigIfNeccessary(
+					(array) $rulesForValue, $rules['default']
 				);
 				
-				$valueToSanitize = self::sanitizeArrayByConfiguration(
-					$valueToSanitize, $configForValue
+				$valueToSanitize = self::sanitizeArrayByRules(
+					$valueToSanitize, $rulesForValue
 				);
-			} elseif(!empty($configForValue)) {
-				$valueToSanitize = self::sanitizeValueByConfiguration(
-					$valueToSanitize,$configForValue
+			} elseif(!empty($rulesForValue)) {
+				$valueToSanitize = self::sanitizeValueByRules(
+					$valueToSanitize,$rulesForValue
 				);	
 			} 
 		}
@@ -135,47 +135,47 @@ class tx_mksanitizedparameters {
 	}
 	
 	/**
-	 * @param mixed $config
+	 * @param mixed $rules
 	 * @param string $nameToSanitize
 	 * 
 	 * @return mixed
 	 */
-	private static function getConfigForValue($config, $nameToSanitize) {
-		$configForValue = !empty($config[$nameToSanitize]) ?
-			$config[$nameToSanitize] : $config['default'];
+	private static function getConfigForValue($rules, $nameToSanitize) {
+		$rulesForValue = !empty($rules[$nameToSanitize]) ?
+			$rules[$nameToSanitize] : $rules['default'];
 		
-		return $configForValue;
+		return $rulesForValue;
 	}
 	
 	/**
-	 * @param array $config
+	 * @param array $rules
 	 * @param mixed $defaultConfig
 	 * 
 	 * @return array
 	 */
 	private static function injectDefaultConfigIfNeccessary(
-		array $config, $defaultConfig
+		array $rules, $defaultConfig
 	) {
-		if(!array_key_exists('default', $config)) {
-			$config['default'] = $defaultConfig;
+		if(!array_key_exists('default', $rules)) {
+			$rules['default'] = $defaultConfig;
 		}
 		
-		return $config;
+		return $rules;
 	}
 	
 	/**
 	 * @param mixed $valueToSanitize
-	 * @param mixed $config
+	 * @param mixed $rules
 	 * 
 	 * @return mixed
 	 */
-	private static function sanitizeValueByConfiguration($valueToSanitize, $config) {
+	private static function sanitizeValueByRules($valueToSanitize, $rules) {
 		$valueToSanitize = trim($valueToSanitize);
 		
-		if(!is_array($config)) {
-			return filter_var($valueToSanitize,$config);
+		if(!is_array($rules)) {
+			return filter_var($valueToSanitize,$rules);
 		} else {
-			return self::sanitizeValueByFilterConfig($valueToSanitize,$config);
+			return self::sanitizeValueByFilterConfig($valueToSanitize,$rules);
 		}
 	}
 	
@@ -206,16 +206,16 @@ class tx_mksanitizedparameters {
 	
 	/**
 	 * @param array $arraysToSanitize
-	 * @param array $config
+	 * @param array $rules
 	 * 
 	 * @return void
 	 */
-	public static function sanitizeArraysByConfiguration(
-		array &$arraysToSanitize, array $config
+	public static function sanitizeArraysByRules(
+		array &$arraysToSanitize, array $rules
 	) {
 		foreach ($arraysToSanitize as $arrayName => &$arrayToSanitize) {
-			$arrayToSanitize = self::sanitizeArrayByConfiguration(
-				$arrayToSanitize, $config
+			$arrayToSanitize = self::sanitizeArrayByRules(
+				$arrayToSanitize, $rules
 			);
 		}	
 	}

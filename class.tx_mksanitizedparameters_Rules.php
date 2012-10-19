@@ -39,6 +39,48 @@ require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 class tx_mksanitizedparameters_Rules {
 	
 	/**
+	 * @var array
+	 */
+	protected static $rulesForFrontend = array();
+	
+	/**
+	* @var array
+	*/
+	protected static $rulesForBackend = array();
+	
+	/**
+	 * look into the doc of 
+	 * tx_mksanitizedparameters::sanitizeArrayByRules()
+	 * to see how the rules must be passed.
+	 * 
+	 * @param array $rules
+	 * 
+	 * @return void
+	 */
+	public static function addRulesForFrontend(array $rules) {
+		self::$rulesForFrontend = 
+			t3lib_div::array_merge_recursive_overrule(
+				self::$rulesForFrontend, $rules
+			);
+	}
+	
+	/**
+	* look into the doc of
+	* tx_mksanitizedparameters::sanitizeArrayByRules()
+	* to see how the rules must be passed.
+	*
+	* @param array $rules
+	*
+	* @return void
+	*/
+	public static function addRulesForBackend(array $rules) {
+		self::$rulesForBackend =
+			t3lib_div::array_merge_recursive_overrule(
+				self::$rulesForBackend, $rules
+			);
+	}
+	
+	/**
 	 * the default environment is Frontend
 	 * 
 	 * @return array
@@ -63,16 +105,14 @@ class tx_mksanitizedparameters_Rules {
 	 * @return array
 	 */
 	public static function getRulesForFrontend() {
-		return 
-			$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mksanitizedparameters']['parameterRules']['FE'];
+		return self::$rulesForFrontend;
 	}
 	
 	/**
 	* @return array
 	*/
 	public static function getRulesForBackend() {
-		return
-			$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mksanitizedparameters']['parameterRules']['BE'];
+		return self::$rulesForBackend;
 	}
 }
 

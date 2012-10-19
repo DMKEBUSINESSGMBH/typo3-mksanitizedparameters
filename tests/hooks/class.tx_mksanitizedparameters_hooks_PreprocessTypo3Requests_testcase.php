@@ -28,9 +28,11 @@
  */
 require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 tx_rnbase::load('tx_mksanitizedparameters');
+tx_rnbase::load('tx_mksanitizedparameters_Rules');
 	
 //otherwise we get an output already started error when the test is excuted
 //via CLI. caused by $template->startPage('testPage');
+//@FIXME find a betty way to avoid the problem
 ob_start();
 
 /**
@@ -51,8 +53,10 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx
 			$GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mksanitizedparameters'];
 		$this->deactivateStealthMode($this->storedExtConfig);
 		
-		$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mksanitizedparameters']['parameterRules']['BE']['testParameter'] = 
-			FILTER_SANITIZE_NUMBER_INT;
+		$rulesForBackend = array(
+			'testParameter' => FILTER_SANITIZE_NUMBER_INT
+		);
+		tx_mksanitizedparameters_Rules::addRulesForBackend($rulesForBackend);
 		require_once PATH_site.TYPO3_mainDir.'template.php';
 	}
 	
@@ -77,12 +81,9 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx
 	 * @see PHPUnit_Framework_TestCase::tearDown()
 	 */
 	protected function tearDown() {
-		$GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mksanitizedparameters'] = 
+		$GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mksanitizedparameters'] =
 			$this->storedExtConfig;
-			
-		unset(
-			$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mksanitizedparameters']['parameterRules']['BE']['testParameter']
-		);
+		
 		unset($_REQUEST['testParameter']);
 		unset($_POST['testParameter']);
 		unset($_GET['testParameter']);
