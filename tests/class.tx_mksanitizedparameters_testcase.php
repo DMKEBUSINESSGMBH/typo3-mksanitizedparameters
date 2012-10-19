@@ -39,7 +39,7 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 	/**
 	 * @group unit
 	 */
-	public function testSanitizeArrayByRulesReturnsUntouchedArrayIfConfigEmpty(){
+	public function testSanitizeArrayByRulesReturnsUntouchedArrayIfRulesEmpty(){
 		$arrayToSanitize = array(
 			'parameterNameToBeSanitized' => 'testValue'
 		);
@@ -55,9 +55,9 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 	/**
 	 * @group unit
 	 */
-	public function testSanitizeArrayByRulesReturnsUntouchedArrayWithoutConfigForGivenParameter(){
+	public function testSanitizeArrayByRulesReturnsUntouchedArrayWithoutRulesForGivenParameter(){
 		$arrayToSanitize = array(
-			'parameterNameWithoutConfig' => 'testValue'
+			'parameterNameWithoutRules' => 'testValue'
 		);
 		$rules = array(
 			'unexistentParameter'	=> FILTER_SANITIZE_NUMBER_INT
@@ -74,7 +74,7 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 	/**
 	 * @group unit
 	 */
-	public function testSanitizeArrayByRulesWorksCorrectWithUnconfiguredValuesButDefaultConfig(){
+	public function testSanitizeArrayByRulesWorksCorrectWithUnconfiguredValuesButDefaultRules(){
 		$arrayToSanitize = array(
 			'parameterNameToBeSanitized' 	=> '1testValue'
 		);
@@ -147,7 +147,7 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 	/**
 	 * @group unit
 	 */
-	public function testSanitizeArrayByRulesWorksCorrectWithUnconfiguredValuesAndNoDefaultConfig(){
+	public function testSanitizeArrayByRulesWorksCorrectWithUnconfiguredValuesAndNoDefaultRules(){
 		$arrayToSanitize = array(
 			'parameterNameToBeSanitized' 		=> '1testValue',
 			'parameterNameNotToBeSanitized' 	=> '1testValue',
@@ -226,7 +226,7 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 	/**
 	 * @group unit
 	 */
-	public function testSanitizeArrayByRulesWorksCorrectWithMultiDimensionalArrayAndDefaultConfigOnlyForSubArray(){
+	public function testSanitizeArrayByRulesWorksCorrectWithMultiDimensionalArrayAndDefaultRulesOnlyForSubArray(){
 		$arrayToSanitize = array(
 			'firstExtensionQualifier'	=> array(
 				'parameterNameToBeSanitizedByDefault' 	=> '1testValue',

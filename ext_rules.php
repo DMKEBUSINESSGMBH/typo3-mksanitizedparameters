@@ -1,13 +1,13 @@
 <?php
 defined('TYPO3_MODE') || die('Access denied.');
 
-// the default config for common TYPO3 request parameters.
+// the default rules for common TYPO3 request parameters.
 // add your own parameter rules in localconf.php similar to the
-// config below or overwrite them. examples for the config possibilities  
+// rules below or overwrite them. examples for the rules possibilities  
 // can be found in class.tx_mksanitizedparameters.php. You can also check
 // the testcases in /tests to see how the classes work.
-// NOTE: your config should be stored serialized for performance reasons.
-// the config would be then something like:
+// NOTE: your rules should be stored serialized for performance reasons.
+// the rules would be then something like:
 // $rulesForFrontend = unserialize(HERE_COMES_YOU_SERIALIZED_ARRAY)
 // tx_mksanitizedparameters_Rules::addRulesForFrontend($rulesForFrontend);
 tx_rnbase::load('tx_mksanitizedparameters_Rules');

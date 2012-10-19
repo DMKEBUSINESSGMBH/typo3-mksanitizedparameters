@@ -30,8 +30,8 @@ require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 
 /**
  * Class to sanitize an array through the filter_var method.
- * Therefore the configuration is based on the one for
- * filter_var_array. The config array mirrors the array
+ * Therefore the rules are based on the one for
+ * filter_var_array. The rules array mirrors the array
  * to be sanitized.
  * In difference to filter_var_array this class supports 
  * multi dimensional arrays, default values for unconfigured
@@ -49,7 +49,7 @@ class tx_mksanitizedparameters {
 	 * 
 	 * @return array
 	 * 
-	 * Sample Config:
+	 * Sample rules:
 	 * 
 	 * array(
 	 * 
@@ -112,12 +112,12 @@ class tx_mksanitizedparameters {
 		}
 			
 		foreach ($arrayToSanitize as $nameToSanitize => &$valueToSanitize) {
-			$rulesForValue = self::getConfigForValue(
+			$rulesForValue = self::getRulesForValue(
 				$rules, $nameToSanitize
 			);
 				
 			if(is_array($valueToSanitize)) {
-				$rulesForValue = self::injectDefaultConfigIfNeccessary(
+				$rulesForValue = self::injectDefaultRulesIfNeccessary(
 					(array) $rulesForValue, $rules['default']
 				);
 				
@@ -125,7 +125,7 @@ class tx_mksanitizedparameters {
 					$valueToSanitize, $rulesForValue
 				);
 			} elseif(!empty($rulesForValue)) {
-				$valueToSanitize = self::sanitizeValueByRules(
+				$valueToSanitize = self::sanitizeValueByRule(
 					$valueToSanitize,$rulesForValue
 				);	
 			} 
@@ -140,7 +140,7 @@ class tx_mksanitizedparameters {
 	 * 
 	 * @return mixed
 	 */
-	private static function getConfigForValue($rules, $nameToSanitize) {
+	private static function getRulesForValue($rules, $nameToSanitize) {
 		$rulesForValue = !empty($rules[$nameToSanitize]) ?
 			$rules[$nameToSanitize] : $rules['default'];
 		
@@ -149,15 +149,15 @@ class tx_mksanitizedparameters {
 	
 	/**
 	 * @param array $rules
-	 * @param mixed $defaultConfig
+	 * @param mixed $defaultRules
 	 * 
 	 * @return array
 	 */
-	private static function injectDefaultConfigIfNeccessary(
-		array $rules, $defaultConfig
+	private static function injectDefaultRulesIfNeccessary(
+		array $rules, $defaultRules
 	) {
 		if(!array_key_exists('default', $rules)) {
-			$rules['default'] = $defaultConfig;
+			$rules['default'] = $defaultRules;
 		}
 		
 		return $rules;
@@ -169,13 +169,13 @@ class tx_mksanitizedparameters {
 	 * 
 	 * @return mixed
 	 */
-	private static function sanitizeValueByRules($valueToSanitize, $rules) {
+	private static function sanitizeValueByRule($valueToSanitize, $rule) {
 		$valueToSanitize = trim($valueToSanitize);
 		
-		if(!is_array($rules)) {
-			return filter_var($valueToSanitize,$rules);
+		if(!is_array($rule)) {
+			return filter_var($valueToSanitize,$rule);
 		} else {
-			return self::sanitizeValueByFilterConfig($valueToSanitize,$rules);
+			return self::sanitizeValueByFilterConfig($valueToSanitize,$rule);
 		}
 	}
 	

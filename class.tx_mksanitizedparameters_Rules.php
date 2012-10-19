@@ -29,7 +29,7 @@
 require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 
 /**
- * Class to register and retrieve configuration for
+ * Class to register and retrieve rules for
  * the parameters in the system
  * 
  * @package TYPO3

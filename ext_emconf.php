@@ -1,12 +1,12 @@
 <?php
 /**
- * Extension Manager/Repository config file for ext "mklib".
- * @package tx_mktools
- * @subpackage tx_mktools_
+ * Extension Manager/Repository config file for ext "mksanitizedparameters".
+ * @package TYPO3
+ * @subpackage mksanitizedparameters
  */
 
 ########################################################################
-# Extension Manager/Repository config file for ext "mktools".
+# Extension Manager/Repository config file for ext "mksanitizedparameters".
 #
 # Manual updates:
 # Only the data in the array - everything else is removed by next
@@ -15,7 +15,7 @@
 
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'Sanitize input parameters system wide',
-	'description' => 'Sanitize $_REQUEST, $_POST and $_GET before the processing of TYPO3 in backend or frontend starts. Take a look into ext_localconf.php how to configure.',
+	'description' => 'Sanitize $_REQUEST, $_POST and $_GET before the processing of TYPO3 in backend or frontend starts. Take a look into ext_rules.php how to add your own rules or see which one exist.',
 	'category' => 'misc',
 	'author' => 'das MedienKombinat GmbH',
 	'author_email' => 'kontakt@das-medienkombinat.de',
