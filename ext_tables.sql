@@ -12,7 +12,7 @@ CREATE TABLE tx_mksanitizedparameters (
 	
 	name varchar(255) DEFAULT '' NOT NULL,
 	value text,
-	hash text,
+	hash varchar(255) DEFAULT '' NOT NULL,
 	
 	PRIMARY KEY (uid),
 	KEY parent (pid),
