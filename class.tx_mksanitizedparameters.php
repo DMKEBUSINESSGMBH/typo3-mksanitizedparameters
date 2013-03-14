@@ -199,6 +199,8 @@ class tx_mksanitizedparameters {
 			$filters = $filterConfig;
 		}
 		
+		self::loadCustomFilterCallbackClass($filterConfig);
+		
 		foreach ($filters as $filter) {
 			$valueToSanitize = 
 				filter_var($valueToSanitize,$filter,$filterConfig);
@@ -209,9 +211,19 @@ class tx_mksanitizedparameters {
 	
 	/**
 	 * @param array $filterConfig
+	 * 
+	 * @return void
 	 */
 	private static function loadCustomFilterCallbackClass(array $filterConfig) {
-		tx_rnbase::load($filterConfig['options'][0]);
+		if(
+			isset($filterConfig['options'][0]) ||
+			is_string($filterConfig['options'][0])
+		){
+			try {
+				tx_rnbase::load($filterConfig['options'][0]);	
+			} catch (Exception $e) {
+			}
+		}
 	}
 	
 	/**
