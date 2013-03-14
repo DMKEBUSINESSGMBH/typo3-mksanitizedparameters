@@ -82,6 +82,9 @@ class tx_mksanitizedparameters {
 	 * 			'default' 	=> FILTER_SANITIZE_NUMBER_INT
 	 * 
 	 * 			//that's the way to call a custom filter!
+	 * 			//the custom class is loaded through tx_rnbase::load(). 
+	 * 			//If your custom class can't be loaded
+	 * 			//this way, then please load the class yourself before setting the rules
 	 * 			'someValue'	=> array(
 	 *				'filter'    => FILTER_CALLBACK,
 	 *             	'options' 	=> array(
@@ -202,6 +205,13 @@ class tx_mksanitizedparameters {
 		}
 		
 		return $valueToSanitize;
+	}
+	
+	/**
+	 * @param array $filterConfig
+	 */
+	private static function loadCustomFilterCallbackClass(array $filterConfig) {
+		tx_rnbase::load($filterConfig['options'][0]);
 	}
 	
 	/**
