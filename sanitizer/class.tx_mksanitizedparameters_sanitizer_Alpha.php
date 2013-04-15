@@ -43,7 +43,7 @@ class tx_mksanitizedparameters_sanitizer_Alpha
 	 * @see tx_mksanitizedparameters_interface_Sanitizer::sanitizeValue()
 	 */
 	public static function sanitizeValue($value) {
-        return self::callPregReplace('/[^[:alpha:]]/', (string) $value);
+        return self::callPregReplace('/[^a-zA-Z-äöüÄÖÜéàèÉÈ]/', (string) $value);
 	}
 	
 	/**
@@ -52,7 +52,7 @@ class tx_mksanitizedparameters_sanitizer_Alpha
 	 * @return string
 	 */
 	public static function sanitizeValueAllowingWhitespaces($value) {
-		return self::callPregReplace('/[^[:alpha:] ]/', (string) $value);
+		return self::callPregReplace('/[^a-zA-Z-äöüÄÖÜéàèÉÈ ]/', (string) $value);
 	}
 	
 	/**

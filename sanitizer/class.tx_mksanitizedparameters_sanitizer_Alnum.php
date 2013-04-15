@@ -43,7 +43,7 @@ class tx_mksanitizedparameters_sanitizer_Alnum
 	 * @see tx_mksanitizedparameters_interface_Sanitizer::sanitizeValue()
 	 */
 	public static function sanitizeValue($value) {
-        return self::callPregReplace('/[^[:alpha:][:digit:]]/', (string) $value);
+        return self::callPregReplace('/[^a-zA-Z-äöüÄÖÜéàèÉÈ[:digit:]]/', (string) $value);
 	}
 	
 	/**
@@ -52,7 +52,7 @@ class tx_mksanitizedparameters_sanitizer_Alnum
 	 * @return string
 	 */
 	public static function sanitizeValueAllowingWhitespaces($value) {
-		return self::callPregReplace('/[^[:alpha:][:digit:] ]/', (string) $value);
+		return self::callPregReplace('/[^a-zA-Z-äöüÄÖÜéàèÉÈ[:digit:] ]/', (string) $value);
 	}
 	
 	/**

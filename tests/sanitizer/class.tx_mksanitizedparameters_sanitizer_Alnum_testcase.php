@@ -61,4 +61,17 @@ class tx_mksanitizedparameters_sanitizer_Alnum_testcase extends tx_phpunit_testc
 			'String was not sanitized correct.'
 		);
 	}
+	
+	/**
+	 * @group unit
+	 */
+	public function testSanitizeValueWithUmlauts(){
+		$testString = 'äbc';
+		
+		$this->assertEquals(
+			'äbc', 
+			tx_mksanitizedparameters_sanitizer_Alnum::sanitizeValue($testString),
+			'String was not sanitized correct.'
+		);
+	}
 }
