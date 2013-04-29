@@ -28,6 +28,7 @@
  */
 require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 tx_rnbase::load('tx_mksanitizedparameters_interface_Sanitizer');
+tx_rnbase::load('tx_mksanitizedparameters_util_RegularExpression');
 
 /**
  * @package TYPO3
@@ -39,11 +40,19 @@ class tx_mksanitizedparameters_sanitizer_Alpha
 {
 
 	/**
+	 * @var string
+	 */
+	private static $regularExpressionForLetters = 'a-zA-Z-äöüÄÖÜéàèÉÈß';
+	
+	/**
 	 * (non-PHPdoc)
 	 * @see tx_mksanitizedparameters_interface_Sanitizer::sanitizeValue()
 	 */
 	public static function sanitizeValue($value) {
-        return self::callPregReplace('/[^a-zA-Z-äöüÄÖÜéàèÉÈ]/', (string) $value);
+        return tx_mksanitizedparameters_util_RegularExpression::callPregReplace(
+        	'/[^' . self::getRegularExpressionForLetters() .']/', 
+        	(string) $value
+        );
 	}
 	
 	/**
@@ -52,17 +61,17 @@ class tx_mksanitizedparameters_sanitizer_Alpha
 	 * @return string
 	 */
 	public static function sanitizeValueAllowingWhitespaces($value) {
-		return self::callPregReplace('/[^a-zA-Z-äöüÄÖÜéàèÉÈ ]/', (string) $value);
+		return tx_mksanitizedparameters_util_RegularExpression::callPregReplace(
+			'/[^' . self::getRegularExpressionForLetters() .' ]/', 
+			(string) $value
+		);
 	}
 	
 	/**
-	 * @param string $pattern
-	 * @param mixed $value
-	 * 
 	 * @return string
 	 */
-	private static function callPregReplace($pattern, $value) {
-		return preg_replace($pattern, '', (string) $value); 
+	public static function getRegularExpressionForLetters() {
+		return self::$regularExpressionForLetters;
 	}
 }
 
