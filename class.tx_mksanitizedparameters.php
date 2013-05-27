@@ -172,12 +172,12 @@ class tx_mksanitizedparameters {
 	 * 
 	 * Attention:
 	 * Filter Configs with an array containing the key "filter" have higher priority
-	 * than filter configs containig array of multiple filters..
+	 * than filter configs containing array of multiple filters.
 	 * Single Filter Configs without array have highest priority.
 	 * So when you have a common config
 	 * 	'__common' => array(
 	 * 		'commonValue' => array(
- 	 *			FILTER_SANITIZE_NUMBER_INT
+ 	 *			FILTER_SANITIZE_NUMBER_INT,....
  	 *		)
 	 * 	) 
 	 * that is overwritten in a lower level with
@@ -192,7 +192,7 @@ class tx_mksanitizedparameters {
 	 * and again is overwritten in a lower level with 
 	 * '__common' => array( 
 	 * 		'commonValue' => array(
- 	 *			FILTER_SANITIZE_NUMBER_INT
+ 	 *			FILTER_SANITIZE_NUMBER_INT,....
 	 * 		)
 	 * )
 	 * that config that is used in the last level is the following:
