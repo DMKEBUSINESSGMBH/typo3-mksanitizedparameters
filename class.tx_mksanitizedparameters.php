@@ -171,34 +171,50 @@ class tx_mksanitizedparameters {
 	 * )
 	 * 
 	 * Attention:
-	 * Filter Configs with an array containing the key "filter" have higher priority.
+	 * Filter Configs with an array containing the key "filter" have higher priority
+	 * than filter configs containig array of multiple filters..
+	 * Single Filter Configs without array have highest priority.
 	 * So when you have a common config
 	 * 	'__common' => array(
- 	 *		FILTER_SANITIZE_NUMBER_INT
-	 * 	),  
+	 * 		'commonValue' => array(
+ 	 *			FILTER_SANITIZE_NUMBER_INT
+ 	 *		)
+	 * 	) 
 	 * that is overwritten in a lower level with
 	 * '__common' => array(
-	 * 		'filter' => array(
-	 * 			FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES	
-	 * 		),
-	 * 		'flags'	=> FILTER_FLAG_ENCODE_AMP
+	 *   	'commonValue' => array(
+	 * 			'filter' => array(
+	 * 				FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES	
+	 * 			),
+	 * 			'flags'	=> FILTER_FLAG_ENCODE_AMP
+	 * 		)
 	 * 	)
 	 * and again is overwritten in a lower level with 
-	 * '__common' => array(
- 	 *		FILTER_SANITIZE_NUMBER_INT
-	 * 	),
+	 * '__common' => array( 
+	 * 		'commonValue' => array(
+ 	 *			FILTER_SANITIZE_NUMBER_INT
+	 * 		)
+	 * )
 	 * that config that is used in the last level is the following:
 	 * '__common' => array(
-	 * 		'filter' => array(
-	 * 			FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES	
-	 * 		),
-	 * 		'flags'	=> FILTER_FLAG_ENCODE_AMP
+	 *   	'commonValue' => array(
+	 * 			'filter' => array(
+	 * 				FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES	
+	 * 			),
+	 * 			'flags'	=> FILTER_FLAG_ENCODE_AMP
+	 * 		)
 	 * 	)
 	 * So you would need to declare the last config as followed:
 	 * '__common' => array(
-	 * 		'filter' => array(
-	 * 			FILTER_SANITIZE_NUMBER_INT
+	 * 		'commonValue' => array(
+	 * 			'filter' => array(
+	 * 				FILTER_SANITIZE_NUMBER_INT
+	 * 			)
 	 * 		)
+	 * 	)
+	 * //OR 
+	 * '__common' => array(
+	 * 		'commonValue' => FILTER_SANITIZE_NUMBER_INT
 	 * 	)
 	 */
 	public static function sanitizeArrayByRules(
