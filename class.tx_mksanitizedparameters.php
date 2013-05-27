@@ -92,9 +92,10 @@ class tx_mksanitizedparameters {
 	 * 	)
 	 * 
 	 * 	// common parameters configuration
-	 *  // will be used if no special configuration found 
-	 *  // can be inside a special rule, too, and will be used from where it is defined
-	 *  // all levels down as long as in the lower level there is no new common rule.
+	 *  // will be used if no special configuration found for a parameter name
+	 *  // can be inside a special rule, too. 
+	 *  // will be handed down to subsequent levels. existing parameter name configurations
+	 *  // in subsequent levels have a higher priority and will not be overwritten.
 	 *  '__common' => array(
 	 *  	// no matter at which position every parameter with the name someOtherValueToo
 	 *  	// will be sanitized with the following configuration as long as there is no
@@ -102,17 +103,21 @@ class tx_mksanitizedparameters {
  	 *		someOtherValueToo => array(FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES)	
 	 * 	),
 	 *  'myExt' => array(
-	 *		// this will overwrite the common rules for everything inside myExt  	
+	 *		// this will add the common rules for everything inside myExt  	
+	 *		// so the cmmon config for otherValueToo is availabe, too
 	 * 		'__common' => array(
  	 *			someOtherValueToo => array(FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES)	
 	 * 		),
-	 *  )
+	 *  ),
+	 * 	'__common' => array(
+ 	 *		otherValueToo => array(FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES)	
+	 * 	),
 	 * 
 	 * 
 	 * 	// default parameters configuration
-	 *  // will be used if no special and no common configuration is found
-	 *  // can be inside a special rule, too, and will be used from where it is defined
-	 *  // all levels down as long as in the lower level there is no new default rule.
+	 *  // will be used if no special and no common configuration is found for a parameter name
+	 *  // can be inside a special rule, too.
+	 *  // will be handed down to subsequent levels if there is no default configuration
 	 * 	'__default' => FILTER_SANITIZE_STRING
 	 * 	//OR
 	 * 	'__default' => array(
@@ -131,7 +136,8 @@ class tx_mksanitizedparameters {
 	 * 		default' => array(
  	 *			FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES	
 	 * 		),
- * 		)  
+	 * 	),
+	 * '__default' => FILTER_SANITIZE_STRING  
 	 * )
 	 * 
 	 * for the following array:
@@ -162,6 +168,36 @@ class tx_mksanitizedparameters {
 	 * 	)
 	 * )
 	 * 
+	 * Attention:
+	 * Filter Configs with an array containing the keys filter have higher priority.
+	 * So when you have a common config
+	 * 	'__common' => array(
+ 	 *		FILTER_SANITIZE_NUMBER_INT
+	 * 	),  
+	 * that is overwritten in a lower level with
+	 * '__common' => array(
+	 * 		'filter' => array(
+	 * 			FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES	
+	 * 		),
+	 * 		'flags'	=> FILTER_FLAG_ENCODE_AMP
+	 * 	)
+	 * and again is overwritten in a lower level with 
+	 * '__common' => array(
+ 	 *		FILTER_SANITIZE_NUMBER_INT
+	 * 	),
+	 * that config that is used in the last level is the following:
+	 * '__common' => array(
+	 * 		'filter' => array(
+	 * 			FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES	
+	 * 		),
+	 * 		'flags'	=> FILTER_FLAG_ENCODE_AMP
+	 * 	)
+	 * So you would need to declare the last config as followed:
+	 * '__common' => array(
+	 * 		'filter' => array(
+	 * 			FILTER_SANITIZE_NUMBER_INT
+	 * 		)
+	 * 	)
 	 */
 	public static function sanitizeArrayByRules(
 		array $arrayToSanitize, array $rules
@@ -179,9 +215,14 @@ class tx_mksanitizedparameters {
 				
 			if(is_array($valueToSanitize)) {
 				// so we have them on the next level, too
-				$rulesForValue = self::injectCommonAndDefaultRulesFromCurrentLevel(
-					(array) $rulesForValue, $rules
-				);
+				$rulesForValue = 
+					self::injectDefaultRulesFromCurrentIntoNextLevelIfNotSet(
+						$rules, (array) $rulesForValue
+					);
+				$rulesForValue = 
+					self::injectCommonRulesFromCurrentIntoNextLevelIfNotSet(
+						$rules, (array) $rulesForValue
+					);
 				
 				$valueToSanitize = self::sanitizeArrayByRules(
 					$valueToSanitize, $rulesForValue
@@ -243,22 +284,43 @@ class tx_mksanitizedparameters {
 	}
 	
 	/**
-	 * @param array $rulesForValue
-	 * @param array $rules
+	 * @param array $rulesFromCurrentLevel
+	 * @param array $rulesForNextLevel
 	 * 
 	 * @return array
 	 */
-	private static function injectCommonAndDefaultRulesFromCurrentLevel(
-		array $rulesForValue, array $rules
+	private static function injectDefaultRulesFromCurrentIntoNextLevelIfNotSet(
+		array $rulesFromCurrentLevel, array $rulesForNextLevel
 	) { 
-		$rulesForValue = self::injectRulesByKey(
-			(array) $rulesForValue, $rules, tx_mksanitizedparameters_Rules::COMMON_RULES_KEY
-		);
-		$rulesForValue = self::injectRulesByKey(
-			(array) $rulesForValue, $rules, tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY
+		$rulesForNextLevel = self::injectRulesByKey(
+			(array) $rulesForNextLevel, $rulesFromCurrentLevel, 
+			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY
 		);
 		
-		return $rulesForValue;
+		return $rulesForNextLevel;
+	}
+	
+	/**
+	 * @param array $rulesFromCurrentLevel
+	 * @param array $rulesForNextLevel
+	 *
+	 * @return array
+	 */
+	private static function injectCommonRulesFromCurrentIntoNextLevelIfNotSet(
+		array $rulesFromCurrentLevel, array $rulesForNextLevel
+	) {
+		$rulesForNextLevel = self::injectRulesByKey(
+			(array) $rulesForNextLevel, $rulesFromCurrentLevel,
+			tx_mksanitizedparameters_Rules::COMMON_RULES_KEY
+		);
+		
+		$rulesForNextLevel[tx_mksanitizedparameters_Rules::COMMON_RULES_KEY] =
+			t3lib_div::array_merge_recursive_overrule(
+				(array) $rulesFromCurrentLevel[tx_mksanitizedparameters_Rules::COMMON_RULES_KEY],
+				(array) $rulesForNextLevel[tx_mksanitizedparameters_Rules::COMMON_RULES_KEY]
+			);
+	
+		return $rulesForNextLevel;
 	}
 	
 	/**
@@ -270,11 +332,9 @@ class tx_mksanitizedparameters {
 	private static function injectRulesByKey(
 		array $rulesForValue, $allRules, $rulesKey 
 	) {
-		$rulesForValue[$rulesKey] = 
-			t3lib_div::array_merge_recursive_overrule(
-				(array) $allRules[$rulesKey],
-				(array) $rulesForValue[$rulesKey]
-			);
+		if(!array_key_exists($rulesKey, $rulesForValue)) {
+			$rulesForValue[$rulesKey] = $allRules[$rulesKey];
+		}
 		
 		return $rulesForValue;
 	}
@@ -389,7 +449,7 @@ class tx_mksanitizedparameters {
 		return tx_rnbase_util_Logger;
 	}
 	
-/**
+	/**
 	 * @param array $arrayToSanitize
 	 * @param mixed $nameToSanitize
 	 * @param mixed $initialValueToSanitize
