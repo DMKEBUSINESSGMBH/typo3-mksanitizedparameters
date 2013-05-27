@@ -3,3 +3,9 @@ stealthMode = 0
 
 # cat=base; type=string; label=The storage folder where the data is stored in stealth mode.
 stealthModeStoragePid = 1
+
+# cat=base; type=boolean; label=Debug Mode enabled? If, than all parameters which are sanitized/changed are displayed on the screen.  
+debugMode = 0
+
+# cat=base; type=boolean; label=Log Mode enabled? If, than all parameters which are sanitized/changed are written to the devlog. Note that devlog extension needs to be installed.  
+logMode = 0

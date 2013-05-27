@@ -115,6 +115,8 @@ class tx_mksanitizedparameters {
 		}
 			
 		foreach ($arrayToSanitize as $nameToSanitize => &$valueToSanitize) {
+			$initialValueToSanitize = $valueToSanitize;
+			
 			$rulesForValue = self::getRulesForValue(
 				$rules, $nameToSanitize
 			);
@@ -132,6 +134,16 @@ class tx_mksanitizedparameters {
 					$valueToSanitize,$rulesForValue
 				);	
 			} 
+			
+			if(self::valueToSanitizeHasChanged($initialValueToSanitize, $valueToSanitize)) {
+				self::handleLogging(
+					$arrayToSanitize, $nameToSanitize, $initialValueToSanitize, $valueToSanitize
+				);
+				
+				self::handleDebugging(
+					$arrayToSanitize, $nameToSanitize, $initialValueToSanitize, $valueToSanitize
+				);
+			}
 		}
 		
 		return $arrayToSanitize;
@@ -224,6 +236,97 @@ class tx_mksanitizedparameters {
 			} catch (Exception $e) {
 			}
 		}
+	}
+	
+	/**
+	 * @param mixed $initialValueToSanitize
+	 * @param mixed $valueToSanitize
+	 * 
+	 * @return boolean
+	 */
+	private static function valueToSanitizeHasChanged($initialValueToSanitize, $valueToSanitize) {
+		return $initialValueToSanitize !== $valueToSanitize;
+	}
+	
+	/**
+	 * @param array $arrayToSanitize
+	 * @param mixed $nameToSanitize
+	 * @param mixed $initialValueToSanitize
+	 * @param mixed $sanitizedValue
+	 * 
+	 * @return void
+	 */
+	private static function handleLogging(
+		array $arrayToSanitize, $nameToSanitize, $initialValueToSanitize, $sanitizedValue
+	) {
+		$isLogMode = tx_rnbase_configurations::getExtensionCfgValue(
+			'mksanitizedparameters', 'logMode'
+		);
+		
+		if(!$isLogMode){
+			return;
+		}
+		
+		$logger = static::getLogger();
+		$logger::warn(
+			'Ein Wert wurde verändert!', 
+			'mksanitizedparameters',
+			array(
+				'Parameter Name:'				=> $nameToSanitize,
+				'initialer Wert:' 				=> $initialValueToSanitize,
+				'Wert nach Bereinigung:'		=> $sanitizedValue,
+				'komplettes Parameter Array'	=> $arrayToSanitize
+			)
+		);
+	}
+	
+	/**
+	 * @return tx_rnbase_util_Logger
+	 */
+	protected static function getLogger() {
+		tx_rnbase::load('tx_rnbase_util_Logger');
+		return tx_rnbase_util_Logger;
+	}
+	
+/**
+	 * @param array $arrayToSanitize
+	 * @param mixed $nameToSanitize
+	 * @param mixed $initialValueToSanitize
+	 * @param mixed $sanitizedValue
+	 * 
+	 * @return void
+	 */
+	private static function handleDebugging(
+		array $arrayToSanitize, $nameToSanitize, $initialValueToSanitize, $sanitizedValue
+	) {
+		$isDebugMode = tx_rnbase_configurations::getExtensionCfgValue(
+			'mksanitizedparameters', 'debugMode'
+		);
+		
+		if(!$isDebugMode){
+			return;
+		}
+		
+		$debugger = static::getDebugger();
+		$debugger::debug(
+			array(
+				'Ein Wert wurde verändert!',  
+				array(
+					'Parameter Name:'				=> $nameToSanitize,
+					'initialer Wert:' 				=> $initialValueToSanitize,
+					'Wert nach Bereinigung:'		=> $sanitizedValue,
+					'komplettes Parameter Array'	=> $arrayToSanitize
+				)
+			)
+		);
+	}
+	
+	/**
+	 * @return tx_rnbase_util_Debug
+	 */
+	protected static function getDebugger() {
+		tx_rnbase::load('tx_rnbase_util_Debug');
+		return tx_rnbase_util_Debug;
 	}
 	
 	/**

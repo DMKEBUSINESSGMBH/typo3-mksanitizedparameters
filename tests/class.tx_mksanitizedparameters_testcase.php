@@ -28,6 +28,9 @@
  */
 require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 tx_rnbase::load('tx_mksanitizedparameters');
+tx_rnbase::load('tx_mklib_tests_Util');
+tx_rnbase::load('tx_rnbase_util_Logger');
+tx_rnbase::load('tx_rnbase_util_Debug');
 	
 /**
  * @package TYPO3
@@ -35,6 +38,25 @@ tx_rnbase::load('tx_mksanitizedparameters');
  * @author Hannes Bochmann <hannes.bochmann@das-mediekombinat.de>
  */
 class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
+	
+	/**
+	 * 
+	 * Enter description here ...
+	 */
+	protected function setUp() {
+		tx_mklib_tests_Util::disableDevlog();
+		tx_mklib_tests_Util::storeExtConf('mksanitizedparameters');
+		tx_mklib_tests_Util::setExtConfVar('debugMode', 0, 'mksanitizedparameters');
+		tx_mklib_tests_Util::setExtConfVar('logMode', 0, 'mksanitizedparameters');
+	}
+	
+	/**
+	 * 
+	 * Enter description here ...
+	 */
+	protected function tearDown(){
+		tx_mklib_tests_Util::restoreExtConf('mksanitizedparameters');
+	}
 	
 	/**
 	 * @group unit
@@ -344,7 +366,7 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		);
 	}
 	
-/**
+	/**
 	 * @group unit
 	 */
 	public function testSanitizeArrayByRulesWithTypicalCaretakerRequest(){
@@ -364,6 +386,207 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 			$arrayToSanitize,
 			$sanitizedArray, 
 			'The array wasn\'t sanitized correct!'
+		);
+	}
+	
+	/**
+	 * @group unit
+	 */
+	public function testSanitizeArrayByRulesDoesNotCallLoggerIfLoggingNotEnabledAndValueNotChanged(){
+		$arrayToSanitize = array (
+		  'parameter' => 'test'
+		);
+		$rules = array(
+			'default'	=> array(FILTER_SANITIZE_STRING),
+		);
+		
+		$mksanitizedparameters = $this->getMockClass('tx_mksanitizedparameters', array('getLogger'));
+		$mksanitizedparameters::staticExpects($this->never())
+			->method('getLogger');
+			
+		$mksanitizedparameters::sanitizeArrayByRules(
+			$arrayToSanitize, $rules
+		);
+	}
+	
+	/**
+	 * @group unit
+	 */
+	public function testSanitizeArrayByRulesDoesNotCallLoggerIfLoggingNotEnabledAndValueChanged(){
+		$arrayToSanitize = array (
+		  'parameter' => '"test"'
+		);
+		$rules = array(
+			'default'	=> array(FILTER_SANITIZE_STRING),
+		);
+		
+		$mksanitizedparameters = $this->getMockClass('tx_mksanitizedparameters', array('getLogger'));
+		$mksanitizedparameters::staticExpects($this->never())
+			->method('getLogger');
+			
+		$mksanitizedparameters::sanitizeArrayByRules(
+			$arrayToSanitize, $rules
+		);
+	}
+	
+	/**
+	 * @group unit
+	 */
+	public function testSanitizeArrayByRulesDoesNotCallLoggerIfLoggingEnabledButValueNotChanged(){
+		tx_mklib_tests_Util::setExtConfVar('logMode', 1, 'mksanitizedparameters');
+		
+		$arrayToSanitize = array (
+		  'parameter' => 'test'
+		);
+		$rules = array(
+			'default'	=> array(FILTER_SANITIZE_STRING),
+		);
+		
+		$mksanitizedparameters = $this->getMockClass('tx_mksanitizedparameters', array('getLogger'));
+		$mksanitizedparameters::staticExpects($this->never())
+			->method('getLogger');
+			
+		$mksanitizedparameters::sanitizeArrayByRules(
+			$arrayToSanitize, $rules
+		);
+	}
+	
+	/**
+	 * @group unit
+	 */
+	public function testSanitizeArrayByRulesCallsLoggerCorrectIfLoggingEnabledAndValueChanged(){
+		tx_mklib_tests_Util::setExtConfVar('logMode', 1, 'mksanitizedparameters');
+		
+		$arrayToSanitize = array (
+		  'parameter' => '"test"'
+		);
+		$rules = array(
+			'default'	=> array(FILTER_SANITIZE_STRING),
+		);
+		
+		$mksanitizedparameters = $this->getMockClass('tx_mksanitizedparameters', array('getLogger'));
+		
+		$logger = $this->getMockClass('tx_rnbase_util_Logger', array('warn'));
+		$logger::staticExpects($this->once())
+			->method('warn')
+			->with(
+				'Ein Wert wurde verändert!', 
+				'mksanitizedparameters',
+				array(
+					'Parameter Name:'				=> 'parameter',
+					'initialer Wert:' 				=> '"test"',
+					'Wert nach Bereinigung:'		=> '&#34;test&#34;',
+					'komplettes Parameter Array'	=> array ('parameter' => '&#34;test&#34;')
+				)
+			);
+			
+		$mksanitizedparameters::staticExpects($this->once())
+			->method('getLogger')
+			->will($this->returnValue($logger));
+			
+		$mksanitizedparameters::sanitizeArrayByRules(
+			$arrayToSanitize, $rules
+		);
+	}
+	
+	/**
+	 * @group unit
+	 */
+	public function testSanitizeArrayByRulesDoesNotCallDebuggerIfDebuggingNotEnabledAndValueNotChanged(){
+		$arrayToSanitize = array (
+		  'parameter' => 'test'
+		);
+		$rules = array(
+			'default'	=> array(FILTER_SANITIZE_STRING),
+		);
+		
+		$mksanitizedparameters = $this->getMockClass('tx_mksanitizedparameters', array('getDebugger'));
+		$mksanitizedparameters::staticExpects($this->never())
+			->method('getDebugger');
+			
+		$mksanitizedparameters::sanitizeArrayByRules(
+			$arrayToSanitize, $rules
+		);
+	}
+	
+	/**
+	 * @group unit
+	 */
+	public function testSanitizeArrayByRulesDoesNotCallDebuggerIfDebuggingNotEnabledAndValueChanged(){
+		$arrayToSanitize = array (
+		  'parameter' => '"test"'
+		);
+		$rules = array(
+			'default'	=> array(FILTER_SANITIZE_STRING),
+		);
+		
+		$mksanitizedparameters = $this->getMockClass('tx_mksanitizedparameters', array('getDebugger'));
+		$mksanitizedparameters::staticExpects($this->never())
+			->method('getDebugger');
+			
+		$mksanitizedparameters::sanitizeArrayByRules(
+			$arrayToSanitize, $rules
+		);
+	}
+	
+	/**
+	 * @group unit
+	 */
+	public function testSanitizeArrayByRulesDoesNotCallDebuggerIfDebuggingEnabledButValueNotChanged(){
+		tx_mklib_tests_Util::setExtConfVar('debugMode', 1, 'mksanitizedparameters');
+		
+		$arrayToSanitize = array (
+		  'parameter' => 'test'
+		);
+		$rules = array(
+			'default'	=> array(FILTER_SANITIZE_STRING),
+		);
+		
+		$mksanitizedparameters = $this->getMockClass('tx_mksanitizedparameters', array('getDebugger'));
+		$mksanitizedparameters::staticExpects($this->never())
+			->method('getDebugger');
+			
+		$mksanitizedparameters::sanitizeArrayByRules(
+			$arrayToSanitize, $rules
+		);
+	}
+	
+	/**
+	 * @group unit
+	 */
+	public function testSanitizeArrayByRulesCallsDebuggerCorrectIfDebuggingEnabledAndValueChanged(){
+		tx_mklib_tests_Util::setExtConfVar('debugMode', 1, 'mksanitizedparameters');
+		
+		$arrayToSanitize = array (
+		  'parameter' => '"test"'
+		);
+		$rules = array(
+			'default'	=> array(FILTER_SANITIZE_STRING),
+		);
+		
+		$mksanitizedparameters = $this->getMockClass('tx_mksanitizedparameters', array('getDebugger'));
+		
+		$debugger = $this->getMockClass('tx_rnbase_util_Debug', array('debug'));
+		$debugger::staticExpects($this->once())
+			->method('debug')
+			->with(
+				array(
+					'Ein Wert wurde verändert!',  
+					array(
+						'Parameter Name:'				=> 'parameter',
+						'initialer Wert:' 				=> '"test"',
+						'Wert nach Bereinigung:'		=> '&#34;test&#34;',
+						'komplettes Parameter Array'	=> array ('parameter' => '&#34;test&#34;')
+					)
+				)
+			);
+			
+		$mksanitizedparameters::staticExpects($this->once())
+			->method('getDebugger')
+			->will($this->returnValue($debugger));
+			
+		$mksanitizedparameters::sanitizeArrayByRules(
+			$arrayToSanitize, $rules
 		);
 	}
 }
