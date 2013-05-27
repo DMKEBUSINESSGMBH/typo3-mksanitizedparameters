@@ -179,7 +179,7 @@ class tx_mksanitizedparameters {
 				
 			if(is_array($valueToSanitize)) {
 				// so we have them on the next level, too
-				$rulesForValue = self::injectCommonAndDefaultRulesIfNeccessary(
+				$rulesForValue = self::injectCommonAndDefaultRulesFromCurrentLevel(
 					(array) $rulesForValue, $rules
 				);
 				
@@ -218,7 +218,7 @@ class tx_mksanitizedparameters {
 		}
 		
 		if(!$rulesForValue) {
-			$rulesForValue = $rules['__default'];	
+			$rulesForValue = $rules[tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY];	
 		}
 		
 		return $rulesForValue;
@@ -237,9 +237,9 @@ class tx_mksanitizedparameters {
 	private static function getCommonRulesByName($rules, $nameToSanitize) {
 		return 
 			(
-				isset($rules['__common']) &&
-				isset($rules['__common'][$nameToSanitize])
-			) ? $rules['__common'][$nameToSanitize] : null;
+				isset($rules[tx_mksanitizedparameters_Rules::COMMON_RULES_KEY]) &&
+				isset($rules[tx_mksanitizedparameters_Rules::COMMON_RULES_KEY][$nameToSanitize])
+			) ? $rules[tx_mksanitizedparameters_Rules::COMMON_RULES_KEY][$nameToSanitize] : null;
 	}
 	
 	/**
@@ -248,14 +248,14 @@ class tx_mksanitizedparameters {
 	 * 
 	 * @return array
 	 */
-	private static function injectCommonAndDefaultRulesIfNeccessary(
+	private static function injectCommonAndDefaultRulesFromCurrentLevel(
 		array $rulesForValue, array $rules
 	) { 
-		$rulesForValue = self::injectRulesByKeyIfNeccessary(
-			(array) $rulesForValue, $rules, '__common'
+		$rulesForValue = self::injectRulesByKey(
+			(array) $rulesForValue, $rules, tx_mksanitizedparameters_Rules::COMMON_RULES_KEY
 		);
-		$rulesForValue = self::injectRulesByKeyIfNeccessary(
-			(array) $rulesForValue, $rules, '__default'
+		$rulesForValue = self::injectRulesByKey(
+			(array) $rulesForValue, $rules, tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY
 		);
 		
 		return $rulesForValue;
@@ -267,12 +267,14 @@ class tx_mksanitizedparameters {
 	 * 
 	 * @return array
 	 */
-	private static function injectRulesByKeyIfNeccessary(
+	private static function injectRulesByKey(
 		array $rulesForValue, $allRules, $rulesKey 
 	) {
-		if(!array_key_exists($rulesKey, $rulesForValue)) {
-			$rulesForValue[$rulesKey] = $allRules[$rulesKey];
-		}
+		$rulesForValue[$rulesKey] = 
+			t3lib_div::array_merge_recursive_overrule(
+				(array) $allRules[$rulesKey],
+				(array) $rulesForValue[$rulesKey]
+			);
 		
 		return $rulesForValue;
 	}

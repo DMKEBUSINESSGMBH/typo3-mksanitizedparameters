@@ -200,7 +200,7 @@ class tx_mksanitizedparameters_Rules_testcase extends tx_phpunit_testcase {
 	*/
 	public function testCommonRulesAreMergedCorrectWhenAdded(){
 		$rulesForFrontend = array(
-			'__common' => array(
+			tx_mksanitizedparameters_Rules::COMMON_RULES_KEY => array(
 				'firstCommon' => FILTER_SANITIZE_STRING,
 				'secondCommon' => FILTER_SANITIZE_ENCODED,
 			)
@@ -210,7 +210,7 @@ class tx_mksanitizedparameters_Rules_testcase extends tx_phpunit_testcase {
 		);
 	
 		$overwriteRulesForFrontend = array(
-			'__common' => array(
+			tx_mksanitizedparameters_Rules::COMMON_RULES_KEY => array(
 				'firstCommon' => FILTER_SANITIZE_NUMBER_INT,
 				'thirdCommon' => FILTER_SANITIZE_ENCODED,
 			)
@@ -223,7 +223,7 @@ class tx_mksanitizedparameters_Rules_testcase extends tx_phpunit_testcase {
 			tx_mksanitizedparameters_tests_Rules::getRulesForFrontend();
 	
 		$expectedRules  = array(
-			'__common' => array(
+			tx_mksanitizedparameters_Rules::COMMON_RULES_KEY => array(
 				'firstCommon' => FILTER_SANITIZE_NUMBER_INT,
 				'secondCommon' => FILTER_SANITIZE_ENCODED,
 				'thirdCommon' => FILTER_SANITIZE_ENCODED,

@@ -39,6 +39,16 @@ require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 class tx_mksanitizedparameters_Rules {
 	
 	/**
+	 * @var string
+	 */
+	const COMMON_RULES_KEY = '__common';
+	
+	/**
+	 * @var string
+	 */
+	const DEFAULT_RULES_KEY = '__default';
+	
+	/**
 	 * @var array
 	 */
 	protected static $rulesForFrontend = array();

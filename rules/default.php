@@ -2,8 +2,8 @@
 defined('TYPO3_MODE') || die('Access denied.');
 
 // $rulesForFrontend = array(
-// 	'__default'	=> array(FILTER_SANITIZE_STRING, FILTER_SANITIZE_MAGIC_QUOTES),
-// 	'__common'	=> array(
+// 	tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> array(FILTER_SANITIZE_STRING, FILTER_SANITIZE_MAGIC_QUOTES),
+// 	tx_mksanitizedparameters_Rules::COMMON_RULES_KEY	=> array(
 // 		// Extbase request token für Formulare
 // 		// JSON String
 // 		'__hmac' => FILTER_UNSAFE_RAW,
@@ -25,8 +25,8 @@ $rulesForFrontend =
 tx_mksanitizedparameters_Rules::addRulesForFrontend($rulesForFrontend);
 
 // $rulesForBackend =  array(
-// 	'__default'	=> array(FILTER_SANITIZE_STRING, FILTER_SANITIZE_MAGIC_QUOTES),
-// 	'__common'	=> array(
+// 	tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> array(FILTER_SANITIZE_STRING, FILTER_SANITIZE_MAGIC_QUOTES),
+// 	tx_mksanitizedparameters_Rules::COMMON_RULES_KEY	=> array(
 // 		// pid, uid und id sollten immer zahlen sein
 // 		'id' => FILTER_SANITIZE_NUMBER_INT,
 // 		'uid' => FILTER_SANITIZE_NUMBER_INT,

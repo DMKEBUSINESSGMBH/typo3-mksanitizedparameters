@@ -101,7 +101,7 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 			'parameterNameToBeSanitized' 	=> '1testValue'
 		);
 		$rules = array(
-			'__default'	=> FILTER_SANITIZE_NUMBER_INT
+			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> FILTER_SANITIZE_NUMBER_INT
 		);
 		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
@@ -208,7 +208,7 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 			'parameterNameToBeSanitizedByDefault' 	=> 'libgd<script>'
 		);
 		$rules = array(
-			'__default' => FILTER_SANITIZE_ENCODED,
+			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_ENCODED,
 			'firstExtensionQualifier'	=> array(
 				'parameterNameToBeSanitized' => FILTER_SANITIZE_NUMBER_INT
 			),
@@ -256,9 +256,9 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 			'parameterNameToBeSanitizedByDefault' 		=> 'libgd<script>'
 		);
 		$rules = array(
-			'__default' => FILTER_SANITIZE_ENCODED,
+			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_ENCODED,
 			'firstExtensionQualifier'	=> array(
-				'__default' => FILTER_SANITIZE_NUMBER_INT
+				tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_NUMBER_INT
 			),
 		);
 		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
@@ -376,7 +376,7 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		  's' => 'acFNX7gVY8wm0mLQbxRaVr8nrnRbPywGb3tjkspp0HC77io/T94qEQbPHMePi2xpNtfpJut9bt2USUBfkCXmc/wKk1Unk7WX7XMoohSuI1BahtNV4DRfGKKpUJV6s+5cD7IET7IFjVLm/wmxs+hl/1Ve1MIjZe2L3VCs4VqmBsg=',
 		);
 		$rules = array(
-			'__default'	=> array(FILTER_SANITIZE_URL),
+			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> array(FILTER_SANITIZE_URL),
 		);
 		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
@@ -397,7 +397,7 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		  'parameter' => 'test'
 		);
 		$rules = array(
-			'__default'	=> array(FILTER_SANITIZE_STRING),
+			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> array(FILTER_SANITIZE_STRING),
 		);
 		
 		$mksanitizedparameters = $this->getMockClass('tx_mksanitizedparameters', array('getLogger'));
@@ -417,7 +417,7 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		  'parameter' => '"test"'
 		);
 		$rules = array(
-			'__default'	=> array(FILTER_SANITIZE_STRING),
+			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> array(FILTER_SANITIZE_STRING),
 		);
 		
 		$mksanitizedparameters = $this->getMockClass('tx_mksanitizedparameters', array('getLogger'));
@@ -439,7 +439,7 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		  'parameter' => 'test'
 		);
 		$rules = array(
-			'__default'	=> array(FILTER_SANITIZE_STRING),
+			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> array(FILTER_SANITIZE_STRING),
 		);
 		
 		$mksanitizedparameters = $this->getMockClass('tx_mksanitizedparameters', array('getLogger'));
@@ -461,7 +461,7 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		  'parameter' => '"test"'
 		);
 		$rules = array(
-			'__default'	=> array(FILTER_SANITIZE_STRING),
+			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> array(FILTER_SANITIZE_STRING),
 		);
 		
 		$mksanitizedparameters = $this->getMockClass('tx_mksanitizedparameters', array('getLogger'));
@@ -497,7 +497,7 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		  'parameter' => 'test'
 		);
 		$rules = array(
-			'__default'	=> array(FILTER_SANITIZE_STRING),
+			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> array(FILTER_SANITIZE_STRING),
 		);
 		
 		$mksanitizedparameters = $this->getMockClass('tx_mksanitizedparameters', array('getDebugger'));
@@ -517,7 +517,7 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		  'parameter' => '"test"'
 		);
 		$rules = array(
-			'__default'	=> array(FILTER_SANITIZE_STRING),
+			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> array(FILTER_SANITIZE_STRING),
 		);
 		
 		$mksanitizedparameters = $this->getMockClass('tx_mksanitizedparameters', array('getDebugger'));
@@ -539,7 +539,7 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		  'parameter' => 'test'
 		);
 		$rules = array(
-			'__default'	=> array(FILTER_SANITIZE_STRING),
+			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> array(FILTER_SANITIZE_STRING),
 		);
 		
 		$mksanitizedparameters = $this->getMockClass('tx_mksanitizedparameters', array('getDebugger'));
@@ -561,7 +561,7 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		  'parameter' => '"test"'
 		);
 		$rules = array(
-			'__default'	=> array(FILTER_SANITIZE_STRING),
+			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> array(FILTER_SANITIZE_STRING),
 		);
 		
 		$mksanitizedparameters = $this->getMockClass('tx_mksanitizedparameters', array('getDebugger'));
@@ -600,10 +600,10 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		);
 		$rules = array(
 			'parameterNameToBeSanitized'	=> FILTER_SANITIZE_NUMBER_INT,
-			'__common' => array(
+			tx_mksanitizedparameters_Rules::COMMON_RULES_KEY => array(
 				'parameterNameToBeSanitized'	=> FILTER_SANITIZE_STRING
 			),
-			'__default'	=> array(
+			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> array(
 				'filter'    => FILTER_CALLBACK,
                	'options' 	=> array(
                		'tx_mksanitizedparameters_sanitizer_Alpha','sanitizeValue'
@@ -630,10 +630,10 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		);
 		$rules = array(
 			'anotherParameterNameToBeSanitized'	=> FILTER_SANITIZE_NUMBER_INT,
-			'__common' => array(
+			tx_mksanitizedparameters_Rules::COMMON_RULES_KEY => array(
 				'parameterNameToBeSanitized'	=> FILTER_SANITIZE_STRING
 			),
-			'__default'	=> array(
+			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> array(
 				'filter'    => FILTER_CALLBACK,
                	'options' 	=> array(
                		'tx_mksanitizedparameters_sanitizer_Alpha','sanitizeValue'
@@ -660,10 +660,10 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		);
 		$rules = array(
 			'anotherParameterNameToBeSanitized'	=> FILTER_SANITIZE_NUMBER_INT,
-			'__common' => array(
+			tx_mksanitizedparameters_Rules::COMMON_RULES_KEY => array(
 				'anotherParameterNameToBeSanitized'	=> FILTER_SANITIZE_STRING
 			),
-			'__default'	=> array(
+			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> array(
 				'filter'    => FILTER_CALLBACK,
                	'options' 	=> array(
                		'tx_mksanitizedparameters_sanitizer_Alpha','sanitizeValue'
@@ -692,10 +692,10 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		);
 		$rules = array(
 			'anotherParameterNameToBeSanitized'	=> FILTER_SANITIZE_NUMBER_INT,
-			'__common' => array(
+			tx_mksanitizedparameters_Rules::COMMON_RULES_KEY => array(
 				'parameterNameToBeSanitized'	=> FILTER_SANITIZE_STRING
 			),
-			'__default'	=> array(
+			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> array(
 				'filter'    => FILTER_CALLBACK,
                	'options' 	=> array(
                		'tx_mksanitizedparameters_sanitizer_Alpha','sanitizeValue'
@@ -724,11 +724,11 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		);
 		$rules = array(
 			'myExt'	=> array(
-				'__common' => array(
+				tx_mksanitizedparameters_Rules::COMMON_RULES_KEY => array(
 					'parameterNameToBeSanitized'	=> FILTER_SANITIZE_NUMBER_INT
 				)
 			),
-			'__common' => array(
+			tx_mksanitizedparameters_Rules::COMMON_RULES_KEY => array(
 				'parameterNameToBeSanitized'	=> FILTER_SANITIZE_STRING
 			)
 		);
@@ -754,9 +754,9 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		);
 		$rules = array(
 			'myExt'	=> array(
-				'__default' =>  FILTER_SANITIZE_NUMBER_INT
+				tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY =>  FILTER_SANITIZE_NUMBER_INT
 			),
-			'__default'	=> FILTER_SANITIZE_STRING
+			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> FILTER_SANITIZE_STRING
 		);
 		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
@@ -765,6 +765,42 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		$this->assertEquals(
 			array('myExt' => array('parameterNameToBeSanitized' 	=> '1')),
 			$sanitizedArray, 
+			'The array wasn\'t sanitized correct!'
+		);
+	}
+	
+	/**
+	* @group unit
+	*/
+	public function testSanitizeArrayByRulesMergesAndOverwritesCommonConfigIntoSubsequentLevels(){
+		$arrayToSanitize = array(
+			'myExt' => array(
+				'parameterNameToBeSanitized' 		=> '"1testValue"',
+				'anotherParameterNameToBeSanitized' => '"1testValue"'
+			)
+		);
+		$rules = array(
+			'myExt'	=> array(
+				tx_mksanitizedparameters_Rules::COMMON_RULES_KEY =>  array(
+					'parameterNameToBeSanitized' => FILTER_SANITIZE_NUMBER_INT
+				)
+			),
+			tx_mksanitizedparameters_Rules::COMMON_RULES_KEY =>  array(
+				'anotherParameterNameToBeSanitized' => FILTER_SANITIZE_STRING
+			)
+		);
+		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
+			$arrayToSanitize, $rules
+		);
+
+		$this->assertEquals(
+			array(
+				'myExt' => array(
+					'parameterNameToBeSanitized' 		=> '1',
+					'anotherParameterNameToBeSanitized' => '&#34;1testValue&#34;'
+				)
+			),
+			$sanitizedArray,
 			'The array wasn\'t sanitized correct!'
 		);
 	}
