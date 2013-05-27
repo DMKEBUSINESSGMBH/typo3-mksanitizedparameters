@@ -34,8 +34,10 @@ require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
  * filter_var_array. The rules array mirrors the array
  * to be sanitized.
  * In difference to filter_var_array this class supports 
- * multi dimensional arrays, default values for unconfigured
- * parameters and multiple filters per value.
+ * multi dimensional arrays, common values for recurring values,
+ * default values for unconfigured parameters and multiple filters per value.
+ * 
+ * for all possibilities look into the doc block of sanitizeArrayByRules
  * 
  * @package TYPO3
  * @subpackage tx_mksanitizedparameters
