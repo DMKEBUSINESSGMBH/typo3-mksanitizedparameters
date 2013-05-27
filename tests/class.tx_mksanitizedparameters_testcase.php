@@ -470,7 +470,7 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		$logger::staticExpects($this->once())
 			->method('warn')
 			->with(
-				'Ein Wert wurde verändert!', 
+				$mksanitizedparameters::MESSAGE_VALUE_HAS_CHANGED,
 				'mksanitizedparameters',
 				array(
 					'Parameter Name:'				=> 'parameter',
@@ -571,7 +571,7 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 			->method('debug')
 			->with(
 				array(
-					'Ein Wert wurde verändert!',  
+					$mksanitizedparameters::MESSAGE_VALUE_HAS_CHANGED,  
 					array(
 						'Parameter Name:'				=> 'parameter',
 						'initialer Wert:' 				=> '"test"',

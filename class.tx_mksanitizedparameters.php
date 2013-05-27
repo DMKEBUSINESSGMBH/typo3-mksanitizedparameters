@@ -44,6 +44,11 @@ require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 class tx_mksanitizedparameters {
 	
 	/**
+	 * @var string
+	 */
+	const MESSAGE_VALUE_HAS_CHANGED = 'Ein Wert wurde von mksanitizedparameters verändert!';
+	
+	/**
 	 * @param array $arrayToSanitize
 	 * @param array $rules
 	 * 
@@ -269,7 +274,7 @@ class tx_mksanitizedparameters {
 		
 		$logger = static::getLogger();
 		$logger::warn(
-			'Ein Wert wurde verändert!', 
+			self::MESSAGE_VALUE_HAS_CHANGED, 
 			'mksanitizedparameters',
 			array(
 				'Parameter Name:'				=> $nameToSanitize,
@@ -307,10 +312,12 @@ class tx_mksanitizedparameters {
 			return;
 		}
 		
+		ob_start();//da wir eine Ausgabe wollen bevor TYPO3 die Ausgabe startet
+		
 		$debugger = static::getDebugger();
 		$debugger::debug(
 			array(
-				'Ein Wert wurde verändert!',  
+				self::MESSAGE_VALUE_HAS_CHANGED,  
 				array(
 					'Parameter Name:'				=> $nameToSanitize,
 					'initialer Wert:' 				=> $initialValueToSanitize,
