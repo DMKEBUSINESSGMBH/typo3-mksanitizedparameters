@@ -40,8 +40,8 @@ tx_rnbase::load('tx_rnbase_util_Debug');
 class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 	
 	/**
-	 * 
-	 * Enter description here ...
+	 * (non-PHPdoc)
+	 * @see PHPUnit_Framework_TestCase::setUp()
 	 */
 	protected function setUp() {
 		tx_mklib_tests_Util::disableDevlog();
@@ -51,8 +51,8 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 	}
 	
 	/**
-	 * 
-	 * Enter description here ...
+	 * (non-PHPdoc)
+	 * @see PHPUnit_Framework_TestCase::tearDown()
 	 */
 	protected function tearDown(){
 		tx_mklib_tests_Util::restoreExtConf('mksanitizedparameters');
@@ -571,14 +571,14 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 			->method('debug')
 			->with(
 				array(
-					$mksanitizedparameters::MESSAGE_VALUE_HAS_CHANGED,  
 					array(
 						'Parameter Name:'				=> 'parameter',
 						'initialer Wert:' 				=> '"test"',
 						'Wert nach Bereinigung:'		=> '&#34;test&#34;',
 						'komplettes Parameter Array'	=> array ('parameter' => '&#34;test&#34;')
 					)
-				)
+				),
+				$mksanitizedparameters::MESSAGE_VALUE_HAS_CHANGED
 			);
 			
 		$mksanitizedparameters::staticExpects($this->once())

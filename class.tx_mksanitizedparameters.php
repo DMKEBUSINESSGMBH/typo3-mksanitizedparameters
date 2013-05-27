@@ -317,14 +317,14 @@ class tx_mksanitizedparameters {
 		$debugger = static::getDebugger();
 		$debugger::debug(
 			array(
-				self::MESSAGE_VALUE_HAS_CHANGED,  
 				array(
 					'Parameter Name:'				=> $nameToSanitize,
 					'initialer Wert:' 				=> $initialValueToSanitize,
 					'Wert nach Bereinigung:'		=> $sanitizedValue,
 					'komplettes Parameter Array'	=> $arrayToSanitize
 				)
-			)
+			),
+			self::MESSAGE_VALUE_HAS_CHANGED
 		);
 	}
 	

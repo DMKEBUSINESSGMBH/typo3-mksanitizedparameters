@@ -29,6 +29,7 @@
 require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 tx_rnbase::load('tx_mksanitizedparameters');
 tx_rnbase::load('tx_mksanitizedparameters_Rules');
+tx_rnbase::load('tx_mklib_tests_Util');
 	
 //otherwise we get an output already started error when the test is excuted
 //via CLI. caused by $template->startPage('testPage');
@@ -58,6 +59,11 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx
 		);
 		tx_mksanitizedparameters_Rules::addRulesForBackend($rulesForBackend);
 		require_once PATH_site.TYPO3_mainDir.'template.php';
+		
+		tx_mklib_tests_Util::disableDevlog();
+		tx_mklib_tests_Util::storeExtConf('mksanitizedparameters');
+		tx_mklib_tests_Util::setExtConfVar('debugMode', 0, 'mksanitizedparameters');
+		tx_mklib_tests_Util::setExtConfVar('logMode', 0, 'mksanitizedparameters');
 	}
 	
 	/**
@@ -87,6 +93,8 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx
 		unset($_REQUEST['testParameter']);
 		unset($_POST['testParameter']);
 		unset($_GET['testParameter']);
+		
+		tx_mklib_tests_Util::restoreExtConf('mksanitizedparameters');
 	}
 	
 	/**

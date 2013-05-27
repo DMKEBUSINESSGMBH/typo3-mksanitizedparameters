@@ -194,4 +194,45 @@ class tx_mksanitizedparameters_Rules_testcase extends tx_phpunit_testcase {
 			'The first rules were not overwritten!'
 		);
 	}
+	
+	/**
+	* @group unit
+	*/
+	public function testCommonRulesAreMergedCorrectWhenAdded(){
+		$rulesForFrontend = array(
+			'common' => array(
+				'firstCommon' => FILTER_SANITIZE_STRING,
+				'secondCommon' => FILTER_SANITIZE_ENCODED,
+			)
+		);
+		tx_mksanitizedparameters_tests_Rules::addRulesForFrontend(
+			$rulesForFrontend
+		);
+	
+		$overwriteRulesForFrontend = array(
+			'common' => array(
+				'firstCommon' => FILTER_SANITIZE_NUMBER_INT,
+				'thirdCommon' => FILTER_SANITIZE_ENCODED,
+			)
+		);
+		tx_mksanitizedparameters_tests_Rules::addRulesForFrontend(
+			$overwriteRulesForFrontend
+		);
+	
+		$addedParameterRules =
+			tx_mksanitizedparameters_tests_Rules::getRulesForFrontend();
+	
+		$expectedRules  = array(
+			'common' => array(
+				'firstCommon' => FILTER_SANITIZE_NUMBER_INT,
+				'secondCommon' => FILTER_SANITIZE_ENCODED,
+				'thirdCommon' => FILTER_SANITIZE_ENCODED,
+			)
+		);
+		$this->assertSame(
+			$expectedRules,
+			$addedParameterRules,
+			'The common rules were not merged correct!'
+		);
+	}
 }
