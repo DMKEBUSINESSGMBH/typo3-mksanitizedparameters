@@ -13,7 +13,7 @@ $TCA['tx_mksanitizedparameters'] = array (
 			'label'   => 'LLL:EXT:lang/locallang_general.xml:LGL.hidden',
 			'config'  => array (
 				'type'    => 'check',
-				'default' => '0'
+				'__default' => '0'
 			)
 		),
 		'name' => array(

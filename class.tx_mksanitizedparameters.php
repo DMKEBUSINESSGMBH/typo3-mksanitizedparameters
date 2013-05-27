@@ -76,7 +76,7 @@ class tx_mksanitizedparameters {
 	 * 		'subArray' => array(
 	 * 			//so all unconfigured parameters inside subArray will get
 	 * 			//the following default sanitization
-	 * 			'default' 	=> FILTER_SANITIZE_NUMBER_INT
+	 * 			'__default' 	=> FILTER_SANITIZE_NUMBER_INT
 	 * 
 	 * 			//that's the way to call a custom filter!
 	 * 			//the custom class is loaded through tx_rnbase::load(). 
@@ -95,7 +95,7 @@ class tx_mksanitizedparameters {
 	 *  // will be used if no special configuration found 
 	 *  // can be inside a special rule, too, and will be used from where it is defined
 	 *  // all levels down as long as in the lower level there is no new common rule.
-	 *  'common' => array(
+	 *  '__common' => array(
 	 *  	// no matter at which position every parameter with the name someOtherValueToo
 	 *  	// will be sanitized with the following configuration as long as there is no
 	 *  	// special configuration
@@ -103,7 +103,7 @@ class tx_mksanitizedparameters {
 	 * 	),
 	 *  'myExt' => array(
 	 *		// this will overwrite the common rules for everything inside myExt  	
-	 * 		'common' => array(
+	 * 		'__common' => array(
  	 *			someOtherValueToo => array(FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES)	
 	 * 		),
 	 *  )
@@ -113,16 +113,16 @@ class tx_mksanitizedparameters {
 	 *  // will be used if no special and no common configuration is found
 	 *  // can be inside a special rule, too, and will be used from where it is defined
 	 *  // all levels down as long as in the lower level there is no new default rule.
-	 * 	'default' => FILTER_SANITIZE_STRING
+	 * 	'__default' => FILTER_SANITIZE_STRING
 	 * 	//OR
-	 * 	'default' => array(
+	 * 	'__default' => array(
 	 * 		'filter' => array(
 	 * 			FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES	
 	 * 		),
 	 * 		'flags'	=> FILTER_FLAG_ENCODE_AMP
 	 * 	)
 	 *  //OR
-	 * 	'default' => array(
+	 * 	'__default' => array(
  	 *		FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES	
 	 * 	),
 	 *  //OR
@@ -218,7 +218,7 @@ class tx_mksanitizedparameters {
 		}
 		
 		if(!$rulesForValue) {
-			$rulesForValue = $rules['default'];	
+			$rulesForValue = $rules['__default'];	
 		}
 		
 		return $rulesForValue;
@@ -237,9 +237,9 @@ class tx_mksanitizedparameters {
 	private static function getCommonRulesByName($rules, $nameToSanitize) {
 		return 
 			(
-				isset($rules['common']) &&
-				isset($rules['common'][$nameToSanitize])
-			) ? $rules['common'][$nameToSanitize] : null;
+				isset($rules['__common']) &&
+				isset($rules['__common'][$nameToSanitize])
+			) ? $rules['__common'][$nameToSanitize] : null;
 	}
 	
 	/**
@@ -252,10 +252,10 @@ class tx_mksanitizedparameters {
 		array $rulesForValue, array $rules
 	) { 
 		$rulesForValue = self::injectRulesByKeyIfNeccessary(
-			(array) $rulesForValue, $rules, 'common'
+			(array) $rulesForValue, $rules, '__common'
 		);
 		$rulesForValue = self::injectRulesByKeyIfNeccessary(
-			(array) $rulesForValue, $rules, 'default'
+			(array) $rulesForValue, $rules, '__default'
 		);
 		
 		return $rulesForValue;
