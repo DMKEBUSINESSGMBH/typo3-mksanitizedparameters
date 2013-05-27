@@ -171,7 +171,7 @@ class tx_mksanitizedparameters {
 	 * )
 	 * 
 	 * Attention:
-	 * Filter Configs with an array containing the keys filter have higher priority.
+	 * Filter Configs with an array containing the key "filter" have higher priority.
 	 * So when you have a common config
 	 * 	'__common' => array(
  	 *		FILTER_SANITIZE_NUMBER_INT
