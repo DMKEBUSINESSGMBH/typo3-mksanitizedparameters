@@ -56,23 +56,15 @@ class tx_mksanitizedparameters {
 	 * 
 	 * Sample rules:
 	 * 
+	 * the order of the rules priority is the following:
+	 * 	- special rules
+	 *  - common rules
+	 *  - default rules
+	 * 
 	 * array(
 	 * 
-	 * 	//all unconfigured parameters will be sanitized
-	 *  //with the default value 
-	 * 	'default' => FILTER_SANITIZE_STRING
-	 * 	//OR
-	 * 	'default' => array(
-	 * 		'filter' => array(
-	 * 			FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES	
-	 * 		),
-	 * 		'flags'	=> FILTER_FLAG_ENCODE_AMP
-	 * 	)
-	 *  //OR
-	 * 	'default' => array(
- 	 *		FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES	
-	 * 	), 
-	 * 
+	 * 	// special parameters configuration. 
+	 *  // will be used first
 	 * 	'myParameterQualifier' => array(
 	 * 		'uid' => FILTER_SANITIZE_NUMBER_INT
 	 * 		'searchWord' => array(
@@ -98,6 +90,48 @@ class tx_mksanitizedparameters {
 	 *			)
 	 * 		)
 	 * 	)
+	 * 
+	 * 	// common parameters configuration
+	 *  // will be used if no special configuration found 
+	 *  // can be inside a special rule, too, and will be used from where it is defined
+	 *  // all levels down as long as in the lower level there is no new common rule.
+	 *  'common' => array(
+	 *  	// no matter at which position every parameter with the name someOtherValueToo
+	 *  	// will be sanitized with the following configuration as long as there is no
+	 *  	// special configuration
+ 	 *		someOtherValueToo => array(FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES)	
+	 * 	),
+	 *  'myExt' => array(
+	 *		// this will overwrite the common rules for everything inside myExt  	
+	 * 		'common' => array(
+ 	 *			someOtherValueToo => array(FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES)	
+	 * 		),
+	 *  )
+	 * 
+	 * 
+	 * 	// default parameters configuration
+	 *  // will be used if no special and no common configuration is found
+	 *  // can be inside a special rule, too, and will be used from where it is defined
+	 *  // all levels down as long as in the lower level there is no new default rule.
+	 * 	'default' => FILTER_SANITIZE_STRING
+	 * 	//OR
+	 * 	'default' => array(
+	 * 		'filter' => array(
+	 * 			FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES	
+	 * 		),
+	 * 		'flags'	=> FILTER_FLAG_ENCODE_AMP
+	 * 	)
+	 *  //OR
+	 * 	'default' => array(
+ 	 *		FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES	
+	 * 	),
+	 *  //OR
+	 * 	'myExt => array(
+	 * 		// this will overwrite the default rules for everything inside myExt
+	 * 		default' => array(
+ 	 *			FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES	
+	 * 		),
+ * 		)  
 	 * )
 	 * 
 	 * for the following array:
@@ -108,9 +142,26 @@ class tx_mksanitizedparameters {
 	 * 		'searchWord' => 'johndoe',
 	 * 		'subArray' => array(
 	 * 			'someOtherValue' => ...
-	 * 		)
+	 * 			'someOtherValueToo' => ...
+	 * 		),
+	 * 		'someOtherValueToo' => ...
 	 * 	)
 	 * )
+	 * 
+	 * results in following sanitizing:
+	 * 
+	 * array(
+	 * 	'myParameterQualifier' => array(
+	 * 		'uid' => the special rule will be used
+	 * 		'searchWord' => the special rule will be used,
+	 * 		'subArray' => array(
+	 * 			'someOtherValue' => the default rule will be used
+	 * 			'someOtherValueToo' => the common rule will be used
+	 * 		),
+	 * 		'someOtherValueToo' => the common rule will be used
+	 * 	)
+	 * )
+	 * 
 	 */
 	public static function sanitizeArrayByRules(
 		array $arrayToSanitize, array $rules
@@ -127,8 +178,9 @@ class tx_mksanitizedparameters {
 			);
 				
 			if(is_array($valueToSanitize)) {
-				$rulesForValue = self::injectDefaultRulesIfNeccessary(
-					(array) $rulesForValue, $rules['default']
+				// so we have them on the next level, too
+				$rulesForValue = self::injectCommonAndDefaultRulesIfNeccessary(
+					(array) $rulesForValue, $rules
 				);
 				
 				$valueToSanitize = self::sanitizeArrayByRules(
@@ -161,8 +213,50 @@ class tx_mksanitizedparameters {
 	 * @return mixed
 	 */
 	private static function getRulesForValue($rules, $nameToSanitize) {
-		$rulesForValue = !empty($rules[$nameToSanitize]) ?
-			$rules[$nameToSanitize] : $rules['default'];
+		if(!$rulesForValue = self::getSpecialRulesByName($rules, $nameToSanitize)) {
+			$rulesForValue = self::getCommonRulesByName($rules, $nameToSanitize);	
+		}
+		
+		if(!$rulesForValue) {
+			$rulesForValue = $rules['default'];	
+		}
+		
+		return $rulesForValue;
+	}
+	
+	/**
+	 * @return mixed
+	 */
+	private static function getSpecialRulesByName($rules, $nameToSanitize) {
+		return isset($rules[$nameToSanitize]) ? $rules[$nameToSanitize] : null;
+	}
+	
+	/**
+	 * @return mixed
+	 */
+	private static function getCommonRulesByName($rules, $nameToSanitize) {
+		return 
+			(
+				isset($rules['common']) &&
+				isset($rules['common'][$nameToSanitize])
+			) ? $rules['common'][$nameToSanitize] : null;
+	}
+	
+	/**
+	 * @param array $rulesForValue
+	 * @param array $rules
+	 * 
+	 * @return array
+	 */
+	private static function injectCommonAndDefaultRulesIfNeccessary(
+		array $rulesForValue, array $rules
+	) { 
+		$rulesForValue = self::injectRulesByKeyIfNeccessary(
+			(array) $rulesForValue, $rules, 'common'
+		);
+		$rulesForValue = self::injectRulesByKeyIfNeccessary(
+			(array) $rulesForValue, $rules, 'default'
+		);
 		
 		return $rulesForValue;
 	}
@@ -173,14 +267,14 @@ class tx_mksanitizedparameters {
 	 * 
 	 * @return array
 	 */
-	private static function injectDefaultRulesIfNeccessary(
-		array $rules, $defaultRules
+	private static function injectRulesByKeyIfNeccessary(
+		array $rulesForValue, $allRules, $rulesKey 
 	) {
-		if(!array_key_exists('default', $rules)) {
-			$rules['default'] = $defaultRules;
+		if(!array_key_exists($rulesKey, $rulesForValue)) {
+			$rulesForValue[$rulesKey] = $allRules[$rulesKey];
 		}
 		
-		return $rules;
+		return $rulesForValue;
 	}
 	
 	/**

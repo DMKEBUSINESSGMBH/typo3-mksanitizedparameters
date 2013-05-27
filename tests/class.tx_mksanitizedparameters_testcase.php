@@ -282,7 +282,7 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 	/**
 	 * @group unit
 	 */
-	public function testSanitizeArrayByRulesWorksCorrectWithSeveralConfiguredFiltersInVersion1(){
+	public function testSanitizeArrayByRulesWorksCorrectWithSeveralConfiguredFiltersAsFilterArray(){
 		$arrayToSanitize = array(
 			'parameterNameToBeSanitized' 	=> 
 			"<span>Is your name O'reilly & are sure about that?</span>",
@@ -312,7 +312,7 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 	/**
 	 * @group unit
 	 */
-	public function testSanitizeArrayByRulesWorksCorrectWithSeveralConfiguredFiltersInVersion2(){
+	public function testSanitizeArrayByRulesWorksCorrectWithSeveralConfiguredFiltersAsList(){
 		$arrayToSanitize = array(
 			'parameterNameToBeSanitized' 	=> 
 			"<span>Is your name O'reilly & are sure about that?</span>",
@@ -587,6 +587,185 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 			
 		$mksanitizedparameters::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
+		);
+	}
+	
+
+	/**
+	 * @group unit
+	 */
+	public function testSanitizeArrayByRulesPrefersSpecialRulesOverCommonRules(){
+		$arrayToSanitize = array(
+			'parameterNameToBeSanitized' 	=> '"1testValue"'
+		);
+		$rules = array(
+			'parameterNameToBeSanitized'	=> FILTER_SANITIZE_NUMBER_INT,
+			'common' => array(
+				'parameterNameToBeSanitized'	=> FILTER_SANITIZE_STRING
+			),
+			'default'	=> array(
+				'filter'    => FILTER_CALLBACK,
+               	'options' 	=> array(
+               		'tx_mksanitizedparameters_sanitizer_Alpha','sanitizeValue'
+				)
+			)
+		);
+		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
+			$arrayToSanitize, $rules
+		);
+		
+		$this->assertEquals(
+			array('parameterNameToBeSanitized' 	=> '1'),
+			$sanitizedArray, 
+			'The array wasn\'t sanitized correct!'
+		);
+	}
+	
+	/**
+	 * @group unit
+	 */
+	public function testSanitizeArrayByRulesPrefersCommonRulesOverDefaultRules(){
+		$arrayToSanitize = array(
+			'parameterNameToBeSanitized' 	=> '"1testValue"'
+		);
+		$rules = array(
+			'anotherParameterNameToBeSanitized'	=> FILTER_SANITIZE_NUMBER_INT,
+			'common' => array(
+				'parameterNameToBeSanitized'	=> FILTER_SANITIZE_STRING
+			),
+			'default'	=> array(
+				'filter'    => FILTER_CALLBACK,
+               	'options' 	=> array(
+               		'tx_mksanitizedparameters_sanitizer_Alpha','sanitizeValue'
+				)
+			)
+		);
+		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
+			$arrayToSanitize, $rules
+		);
+		
+		$this->assertEquals(
+			array('parameterNameToBeSanitized' 	=> '&#34;1testValue&#34;'),
+			$sanitizedArray, 
+			'The array wasn\'t sanitized correct!'
+		);
+	}
+	
+	/**
+	 * @group unit
+	 */
+	public function testSanitizeArrayByRulesUsesDefaultRulesIfNoSpecialsOrCommons(){
+		$arrayToSanitize = array(
+			'parameterNameToBeSanitized' 	=> '"1testValue"'
+		);
+		$rules = array(
+			'anotherParameterNameToBeSanitized'	=> FILTER_SANITIZE_NUMBER_INT,
+			'common' => array(
+				'anotherParameterNameToBeSanitized'	=> FILTER_SANITIZE_STRING
+			),
+			'default'	=> array(
+				'filter'    => FILTER_CALLBACK,
+               	'options' 	=> array(
+               		'tx_mksanitizedparameters_sanitizer_Alpha','sanitizeValue'
+				)
+			)
+		);
+		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
+			$arrayToSanitize, $rules
+		);
+		
+		$this->assertEquals(
+			array('parameterNameToBeSanitized' 	=> 'testValue'),
+			$sanitizedArray, 
+			'The array wasn\'t sanitized correct!'
+		);
+	}
+	
+	/**
+	 * @group unit
+	 */
+	public function testSanitizeArrayByRulesPrefersCommonRulesOverDefaultRulesWhenParameterNameInSubArray(){
+		$arrayToSanitize = array(
+			'myExt' => array(
+				'parameterNameToBeSanitized' 	=> '"1testValue"'
+			)
+		);
+		$rules = array(
+			'anotherParameterNameToBeSanitized'	=> FILTER_SANITIZE_NUMBER_INT,
+			'common' => array(
+				'parameterNameToBeSanitized'	=> FILTER_SANITIZE_STRING
+			),
+			'default'	=> array(
+				'filter'    => FILTER_CALLBACK,
+               	'options' 	=> array(
+               		'tx_mksanitizedparameters_sanitizer_Alpha','sanitizeValue'
+				)
+			)
+		);
+		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
+			$arrayToSanitize, $rules
+		);
+		
+		$this->assertEquals(
+			array('myExt' => array('parameterNameToBeSanitized' 	=> '&#34;1testValue&#34;')),
+			$sanitizedArray, 
+			'The array wasn\'t sanitized correct!'
+		);
+	}
+	
+	/**
+	 * @group unit
+	 */
+	public function testSanitizeArrayByRulesUsesCommonRulesInSubArrayEvenIfCommonRulesInMainArray(){
+		$arrayToSanitize = array(
+			'myExt' => array(
+				'parameterNameToBeSanitized' 	=> '"1testValue"'
+			)
+		);
+		$rules = array(
+			'myExt'	=> array(
+				'common' => array(
+					'parameterNameToBeSanitized'	=> FILTER_SANITIZE_NUMBER_INT
+				)
+			),
+			'common' => array(
+				'parameterNameToBeSanitized'	=> FILTER_SANITIZE_STRING
+			)
+		);
+		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
+			$arrayToSanitize, $rules
+		);
+		
+		$this->assertEquals(
+			array('myExt' => array('parameterNameToBeSanitized' 	=> '1')),
+			$sanitizedArray, 
+			'The array wasn\'t sanitized correct!'
+		);
+	}
+	
+	/**
+	 * @group unit
+	 */
+	public function testSanitizeArrayByRulesUsesDefaultRulesInSubArrayEvenIfDefaultRulesInMainArray(){
+		$arrayToSanitize = array(
+			'myExt' => array(
+				'parameterNameToBeSanitized' 	=> '"1testValue"'
+			)
+		);
+		$rules = array(
+			'myExt'	=> array(
+				'default' =>  FILTER_SANITIZE_NUMBER_INT
+			),
+			'default'	=> FILTER_SANITIZE_STRING
+		);
+		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
+			$arrayToSanitize, $rules
+		);
+		
+		$this->assertEquals(
+			array('myExt' => array('parameterNameToBeSanitized' 	=> '1')),
+			$sanitizedArray, 
+			'The array wasn\'t sanitized correct!'
 		);
 	}
 }

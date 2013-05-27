@@ -18,7 +18,3 @@ require_once(t3lib_extMgm::extPath($_EXTKEY).'rules/default.php');
 if(t3lib_extMgm::isLoaded('caretaker_instance')){
 	require_once(t3lib_extMgm::extPath($_EXTKEY).'rules/caretaker_instance.php');
 }
-
-if(t3lib_extMgm::isLoaded('powermail')){
-	require_once(t3lib_extMgm::extPath($_EXTKEY).'rules/powermail.php');
-}
