@@ -486,7 +486,9 @@ class tx_mksanitizedparameters {
 			return;
 		}
 		
-		ob_start();//da wir eine Ausgabe wollen bevor TYPO3 die Ausgabe startet
+		if(TYPO3_MODE == 'FE') {
+			ob_start();//da wir eine Ausgabe wollen bevor TYPO3 die FE Ausgabe startet
+		}
 		
 		$debugger = static::getDebugger();
 		$debugger::debug(
