@@ -424,7 +424,7 @@ class tx_mksanitizedparameters {
 	 * @return boolean
 	 */
 	private static function valueToSanitizeHasChanged($initialValueToSanitize, $valueToSanitize) {
-		return $initialValueToSanitize !== $valueToSanitize;
+		return $initialValueToSanitize != $valueToSanitize;
 	}
 	
 	/**
