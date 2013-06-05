@@ -101,7 +101,7 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx
 	 * @group integration
 	 */
 	public function testHookIsCalledInBackendAndSanitizesRequestPostAndGetGlobals(){
-		$_REQUEST['testParameter'] = '2WithString';
+		$_COOKIE['testParameter'] = '2WithString';
 		$_POST['testParameter'] = '2WithString';
 		$_GET['testParameter'] = '2WithString';
 		
@@ -110,7 +110,7 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx
 		ob_end_flush();
 		
 		$this->assertEquals(
-			2,$_REQUEST['testParameter'], 'Parameter nicht bereinigt'
+			2,$_COOKIE['testParameter'], 'Parameter nicht bereinigt'
 		);
 		$this->assertEquals(
 			2,$_POST['testParameter'], 'Parameter nicht bereinigt'
