@@ -27,12 +27,11 @@ tx_mksanitizedparameters_Rules::addRulesForFrontend($rulesForFrontend);
 
 // $rulesForBackend =  array(
 // 	tx_mksanitizedparameters_Rules::COMMON_RULES_KEY	=> array(
-// 		// pid, uid und id sollten immer zahlen sein
-// 		'id' => FILTER_SANITIZE_NUMBER_INT,
-// 		'uid' => FILTER_SANITIZE_NUMBER_INT,
+// 		'id' => FILTER_SANITIZE_STRING,
+// 		'uid' => FILTER_SANITIZE_STRING,
 //	 	'pid' => FILTER_SANITIZE_STRING,
 // 	)
 // );
 
-$rulesForBackend = unserialize('a:1:{s:8:"__common";a:3:{s:2:"id";i:519;s:3:"uid";i:519;s:3:"pid";i:513;}}');
+$rulesForBackend = unserialize('a:1:{s:8:"__common";a:3:{s:2:"id";i:513;s:3:"uid";i:513;s:3:"pid";i:513;}}');
 tx_mksanitizedparameters_Rules::addRulesForBackend($rulesForBackend);
