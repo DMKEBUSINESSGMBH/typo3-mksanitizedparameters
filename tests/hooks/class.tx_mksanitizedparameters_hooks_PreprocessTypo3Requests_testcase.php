@@ -30,8 +30,8 @@ require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 
 //wir brauchen eine XClass damit der Debug Mode überschrieben wird
 global $TYPO3_CONF_VARS;
-$TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/class.tx_mksanitizedparameters.php'] = 
-	t3lib_extMgm::extPath('mksanitizedparameters') . 'tests/hooks/class.ux_tx_mksanitizedparameters.php';
+$TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/hooks/class.tx_mksanitizedparameters_hooks_PreprocessTypo3Requests.php'] = 
+	t3lib_extMgm::extPath('mksanitizedparameters') . 'tests/hooks/class.ux_tx_mksanitizedparameters_hooks_PreprocessTypo3Requests.php';
 
 tx_rnbase::load('tx_mksanitizedparameters');
 tx_rnbase::load('tx_mksanitizedparameters_Rules');

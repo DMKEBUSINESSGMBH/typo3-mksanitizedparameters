@@ -27,14 +27,35 @@
  * include required classes
  */
 require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
+tx_rnbase::load('tx_mksanitizedparameters');
+
+/**
+ * damit wir eigentliche klasse ersetzen können
+ * 
+ * @author Hannes Bochmann
+ *
+ */
+class ux_tx_mksanitizedparameters_hooks_PreprocessTypo3Requests 
+	extends tx_mksanitizedparameters_hooks_PreprocessTypo3Requests {
+
+	/**
+	 * wird in ux_tx_mksanitizedparameters_hooks_PreprocessTypo3Requests
+	 * überschrieben damit debug mode abgeschaltet werden kann
+	 * 
+	 * @return ux_tx_mksanitizedparameters
+	 */
+	protected function getMksanitizedparametersMainClass () {
+		return ux_tx_mksanitizedparameters;
+	}
+}
 
 /**
  * wir wollen für die Hook test keinen debug mode
- * 
+ *
  * @author Hannes Bochmann
  */
 class ux_tx_mksanitizedparameters extends tx_mksanitizedparameters {
-	
+
 	/**
 	 * @return boolean
 	 */
