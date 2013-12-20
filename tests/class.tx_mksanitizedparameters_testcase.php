@@ -500,7 +500,13 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> array(FILTER_SANITIZE_STRING),
 		);
 		
-		$mksanitizedparameters = $this->getMockClass('tx_mksanitizedparameters', array('getDebugger'));
+		$mksanitizedparameters = $this->getMockClass(
+			'tx_mksanitizedparameters', array('getDebugger','getDebugMode')
+		);
+		$mksanitizedparameters::staticExpects($this->once())
+			->method('getDebugMode')
+			->will($this->returnValue(false));
+		
 		$mksanitizedparameters::staticExpects($this->never())
 			->method('getDebugger');
 			
@@ -520,7 +526,13 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> array(FILTER_SANITIZE_STRING),
 		);
 		
-		$mksanitizedparameters = $this->getMockClass('tx_mksanitizedparameters', array('getDebugger'));
+		$mksanitizedparameters = $this->getMockClass(
+			'tx_mksanitizedparameters', array('getDebugger','getDebugMode')
+		);
+		$mksanitizedparameters::staticExpects($this->once())
+			->method('getDebugMode')
+			->will($this->returnValue(false));
+		
 		$mksanitizedparameters::staticExpects($this->never())
 			->method('getDebugger');
 			
@@ -533,8 +545,6 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 	 * @group unit
 	 */
 	public function testSanitizeArrayByRulesDoesNotCallDebuggerIfDebuggingEnabledButValueNotChanged(){
-		tx_mklib_tests_Util::setExtConfVar('debugMode', 1, 'mksanitizedparameters');
-		
 		$arrayToSanitize = array (
 		  'parameter' => 'test'
 		);
@@ -542,7 +552,13 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> array(FILTER_SANITIZE_STRING),
 		);
 		
-		$mksanitizedparameters = $this->getMockClass('tx_mksanitizedparameters', array('getDebugger'));
+		$mksanitizedparameters = $this->getMockClass(
+			'tx_mksanitizedparameters', array('getDebugger','getDebugMode')
+		);
+		$mksanitizedparameters::staticExpects($this->once())
+			->method('getDebugMode')
+			->will($this->returnValue(true));
+		
 		$mksanitizedparameters::staticExpects($this->never())
 			->method('getDebugger');
 			
@@ -555,8 +571,6 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 	 * @group unit
 	 */
 	public function testSanitizeArrayByRulesCallsDebuggerCorrectIfDebuggingEnabledAndValueChanged(){
-		tx_mklib_tests_Util::setExtConfVar('debugMode', 1, 'mksanitizedparameters');
-		
 		$arrayToSanitize = array (
 		  'parameter' => '"test"'
 		);
@@ -564,7 +578,12 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> array(FILTER_SANITIZE_STRING),
 		);
 		
-		$mksanitizedparameters = $this->getMockClass('tx_mksanitizedparameters', array('getDebugger'));
+		$mksanitizedparameters = $this->getMockClass(
+			'tx_mksanitizedparameters', array('getDebugger','getDebugMode')
+		);
+		$mksanitizedparameters::staticExpects($this->once())
+			->method('getDebugMode')
+			->will($this->returnValue(true));
 		
 		$debugger = $this->getMockClass('tx_rnbase_util_Debug', array('debug'));
 		$debugger::staticExpects($this->once())

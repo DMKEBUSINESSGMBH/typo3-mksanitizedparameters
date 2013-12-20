@@ -503,6 +503,21 @@ class tx_mksanitizedparameters {
 			self::MESSAGE_VALUE_HAS_CHANGED
 		);
 	}
+	
+	
+	/**
+	 * @return boolean
+	 */
+	protected static function getDebugMode() {
+		$debugModeByExtensionConfiguration = tx_rnbase_configurations::getExtensionCfgValue(
+			'mksanitizedparameters', 'debugMode'
+		);
+
+		return 
+			$debugModeByExtensionConfiguration || 
+			(defined('TYPO3_ERRORHANDLER_MODE') && TYPO3_ERRORHANDLER_MODE == 'debug')
+		;
+	}
 
 	/**
 	 * @return tx_rnbase_util_Debug
