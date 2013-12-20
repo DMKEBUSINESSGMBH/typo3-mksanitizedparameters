@@ -62,7 +62,10 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests {
 		} else {
 			tx_rnbase::load('tx_mksanitizedparameters');
 			tx_rnbase::load('tx_mksanitizedparameters_Rules');
-			tx_mksanitizedparameters::sanitizeArraysByRules(
+			// ohne Instanz kann die XClass in tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase
+			// nicht anspringen
+			$mksanitizedparametersMainClass = tx_rnbase::makeInstance('tx_mksanitizedparameters');
+			$mksanitizedparametersMainClass::sanitizeArraysByRules(
 				$arraysToSanitize, 
 				tx_mksanitizedparameters_Rules::getRulesForCurrentEnvironment()
 			);
