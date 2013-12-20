@@ -478,11 +478,7 @@ class tx_mksanitizedparameters {
 	private static function handleDebugging(
 		array $arrayToSanitize, $nameToSanitize, $initialValueToSanitize, $sanitizedValue
 	) {
-		$isDebugMode = tx_rnbase_configurations::getExtensionCfgValue(
-			'mksanitizedparameters', 'debugMode'
-		);
-
-		if(!$isDebugMode){
+		if(!static::getDebugMode()){
 			return;
 		}
 
