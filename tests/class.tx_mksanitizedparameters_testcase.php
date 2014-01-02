@@ -31,14 +31,14 @@ tx_rnbase::load('tx_mksanitizedparameters');
 tx_rnbase::load('tx_mklib_tests_Util');
 tx_rnbase::load('tx_rnbase_util_Logger');
 tx_rnbase::load('tx_rnbase_util_Debug');
-	
+
 /**
  * @package TYPO3
  * @subpackage tx_mksanitizedparameters
  * @author Hannes Bochmann <hannes.bochmann@das-mediekombinat.de>
  */
 class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
-	
+
 	/**
 	 * (non-PHPdoc)
 	 * @see PHPUnit_Framework_TestCase::setUp()
@@ -49,7 +49,7 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		tx_mklib_tests_Util::setExtConfVar('debugMode', 0, 'mksanitizedparameters');
 		tx_mklib_tests_Util::setExtConfVar('logMode', 0, 'mksanitizedparameters');
 	}
-	
+
 	/**
 	 * (non-PHPdoc)
 	 * @see PHPUnit_Framework_TestCase::tearDown()
@@ -57,7 +57,7 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 	protected function tearDown(){
 		tx_mklib_tests_Util::restoreExtConf('mksanitizedparameters');
 	}
-	
+
 	/**
 	 * @group unit
 	 */
@@ -68,12 +68,12 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
 			$arrayToSanitize, array()
 		);
-		
+
 		$this->assertSame(
 			$arrayToSanitize, $sanitizedArray, 'The array was touched!'
 		);
 	}
-	
+
 	/**
 	 * @group unit
 	 */
@@ -87,12 +87,12 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
-		
+
 		$this->assertSame(
 			$arrayToSanitize, $sanitizedArray, 'The array was touched!'
 		);
 	}
-	
+
 	/**
 	 * @group unit
 	 */
@@ -106,14 +106,14 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
-		
+
 		$this->assertEquals(
 			array('parameterNameToBeSanitized' 	=> '1'),
-			$sanitizedArray, 
+			$sanitizedArray,
 			'The array wasn\'t sanitized correct!'
 		);
 	}
-	
+
 	/**
 	 * @group unit
 	 */
@@ -127,14 +127,14 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
-		
+
 		$this->assertEquals(
 			array('parameterNameToBeSanitized' 	=> '1'),
-			$sanitizedArray, 
+			$sanitizedArray,
 			'The array wasn\'t sanitized correct!'
 		);
 	}
-	
+
 	/**
 	 * @group unit
 	 */
@@ -155,17 +155,17 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
-		
+
 		$this->assertEquals(
 			array(
 				'parameterInRange' 		=> 'me&you',
 				'parameterOutOfRange' 	=> 'me&#38;you',
 			),
-			$sanitizedArray, 
+			$sanitizedArray,
 			'The array wasn\'t sanitized correct!'
 		);
 	}
-	
+
 	/**
 	 * @group unit
 	 */
@@ -180,17 +180,17 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
-		
+
 		$this->assertEquals(
 			array(
 				'parameterNameToBeSanitized' 		=> '1',
 				'parameterNameNotToBeSanitized' 	=> '1testValue',
 			),
-			$sanitizedArray, 
+			$sanitizedArray,
 			'The array wasn\'t sanitized correct!'
 		);
 	}
-	
+
 	/**
 	 * @group unit
 	 */
@@ -201,7 +201,7 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 				'parameterNameToBeSanitizedByDefault' 	=> 'libgd<script>'
 			),
 			'secondExtensionQualifier'	=> array(
-				'subArray'	=> array(	
+				'subArray'	=> array(
 					'parameterNameToBeSanitized' => '<span>me&you</span>'
 				)
 			),
@@ -213,7 +213,7 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 				'parameterNameToBeSanitized' => FILTER_SANITIZE_NUMBER_INT
 			),
 			'secondExtensionQualifier'	=> array(
-				'subArray'	=> array(	
+				'subArray'	=> array(
 					'parameterNameToBeSanitized'	=> array(
 						'filter'    => FILTER_SANITIZE_STRING,
 		                'flags'   	=> FILTER_FLAG_ENCODE_AMP
@@ -224,27 +224,27 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
-		
+
 		$expectedArray = array(
 			'firstExtensionQualifier'	=> array(
 				'parameterNameToBeSanitized' 			=> 1,
 				'parameterNameToBeSanitizedByDefault' 	=> 'libgd%3Cscript%3E'
 			),
 			'secondExtensionQualifier'	=> array(
-				'subArray'	=> array(	
+				'subArray'	=> array(
 					'parameterNameToBeSanitized' => 'me&#38;you'
 				)
 			),
 			'parameterNameToBeSanitizedByDefault' 	=> 'libgd%3Cscript%3E'
-		); 
-		
+		);
+
 		$this->assertEquals(
 			$expectedArray,
-			$sanitizedArray, 
+			$sanitizedArray,
 			'The array wasn\'t sanitized correct!'
 		);
 	}
-	
+
 	/**
 	 * @group unit
 	 */
@@ -264,27 +264,27 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
-		
+
 		$expectedArray = array(
 			'firstExtensionQualifier'	=> array(
 				'parameterNameToBeSanitizedByDefault' 	=> 1,
 			),
 			'parameterNameToBeSanitizedByDefault' 		=> 'libgd%3Cscript%3E'
-		); 
-		
+		);
+
 		$this->assertEquals(
 			$expectedArray,
-			$sanitizedArray, 
+			$sanitizedArray,
 			'The array wasn\'t sanitized correct!'
 		);
 	}
-	
+
 	/**
 	 * @group unit
 	 */
 	public function testSanitizeArrayByRulesWorksCorrectWithSeveralConfiguredFiltersAsFilterArray(){
 		$arrayToSanitize = array(
-			'parameterNameToBeSanitized' 	=> 
+			'parameterNameToBeSanitized' 	=>
 			"<span>Is your name O'reilly & are sure about that?</span>",
 		);
 		$rules = array(
@@ -298,23 +298,23 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
-		
+
 		$this->assertEquals(
 			array(
-				'parameterNameToBeSanitized'	=> 
+				'parameterNameToBeSanitized'	=>
 				'Is your name O&#39;reilly &#38; are sure about that?',
 			),
-			$sanitizedArray, 
+			$sanitizedArray,
 			'The array wasn\'t sanitized correct!'
 		);
 	}
-	
+
 	/**
 	 * @group unit
 	 */
 	public function testSanitizeArrayByRulesWorksCorrectWithSeveralConfiguredFiltersAsList(){
 		$arrayToSanitize = array(
-			'parameterNameToBeSanitized' 	=> 
+			'parameterNameToBeSanitized' 	=>
 			"<span>Is your name O'reilly & are sure about that?</span>",
 		);
 		$rules = array(
@@ -325,23 +325,23 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
-		
+
 		$this->assertEquals(
 			array(
-				'parameterNameToBeSanitized'	=> 
+				'parameterNameToBeSanitized'	=>
 				'Is your name O&#39;reilly & are sure about that?',
 			),
-			$sanitizedArray, 
+			$sanitizedArray,
 			'The array wasn\'t sanitized correct!'
 		);
 	}
-	
+
 	/**
 	 * @group unit
 	 */
 	public function testSanitizeArrayByRulesWorksCorrectWithCustomFilter(){
 		$arrayToSanitize = array(
-			'parameterNameToBeSanitized' 	=> 
+			'parameterNameToBeSanitized' 	=>
 			"abc123",
 		);
 		$rules = array(
@@ -355,17 +355,17 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
-		
+
 		$this->assertEquals(
 			array(
-				'parameterNameToBeSanitized'	=> 
+				'parameterNameToBeSanitized'	=>
 				'abc',
 			),
-			$sanitizedArray, 
+			$sanitizedArray,
 			'The array wasn\'t sanitized correct!'
 		);
 	}
-	
+
 	/**
 	 * @group unit
 	 */
@@ -381,14 +381,14 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
-		
+
 		$this->assertEquals(
 			$arrayToSanitize,
-			$sanitizedArray, 
+			$sanitizedArray,
 			'The array wasn\'t sanitized correct!'
 		);
 	}
-	
+
 	/**
 	 * @group unit
 	 */
@@ -399,16 +399,16 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		$rules = array(
 			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> array(FILTER_SANITIZE_STRING),
 		);
-		
+
 		$mksanitizedparameters = $this->getMockClass('tx_mksanitizedparameters', array('getLogger'));
 		$mksanitizedparameters::staticExpects($this->never())
 			->method('getLogger');
-			
+
 		$mksanitizedparameters::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
 	}
-	
+
 	/**
 	 * @group unit
 	 */
@@ -419,53 +419,53 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		$rules = array(
 			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> array(FILTER_SANITIZE_STRING),
 		);
-		
+
 		$mksanitizedparameters = $this->getMockClass('tx_mksanitizedparameters', array('getLogger'));
 		$mksanitizedparameters::staticExpects($this->never())
 			->method('getLogger');
-			
+
 		$mksanitizedparameters::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
 	}
-	
+
 	/**
 	 * @group unit
 	 */
 	public function testSanitizeArrayByRulesDoesNotCallLoggerIfLoggingEnabledButValueNotChanged(){
 		tx_mklib_tests_Util::setExtConfVar('logMode', 1, 'mksanitizedparameters');
-		
+
 		$arrayToSanitize = array (
 		  'parameter' => 'test'
 		);
 		$rules = array(
 			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> array(FILTER_SANITIZE_STRING),
 		);
-		
+
 		$mksanitizedparameters = $this->getMockClass('tx_mksanitizedparameters', array('getLogger'));
 		$mksanitizedparameters::staticExpects($this->never())
 			->method('getLogger');
-			
+
 		$mksanitizedparameters::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
 	}
-	
+
 	/**
 	 * @group unit
 	 */
 	public function testSanitizeArrayByRulesCallsLoggerCorrectIfLoggingEnabledAndValueChanged(){
 		tx_mklib_tests_Util::setExtConfVar('logMode', 1, 'mksanitizedparameters');
-		
+
 		$arrayToSanitize = array (
 		  'parameter' => '"test"'
 		);
 		$rules = array(
 			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> array(FILTER_SANITIZE_STRING),
 		);
-		
+
 		$mksanitizedparameters = $this->getMockClass('tx_mksanitizedparameters', array('getLogger'));
-		
+
 		$logger = $this->getMockClass('tx_rnbase_util_Logger', array('warn'));
 		$logger::staticExpects($this->once())
 			->method('warn')
@@ -479,16 +479,16 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 					'komplettes Parameter Array'	=> array ('parameter' => '&#34;test&#34;')
 				)
 			);
-			
+
 		$mksanitizedparameters::staticExpects($this->once())
 			->method('getLogger')
 			->will($this->returnValue($logger));
-			
+
 		$mksanitizedparameters::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
 	}
-	
+
 	/**
 	 * @group unit
 	 */
@@ -499,16 +499,16 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		$rules = array(
 			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> array(FILTER_SANITIZE_STRING),
 		);
-		
+
 		$mksanitizedparameters = $this->getMockClass('tx_mksanitizedparameters', array('getDebugger'));
 		$mksanitizedparameters::staticExpects($this->never())
 			->method('getDebugger');
-			
+
 		$mksanitizedparameters::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
 	}
-	
+
 	/**
 	 * @group unit
 	 */
@@ -519,53 +519,53 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		$rules = array(
 			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> array(FILTER_SANITIZE_STRING),
 		);
-		
+
 		$mksanitizedparameters = $this->getMockClass('tx_mksanitizedparameters', array('getDebugger'));
 		$mksanitizedparameters::staticExpects($this->never())
 			->method('getDebugger');
-			
+
 		$mksanitizedparameters::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
 	}
-	
+
 	/**
 	 * @group unit
 	 */
 	public function testSanitizeArrayByRulesDoesNotCallDebuggerIfDebuggingEnabledButValueNotChanged(){
 		tx_mklib_tests_Util::setExtConfVar('debugMode', 1, 'mksanitizedparameters');
-		
+
 		$arrayToSanitize = array (
 		  'parameter' => 'test'
 		);
 		$rules = array(
 			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> array(FILTER_SANITIZE_STRING),
 		);
-		
+
 		$mksanitizedparameters = $this->getMockClass('tx_mksanitizedparameters', array('getDebugger'));
 		$mksanitizedparameters::staticExpects($this->never())
 			->method('getDebugger');
-			
+
 		$mksanitizedparameters::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
 	}
-	
+
 	/**
 	 * @group unit
 	 */
 	public function testSanitizeArrayByRulesCallsDebuggerCorrectIfDebuggingEnabledAndValueChanged(){
 		tx_mklib_tests_Util::setExtConfVar('debugMode', 1, 'mksanitizedparameters');
-		
+
 		$arrayToSanitize = array (
 		  'parameter' => '"test"'
 		);
 		$rules = array(
 			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> array(FILTER_SANITIZE_STRING),
 		);
-		
+
 		$mksanitizedparameters = $this->getMockClass('tx_mksanitizedparameters', array('getDebugger'));
-		
+
 		$debugger = $this->getMockClass('tx_rnbase_util_Debug', array('debug'));
 		$debugger::staticExpects($this->once())
 			->method('debug')
@@ -580,16 +580,16 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 				),
 				$mksanitizedparameters::MESSAGE_VALUE_HAS_CHANGED
 			);
-			
+
 		$mksanitizedparameters::staticExpects($this->once())
 			->method('getDebugger')
 			->will($this->returnValue($debugger));
-			
+
 		$mksanitizedparameters::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
 	}
-	
+
 
 	/**
 	 * @group unit
@@ -613,14 +613,14 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
-		
+
 		$this->assertEquals(
 			array('parameterNameToBeSanitized' 	=> '1'),
-			$sanitizedArray, 
+			$sanitizedArray,
 			'The array wasn\'t sanitized correct!'
 		);
 	}
-	
+
 	/**
 	 * @group unit
 	 */
@@ -643,14 +643,14 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
-		
+
 		$this->assertEquals(
 			array('parameterNameToBeSanitized' 	=> '&#34;1testValue&#34;'),
-			$sanitizedArray, 
+			$sanitizedArray,
 			'The array wasn\'t sanitized correct!'
 		);
 	}
-	
+
 	/**
 	 * @group unit
 	 */
@@ -673,14 +673,14 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
-		
+
 		$this->assertEquals(
 			array('parameterNameToBeSanitized' 	=> 'testValue'),
-			$sanitizedArray, 
+			$sanitizedArray,
 			'The array wasn\'t sanitized correct!'
 		);
 	}
-	
+
 	/**
 	 * @group unit
 	 */
@@ -705,14 +705,42 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
-		
+
 		$this->assertEquals(
 			array('myExt' => array('parameterNameToBeSanitized' 	=> '&#34;1testValue&#34;')),
-			$sanitizedArray, 
+			$sanitizedArray,
 			'The array wasn\'t sanitized correct!'
 		);
 	}
-	
+
+	/**
+	 * @group unit
+	 */
+	public function testSanitizeArrayByRulesWithRulesForSubArrayButSubArrayParameterItSelfIsGivenCastsFilterArrayConfigToIntegerResultingInEmptiedValue(){
+		$arrayToSanitize = array(
+			'myExt' => 'test'
+		);
+		$rules = array(
+			'myExt'	=> array(
+				'mySubParameter' => array(
+					'filter'    => FILTER_CALLBACK,
+	               	'options' 	=> array(
+	               		'doesNotMatter','doesNotMatterToo'
+					)
+				),
+			)
+		);
+		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
+			$arrayToSanitize, $rules
+		);
+
+		$this->assertEquals(
+			array('myExt' => ''),
+			$sanitizedArray,
+			'The array wasn\'t sanitized correct!'
+		);
+	}
+
 	/**
 	 * @group unit
 	 */
@@ -735,14 +763,14 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
-		
+
 		$this->assertEquals(
 			array('myExt' => array('parameterNameToBeSanitized' 	=> '1')),
-			$sanitizedArray, 
+			$sanitizedArray,
 			'The array wasn\'t sanitized correct!'
 		);
 	}
-	
+
 	/**
 	 * @group unit
 	 */
@@ -761,14 +789,14 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
-		
+
 		$this->assertEquals(
 			array('myExt' => array('parameterNameToBeSanitized' 	=> '1')),
-			$sanitizedArray, 
+			$sanitizedArray,
 			'The array wasn\'t sanitized correct!'
 		);
 	}
-	
+
 	/**
 	* @group unit
 	*/

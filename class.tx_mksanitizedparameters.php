@@ -394,7 +394,7 @@ class tx_mksanitizedparameters {
 
 		foreach ($filters as $filter) {
 			$valueToSanitize =
-				filter_var($valueToSanitize,$filter,$filterConfig);
+				filter_var($valueToSanitize, intval($filter), $filterConfig);
 		}
 
 		return $valueToSanitize;
