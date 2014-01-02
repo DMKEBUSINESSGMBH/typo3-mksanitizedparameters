@@ -69,7 +69,7 @@ class tx_mksanitizedparameters {
 	 *  // will be used first
 	 *  // NOTE: it is not possible to have a configuration for the value
 	 *	// myParameterQualifier and for the sub parameters in myParameterQualifier.
-	 *	// only on is possible! either myParameterQualifier or myParameterQualifier[...]
+	 *	// only one is possible! either myParameterQualifier or myParameterQualifier[...]
 	 * 	'myParameterQualifier' => array(
 	 * 		'uid' => FILTER_SANITIZE_NUMBER_INT
 	 * 		'searchWord' => array(
