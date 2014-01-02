@@ -67,6 +67,9 @@ class tx_mksanitizedparameters {
 	 *
 	 * 	// special parameters configuration.
 	 *  // will be used first
+	 *  // NOTE: it is not possible to have a configuration for the value
+	 *	// myParameterQualifier and for the sub parameters in myParameterQualifier.
+	 *	// only on is possible! either myParameterQualifier or myParameterQualifier[...]
 	 * 	'myParameterQualifier' => array(
 	 * 		'uid' => FILTER_SANITIZE_NUMBER_INT
 	 * 		'searchWord' => array(
@@ -499,8 +502,8 @@ class tx_mksanitizedparameters {
 			self::MESSAGE_VALUE_HAS_CHANGED
 		);
 	}
-	
-	
+
+
 	/**
 	 * @return boolean
 	 */
@@ -509,8 +512,8 @@ class tx_mksanitizedparameters {
 			'mksanitizedparameters', 'debugMode'
 		);
 
-		return 
-			$debugModeByExtensionConfiguration || 
+		return
+			$debugModeByExtensionConfiguration ||
 			(defined('TYPO3_ERRORHANDLER_MODE') && TYPO3_ERRORHANDLER_MODE == 'debug')
 		;
 	}
