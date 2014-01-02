@@ -27,25 +27,39 @@
  * include required classes
  */
 require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
+tx_rnbase::load('tx_mksanitizedparameters');
 
 /**
- * @package TYPO3
- * @subpackage tx_mksanitizedparameters
- * @author Hannes Bochmann <hannes.bochmann@das-mediekombinat.de>
+ * damit wir eigentliche klasse ersetzen können
+ * 
+ * @author Hannes Bochmann
+ *
  */
-class tx_mksanitizedparameters_util_RegularExpression {
+class ux_tx_mksanitizedparameters_hooks_PreprocessTypo3Requests 
+	extends tx_mksanitizedparameters_hooks_PreprocessTypo3Requests {
 
 	/**
-	 * @param string $pattern
-	 * @param mixed $value
+	 * wird in ux_tx_mksanitizedparameters_hooks_PreprocessTypo3Requests
+	 * überschrieben damit debug mode abgeschaltet werden kann
 	 * 
-	 * @return string
+	 * @return ux_tx_mksanitizedparameters
 	 */
-	public static function callPregReplace($pattern, $value) {
-		return preg_replace($pattern, '', $value); 
+	protected function getMksanitizedparametersMainClass () {
+		return ux_tx_mksanitizedparameters;
 	}
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/util/class.tx_mksanitizedparameters_util_RegularExpression.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/util/class.tx_mksanitizedparameters_util_RegularExpression.php']);
+/**
+ * wir wollen für die Hook test keinen debug mode
+ *
+ * @author Hannes Bochmann
+ */
+class ux_tx_mksanitizedparameters extends tx_mksanitizedparameters {
+
+	/**
+	 * @return boolean
+	 */
+	protected static function getDebugMode() {
+		return false;
+	}
 }

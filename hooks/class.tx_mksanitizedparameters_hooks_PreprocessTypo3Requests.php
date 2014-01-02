@@ -62,11 +62,23 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests {
 		} else {
 			tx_rnbase::load('tx_mksanitizedparameters');
 			tx_rnbase::load('tx_mksanitizedparameters_Rules');
-			tx_mksanitizedparameters::sanitizeArraysByRules(
+
+			$mksanitizedparametersMainClass = $this->getMksanitizedparametersMainClass();
+			$mksanitizedparametersMainClass::sanitizeArraysByRules(
 				$arraysToSanitize, 
 				tx_mksanitizedparameters_Rules::getRulesForCurrentEnvironment()
 			);
 		}
+	}
+	
+	/**
+	 * wird in tests/hooks/class.ux_tx_mksanitizedparameters.php
+	 * überschrieben damit debug mode abgeschaltet werden kann
+	 * 
+	 * @return tx_mksanitizedparameters
+	 */
+	protected function getMksanitizedparametersMainClass () {
+		return tx_mksanitizedparameters;
 	}
 }
 

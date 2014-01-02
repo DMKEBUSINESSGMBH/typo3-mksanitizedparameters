@@ -65,7 +65,8 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		$arrayToSanitize = array(
 			'parameterNameToBeSanitized' => 'testValue'
 		);
-		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
+		$mainClass = $this->getMainClassMockWithoutDebugMode();
+		$sanitizedArray = $mainClass::sanitizeArrayByRules(
 			$arrayToSanitize, array()
 		);
 
@@ -84,7 +85,8 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		$rules = array(
 			'unexistentParameter'	=> FILTER_SANITIZE_NUMBER_INT
 		);
-		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
+		$mainClass = $this->getMainClassMockWithoutDebugMode();
+		$sanitizedArray = $mainClass::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
 
@@ -103,7 +105,8 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		$rules = array(
 			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> FILTER_SANITIZE_NUMBER_INT
 		);
-		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
+		$mainClass = $this->getMainClassMockWithoutDebugMode();
+		$sanitizedArray = $mainClass::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
 
@@ -124,7 +127,8 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		$rules = array(
 			'parameterNameToBeSanitized'	=> FILTER_SANITIZE_NUMBER_INT
 		);
-		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
+		$mainClass = $this->getMainClassMockWithoutDebugMode();
+		$sanitizedArray = $mainClass::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
 
@@ -152,7 +156,8 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
                 'flags'   	=> FILTER_FLAG_ENCODE_AMP
 			)
 		);
-		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
+		$mainClass = $this->getMainClassMockWithoutDebugMode();
+		$sanitizedArray = $mainClass::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
 
@@ -177,7 +182,8 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		$rules = array(
 			'parameterNameToBeSanitized'	=> FILTER_SANITIZE_NUMBER_INT
 		);
-		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
+		$mainClass = $this->getMainClassMockWithoutDebugMode();
+		$sanitizedArray = $mainClass::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
 
@@ -221,7 +227,8 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 				)
 			)
 		);
-		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
+		$mainClass = $this->getMainClassMockWithoutDebugMode();
+		$sanitizedArray = $mainClass::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
 
@@ -261,7 +268,8 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 				tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_NUMBER_INT
 			),
 		);
-		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
+		$mainClass = $this->getMainClassMockWithoutDebugMode();
+		$sanitizedArray = $mainClass::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
 
@@ -295,7 +303,8 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
                 'flags'   	=> FILTER_FLAG_ENCODE_AMP
 			)
 		);
-		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
+		$mainClass = $this->getMainClassMockWithoutDebugMode();
+		$sanitizedArray = $mainClass::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
 
@@ -322,7 +331,8 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 				FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES
 			)
 		);
-		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
+		$mainClass = $this->getMainClassMockWithoutDebugMode();
+		$sanitizedArray = $mainClass::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
 
@@ -352,7 +362,8 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 				)
 			)
 		);
-		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
+		$mainClass = $this->getMainClassMockWithoutDebugMode();
+		$sanitizedArray = $mainClass::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
 
@@ -378,7 +389,8 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		$rules = array(
 			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> array(FILTER_SANITIZE_URL),
 		);
-		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
+		$mainClass = $this->getMainClassMockWithoutDebugMode();
+		$sanitizedArray = $mainClass::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
 
@@ -401,6 +413,7 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		);
 
 		$mksanitizedparameters = $this->getMockClass('tx_mksanitizedparameters', array('getLogger'));
+
 		$mksanitizedparameters::staticExpects($this->never())
 			->method('getLogger');
 
@@ -420,7 +433,14 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> array(FILTER_SANITIZE_STRING),
 		);
 
-		$mksanitizedparameters = $this->getMockClass('tx_mksanitizedparameters', array('getLogger'));
+		$mksanitizedparameters = $this->getMockClass(
+			'tx_mksanitizedparameters', array('getDebugMode', 'getLogger')
+		);
+
+		$mksanitizedparameters::staticExpects($this->any())
+			->method('getDebugMode')
+			->will($this->returnValue(false));
+
 		$mksanitizedparameters::staticExpects($this->never())
 			->method('getLogger');
 
@@ -442,7 +462,14 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> array(FILTER_SANITIZE_STRING),
 		);
 
-		$mksanitizedparameters = $this->getMockClass('tx_mksanitizedparameters', array('getLogger'));
+		$mksanitizedparameters = $this->getMockClass(
+			'tx_mksanitizedparameters', array('getDebugMode', 'getLogger')
+		);
+
+		$mksanitizedparameters::staticExpects($this->any())
+			->method('getDebugMode')
+			->will($this->returnValue(false));
+
 		$mksanitizedparameters::staticExpects($this->never())
 			->method('getLogger');
 
@@ -464,7 +491,13 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> array(FILTER_SANITIZE_STRING),
 		);
 
-		$mksanitizedparameters = $this->getMockClass('tx_mksanitizedparameters', array('getLogger'));
+		$mksanitizedparameters = $this->getMockClass(
+			'tx_mksanitizedparameters', array('getDebugMode', 'getLogger')
+		);
+
+		$mksanitizedparameters::staticExpects($this->any())
+			->method('getDebugMode')
+			->will($this->returnValue(false));
 
 		$logger = $this->getMockClass('tx_rnbase_util_Logger', array('warn'));
 		$logger::staticExpects($this->once())
@@ -500,7 +533,12 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> array(FILTER_SANITIZE_STRING),
 		);
 
-		$mksanitizedparameters = $this->getMockClass('tx_mksanitizedparameters', array('getDebugger'));
+		$mksanitizedparameters = $this->getMockClass(
+			'tx_mksanitizedparameters', array('getDebugger','getDebugMode')
+		);
+		$mksanitizedparameters::staticExpects($this->never())
+			->method('getDebugMode');
+
 		$mksanitizedparameters::staticExpects($this->never())
 			->method('getDebugger');
 
@@ -520,7 +558,13 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> array(FILTER_SANITIZE_STRING),
 		);
 
-		$mksanitizedparameters = $this->getMockClass('tx_mksanitizedparameters', array('getDebugger'));
+		$mksanitizedparameters = $this->getMockClass(
+			'tx_mksanitizedparameters', array('getDebugger','getDebugMode')
+		);
+		$mksanitizedparameters::staticExpects($this->once())
+			->method('getDebugMode')
+			->will($this->returnValue(false));
+
 		$mksanitizedparameters::staticExpects($this->never())
 			->method('getDebugger');
 
@@ -533,8 +577,6 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 	 * @group unit
 	 */
 	public function testSanitizeArrayByRulesDoesNotCallDebuggerIfDebuggingEnabledButValueNotChanged(){
-		tx_mklib_tests_Util::setExtConfVar('debugMode', 1, 'mksanitizedparameters');
-
 		$arrayToSanitize = array (
 		  'parameter' => 'test'
 		);
@@ -542,7 +584,12 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> array(FILTER_SANITIZE_STRING),
 		);
 
-		$mksanitizedparameters = $this->getMockClass('tx_mksanitizedparameters', array('getDebugger'));
+		$mksanitizedparameters = $this->getMockClass(
+			'tx_mksanitizedparameters', array('getDebugger','getDebugMode')
+		);
+		$mksanitizedparameters::staticExpects($this->never())
+			->method('getDebugMode');
+
 		$mksanitizedparameters::staticExpects($this->never())
 			->method('getDebugger');
 
@@ -555,8 +602,6 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 	 * @group unit
 	 */
 	public function testSanitizeArrayByRulesCallsDebuggerCorrectIfDebuggingEnabledAndValueChanged(){
-		tx_mklib_tests_Util::setExtConfVar('debugMode', 1, 'mksanitizedparameters');
-
 		$arrayToSanitize = array (
 		  'parameter' => '"test"'
 		);
@@ -564,7 +609,12 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> array(FILTER_SANITIZE_STRING),
 		);
 
-		$mksanitizedparameters = $this->getMockClass('tx_mksanitizedparameters', array('getDebugger'));
+		$mksanitizedparameters = $this->getMockClass(
+			'tx_mksanitizedparameters', array('getDebugger','getDebugMode')
+		);
+		$mksanitizedparameters::staticExpects($this->once())
+			->method('getDebugMode')
+			->will($this->returnValue(true));
 
 		$debugger = $this->getMockClass('tx_rnbase_util_Debug', array('debug'));
 		$debugger::staticExpects($this->once())
@@ -610,7 +660,8 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 				)
 			)
 		);
-		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
+		$mainClass = $this->getMainClassMockWithoutDebugMode();
+		$sanitizedArray = $mainClass::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
 
@@ -640,7 +691,8 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 				)
 			)
 		);
-		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
+		$mainClass = $this->getMainClassMockWithoutDebugMode();
+		$sanitizedArray = $mainClass::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
 
@@ -670,7 +722,8 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 				)
 			)
 		);
-		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
+		$mainClass = $this->getMainClassMockWithoutDebugMode();
+		$sanitizedArray = $mainClass::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
 
@@ -702,40 +755,13 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 				)
 			)
 		);
-		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
+		$mainClass = $this->getMainClassMockWithoutDebugMode();
+		$sanitizedArray = $mainClass::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
 
 		$this->assertEquals(
 			array('myExt' => array('parameterNameToBeSanitized' 	=> '&#34;1testValue&#34;')),
-			$sanitizedArray,
-			'The array wasn\'t sanitized correct!'
-		);
-	}
-
-	/**
-	 * @group unit
-	 */
-	public function testSanitizeArrayByRulesWithRulesForSubArrayButSubArrayParameterItSelfIsGivenCastsFilterArrayConfigToIntegerResultingInEmptiedValue(){
-		$arrayToSanitize = array(
-			'myExt' => 'test'
-		);
-		$rules = array(
-			'myExt'	=> array(
-				'mySubParameter' => array(
-					'filter'    => FILTER_CALLBACK,
-	               	'options' 	=> array(
-	               		'doesNotMatter','doesNotMatterToo'
-					)
-				),
-			)
-		);
-		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
-			$arrayToSanitize, $rules
-		);
-
-		$this->assertEquals(
-			array('myExt' => ''),
 			$sanitizedArray,
 			'The array wasn\'t sanitized correct!'
 		);
@@ -760,7 +786,8 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 				'parameterNameToBeSanitized'	=> FILTER_SANITIZE_STRING
 			)
 		);
-		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
+		$mainClass = $this->getMainClassMockWithoutDebugMode();
+		$sanitizedArray = $mainClass::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
 
@@ -786,7 +813,8 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 			),
 			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> FILTER_SANITIZE_STRING
 		);
-		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
+		$mainClass = $this->getMainClassMockWithoutDebugMode();
+		$sanitizedArray = $mainClass::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
 
@@ -817,7 +845,8 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 				'anotherParameterNameToBeSanitized' => FILTER_SANITIZE_STRING
 			)
 		);
-		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
+		$mainClass = $this->getMainClassMockWithoutDebugMode();
+		$sanitizedArray = $mainClass::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
 		);
 
@@ -831,5 +860,48 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 			$sanitizedArray,
 			'The array wasn\'t sanitized correct!'
 		);
+	}
+
+	/**
+	 * @group unit
+	 */
+	public function testSanitizeArrayByRulesWithRulesForSubArrayButSubArrayParameterItSelfIsGivenCastsFilterArrayConfigToIntegerResultingInEmptiedValue(){
+		$arrayToSanitize = array(
+			'myExt' => 'test'
+		);
+		$rules = array(
+			'myExt'	=> array(
+				'mySubParameter' => array(
+					'filter'    => FILTER_CALLBACK,
+					'options' 	=> array(
+						'doesNotMatter','doesNotMatterToo'
+					)
+				),
+			)
+		);
+		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
+			$arrayToSanitize, $rules
+		);
+
+		$this->assertEquals(
+			array('myExt' => ''),
+			$sanitizedArray,
+			'The array wasn\'t sanitized correct!'
+		);
+	}
+
+	/**
+	 * @return tx_mksanitizedparameters
+	 */
+	private function getMainClassMockWithoutDebugMode() {
+		$mksanitizedparameters = $this->getMockClass(
+			'tx_mksanitizedparameters', array('getDebugMode')
+		);
+
+		$mksanitizedparameters::staticExpects($this->any())
+			->method('getDebugMode')
+			->will($this->returnValue(false));
+
+		return $mksanitizedparameters;
 	}
 }

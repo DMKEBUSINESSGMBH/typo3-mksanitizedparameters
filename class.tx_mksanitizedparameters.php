@@ -478,11 +478,7 @@ class tx_mksanitizedparameters {
 	private static function handleDebugging(
 		array $arrayToSanitize, $nameToSanitize, $initialValueToSanitize, $sanitizedValue
 	) {
-		$isDebugMode = tx_rnbase_configurations::getExtensionCfgValue(
-			'mksanitizedparameters', 'debugMode'
-		);
-
-		if(!$isDebugMode){
+		if(!static::getDebugMode()){
 			return;
 		}
 
@@ -502,6 +498,21 @@ class tx_mksanitizedparameters {
 			),
 			self::MESSAGE_VALUE_HAS_CHANGED
 		);
+	}
+	
+	
+	/**
+	 * @return boolean
+	 */
+	protected static function getDebugMode() {
+		$debugModeByExtensionConfiguration = tx_rnbase_configurations::getExtensionCfgValue(
+			'mksanitizedparameters', 'debugMode'
+		);
+
+		return 
+			$debugModeByExtensionConfiguration || 
+			(defined('TYPO3_ERRORHANDLER_MODE') && TYPO3_ERRORHANDLER_MODE == 'debug')
+		;
 	}
 
 	/**
