@@ -879,8 +879,10 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 				),
 			)
 		);
-		$sanitizedArray = tx_mksanitizedparameters::sanitizeArrayByRules(
-			$arrayToSanitize, $rules
+		
+		$mainClass = $this->getMainClassMockWithoutDebugMode();
+		$sanitizedArray = $mainClass::sanitizeArrayByRules(
+				$arrayToSanitize, $rules
 		);
 
 		$this->assertEquals(
