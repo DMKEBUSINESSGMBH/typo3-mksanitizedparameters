@@ -40,7 +40,9 @@ tx_rnbase::load('tx_mklib_tests_Util');
 //otherwise we get an output already started error when the test is excuted
 //via CLI. caused by $template->startPage('testPage');
 //@FIXME find a betty way to avoid the problem
-ob_start();
+if((defined('TYPO3_cliMode') && TYPO3_cliMode)) {
+	ob_start();
+}
 
 /**
  * @package TYPO3
