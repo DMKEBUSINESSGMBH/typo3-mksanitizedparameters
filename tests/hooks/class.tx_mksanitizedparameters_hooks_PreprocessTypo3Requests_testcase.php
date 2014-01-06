@@ -107,6 +107,11 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx
 	
 	/**
 	 * @group integration
+	 * 
+	 * Dieser Test lässt sich leider nicht im BE ausführen wegen
+	 * "Cannot modify header information - headers already sent by" Meldung 
+	 * diese kommt durch typo3\template.php Line: 738 zu Stande
+	 * auf CLI läuft alles
 	 */
 	public function testHookIsCalledInBackendAndSanitizesRequestPostAndGetGlobals(){
 		$_COOKIE['testParameter'] = '2WithString';
