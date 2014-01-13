@@ -367,8 +367,6 @@ class tx_mksanitizedparameters {
 	 * @return mixed
 	 */
 	private static function sanitizeValueByRule($valueToSanitize, $rule) {
-		$valueToSanitize = trim($valueToSanitize);
-
 		if(!is_array($rule)) {
 			return filter_var($valueToSanitize,$rule);
 		} else {

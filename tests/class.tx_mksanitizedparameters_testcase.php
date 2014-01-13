@@ -481,6 +481,35 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 	/**
 	 * @group unit
 	 */
+	public function testSanitizeArrayByRulesDoesNotConsiderValueAsChangedIfHasWhitespaceAtBeginningOrEnd(){
+		tx_mklib_tests_Util::setExtConfVar('logMode', 1, 'mksanitizedparameters');
+
+		$arrayToSanitize = array (
+			'parameter' => ' test '
+		);
+		$rules = array(
+			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY	=> array(FILTER_SANITIZE_STRING),
+		);
+
+		$mksanitizedparameters = $this->getMockClass(
+			'tx_mksanitizedparameters', array('getDebugMode', 'getLogger')
+		);
+
+		$mksanitizedparameters::staticExpects($this->any())
+			->method('getDebugMode')
+			->will($this->returnValue(false));
+
+		$mksanitizedparameters::staticExpects($this->never())
+			->method('getLogger');
+
+		$mksanitizedparameters::sanitizeArrayByRules(
+			$arrayToSanitize, $rules
+		);
+	}
+
+	/**
+	 * @group unit
+	 */
 	public function testSanitizeArrayByRulesCallsLoggerCorrectIfLoggingEnabledAndValueChanged(){
 		tx_mklib_tests_Util::setExtConfVar('logMode', 1, 'mksanitizedparameters');
 
@@ -879,7 +908,7 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 				),
 			)
 		);
-		
+
 		$mainClass = $this->getMainClassMockWithoutDebugMode();
 		$sanitizedArray = $mainClass::sanitizeArrayByRules(
 				$arrayToSanitize, $rules
