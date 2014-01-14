@@ -483,10 +483,6 @@ class tx_mksanitizedparameters {
 			return;
 		}
 
-		if(TYPO3_MODE == 'FE') {
-			ob_start();//da wir eine Ausgabe wollen bevor TYPO3 die FE Ausgabe startet
-		}
-
 		$debugger = static::getDebugger();
 		$debugger::debug(
 			array(
@@ -499,6 +495,8 @@ class tx_mksanitizedparameters {
 			),
 			self::MESSAGE_VALUE_HAS_CHANGED
 		);
+
+		static::callExit();
 	}
 
 
@@ -522,6 +520,13 @@ class tx_mksanitizedparameters {
 	protected static function getDebugger() {
 		tx_rnbase::load('tx_rnbase_util_Debug');
 		return tx_rnbase_util_Debug;
+	}
+
+	/**
+	 * @return tx_rnbase_util_Debug
+	 */
+	protected static function callExit() {
+		exit;
 	}
 
 	/**

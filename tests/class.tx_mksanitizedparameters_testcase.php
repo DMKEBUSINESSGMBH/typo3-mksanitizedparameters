@@ -639,7 +639,7 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		);
 
 		$mksanitizedparameters = $this->getMockClass(
-			'tx_mksanitizedparameters', array('getDebugger','getDebugMode')
+			'tx_mksanitizedparameters', array('getDebugger','getDebugMode', 'callExit')
 		);
 		$mksanitizedparameters::staticExpects($this->once())
 			->method('getDebugMode')
@@ -663,6 +663,10 @@ class tx_mksanitizedparameters_testcase extends tx_phpunit_testcase {
 		$mksanitizedparameters::staticExpects($this->once())
 			->method('getDebugger')
 			->will($this->returnValue($debugger));
+
+		$mksanitizedparameters::staticExpects($this->once())
+			->method('callExit')
+			->will($this->returnValue(true));
 
 		$mksanitizedparameters::sanitizeArrayByRules(
 			$arrayToSanitize, $rules
