@@ -496,7 +496,9 @@ class tx_mksanitizedparameters {
 			self::MESSAGE_VALUE_HAS_CHANGED
 		);
 
-		static::callExit();
+		if(TYPO3_MODE == 'FE') {
+			static::callExit();//da wir eine Ausgabe wollen bevor TYPO3 die FE Ausgabe startet
+		}
 	}
 
 
