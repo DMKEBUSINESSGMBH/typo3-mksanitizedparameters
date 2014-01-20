@@ -3,7 +3,7 @@ defined('TYPO3_MODE') || die('Access denied.');
 
 // the default rules for common TYPO3 request parameters.
 // add your own parameter rules in localconf.php similar to the
-// rules below or overwrite them. examples for the rules possibilities  
+// rules below or overwrite them. examples for the rules possibilities
 // can be found in class.tx_mksanitizedparameters.php. You can also check
 // the testcases in /tests to see how the classes work.
 // NOTE: your rules should be stored serialized for performance reasons.
@@ -21,4 +21,8 @@ if(t3lib_extMgm::isLoaded('caretaker_instance')){
 
 if(t3lib_extMgm::isLoaded('mksearch')){
 	require_once(t3lib_extMgm::extPath($_EXTKEY).'rules/mksearch.php');
+}
+
+if(t3lib_extMgm::isLoaded('fluid_recommendation')){
+	require_once(t3lib_extMgm::extPath($_EXTKEY).'rules/fluid_recommendation.php');
 }
