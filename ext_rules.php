@@ -26,3 +26,7 @@ if(t3lib_extMgm::isLoaded('mksearch')){
 if(t3lib_extMgm::isLoaded('fluid_recommendation')){
 	require_once(t3lib_extMgm::extPath($_EXTKEY).'rules/fluid_recommendation.php');
 }
+
+if(t3lib_extMgm::isLoaded('powermail')){
+	require_once(t3lib_extMgm::extPath($_EXTKEY).'rules/powermail.php');
+}
