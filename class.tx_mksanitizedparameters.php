@@ -282,16 +282,7 @@ class tx_mksanitizedparameters {
 		if(!$rulesForValue) {
 			$rulesForValue = $rules[tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY];
 		}
-if(
-	defined('TYPO3_ERRORHANDLER_MODE') &&
-	TYPO3_ERRORHANDLER_MODE == 'debug'
-) {
-	tx_rnbase::load('tx_rnbase_util_Debug');
-	tx_rnbase_util_Debug::debug(array(
-			$rulesForValue,$nameToSanitize,self::getSpecialRulesByName($rules, $nameToSanitize),
-			self::getSpecialRulesByName($rules, 'success'),$rules
-	),__METHOD__.' Line: '.__LINE__); // @TODO: remove me
-}
+		
 		return $rulesForValue;
 	}
 
