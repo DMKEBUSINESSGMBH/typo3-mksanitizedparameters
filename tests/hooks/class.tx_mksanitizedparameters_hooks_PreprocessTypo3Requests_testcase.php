@@ -30,13 +30,13 @@ require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 
 //wir brauchen eine XClass damit der Debug Mode überschrieben wird
 global $TYPO3_CONF_VARS;
-$TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/hooks/class.tx_mksanitizedparameters_hooks_PreprocessTypo3Requests.php'] = 
+$TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/hooks/class.tx_mksanitizedparameters_hooks_PreprocessTypo3Requests.php'] =
 	t3lib_extMgm::extPath('mksanitizedparameters') . 'tests/hooks/class.ux_tx_mksanitizedparameters_hooks_PreprocessTypo3Requests.php';
 
 tx_rnbase::load('tx_mksanitizedparameters');
 tx_rnbase::load('tx_mksanitizedparameters_Rules');
 tx_rnbase::load('tx_mklib_tests_Util');
-	
+
 //otherwise we get an output already started error when the test is excuted
 //via CLI. caused by $template->startPage('testPage');
 //@FIXME find a betty way to avoid the problem
@@ -50,51 +50,51 @@ if((defined('TYPO3_cliMode') && TYPO3_cliMode)) {
  * @author Hannes Bochmann <hannes.bochmann@das-mediekombinat.de>
  */
 class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx_phpunit_testcase {
-	
+
 	private $storedExtConfig;
-	
+
 	/**
 	 * (non-PHPdoc)
 	 * @see PHPUnit_Framework_TestCase::setUp()
 	 */
 	protected function setUp() {
-		$this->storedExtConfig =  
+		$this->storedExtConfig =
 			$GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mksanitizedparameters'];
 		$this->deactivateStealthMode($this->storedExtConfig);
-		
+
 		$rulesForBackend = array(
 			'testParameter' => FILTER_SANITIZE_NUMBER_INT
 		);
 		tx_mksanitizedparameters_Rules::addRulesForBackend($rulesForBackend);
 		require_once PATH_site.TYPO3_mainDir.'template.php';
-		
+
 		tx_mklib_tests_Util::disableDevlog();
 		tx_mklib_tests_Util::storeExtConf('mksanitizedparameters');
 		tx_mklib_tests_Util::setExtConfVar('debugMode', 0, 'mksanitizedparameters');
 		tx_mklib_tests_Util::setExtConfVar('logMode', 0, 'mksanitizedparameters');
-		
+
 		if(tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
-			$GLOBALS['TBE_TEMPLATE'] = 
+			$GLOBALS['TBE_TEMPLATE'] =
 				tx_rnbase::makeInstance('TYPO3\CMS\Backend\Template\DocumentTemplate');
 		}
 	}
-	
+
 	/**
 	 * @param string $serializedExtConfig
-	 * 
+	 *
 	 * @return void
 	 */
 	private function deactivateStealthMode($serializedExtConfig) {
-		$extConfig = 
+		$extConfig =
 			unserialize($serializedExtConfig);
-		
+
 		if(!is_array($extConfig)) {
 			$extConfig = array();
 		}
 		$extConfig['stealthMode'] = 0;
 		$GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mksanitizedparameters'] = serialize($extConfig);
 	}
-	
+
 	/**
 	 * (non-PHPdoc)
 	 * @see PHPUnit_Framework_TestCase::tearDown()
@@ -102,19 +102,19 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx
 	protected function tearDown() {
 		$GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mksanitizedparameters'] =
 			$this->storedExtConfig;
-		
+
 		unset($_REQUEST['testParameter']);
 		unset($_POST['testParameter']);
 		unset($_GET['testParameter']);
-		
+
 		tx_mklib_tests_Util::restoreExtConf('mksanitizedparameters');
 	}
-	
+
 	/**
 	 * @group integration
-	 * 
+	 *
 	 * Dieser Test lässt sich leider nicht im BE ausführen wegen
-	 * "Cannot modify header information - headers already sent by" Meldung 
+	 * "Cannot modify header information - headers already sent by" Meldung
 	 * diese kommt durch typo3\template.php Line: 738 zu Stande
 	 * auf CLI läuft alles
 	 */
@@ -122,11 +122,11 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx
 		$_COOKIE['testParameter'] = '2WithString';
 		$_POST['testParameter'] = '2WithString';
 		$_GET['testParameter'] = '2WithString';
-		
+
 		$template = tx_rnbase::makeInstance('template');
 		$template->startPage('testPage');
 		ob_end_flush();
-		
+
 		$this->assertEquals(
 			2,$_COOKIE['testParameter'], 'Parameter nicht bereinigt'
 		);
@@ -137,28 +137,28 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx
 			2,$_GET['testParameter'], 'Parameter nicht bereinigt'
 		);
 	}
-	
+
 	/**
-	 * we can't check if the hook is called correctly in FE as 
+	 * we can't check if the hook is called correctly in FE as
 	 * including PATH_site.TYPO3_mainDir.'sysext/cms/tslib/index_ts.php'
 	 * results in an fatal error. so we test at least if the hook
 	 * is offered in PATH_site.TYPO3_mainDir.'sysext/cms/tslib/index_ts.php'
 	 * and if the hook is configured correctly.
-	 * 
+	 *
 	 * @group integration
 	 */
 	public function testHookInFrontendIsAvailableAndConfigured(){
-		$indexTs = 
+		$indexTs =
 			file_get_contents(PATH_site.TYPO3_mainDir.'sysext/cms/tslib/index_ts.php');
 
-		$callHookLine = 
+		$callHookLine =
 			strstr($indexTs, 'foreach ($TYPO3_CONF_VARS[\'SC_OPTIONS\'][\'tslib/index_ts.php\'][\'preprocessRequest\'] as $hookFunction) {');
-			
+
 		$this->assertNotEmpty($callHookLine, 'The line calling the FE hook wasn\'t found in '.PATH_site.TYPO3_mainDir.'sysext/cms/tslib/index_ts.php');
-		
+
 		$this->assertTrue(
 			in_array(
-				'EXT:mksanitizedparameters/hooks/class.tx_mksanitizedparameters_hooks_PreprocessTypo3Requests.php:tx_mksanitizedparameters_hooks_PreprocessTypo3Requests->sanitizeGlobalInputArrays', 
+				'EXT:mksanitizedparameters/hooks/class.tx_mksanitizedparameters_hooks_PreprocessTypo3Requests.php:tx_mksanitizedparameters_hooks_PreprocessTypo3Requests->sanitizeGlobalInputArrays',
 				$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/index_ts.php']['preprocessRequest']
 			),
 			'The FE Hook is not configured'
