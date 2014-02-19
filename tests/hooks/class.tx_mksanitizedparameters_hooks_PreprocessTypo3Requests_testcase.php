@@ -72,6 +72,11 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx
 		tx_mklib_tests_Util::storeExtConf('mksanitizedparameters');
 		tx_mklib_tests_Util::setExtConfVar('debugMode', 0, 'mksanitizedparameters');
 		tx_mklib_tests_Util::setExtConfVar('logMode', 0, 'mksanitizedparameters');
+		
+		if(tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
+			$GLOBALS['TBE_TEMPLATE'] = 
+				tx_rnbase::makeInstance('TYPO3\CMS\Backend\Template\DocumentTemplate');
+		}
 	}
 	
 	/**
