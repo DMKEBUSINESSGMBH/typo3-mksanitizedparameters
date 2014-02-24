@@ -30,3 +30,7 @@ if(t3lib_extMgm::isLoaded('fluid_recommendation')){
 if(t3lib_extMgm::isLoaded('powermail')){
 	require_once(t3lib_extMgm::extPath($_EXTKEY).'rules/powermail.php');
 }
+
+if(t3lib_extMgm::isLoaded('sr_feuser_register')){
+	require_once(t3lib_extMgm::extPath($_EXTKEY).'rules/sr_feuser_register.php');
+}
