@@ -29,20 +29,12 @@
 require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 
 //wir brauchen eine XClass damit der Debug Mode überschrieben wird
-global $TYPO3_CONF_VARS;
-$TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/hooks/class.tx_mksanitizedparameters_hooks_PreprocessTypo3Requests.php'] =
-	t3lib_extMgm::extPath('mksanitizedparameters') . 'tests/hooks/class.ux_tx_mksanitizedparameters_hooks_PreprocessTypo3Requests.php';
+$GLOBALE['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/hooks/class.tx_mksanitizedparameters_hooks_PreprocessTypo3Requests.php'] =
+	t3lib_extMgm::extPath('mksanitizedparameters', 'tests/hooks/class.ux_tx_mksanitizedparameters_hooks_PreprocessTypo3Requests.php');
 
 tx_rnbase::load('tx_mksanitizedparameters');
 tx_rnbase::load('tx_mksanitizedparameters_Rules');
 tx_rnbase::load('tx_mklib_tests_Util');
-
-//otherwise we get an output already started error when the test is excuted
-//via CLI. caused by $template->startPage('testPage');
-//@FIXME find a betty way to avoid the problem
-if((defined('TYPO3_cliMode') && TYPO3_cliMode)) {
-	ob_start();
-}
 
 /**
  * @package TYPO3
@@ -77,6 +69,22 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx
 			$GLOBALS['TBE_TEMPLATE'] =
 				tx_rnbase::makeInstance('TYPO3\CMS\Backend\Template\DocumentTemplate');
 		}
+		/*
+		 * warning "Cannot modify header information" abfangen.
+		 *
+		 * Einige Tests lassen sich leider nicht ausführen:
+		 * "Cannot modify header information - headers already sent by"
+		 * Diese wird durch durch typo3\template.php Line: 738 zu ausgelöst
+		 * Ab Typo3 6.1 laufend die Tests auch auf der CLI nicht.
+		 * Eigentlich gibt es dafür die runInSeparateProcess Anotation,
+		 * Allerdings funktioniert diese bei Typo3 nicht, wenn versucht wird
+		 * die GLOBALS in den anderen Prozess zu übertragen.
+		 * Ein Deaktivierend er übertragung führt dazu,
+		 * das Typo3 nicht initialisiert ist.
+		 *
+		 * Wir gehen also erst mal den Weg, den Fehler abzufangen.
+		 */
+		set_error_handler(array(__CLASS__, 'errorHandler'), E_WARNING);
 	}
 
 	/**
@@ -96,6 +104,27 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx
 	}
 
 	/**
+	 *
+	 * @param integer $errno
+	 * @param string $errstr
+	 * @param string $errfile
+	 * @param integer $errline
+	 * @param array $errcontext
+	 */
+	public static function errorHandler($errno, $errstr, $errfile, $errline, $errcontext) {
+		$ignoreMsg = array(
+			'Cannot modify header information - headers already sent by',
+		);
+		foreach($ignoreMsg as $msg) {
+			if (strpos($errstr, $ignoreMsg) !== FALSE) {
+				// Don't execute PHP internal error handler
+				return FALSE;
+			}
+		}
+		return NULL;
+	}
+
+	/**
 	 * (non-PHPdoc)
 	 * @see PHPUnit_Framework_TestCase::tearDown()
 	 */
@@ -108,24 +137,22 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx
 		unset($_GET['testParameter']);
 
 		tx_mklib_tests_Util::restoreExtConf('mksanitizedparameters');
+
+		// error handler zurücksetzen
+		restore_error_handler();
 	}
 
 	/**
 	 * @group integration
-	 *
-	 * Dieser Test lässt sich leider nicht im BE ausführen wegen
-	 * "Cannot modify header information - headers already sent by" Meldung
-	 * diese kommt durch typo3\template.php Line: 738 zu Stande
-	 * auf CLI läuft alles
 	 */
 	public function testHookIsCalledInBackendAndSanitizesRequestPostAndGetGlobals(){
 		$_COOKIE['testParameter'] = '2WithString';
 		$_POST['testParameter'] = '2WithString';
 		$_GET['testParameter'] = '2WithString';
 
+		/* @var $template \TYPO3\CMS\Backend\Template\DocumentTemplate */
 		$template = tx_rnbase::makeInstance('template');
 		$template->startPage('testPage');
-		ob_end_flush();
 
 		$this->assertEquals(
 			2,$_COOKIE['testParameter'], 'Parameter nicht bereinigt'

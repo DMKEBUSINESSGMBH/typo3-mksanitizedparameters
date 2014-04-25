@@ -282,7 +282,7 @@ class tx_mksanitizedparameters {
 		if(!$rulesForValue) {
 			$rulesForValue = $rules[tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY];
 		}
-		
+
 		return $rulesForValue;
 	}
 
@@ -483,6 +483,7 @@ class tx_mksanitizedparameters {
 			return;
 		}
 
+
 		$debugger = static::getDebugger();
 		$debugger::debug(
 			array(
@@ -521,7 +522,7 @@ class tx_mksanitizedparameters {
 	 */
 	protected static function getDebugger() {
 		tx_rnbase::load('tx_rnbase_util_Debug');
-		return tx_rnbase_util_Debug;
+		return 'tx_rnbase_util_Debug';
 	}
 
 	/**
