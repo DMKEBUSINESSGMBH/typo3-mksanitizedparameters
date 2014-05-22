@@ -36,12 +36,12 @@ require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests {
 
 	/**
-	 * sanitize $_REQUEST, $_POST, $_GET before 
+	 * sanitize $_REQUEST, $_POST, $_GET before
 	 * Frontend/Backend Actions start.
-	 * 
+	 *
 	 * @param array $parameters
 	 * @param $parent
-	 * 
+	 *
 	 * @return void
 	 */
 	public function sanitizeGlobalInputArrays(array $parameters, $parent) {
@@ -51,9 +51,9 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests {
 		$arraysToSanitize = array(
 			'$_COOKIE' => &$_COOKIE,
 			'$_POST' => &$_POST,
-			'$_GET' => &$_GET 
+			'$_GET' => &$_GET
 		);
-		
+
 		if($isStealthMode) {
 			tx_rnbase::load('tx_mksanitizedparameters_StealthMode');
 			tx_mksanitizedparameters_StealthMode::monitorArrays(
@@ -65,16 +65,16 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests {
 
 			$mksanitizedparametersMainClass = $this->getMksanitizedparametersMainClass();
 			$mksanitizedparametersMainClass::sanitizeArraysByRules(
-				$arraysToSanitize, 
+				$arraysToSanitize,
 				tx_mksanitizedparameters_Rules::getRulesForCurrentEnvironment()
 			);
 		}
 	}
-	
+
 	/**
 	 * wird in tests/hooks/class.ux_tx_mksanitizedparameters.php
 	 * überschrieben damit debug mode abgeschaltet werden kann
-	 * 
+	 *
 	 * @return tx_mksanitizedparameters
 	 */
 	protected function getMksanitizedparametersMainClass () {
