@@ -78,7 +78,7 @@ class tx_mksanitizedparameters_StealthMode {
 	 * @return void
 	 */
 	private static function loadTca() {
-		global $TYPO3_CONF_VARS, $TCA;
+		global $GLOBALS['TYPO3_CONF_VARS'], $TCA;
 		if(empty($TCA[self::$storageDbTableName])) {
 			tslib_eidtools::initTCA();
 			t3lib_div::loadTCA(self::$storageDbTableName);
@@ -162,6 +162,6 @@ class tx_mksanitizedparameters_StealthMode {
 	}
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/class.tx_mksanitizedparameters_StealthMode.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/class.tx_mksanitizedparameters_StealthMode.php']);
+if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/class.tx_mksanitizedparameters_StealthMode.php']) {
+	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/class.tx_mksanitizedparameters_StealthMode.php']);
 }
