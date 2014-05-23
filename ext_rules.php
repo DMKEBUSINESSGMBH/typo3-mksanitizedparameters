@@ -1,6 +1,8 @@
 <?php
 defined('TYPO3_MODE') || die('Access denied.');
 
+$_EXTKEY = 'mksanitizedparameters';
+
 // the default rules for common TYPO3 request parameters.
 // add your own parameter rules in localconf.php similar to the
 // rules below or overwrite them. examples for the rules possibilities
