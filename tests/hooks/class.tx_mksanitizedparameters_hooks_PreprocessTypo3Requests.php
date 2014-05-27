@@ -31,17 +31,17 @@ tx_rnbase::load('tx_mksanitizedparameters');
 
 /**
  * damit wir eigentliche klasse ersetzen können
- * 
+ *
  * @author Hannes Bochmann
  *
  */
-class ux_tx_mksanitizedparameters_hooks_PreprocessTypo3Requests 
+class tx_mksanitizedparameters_tests_hooks_PreprocessTypo3Requests
 	extends tx_mksanitizedparameters_hooks_PreprocessTypo3Requests {
 
 	/**
 	 * wird in ux_tx_mksanitizedparameters_hooks_PreprocessTypo3Requests
 	 * überschrieben damit debug mode abgeschaltet werden kann
-	 * 
+	 *
 	 * @return ux_tx_mksanitizedparameters
 	 */
 	protected function getMksanitizedparametersMainClass () {
