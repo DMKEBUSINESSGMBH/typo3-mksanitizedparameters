@@ -34,5 +34,3 @@ if(t3lib_extMgm::isLoaded('powermail')){
 if(t3lib_extMgm::isLoaded('sr_feuser_register')){
 	require_once(t3lib_extMgm::extPath($_EXTKEY).'rules/sr_feuser_register.php');
 }
-
-require_once(t3lib_extMgm::extPath($_EXTKEY).'rules/piwik.php');
