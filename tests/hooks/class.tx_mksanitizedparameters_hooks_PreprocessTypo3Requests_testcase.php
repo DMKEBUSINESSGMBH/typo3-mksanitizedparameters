@@ -28,9 +28,10 @@
  */
 require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 
-//wir brauchen eine XClass damit der Debug Mode überschrieben wird
-$GLOBALE['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/hooks/class.tx_mksanitizedparameters_hooks_PreprocessTypo3Requests.php'] =
-	t3lib_extMgm::extPath('mksanitizedparameters', 'tests/hooks/class.ux_tx_mksanitizedparameters_hooks_PreprocessTypo3Requests.php');
+//wir brauchen einen eigenen Hook damit der Debug Mode überschrieben wird
+require_once(t3lib_extMgm::extPath('mksanitizedparameters', 'tests/hooks/class.tx_mksanitizedparameters_hooks_PreprocessTypo3Requests.php'));
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['typo3/template.php']['preStartPageHook']['mksanitizedparameters'] =
+	'EXT:mksanitizedparameters/tests/hooks/class.tx_mksanitizedparameters_hooks_PreprocessTypo3Requests.php:&tx_mksanitizedparameters_tests_hooks_PreprocessTypo3Requests->sanitizeGlobalInputArrays';
 
 tx_rnbase::load('tx_mksanitizedparameters');
 tx_rnbase::load('tx_mksanitizedparameters_Rules');
@@ -115,7 +116,7 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx
 			'Cannot modify header information - headers already sent by',
 		);
 		foreach($ignoreMsg as $msg) {
-			if (strpos($errstr, $ignoreMsg) !== FALSE) {
+			if ((is_string($ignoreMsg) || is_numeric($ignoreMsg)) && strpos($errstr, $ignoreMsg) !== FALSE) {
 				// Don't execute PHP internal error handler
 				return FALSE;
 			}
