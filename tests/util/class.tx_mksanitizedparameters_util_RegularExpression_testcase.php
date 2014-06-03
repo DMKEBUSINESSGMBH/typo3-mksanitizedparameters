@@ -29,23 +29,24 @@
 require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 tx_rnbase::load('tx_mksanitizedparameters_util_RegularExpression');
 tx_rnbase::load('tx_mksanitizedparameters_sanitizer_Alpha');
-	
+
 /**
  * @package TYPO3
  * @subpackage tx_mksanitizedparameters
  * @author Hannes Bochmann <hannes.bochmann@das-mediekombinat.de>
  */
 class tx_mksanitizedparameters_util_RegularExpression_testcase extends tx_phpunit_testcase {
-	
+
 	/**
 	 * @group unit
 	 */
 	public function testCallPregReplace(){
+		$this->markTestSkipped('Test für Jenkins');
 		$testString = 'abc123#! def';
-		
+
 		$pattern = '/[^' . tx_mksanitizedparameters_sanitizer_Alpha::getRegularExpressionForLetters() .']/';
 		$this->assertEquals(
-			'abcdef', 
+			'abcdef',
 			tx_mksanitizedparameters_util_RegularExpression::callPregReplace(
 				$pattern, $testString
 			),
