@@ -41,7 +41,6 @@ class tx_mksanitizedparameters_util_RegularExpression_testcase extends tx_phpuni
 	 * @group unit
 	 */
 	public function testCallPregReplace(){
-		$this->markTestSkipped('Test für Jenkins');
 		$testString = 'abc123#! def';
 
 		$pattern = '/[^' . tx_mksanitizedparameters_sanitizer_Alpha::getRegularExpressionForLetters() .']/';
