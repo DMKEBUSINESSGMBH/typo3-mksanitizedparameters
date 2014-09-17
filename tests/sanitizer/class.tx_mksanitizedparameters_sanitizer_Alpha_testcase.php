@@ -3,7 +3,7 @@
  *
  *  Copyright notice
  *
- *  (c) 2012 das MedienKombinat GmbH <kontakt@das-medienkombinat.de>
+ *  (c) 2012 DMK E-Business GmbH <dev@dmk-ebusiness.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -32,7 +32,7 @@ tx_rnbase::load('tx_mksanitizedparameters_sanitizer_Alpha');
 /**
  * @package TYPO3
  * @subpackage tx_mksanitizedparameters
- * @author Hannes Bochmann <hannes.bochmann@das-mediekombinat.de>
+ * @author Hannes Bochmann <dev@dmk-ebusiness.de>
  */
 class tx_mksanitizedparameters_sanitizer_Alpha_testcase extends tx_phpunit_testcase {
 	
