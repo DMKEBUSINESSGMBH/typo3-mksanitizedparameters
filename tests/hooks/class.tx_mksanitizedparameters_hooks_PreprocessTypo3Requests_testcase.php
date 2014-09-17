@@ -59,7 +59,6 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx
 			'testParameter' => FILTER_SANITIZE_NUMBER_INT
 		);
 		tx_mksanitizedparameters_Rules::addRulesForBackend($rulesForBackend);
-		require_once PATH_site.TYPO3_mainDir.'template.php';
 
 		tx_mklib_tests_Util::disableDevlog();
 		tx_mklib_tests_Util::storeExtConf('mksanitizedparameters');
