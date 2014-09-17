@@ -15,18 +15,18 @@
 
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'Sanitize input parameters system wide',
-	'description' => 'Sanitize $_REQUEST, $_POST and $_GET before the processing of TYPO3 in backend or frontend starts. Take a look into ext_rules.php how to add your own rules or see which one exist.',
+	'description' => 'Sanitize $_REQUEST, $_POST and $_GET before the processing of TYPO3 in backend or frontend starts. Take a look into the documentation how to add your own rules or see which one exist.',
 	'category' => 'misc',
-	'author' => 'das MedienKombinat GmbH',
-	'author_email' => 'kontakt@das-medienkombinat.de',
-	'author_company' => 'das Medienkombinat GmbH',
+	'author' => 'Hannes Bochmann',
+	'author_email' => 'dev@dmk-ebusiness.de',
+	'author_company' => 'DMK E-Business GmbH',
 	'shy' => '',
-	'dependencies' => 'rn_base,mklib',
+	'dependencies' => 'rn_base',
 	'version' => '0.3.11',
 	'conflicts' => '',
 	'priority' => 'top',
 	'module' => '',
-	'state' => 'beta',
+	'state' => 'stable',
 	'internal' => '',
 	'uploadfolder' => 0,
 	'createDirs' => '',
@@ -36,11 +36,12 @@ $EM_CONF[$_EXTKEY] = array(
 	'constraints' => array(
 		'depends' => array(
 			'rn_base'	=> '',
-			'mklib'	=> ''
+			'typo3' => '4.5.0-6.2.99',
 		),
 		'conflicts' => array(
 		),
 		'suggests' => array(
+			'mklib' => ''
 		),
 	),
 );
