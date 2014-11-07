@@ -17,7 +17,8 @@ Introduction
 What does it do?
 ----------------
 
-Sanitizes all parameters in $_GET, $_POST und $_COOKIE. Every possible parameter
+Sanitizes all parameters in $_GET, $_POST and $_COOKIE in the frontend and backend.
+Every possible parameter
 can be configured separately. The configuration can be for a specific position
 in the parameter array or common for every possible position or even default for all
 parameters, which are not configured.
