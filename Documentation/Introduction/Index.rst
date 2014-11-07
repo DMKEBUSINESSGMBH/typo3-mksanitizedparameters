@@ -33,7 +33,7 @@ any place you want. You just have to provide the correct rule/configuration to b
 your code is not vulnerable to MySQL injections etc.
 
 The sanitizing itself is done through the filter function of PHP. So you can take full advantage
-of it's features.
+of it's features and provide even custom filters.
 
 
 .. _features:
