@@ -22,6 +22,16 @@ can be configured separately. The configuration can be for a specific position
 in the parameter array or common for every possible position or even default for all
 parameters, which are not configured.
 
+This way possible attacks like MySQL injections can be prevented even for parameters
+where attack potential was not suspected. So unclosed security holes are harder or
+even not at all exploited.
+
+Taking care of the correct data type of a parameter is now done in one single place.
+You don't need to call intval() for numeric parameters every time you use them (e.g.
+in a MySQL query). You can use them safe and directly without any further action at
+any place you want. You just have to provide the correct rule/configuration to be sure
+your code is not vulnerable to MySQL injections etc.
+
 The sanitizing itself is done through the filter function of PHP. So you can take full advantage
 of it's features.
 
