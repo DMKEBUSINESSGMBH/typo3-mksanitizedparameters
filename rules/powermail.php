@@ -6,6 +6,7 @@ defined('TYPO3_MODE') || die('Access denied.');
 // 		'url' => FILTER_SANITIZE_URL,
 // 		// JSON String
 // 		'__hmac' => FILTER_UNSAFE_RAW,
+// 		'__trustedProperties' => FILTER_UNSAFE_RAW,
 // 		'__referrer' => array(
 // 			'extensionName' => FILTER_SANITIZE_STRING,
 // 			'controllerName' =>	FILTER_SANITIZE_STRING,
@@ -18,7 +19,8 @@ defined('TYPO3_MODE') || die('Access denied.');
 // 	),
 // );
 
-$rulesForFrontend =
-	unserialize('a:1:{s:16:"tx_powermail_pi1";a:5:{s:3:"url";i:518;s:6:"__hmac";i:516;s:10:"__referrer";a:3:{s:13:"extensionName";i:513;s:14:"controllerName";i:513;s:10:"actionName";i:513;}s:4:"form";i:519;s:5:"field";a:1:{s:9:"__default";i:516;}}}');
+$rulesForFrontendVersion1 =
+	unserialize('a:1:{s:16:"tx_powermail_pi1";a:6:{s:3:"url";i:518;s:6:"__hmac";i:516;s:19:"__trustedProperties";i:516;s:10:"__referrer";a:3:{s:13:"extensionName";i:513;s:14:"controllerName";i:513;s:10:"actionName";i:513;}s:4:"form";i:519;s:5:"field";a:1:{s:9:"__default";i:516;}}}');
 
-tx_mksanitizedparameters_Rules::addRulesForFrontend($rulesForFrontend);
+tx_mksanitizedparameters_Rules::addRulesForFrontend($rulesForFrontendVersion1);
+
