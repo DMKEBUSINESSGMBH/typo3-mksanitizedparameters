@@ -498,7 +498,8 @@ class tx_mksanitizedparameters {
 		);
 
 		if(TYPO3_MODE == 'FE') {
-			static::callExit();//da wir eine Ausgabe wollen bevor TYPO3 die FE Ausgabe startet
+			$GLOBALS['TYPO3_CONF_VARS']['FE']['compressionLevel'] = 0;
+			ob_flush();
 		}
 	}
 
@@ -523,13 +524,6 @@ class tx_mksanitizedparameters {
 	protected static function getDebugger() {
 		tx_rnbase::load('tx_rnbase_util_Debug');
 		return 'tx_rnbase_util_Debug';
-	}
-
-	/**
-	 * @return tx_rnbase_util_Debug
-	 */
-	protected static function callExit() {
-		exit;
 	}
 
 	/**
