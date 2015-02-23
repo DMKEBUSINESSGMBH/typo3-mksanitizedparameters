@@ -1,7 +1,7 @@
 {
 	"name" : "dmk/mksanitizedparameters",
 	"description" : "Sanitize $_REQUEST, $_POST and $_GET before the processing of TYPO3 in backend or frontend starts. Take a look into the documentation how to add your own rules or see which one exist.",
-	"version" : "1.0.1",
+	"version" : "1.0.3",
 	"type" : "typo3-cms-extension",
 	"keywords" : ["TYPO3 CMS", "parameter", "sanitize", "security"],
 	"homepage" : "http://www.dmk-ebusiness.de/",
