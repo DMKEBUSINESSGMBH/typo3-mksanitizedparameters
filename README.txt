@@ -1,1 +1,0 @@
-Please refer to the documentatiopn on http://typo3.org/extensions/repository/view/mksanitizedparameters
