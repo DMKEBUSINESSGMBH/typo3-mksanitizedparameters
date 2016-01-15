@@ -220,7 +220,7 @@ class tx_mksanitizedparameters {
 	 * 		'commonValue' => FILTER_SANITIZE_NUMBER_INT
 	 * 	)
 	 */
-	public static function sanitizeArrayByRules(
+	public function sanitizeArrayByRules(
 		array $arrayToSanitize, array $rules
 	) {
 		if(empty($rules)) {
@@ -230,36 +230,36 @@ class tx_mksanitizedparameters {
 		foreach ($arrayToSanitize as $nameToSanitize => &$valueToSanitize) {
 			$initialValueToSanitize = $valueToSanitize;
 
-			$rulesForValue = self::getRulesForValue(
+			$rulesForValue = $this->getRulesForValue(
 				$rules, $nameToSanitize
 			);
 
 			if(is_array($valueToSanitize)) {
 				// so we have them on the next level, too
 				$rulesForValue =
-					self::injectDefaultRulesFromCurrentIntoNextLevelIfNotSet(
+					$this->injectDefaultRulesFromCurrentIntoNextLevelIfNotSet(
 						$rules, (array) $rulesForValue
 					);
 				$rulesForValue =
-					self::injectCommonRulesFromCurrentIntoNextLevelIfNotSet(
+					$this->injectCommonRulesFromCurrentIntoNextLevelIfNotSet(
 						$rules, (array) $rulesForValue
 					);
 
-				$valueToSanitize = self::sanitizeArrayByRules(
+				$valueToSanitize = $this->sanitizeArrayByRules(
 					$valueToSanitize, $rulesForValue
 				);
 			} elseif(!empty($rulesForValue)) {
-				$valueToSanitize = self::sanitizeValueByRule(
+				$valueToSanitize = $this->sanitizeValueByRule(
 					$valueToSanitize,$rulesForValue
 				);
 			}
 
-			if(self::valueToSanitizeHasChanged($initialValueToSanitize, $valueToSanitize)) {
-				self::handleDebugging(
+			if($this->valueToSanitizeHasChanged($initialValueToSanitize, $valueToSanitize)) {
+				$this->handleDebugging(
 					$arrayToSanitize, $nameToSanitize, $initialValueToSanitize, $valueToSanitize
 				);
 
-				self::handleLogging(
+				$this->handleLogging(
 					$arrayToSanitize, $nameToSanitize, $initialValueToSanitize, $valueToSanitize
 				);
 			}
@@ -274,9 +274,9 @@ class tx_mksanitizedparameters {
 	 *
 	 * @return mixed
 	 */
-	private static function getRulesForValue($rules, $nameToSanitize) {
-		if(!$rulesForValue = self::getSpecialRulesByName($rules, $nameToSanitize)) {
-			$rulesForValue = self::getCommonRulesByName($rules, $nameToSanitize);
+	private function getRulesForValue($rules, $nameToSanitize) {
+		if(!$rulesForValue = $this->getSpecialRulesByName($rules, $nameToSanitize)) {
+			$rulesForValue = $this->getCommonRulesByName($rules, $nameToSanitize);
 		}
 
 		if(!$rulesForValue) {
@@ -289,14 +289,14 @@ class tx_mksanitizedparameters {
 	/**
 	 * @return mixed
 	 */
-	private static function getSpecialRulesByName($rules, $nameToSanitize) {
+	private function getSpecialRulesByName($rules, $nameToSanitize) {
 		return isset($rules[$nameToSanitize]) ? $rules[$nameToSanitize] : null;
 	}
 
 	/**
 	 * @return mixed
 	 */
-	private static function getCommonRulesByName($rules, $nameToSanitize) {
+	private function getCommonRulesByName($rules, $nameToSanitize) {
 		return
 			(
 				isset($rules[tx_mksanitizedparameters_Rules::COMMON_RULES_KEY]) &&
@@ -310,10 +310,10 @@ class tx_mksanitizedparameters {
 	 *
 	 * @return array
 	 */
-	private static function injectDefaultRulesFromCurrentIntoNextLevelIfNotSet(
+	private function injectDefaultRulesFromCurrentIntoNextLevelIfNotSet(
 		array $rulesFromCurrentLevel, array $rulesForNextLevel
 	) {
-		$rulesForNextLevel = self::injectRulesByKey(
+		$rulesForNextLevel = $this->injectRulesByKey(
 			(array) $rulesForNextLevel, $rulesFromCurrentLevel,
 			tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY
 		);
@@ -327,10 +327,10 @@ class tx_mksanitizedparameters {
 	 *
 	 * @return array
 	 */
-	private static function injectCommonRulesFromCurrentIntoNextLevelIfNotSet(
+	private function injectCommonRulesFromCurrentIntoNextLevelIfNotSet(
 		array $rulesFromCurrentLevel, array $rulesForNextLevel
 	) {
-		$rulesForNextLevel = self::injectRulesByKey(
+		$rulesForNextLevel = $this->injectRulesByKey(
 			(array) $rulesForNextLevel, $rulesFromCurrentLevel,
 			tx_mksanitizedparameters_Rules::COMMON_RULES_KEY
 		);
@@ -350,7 +350,7 @@ class tx_mksanitizedparameters {
 	 *
 	 * @return array
 	 */
-	private static function injectRulesByKey(
+	private function injectRulesByKey(
 		array $rulesForValue, $allRules, $rulesKey
 	) {
 		if(!array_key_exists($rulesKey, $rulesForValue)) {
@@ -366,11 +366,11 @@ class tx_mksanitizedparameters {
 	 *
 	 * @return mixed
 	 */
-	private static function sanitizeValueByRule($valueToSanitize, $rule) {
+	private function sanitizeValueByRule($valueToSanitize, $rule) {
 		if(!is_array($rule)) {
 			return filter_var($valueToSanitize,$rule);
 		} else {
-			return self::sanitizeValueByFilterConfig($valueToSanitize,$rule);
+			return $this->sanitizeValueByFilterConfig($valueToSanitize,$rule);
 		}
 	}
 
@@ -380,7 +380,7 @@ class tx_mksanitizedparameters {
 	 *
 	 * @return mixed
 	 */
-	private static function sanitizeValueByFilterConfig(
+	private function sanitizeValueByFilterConfig(
 		$valueToSanitize, array $filterConfig
 	) {
 		if(isset($filterConfig['filter'])) {
@@ -391,7 +391,7 @@ class tx_mksanitizedparameters {
 			$filters = $filterConfig;
 		}
 
-		self::loadCustomFilterCallbackClass($filterConfig);
+		$this->loadCustomFilterCallbackClass($filterConfig);
 
 		foreach ($filters as $filter) {
 			$valueToSanitize =
@@ -406,7 +406,7 @@ class tx_mksanitizedparameters {
 	 *
 	 * @return void
 	 */
-	private static function loadCustomFilterCallbackClass(array $filterConfig) {
+	private function loadCustomFilterCallbackClass(array $filterConfig) {
 		if(
 			isset($filterConfig['options'][0]) ||
 			is_string($filterConfig['options'][0])
@@ -424,7 +424,7 @@ class tx_mksanitizedparameters {
 	 *
 	 * @return boolean
 	 */
-	private static function valueToSanitizeHasChanged($initialValueToSanitize, $valueToSanitize) {
+	private function valueToSanitizeHasChanged($initialValueToSanitize, $valueToSanitize) {
 		return $initialValueToSanitize != $valueToSanitize;
 	}
 
@@ -436,7 +436,7 @@ class tx_mksanitizedparameters {
 	 *
 	 * @return void
 	 */
-	private static function handleLogging(
+	private function handleLogging(
 		array $arrayToSanitize, $nameToSanitize, $initialValueToSanitize, $sanitizedValue
 	) {
 		$isLogMode = tx_rnbase_configurations::getExtensionCfgValue(
@@ -447,15 +447,19 @@ class tx_mksanitizedparameters {
 			return;
 		}
 
-		$logger = static::getLogger();
-		$logger::warn(
-			self::MESSAGE_VALUE_HAS_CHANGED,
-			'mksanitizedparameters',
+		// wir rufen die Methode mit call_user_func_array auf, da sie
+		// statisch ist, womit wir diese nicht mocken könnten
+		call_user_func_array(
+			array($this->getLogger(), 'warn'),
 			array(
-				'Parameter Name:'				=> $nameToSanitize,
-				'initialer Wert:' 				=> $initialValueToSanitize,
-				'Wert nach Bereinigung:'		=> $sanitizedValue,
-				'komplettes Parameter Array'	=> $arrayToSanitize
+				self::MESSAGE_VALUE_HAS_CHANGED,
+				'mksanitizedparameters',
+				array(
+					'Parameter Name:'				=> $nameToSanitize,
+					'initialer Wert:' 				=> $initialValueToSanitize,
+					'Wert nach Bereinigung:'		=> $sanitizedValue,
+					'komplettes Parameter Array'	=> $arrayToSanitize
+				)
 			)
 		);
 	}
@@ -463,7 +467,7 @@ class tx_mksanitizedparameters {
 	/**
 	 * @return tx_rnbase_util_Logger
 	 */
-	protected static function getLogger() {
+	protected function getLogger() {
 		tx_rnbase::load('tx_rnbase_util_Logger');
 		return tx_rnbase_util_Logger;
 	}
@@ -476,25 +480,28 @@ class tx_mksanitizedparameters {
 	 *
 	 * @return void
 	 */
-	private static function handleDebugging(
+	private function handleDebugging(
 		array $arrayToSanitize, $nameToSanitize, $initialValueToSanitize, $sanitizedValue
 	) {
-		if(!static::getDebugMode()){
+		if(!$this->getDebugMode()){
 			return;
 		}
 
-
-		$debugger = static::getDebugger();
-		$debugger::debug(
+		// wir rufen die Methode mit call_user_func_array auf, da sie
+		// statisch ist, womit wir diese nicht mocken könnten
+		call_user_func_array(
+			array($this->getDebugger(), 'debug'),
 			array(
 				array(
-					'Parameter Name:'				=> $nameToSanitize,
-					'initialer Wert:' 				=> $initialValueToSanitize,
-					'Wert nach Bereinigung:'		=> $sanitizedValue,
-					'komplettes Parameter Array'	=> $arrayToSanitize
-				)
-			),
-			self::MESSAGE_VALUE_HAS_CHANGED
+					array(
+						'Parameter Name:'				=> $nameToSanitize,
+						'initialer Wert:' 				=> $initialValueToSanitize,
+						'Wert nach Bereinigung:'		=> $sanitizedValue,
+						'komplettes Parameter Array'	=> $arrayToSanitize
+					)
+				),
+				self::MESSAGE_VALUE_HAS_CHANGED
+			)
 		);
 
 		if(TYPO3_MODE == 'FE') {
@@ -507,7 +514,7 @@ class tx_mksanitizedparameters {
 	/**
 	 * @return boolean
 	 */
-	protected static function getDebugMode() {
+	protected function getDebugMode() {
 		$debugModeByExtensionConfiguration = tx_rnbase_configurations::getExtensionCfgValue(
 			'mksanitizedparameters', 'debugMode'
 		);
@@ -521,7 +528,7 @@ class tx_mksanitizedparameters {
 	/**
 	 * @return tx_rnbase_util_Debug
 	 */
-	protected static function getDebugger() {
+	protected function getDebugger() {
 		tx_rnbase::load('tx_rnbase_util_Debug');
 		return 'tx_rnbase_util_Debug';
 	}
@@ -532,11 +539,11 @@ class tx_mksanitizedparameters {
 	 *
 	 * @return void
 	 */
-	public static function sanitizeArraysByRules(
+	public function sanitizeArraysByRules(
 		array &$arraysToSanitize, array $rules
 	) {
 		foreach ($arraysToSanitize as $arrayName => &$arrayToSanitize) {
-			$arrayToSanitize = self::sanitizeArrayByRules(
+			$arrayToSanitize = $this->sanitizeArrayByRules(
 				$arrayToSanitize, $rules
 			);
 		}

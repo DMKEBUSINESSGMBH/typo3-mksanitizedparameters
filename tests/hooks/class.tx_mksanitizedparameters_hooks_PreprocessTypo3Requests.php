@@ -46,7 +46,7 @@ class tx_mksanitizedparameters_tests_hooks_PreprocessTypo3Requests
 	 * @return ux_tx_mksanitizedparameters
 	 */
 	protected function getMksanitizedparametersMainClass () {
-		return ux_tx_mksanitizedparameters;
+		return tx_rnbase::makeInstance('ux_tx_mksanitizedparameters');
 	}
 }
 
@@ -60,7 +60,7 @@ class ux_tx_mksanitizedparameters extends tx_mksanitizedparameters {
 	/**
 	 * @return boolean
 	 */
-	protected static function getDebugMode() {
+	protected function getDebugMode() {
 		return false;
 	}
 }
