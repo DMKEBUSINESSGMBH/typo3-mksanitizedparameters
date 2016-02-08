@@ -14,6 +14,19 @@
 		}
 	],
 	"support": {
-		"email": "dev@dmk-ebusiness.de"
+		"email": "dev@dmk-ebusiness.de",
+		"source": "https://github.com/DMKEBUSINESSGMBH/typo3-mksanitizedparameters",
+		"issues": "https://forge.typo3.org/projects/extension-mksanitizedparameters"
+	},
+	"replace": {
+		"typo3-ter/mksanitizedparameters": "*"
+	},
+	"require" : {
+		"typo3/cms-core" : ">=4.5.0 <=7.6.99",
+		"digedag/rn-base" : ">=0.16.3"
+	},
+	"autoload": {
+		"classmap": ["hooks/", "interface/", "sanitizer/", "util/"],
+		"files": ["class.tx_mksanitizedparameters.php", "class.tx_mksanitizedparameters_Rules.php", "class.tx_mksanitizedparameters_StealthMode.php"]
 	}
 }

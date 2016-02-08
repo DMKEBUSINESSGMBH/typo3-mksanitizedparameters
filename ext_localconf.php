@@ -12,4 +12,4 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/index_ts.php']['preprocessReque
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['typo3/template.php']['preStartPageHook']['mksanitizedparameters'] =
 	'EXT:'.$_EXTKEY.'/hooks/class.tx_mksanitizedparameters_hooks_PreprocessTypo3Requests.php:tx_mksanitizedparameters_hooks_PreprocessTypo3Requests->sanitizeGlobalInputArrays';
 
-require_once(t3lib_extMgm::extPath($_EXTKEY).'ext_rules.php');
+require_once(tx_rnbase_util_Extensions::extPath($_EXTKEY).'ext_rules.php');

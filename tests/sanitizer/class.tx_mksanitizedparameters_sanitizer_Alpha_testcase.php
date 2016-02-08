@@ -22,54 +22,50 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  */
-
-/**
- * include required classes
- */
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
+tx_rnbase::load('tx_rnbase_tests_BaseTestCase');
 tx_rnbase::load('tx_mksanitizedparameters_sanitizer_Alpha');
-	
+
 /**
  * @package TYPO3
  * @subpackage tx_mksanitizedparameters
  * @author Hannes Bochmann <dev@dmk-ebusiness.de>
  */
-class tx_mksanitizedparameters_sanitizer_Alpha_testcase extends tx_phpunit_testcase {
-	
+class tx_mksanitizedparameters_sanitizer_Alpha_testcase extends tx_rnbase_tests_BaseTestCase {
+
 	/**
 	 * @group unit
 	 */
 	public function testSanitizeValueRemovesNonLetters(){
 		$testString = 'abc123#! def';
-		
+
 		$this->assertEquals(
-			'abcdef', 
+			'abcdef',
 			tx_mksanitizedparameters_sanitizer_Alpha::sanitizeValue($testString),
 			'String was not sanitized correct.'
 		);
 	}
-	
+
 	/**
 	 * @group unit
 	 */
 	public function testSanitizeValueAllowingWhitespacesRemovesNonLetters(){
 		$testString = 'abc123#! def';
-		
+
 		$this->assertEquals(
-			'abc def', 
+			'abc def',
 			tx_mksanitizedparameters_sanitizer_Alpha::sanitizeValueAllowingWhitespaces($testString),
 			'String was not sanitized correct.'
 		);
 	}
-	
+
 	/**
 	 * @group unit
 	 */
 	public function testSanitizeValueWithUmlauts(){
 		$testString = 'äbc';
-		
+
 		$this->assertEquals(
-			'äbc', 
+			'äbc',
 			tx_mksanitizedparameters_sanitizer_Alpha::sanitizeValue($testString),
 			'String was not sanitized correct.'
 		);

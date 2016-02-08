@@ -22,11 +22,7 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  */
-
-/**
- * include required classes
- */
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
+tx_rnbase::load('tx_rnbase_util_Arrays');
 
 /**
  * Class to sanitize an array through the filter_var method.
@@ -336,7 +332,7 @@ class tx_mksanitizedparameters {
 		);
 
 		$rulesForNextLevel[tx_mksanitizedparameters_Rules::COMMON_RULES_KEY] =
-			t3lib_div::array_merge_recursive_overrule(
+			tx_rnbase_util_Arrays::mergeRecursiveWithOverrule(
 				(array) $rulesFromCurrentLevel[tx_mksanitizedparameters_Rules::COMMON_RULES_KEY],
 				(array) $rulesForNextLevel[tx_mksanitizedparameters_Rules::COMMON_RULES_KEY]
 			);
@@ -518,11 +514,9 @@ class tx_mksanitizedparameters {
 		$debugModeByExtensionConfiguration = tx_rnbase_configurations::getExtensionCfgValue(
 			'mksanitizedparameters', 'debugMode'
 		);
+		tx_rnbase::load('tx_rnbase_util_Network');
 
-		return
-			$debugModeByExtensionConfiguration ||
-			(defined('TYPO3_ERRORHANDLER_MODE') && TYPO3_ERRORHANDLER_MODE == 'debug')
-		;
+		return $debugModeByExtensionConfiguration || tx_rnbase_util_Network::isDevelopmentIp();
 	}
 
 	/**

@@ -22,11 +22,7 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  */
-
-/**
- * include required classes
- */
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
+tx_rnbase::load('tx_rnbase_tests_BaseTestCase');
 tx_rnbase::load('tx_mksanitizedparameters_util_RegularExpression');
 tx_rnbase::load('tx_mksanitizedparameters_sanitizer_Alpha');
 
@@ -35,7 +31,7 @@ tx_rnbase::load('tx_mksanitizedparameters_sanitizer_Alpha');
  * @subpackage tx_mksanitizedparameters
  * @author Hannes Bochmann <dev@dmk-ebusiness.de>
  */
-class tx_mksanitizedparameters_util_RegularExpression_testcase extends tx_phpunit_testcase {
+class tx_mksanitizedparameters_util_RegularExpression_testcase extends tx_rnbase_tests_BaseTestCase {
 
 	/**
 	 * @group unit

@@ -22,11 +22,6 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  */
-
-/**
- * include required classes
- */
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 tx_rnbase::load('tx_rnbase_util_DB');
 tx_rnbase::load('tx_rnbase_util_TYPO3');
 
@@ -80,7 +75,8 @@ class tx_mksanitizedparameters_StealthMode {
 	private static function loadTca() {
 		if(empty($GLOBALS['TCA'][self::$storageDbTableName])) {
 			tslib_eidtools::initTCA();
-			t3lib_div::loadTCA(self::$storageDbTableName);
+			tx_rnbase::load('tx_rnbase_util_TCA');
+			tx_rnbase_util_TCA::loadTCA(self::$storageDbTableName);
 		}
 	}
 

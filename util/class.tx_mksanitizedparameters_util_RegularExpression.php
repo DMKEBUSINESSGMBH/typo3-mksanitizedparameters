@@ -24,11 +24,6 @@
  */
 
 /**
- * include required classes
- */
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
-
-/**
  * @package TYPO3
  * @subpackage tx_mksanitizedparameters
  * @author Hannes Bochmann <dev@dmk-ebusiness.de>

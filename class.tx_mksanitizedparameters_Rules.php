@@ -22,58 +22,54 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  */
-
-/**
- * include required classes
- */
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
+tx_rnbase::load('tx_rnbase_util_Arrays');
 
 /**
  * Class to register and retrieve rules for
  * the parameters in the system
- * 
+ *
  * @package TYPO3
  * @subpackage tx_mksanitizedparameters
  * @author Hannes Bochmann <dev@dmk-ebusiness.de>
  */
 class tx_mksanitizedparameters_Rules {
-	
+
 	/**
 	 * @var string
 	 */
 	const COMMON_RULES_KEY = '__common';
-	
+
 	/**
 	 * @var string
 	 */
 	const DEFAULT_RULES_KEY = '__default';
-	
+
 	/**
 	 * @var array
 	 */
 	protected static $rulesForFrontend = array();
-	
+
 	/**
 	* @var array
 	*/
 	protected static $rulesForBackend = array();
-	
+
 	/**
-	 * look into the doc of 
+	 * look into the doc of
 	 * tx_mksanitizedparameters::sanitizeArrayByRules()
 	 * to see how the rules must be passed.
-	 * 
+	 *
 	 * @param array $rules
-	 * 
+	 *
 	 * @return void
 	 */
 	public static function addRulesForFrontend(array $rules) {
-		self::$rulesForFrontend = 
-			t3lib_div::array_merge_recursive_overrule(
+		self::$rulesForFrontend =
+			tx_rnbase_util_Arrays::mergeRecursiveWithOverrule(
 				self::$rulesForFrontend, $rules
 			);
 	}
-	
+
 	/**
 	* look into the doc of
 	* tx_mksanitizedparameters::sanitizeArrayByRules()
@@ -85,14 +81,14 @@ class tx_mksanitizedparameters_Rules {
 	*/
 	public static function addRulesForBackend(array $rules) {
 		self::$rulesForBackend =
-			t3lib_div::array_merge_recursive_overrule(
+			tx_rnbase_util_Arrays::mergeRecursiveWithOverrule(
 				self::$rulesForBackend, $rules
 			);
 	}
-	
+
 	/**
 	 * the default environment is Frontend
-	 * 
+	 *
 	 * @return array
 	 */
 	public static function getRulesForCurrentEnvironment() {
@@ -107,17 +103,17 @@ class tx_mksanitizedparameters_Rules {
 					tx_mksanitizedparameters_Rules::getRulesForBackend();
 				break;
 		}
-		
+
 		return $parameterRulesForCurrentEnvironment;
 	}
-	
+
 	/**
 	 * @return array
 	 */
 	public static function getRulesForFrontend() {
 		return self::$rulesForFrontend;
 	}
-	
+
 	/**
 	* @return array
 	*/

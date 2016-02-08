@@ -22,11 +22,6 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  */
-
-/**
- * include required classes
- */
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 tx_rnbase::load('tx_mksanitizedparameters');
 tx_rnbase::load('tx_mklib_tests_Util');
 tx_rnbase::load('tx_rnbase_util_Logger');

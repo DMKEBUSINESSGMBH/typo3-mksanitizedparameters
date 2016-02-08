@@ -4,4 +4,4 @@ if (!defined ('TYPO3_MODE')) {
 }
 $_EXTKEY = 'mksanitizedparameters';
 
-require_once(t3lib_extMgm::extPath($_EXTKEY).'tca/ext_tables.php');
+require_once(tx_rnbase_util_Extensions::extPath($_EXTKEY).'tca/ext_tables.php');

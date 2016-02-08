@@ -2,7 +2,7 @@
 if (!defined ('TYPO3_MODE')) {
 	die ('Access denied.');
 }
-t3lib_extMgm::allowTableOnStandardPages('tx_mksanitizedparameters');
+tx_rnbase_util_Extensions::allowTableOnStandardPages('tx_mksanitizedparameters');
 
 $TCA['tx_mksanitizedparameters'] = array (
 	'ctrl' => array (
@@ -18,6 +18,6 @@ $TCA['tx_mksanitizedparameters'] = array (
 		'tstamp'    => 'tstamp',
 		'crdate'    => 'crdate',
 		'cruser_id' => 'cruser_id',
-		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca/tx_mksanitizedparameters.php'
+		'dynamicConfigFile' => tx_rnbase_util_Extensions::extPath($_EXTKEY).'tca/tx_mksanitizedparameters.php'
 	),
 );

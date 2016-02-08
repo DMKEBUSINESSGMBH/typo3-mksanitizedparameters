@@ -23,26 +23,22 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  */
 
-/**
- * include required classes
- */
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
-
 //wir brauchen einen eigenen Hook damit der Debug Mode überschrieben wird
-require_once(t3lib_extMgm::extPath('mksanitizedparameters', 'tests/hooks/class.tx_mksanitizedparameters_hooks_PreprocessTypo3Requests.php'));
+require_once(tx_rnbase_util_Extensions::extPath('mksanitizedparameters', 'tests/hooks/class.tx_mksanitizedparameters_hooks_PreprocessTypo3Requests.php'));
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['typo3/template.php']['preStartPageHook']['mksanitizedparameters'] =
 	'EXT:mksanitizedparameters/tests/hooks/class.tx_mksanitizedparameters_hooks_PreprocessTypo3Requests.php:&tx_mksanitizedparameters_tests_hooks_PreprocessTypo3Requests->sanitizeGlobalInputArrays';
 
 tx_rnbase::load('tx_mksanitizedparameters');
 tx_rnbase::load('tx_mksanitizedparameters_Rules');
 tx_rnbase::load('tx_mklib_tests_Util');
+tx_rnbase::load('tx_rnbase_tests_BaseTestCase');
 
 /**
  * @package TYPO3
  * @subpackage tx_mksanitizedparameters
  * @author Hannes Bochmann <dev@dmk-ebusiness.de>
  */
-class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx_phpunit_testcase {
+class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx_rnbase_tests_BaseTestCase {
 
 	private $storedExtConfig;
 
@@ -151,7 +147,7 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx
 		$_GET['testParameter'] = '2WithString';
 
 		/* @var $template \TYPO3\CMS\Backend\Template\DocumentTemplate */
-		$template = tx_rnbase::makeInstance('template');
+		$template = tx_rnbase::makeInstance(tx_rnbase_util_Typo3Classes::getDocumentTemplateClass());
 		$template->startPage('testPage');
 
 		$this->assertEquals(
@@ -167,21 +163,26 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx
 
 	/**
 	 * we can't check if the hook is called correctly in FE as
-	 * including PATH_site.TYPO3_mainDir.'sysext/cms/tslib/index_ts.php'
+	 * including PATH_typo3.'sysext/cms/tslib/index_ts.php'
 	 * results in an fatal error. so we test at least if the hook
-	 * is offered in PATH_site.TYPO3_mainDir.'sysext/cms/tslib/index_ts.php'
+	 * is offered in PATH_typo3.'sysext/cms/tslib/index_ts.php'
 	 * and if the hook is configured correctly.
 	 *
 	 * @group integration
 	 */
 	public function testHookInFrontendIsAvailableAndConfigured(){
-		$indexTs =
-			file_get_contents(PATH_site.TYPO3_mainDir.'sysext/cms/tslib/index_ts.php');
+		if (tx_rnbase_util_TYPO3::isTYPO70OrHigher()) {
+			$indexTs = file_get_contents(PATH_typo3 . 'sysext/frontend/Classes/Http/RequestHandler.php');
+			$callHookLine =
+				strstr($indexTs, 'foreach ($GLOBALS[\'TYPO3_CONF_VARS\'][\'SC_OPTIONS\'][\'tslib/index_ts.php\'][\'preprocessRequest\'] as $hookFunction) {');
+		} else {
+			$indexTs = file_get_contents(PATH_typo3 . 'sysext/cms/tslib/index_ts.php');
+			$callHookLine =
+				strstr($indexTs, 'foreach ($TYPO3_CONF_VARS[\'SC_OPTIONS\'][\'tslib/index_ts.php\'][\'preprocessRequest\'] as $hookFunction) {');
+		}
 
-		$callHookLine =
-			strstr($indexTs, 'foreach ($TYPO3_CONF_VARS[\'SC_OPTIONS\'][\'tslib/index_ts.php\'][\'preprocessRequest\'] as $hookFunction) {');
 
-		$this->assertNotEmpty($callHookLine, 'The line calling the FE hook wasn\'t found in '.PATH_site.TYPO3_mainDir.'sysext/cms/tslib/index_ts.php');
+		$this->assertNotEmpty($callHookLine, 'The line calling the FE hook wasn\'t found in '.PATH_typo3.'sysext/cms/tslib/index_ts.php');
 
 		$this->assertTrue(
 			in_array(
