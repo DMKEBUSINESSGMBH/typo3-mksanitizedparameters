@@ -16,7 +16,7 @@
 	"support": {
 		"email": "dev@dmk-ebusiness.de",
 		"source": "https://github.com/DMKEBUSINESSGMBH/typo3-mksanitizedparameters",
-		"issues": "https://forge.typo3.org/projects/extension-mksanitizedparameters"
+		"issues": "https://github.com/DMKEBUSINESSGMBH/typo3-mksanitizedparameters"
 	},
 	"replace": {
 		"typo3-ter/mksanitizedparameters": "*"
