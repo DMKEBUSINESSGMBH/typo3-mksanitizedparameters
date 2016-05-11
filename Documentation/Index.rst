@@ -26,7 +26,7 @@ MK Sanitizedparameters
 		de
 
 	:Description:
-		
+
 
 	:Keywords:
 		security, forAdmins, forIntermediates
@@ -43,8 +43,8 @@ MK Sanitizedparameters
 	:License:
 		This document is published under the Open Content License
 		available from http://www.opencontent.org/opl.shtml
-		
-		The content of this document is related to TYPO3 
+
+		The content of this document is related to TYPO3
 		- a GNU/GPL CMS/Framework available from www.typo3.org
 
 	:Rendered:
@@ -61,6 +61,7 @@ MK Sanitizedparameters
 	:titlesonly:
 	:glob:
 
-	Introduction/Index
-	UsersManual/Index
-	Rules/Index
+   Introduction/Index
+   UsersManual/Index
+   Rules/Index
+   ChangeLog/Index
