@@ -4,7 +4,7 @@ mksanitizedparameters
 What does it do?
 ----------------
 
-Sanitizes all parameters in \$\_GET, \$\_POST and \$\_COOKIE in the frontend and backend. Every possible parameter can be configured separately. The configuration can be for a specific position in the parameter array or common for every possible position or even default for all parameters, which are not configured.
+Sanitizes all parameters in $\_GET, $\_POST and $\_COOKIE in the frontend and backend. Every possible parameter can be configured separately. The configuration can be for a specific position in the parameter array or common for every possible position or even default for all parameters, which are not configured.
 
 This way possible attacks like MySQL injections can be prevented even for parameters where attack potential was not suspected. So unclosed security holes are harder or even not at all exploited.
 
