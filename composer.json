@@ -19,7 +19,8 @@
 		"issues": "https://github.com/DMKEBUSINESSGMBH/typo3-mksanitizedparameters"
 	},
 	"replace": {
-		"typo3-ter/mksanitizedparameters": "*"
+		"mksanitizedparameters": "self.version",
+		"typo3-ter/mksanitizedparameters": "self.version"
 	},
 	"require" : {
 		"typo3/cms-core" : ">=4.5.0 <=7.6.99",
