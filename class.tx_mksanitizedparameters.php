@@ -22,7 +22,6 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  */
-tx_rnbase::load('tx_rnbase_util_Arrays');
 
 /**
  * Class to sanitize an array through the filter_var method.
@@ -331,6 +330,7 @@ class tx_mksanitizedparameters {
 			tx_mksanitizedparameters_Rules::COMMON_RULES_KEY
 		);
 
+		tx_rnbase::load('tx_rnbase_util_Arrays');
 		$rulesForNextLevel[tx_mksanitizedparameters_Rules::COMMON_RULES_KEY] =
 			tx_rnbase_util_Arrays::mergeRecursiveWithOverrule(
 				(array) $rulesFromCurrentLevel[tx_mksanitizedparameters_Rules::COMMON_RULES_KEY],
