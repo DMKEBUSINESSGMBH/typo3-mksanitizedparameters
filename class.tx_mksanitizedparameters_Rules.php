@@ -22,7 +22,6 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  */
-tx_rnbase::load('tx_rnbase_util_Arrays');
 
 /**
  * Class to register and retrieve rules for
@@ -63,7 +62,10 @@ class tx_mksanitizedparameters_Rules {
 	 *
 	 * @return void
 	 */
-	public static function addRulesForFrontend(array $rules) {
+	public static function addRulesForFrontend(
+		array $rules
+	) {
+		tx_rnbase::load('tx_rnbase_util_Arrays');
 		self::$rulesForFrontend =
 			tx_rnbase_util_Arrays::mergeRecursiveWithOverrule(
 				self::$rulesForFrontend, $rules
@@ -79,7 +81,10 @@ class tx_mksanitizedparameters_Rules {
 	*
 	* @return void
 	*/
-	public static function addRulesForBackend(array $rules) {
+	public static function addRulesForBackend(
+		array $rules
+	) {
+		tx_rnbase::load('tx_rnbase_util_Arrays');
 		self::$rulesForBackend =
 			tx_rnbase_util_Arrays::mergeRecursiveWithOverrule(
 				self::$rulesForBackend, $rules

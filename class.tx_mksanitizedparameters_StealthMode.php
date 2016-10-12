@@ -22,8 +22,6 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  */
-tx_rnbase::load('tx_rnbase_util_DB');
-tx_rnbase::load('tx_rnbase_util_TYPO3');
 
 /**
  * Stores the given arrays to the DB so it can be checked
@@ -37,6 +35,17 @@ class tx_mksanitizedparameters_StealthMode {
 
 	private static $storagePid;
 	private static $storageDbTableName = 'tx_mksanitizedparameters';
+
+	/**
+	 * returns the db connection
+	 *
+	 * @return Tx_Rnbase_Database_Connection
+	 */
+	protected static function getDatabaseConnection()
+	{
+		tx_rnbase::load('Tx_Rnbase_Database_Connection');
+		return Tx_Rnbase_Database_Connection::getInstance();
+	}
 
 	/**
 	 * Stores the given arrays to the DB so it can be checked
@@ -105,7 +114,7 @@ class tx_mksanitizedparameters_StealthMode {
 			),
 			'crdate'	=> time()
 		);
-		tx_rnbase_util_DB::doInsert(
+		self::getDatabaseConnection()->doInsert(
 			self::$storageDbTableName, $dataToInsert
 		);
 	}
@@ -125,7 +134,7 @@ class tx_mksanitizedparameters_StealthMode {
 
 		$where = 'hash = "' . $arrayHash . '"';
 
-		$selectResult = tx_rnbase_util_DB::doSelect(
+		$selectResult = self::getDatabaseConnection()->doSelect(
 			'*',
 			self::$storageDbTableName,
 			array(
