@@ -1,6 +1,5 @@
 <?php
 /**
- *
  *  Copyright notice
  *
  *  (c) 2012 DMK E-Business GmbH <dev@dmk-ebusiness.de>
@@ -28,19 +27,21 @@
  * @subpackage tx_mksanitizedparameters
  * @author Hannes Bochmann <dev@dmk-ebusiness.de>
  */
-class tx_mksanitizedparameters_util_RegularExpression {
+class tx_mksanitizedparameters_util_RegularExpression
+{
 
-	/**
-	 * @param string $pattern
-	 * @param mixed $value
-	 * 
-	 * @return string
-	 */
-	public static function callPregReplace($pattern, $value) {
-		return preg_replace($pattern, '', $value); 
-	}
+    /**
+     * @param string $pattern
+     * @param mixed $value
+     *
+     * @return string
+     */
+    public static function callPregReplace($pattern, $value)
+    {
+        return preg_replace($pattern, '', $value);
+    }
 }
 
-if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/util/class.tx_mksanitizedparameters_util_RegularExpression.php'])	{
-	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/util/class.tx_mksanitizedparameters_util_RegularExpression.php']);
+if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/util/class.tx_mksanitizedparameters_util_RegularExpression.php']) {
+    include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/util/class.tx_mksanitizedparameters_util_RegularExpression.php']);
 }

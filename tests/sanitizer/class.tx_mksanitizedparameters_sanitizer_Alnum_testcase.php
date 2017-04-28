@@ -1,6 +1,5 @@
 <?php
 /**
- *
  *  Copyright notice
  *
  *  (c) 2012 DMK E-Business GmbH <dev@dmk-ebusiness.de>
@@ -30,44 +29,48 @@ tx_rnbase::load('tx_mksanitizedparameters_sanitizer_Alnum');
  * @subpackage tx_mksanitizedparameters
  * @author Hannes Bochmann <dev@dmk-ebusiness.de>
  */
-class tx_mksanitizedparameters_sanitizer_Alnum_testcase extends tx_rnbase_tests_BaseTestCase {
+class tx_mksanitizedparameters_sanitizer_Alnum_testcase extends tx_rnbase_tests_BaseTestCase
+{
 
-	/**
-	 * @group unit
-	 */
-	public function testSanitizeValueRemovesNonLettersAndNonDigits(){
-		$testString = 'abc123#! def';
+    /**
+     * @group unit
+     */
+    public function testSanitizeValueRemovesNonLettersAndNonDigits()
+    {
+        $testString = 'abc123#! def';
 
-		$this->assertEquals(
-			'abc123def',
-			tx_mksanitizedparameters_sanitizer_Alnum::sanitizeValue($testString),
-			'String was not sanitized correct.'
-		);
-	}
+        $this->assertEquals(
+            'abc123def',
+            tx_mksanitizedparameters_sanitizer_Alnum::sanitizeValue($testString),
+            'String was not sanitized correct.'
+        );
+    }
 
-	/**
-	 * @group unit
-	 */
-	public function testSanitizeValueAllowingWhitespacesRemovesNonLettersAndNonDigits(){
-		$testString = 'abc123#! def';
+    /**
+     * @group unit
+     */
+    public function testSanitizeValueAllowingWhitespacesRemovesNonLettersAndNonDigits()
+    {
+        $testString = 'abc123#! def';
 
-		$this->assertEquals(
-			'abc123 def',
-			tx_mksanitizedparameters_sanitizer_Alnum::sanitizeValueAllowingWhitespaces($testString),
-			'String was not sanitized correct.'
-		);
-	}
+        $this->assertEquals(
+            'abc123 def',
+            tx_mksanitizedparameters_sanitizer_Alnum::sanitizeValueAllowingWhitespaces($testString),
+            'String was not sanitized correct.'
+        );
+    }
 
-	/**
-	 * @group unit
-	 */
-	public function testSanitizeValueWithUmlauts(){
-		$testString = 'äbc';
+    /**
+     * @group unit
+     */
+    public function testSanitizeValueWithUmlauts()
+    {
+        $testString = 'äbc';
 
-		$this->assertEquals(
-			'äbc',
-			tx_mksanitizedparameters_sanitizer_Alnum::sanitizeValue($testString),
-			'String was not sanitized correct.'
-		);
-	}
+        $this->assertEquals(
+            'äbc',
+            tx_mksanitizedparameters_sanitizer_Alnum::sanitizeValue($testString),
+            'String was not sanitized correct.'
+        );
+    }
 }

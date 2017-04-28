@@ -1,6 +1,5 @@
 <?php
 /**
- *
  *  Copyright notice
  *
  *  (c) 2012 DMK E-Business GmbH <dev@dmk-ebusiness.de>
@@ -28,55 +27,59 @@
  * @subpackage tx_mksanitizedparameters
  * @author Hannes Bochmann <dev@dmk-ebusiness.de>
  */
-class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests {
+class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests
+{
 
-	/**
-	 * sanitize $_REQUEST, $_POST, $_GET before
-	 * Frontend/Backend Actions start.
-	 *
-	 * @param array $parameters
-	 * @param $parent
-	 *
-	 * @return void
-	 */
-	public function sanitizeGlobalInputArrays(array $parameters, $parent) {
-		$isStealthMode = tx_rnbase_configurations::getExtensionCfgValue(
-			'mksanitizedparameters', 'stealthMode'
-		);
-		$arraysToSanitize = array(
-			'$_COOKIE' => &$_COOKIE,
-			'$_POST' => &$_POST,
-			'$_GET' => &$_GET
-		);
+    /**
+     * sanitize $_REQUEST, $_POST, $_GET before
+     * Frontend/Backend Actions start.
+     *
+     * @param array $parameters
+     * @param $parent
+     *
+     * @return void
+     */
+    public function sanitizeGlobalInputArrays(array $parameters, $parent)
+    {
+        $isStealthMode = tx_rnbase_configurations::getExtensionCfgValue(
+            'mksanitizedparameters',
+            'stealthMode'
+        );
+        $arraysToSanitize = array(
+            '$_COOKIE' => &$_COOKIE,
+            '$_POST' => &$_POST,
+            '$_GET' => &$_GET
+        );
 
-		if($isStealthMode) {
-			tx_rnbase::load('tx_mksanitizedparameters_StealthMode');
-			tx_mksanitizedparameters_StealthMode::monitorArrays(
-				$arraysToSanitize
-			);
-		} else {
-			tx_rnbase::load('tx_mksanitizedparameters');
-			tx_rnbase::load('tx_mksanitizedparameters_Rules');
+        if ($isStealthMode) {
+            tx_rnbase::load('tx_mksanitizedparameters_StealthMode');
+            tx_mksanitizedparameters_StealthMode::monitorArrays(
+                $arraysToSanitize
+            );
+        } else {
+            tx_rnbase::load('tx_mksanitizedparameters');
+            tx_rnbase::load('tx_mksanitizedparameters_Rules');
 
-			$mksanitizedparametersMainClass = $this->getMksanitizedparametersMainClass();
-			$mksanitizedparametersMainClass->sanitizeArraysByRules(
-				$arraysToSanitize,
-				tx_mksanitizedparameters_Rules::getRulesForCurrentEnvironment()
-			);
-		}
-	}
+            $mksanitizedparametersMainClass = $this->getMksanitizedparametersMainClass();
+            $mksanitizedparametersMainClass->sanitizeArraysByRules(
+                $arraysToSanitize,
+                tx_mksanitizedparameters_Rules::getRulesForCurrentEnvironment()
+            );
+        }
+    }
 
-	/**
-	 * wird in tests/hooks/class.ux_tx_mksanitizedparameters.php
-	 * überschrieben damit debug mode abgeschaltet werden kann
-	 *
-	 * @return tx_mksanitizedparameters
-	 */
-	protected function getMksanitizedparametersMainClass () {
-		return tx_rnbase::makeInstance('tx_mksanitizedparameters');
-	}
+    /**
+     * wird in tests/hooks/class.ux_tx_mksanitizedparameters.php
+     * überschrieben damit debug mode abgeschaltet werden kann
+     *
+     * @return tx_mksanitizedparameters
+     */
+    protected function getMksanitizedparametersMainClass()
+    {
+        return tx_rnbase::makeInstance('tx_mksanitizedparameters');
+    }
 }
 
-if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/hooks/class.tx_mksanitizedparameters_hooks_PreprocessTypo3Requests.php'])	{
-	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/hooks/class.tx_mksanitizedparameters_hooks_PreprocessTypo3Requests.php']);
+if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/hooks/class.tx_mksanitizedparameters_hooks_PreprocessTypo3Requests.php']) {
+    include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/hooks/class.tx_mksanitizedparameters_hooks_PreprocessTypo3Requests.php']);
 }

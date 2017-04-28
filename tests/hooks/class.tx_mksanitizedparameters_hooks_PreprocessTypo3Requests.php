@@ -1,6 +1,5 @@
 <?php
 /**
- *
  *  Copyright notice
  *
  *  (c) 2012 DMK E-Business GmbH <dev@dmk-ebusiness.de>
@@ -29,20 +28,20 @@ tx_rnbase::load('tx_mksanitizedparameters_hooks_PreprocessTypo3Requests');
  * damit wir eigentliche klasse ersetzen können
  *
  * @author Hannes Bochmann
- *
  */
-class tx_mksanitizedparameters_tests_hooks_PreprocessTypo3Requests
-	extends tx_mksanitizedparameters_hooks_PreprocessTypo3Requests {
+class tx_mksanitizedparameters_tests_hooks_PreprocessTypo3Requests extends tx_mksanitizedparameters_hooks_PreprocessTypo3Requests
+{
 
-	/**
-	 * wird in ux_tx_mksanitizedparameters_hooks_PreprocessTypo3Requests
-	 * überschrieben damit debug mode abgeschaltet werden kann
-	 *
-	 * @return ux_tx_mksanitizedparameters
-	 */
-	protected function getMksanitizedparametersMainClass () {
-		return tx_rnbase::makeInstance('ux_tx_mksanitizedparameters');
-	}
+    /**
+     * wird in ux_tx_mksanitizedparameters_hooks_PreprocessTypo3Requests
+     * überschrieben damit debug mode abgeschaltet werden kann
+     *
+     * @return ux_tx_mksanitizedparameters
+     */
+    protected function getMksanitizedparametersMainClass()
+    {
+        return tx_rnbase::makeInstance('ux_tx_mksanitizedparameters');
+    }
 }
 
 /**
@@ -50,12 +49,14 @@ class tx_mksanitizedparameters_tests_hooks_PreprocessTypo3Requests
  *
  * @author Hannes Bochmann
  */
-class ux_tx_mksanitizedparameters extends tx_mksanitizedparameters {
+class ux_tx_mksanitizedparameters extends tx_mksanitizedparameters
+{
 
-	/**
-	 * @return boolean
-	 */
-	protected function getDebugMode() {
-		return false;
-	}
+    /**
+     * @return boolean
+     */
+    protected function getDebugMode()
+    {
+        return false;
+    }
 }

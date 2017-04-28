@@ -1,6 +1,5 @@
 <?php
 /**
- *
  *  Copyright notice
  *
  *  (c) 2012 DMK E-Business GmbH <dev@dmk-ebusiness.de>
@@ -31,141 +30,152 @@
  * @subpackage tx_mksanitizedparameters
  * @author Hannes Bochmann <dev@dmk-ebusiness.de>
  */
-class tx_mksanitizedparameters_StealthMode {
+class tx_mksanitizedparameters_StealthMode
+{
+    private static $storagePid;
+    private static $storageDbTableName = 'tx_mksanitizedparameters';
 
-	private static $storagePid;
-	private static $storageDbTableName = 'tx_mksanitizedparameters';
+    /**
+     * returns the db connection
+     *
+     * @return Tx_Rnbase_Database_Connection
+     */
+    protected static function getDatabaseConnection()
+    {
+        tx_rnbase::load('Tx_Rnbase_Database_Connection');
 
-	/**
-	 * returns the db connection
-	 *
-	 * @return Tx_Rnbase_Database_Connection
-	 */
-	protected static function getDatabaseConnection()
-	{
-		tx_rnbase::load('Tx_Rnbase_Database_Connection');
-		return Tx_Rnbase_Database_Connection::getInstance();
-	}
+        return Tx_Rnbase_Database_Connection::getInstance();
+    }
 
-	/**
-	 * Stores the given arrays to the DB so it can be checked
- 	 * which parameters have which values.
- 	 *
-	 * @param array $arraysToMonitor
-	 *
-	 * @return void
-	 */
-	public static function monitorArrays(array $arraysToMonitor) {
-		self::prepareTcaAndDatabaseIfNotAvailable();
+    /**
+     * Stores the given arrays to the DB so it can be checked
+     * which parameters have which values.
+     *
+     * @param array $arraysToMonitor
+     *
+     * @return void
+     */
+    public static function monitorArrays(array $arraysToMonitor)
+    {
+        self::prepareTcaAndDatabaseIfNotAvailable();
 
-		self::$storagePid = tx_rnbase_configurations::getExtensionCfgValue(
-			'mksanitizedparameters', 'stealthModeStoragePid'
-		);
+        self::$storagePid = tx_rnbase_configurations::getExtensionCfgValue(
+            'mksanitizedparameters',
+            'stealthModeStoragePid'
+        );
 
-		foreach ($arraysToMonitor as $arrayKey => $arrayToMonitor) {
-			self::monitorArray($arrayKey, $arrayToMonitor);
-		}
-	}
+        foreach ($arraysToMonitor as $arrayKey => $arrayToMonitor) {
+            self::monitorArray($arrayKey, $arrayToMonitor);
+        }
+    }
 
-	/**
-	 * its possible that this script is used in an eID which
-	 * causes no TCA or DB to be available. We fix this!
-	 *
-	 * @return void
-	 */
-	private static function prepareTcaAndDatabaseIfNotAvailable() {
-		self::loadTca();
-		tslib_eidtools::connectDB();
-	}
+    /**
+     * its possible that this script is used in an eID which
+     * causes no TCA or DB to be available. We fix this!
+     *
+     * @return void
+     */
+    private static function prepareTcaAndDatabaseIfNotAvailable()
+    {
+        self::loadTca();
+        tslib_eidtools::connectDB();
+    }
 
-	/**
-	 * @return void
-	 */
-	private static function loadTca() {
-		if(empty($GLOBALS['TCA'][self::$storageDbTableName])) {
-			tslib_eidtools::initTCA();
-			tx_rnbase::load('tx_rnbase_util_TCA');
-			tx_rnbase_util_TCA::loadTCA(self::$storageDbTableName);
-		}
-	}
+    /**
+     * @return void
+     */
+    private static function loadTca()
+    {
+        if (empty($GLOBALS['TCA'][self::$storageDbTableName])) {
+            tslib_eidtools::initTCA();
+            tx_rnbase::load('tx_rnbase_util_TCA');
+            tx_rnbase_util_TCA::loadTCA(self::$storageDbTableName);
+        }
+    }
 
-	/**
-	 * @param string $arrayKey
-	 * @param array $arrayValues
-	 *
-	 * @return void
-	 */
-	public static function monitorArray($arrayKey, array $arrayValues) {
-		if(
-			empty($arrayValues) ||
-			self::arrayWasAlreadyMonitored($arrayKey,$arrayValues)
-		) {
-			return;
-		}
+    /**
+     * @param string $arrayKey
+     * @param array $arrayValues
+     *
+     * @return void
+     */
+    public static function monitorArray($arrayKey, array $arrayValues)
+    {
+        if (empty($arrayValues) ||
+            self::arrayWasAlreadyMonitored($arrayKey, $arrayValues)
+        ) {
+            return;
+        }
 
-		$dataToInsert = array(
-			'pid' 		=> self::$storagePid,
-			'name'  	=> $arrayKey,
-			'value' 	=> self::getArrayAsStringOutput(
-				$arrayValues
-			),
-			'hash'		=> self::getHashByArrayToMonitor(
-				$arrayKey, $arrayValues
-			),
-			'crdate'	=> time()
-		);
-		self::getDatabaseConnection()->doInsert(
-			self::$storageDbTableName, $dataToInsert
-		);
-	}
+        $dataToInsert = array(
+            'pid'        => self::$storagePid,
+            'name'    => $arrayKey,
+            'value'    => self::getArrayAsStringOutput(
+                $arrayValues
+            ),
+            'hash'        => self::getHashByArrayToMonitor(
+                $arrayKey,
+                $arrayValues
+            ),
+            'crdate'    => time()
+        );
+        self::getDatabaseConnection()->doInsert(
+            self::$storageDbTableName,
+            $dataToInsert
+        );
+    }
 
-	/**
-	 * @param string $arrayKey
-	 * @param array $arrayToMonitor
-	 *
-	 * @return boolean
-	 */
-	private static function arrayWasAlreadyMonitored(
-		$arrayKey, array $arrayToMonitor
-	) {
-		$arrayHash = self::getHashByArrayToMonitor(
-			$arrayKey, $arrayToMonitor
-		);
+    /**
+     * @param string $arrayKey
+     * @param array $arrayToMonitor
+     *
+     * @return bool
+     */
+    private static function arrayWasAlreadyMonitored(
+        $arrayKey,
+        array $arrayToMonitor
+    ) {
+        $arrayHash = self::getHashByArrayToMonitor(
+            $arrayKey,
+            $arrayToMonitor
+        );
 
-		$where = 'hash = "' . $arrayHash . '"';
+        $where = 'hash = "' . $arrayHash . '"';
 
-		$selectResult = self::getDatabaseConnection()->doSelect(
-			'*',
-			self::$storageDbTableName,
-			array(
-				'where' => $where,
-				'enablefieldsfe' => true
-			)
-		);
+        $selectResult = self::getDatabaseConnection()->doSelect(
+            '*',
+            self::$storageDbTableName,
+            array(
+                'where' => $where,
+                'enablefieldsfe' => true
+            )
+        );
 
-		return !empty($selectResult);
-	}
+        return !empty($selectResult);
+    }
 
-	/**
-	 * @param array $array
-	 *
-	 * @return string
-	 */
-	private static function getArrayAsStringOutput(array $array) {
-		return var_export($array,true);
-	}
+    /**
+     * @param array $array
+     *
+     * @return string
+     */
+    private static function getArrayAsStringOutput(array $array)
+    {
+        return var_export($array, true);
+    }
 
-	/**
-	 * @param string $arrayKey
-	 * @param array $arrayValues
-	 *
-	 * @return string
-	 */
-	private static function getHashByArrayToMonitor($arrayKey, array $arrayValues) {
-		return md5($arrayKey.self::getArrayAsStringOutput($arrayValues));
-	}
+    /**
+     * @param string $arrayKey
+     * @param array $arrayValues
+     *
+     * @return string
+     */
+    private static function getHashByArrayToMonitor($arrayKey, array $arrayValues)
+    {
+        return md5($arrayKey.self::getArrayAsStringOutput($arrayValues));
+    }
 }
 
 if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/class.tx_mksanitizedparameters_StealthMode.php']) {
-	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/class.tx_mksanitizedparameters_StealthMode.php']);
+    include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/class.tx_mksanitizedparameters_StealthMode.php']);
 }

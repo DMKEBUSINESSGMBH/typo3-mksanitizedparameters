@@ -1,6 +1,5 @@
 <?php
 /**
- *
  *  Copyright notice
  *
  *  (c) 2012 DMK E-Business GmbH <dev@dmk-ebusiness.de>
@@ -31,21 +30,24 @@ tx_rnbase::load('tx_mksanitizedparameters_sanitizer_Alpha');
  * @subpackage tx_mksanitizedparameters
  * @author Hannes Bochmann <dev@dmk-ebusiness.de>
  */
-class tx_mksanitizedparameters_util_RegularExpression_testcase extends tx_rnbase_tests_BaseTestCase {
+class tx_mksanitizedparameters_util_RegularExpression_testcase extends tx_rnbase_tests_BaseTestCase
+{
 
-	/**
-	 * @group unit
-	 */
-	public function testCallPregReplace(){
-		$testString = 'abc123#! def';
+    /**
+     * @group unit
+     */
+    public function testCallPregReplace()
+    {
+        $testString = 'abc123#! def';
 
-		$pattern = '/[^' . tx_mksanitizedparameters_sanitizer_Alpha::getRegularExpressionForLetters() .']/';
-		$this->assertEquals(
-			'abcdef',
-			tx_mksanitizedparameters_util_RegularExpression::callPregReplace(
-				$pattern, $testString
-			),
-			'regex wurde nicht korrekt ausgeführt womit string nicht richtig ersetzt wurde.'
-		);
-	}
+        $pattern = '/[^' . tx_mksanitizedparameters_sanitizer_Alpha::getRegularExpressionForLetters() .']/';
+        $this->assertEquals(
+            'abcdef',
+            tx_mksanitizedparameters_util_RegularExpression::callPregReplace(
+                $pattern,
+                $testString
+            ),
+            'regex wurde nicht korrekt ausgeführt womit string nicht richtig ersetzt wurde.'
+        );
+    }
 }

@@ -17,22 +17,22 @@ tx_rnbase::load('tx_mksanitizedparameters_Rules');
 
 require_once(tx_rnbase_util_Extensions::extPath($_EXTKEY).'rules/default.php');
 
-if(tx_rnbase_util_Extensions::isLoaded('caretaker_instance')){
-	require_once(tx_rnbase_util_Extensions::extPath($_EXTKEY).'rules/caretaker_instance.php');
+if (tx_rnbase_util_Extensions::isLoaded('caretaker_instance')) {
+    require_once(tx_rnbase_util_Extensions::extPath($_EXTKEY).'rules/caretaker_instance.php');
 }
 
-if(tx_rnbase_util_Extensions::isLoaded('mksearch')){
-	require_once(tx_rnbase_util_Extensions::extPath($_EXTKEY).'rules/mksearch.php');
+if (tx_rnbase_util_Extensions::isLoaded('mksearch')) {
+    require_once(tx_rnbase_util_Extensions::extPath($_EXTKEY).'rules/mksearch.php');
 }
 
-if(tx_rnbase_util_Extensions::isLoaded('fluid_recommendation')){
-	require_once(tx_rnbase_util_Extensions::extPath($_EXTKEY).'rules/fluid_recommendation.php');
+if (tx_rnbase_util_Extensions::isLoaded('fluid_recommendation')) {
+    require_once(tx_rnbase_util_Extensions::extPath($_EXTKEY).'rules/fluid_recommendation.php');
 }
 
-if(tx_rnbase_util_Extensions::isLoaded('powermail')){
-	require_once(tx_rnbase_util_Extensions::extPath($_EXTKEY).'rules/powermail.php');
+if (tx_rnbase_util_Extensions::isLoaded('powermail')) {
+    require_once(tx_rnbase_util_Extensions::extPath($_EXTKEY).'rules/powermail.php');
 }
 
-if(tx_rnbase_util_Extensions::isLoaded('sr_feuser_register')){
-	require_once(tx_rnbase_util_Extensions::extPath($_EXTKEY).'rules/sr_feuser_register.php');
+if (tx_rnbase_util_Extensions::isLoaded('sr_feuser_register')) {
+    require_once(tx_rnbase_util_Extensions::extPath($_EXTKEY).'rules/sr_feuser_register.php');
 }

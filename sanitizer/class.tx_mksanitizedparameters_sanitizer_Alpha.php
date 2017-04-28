@@ -1,6 +1,5 @@
 <?php
 /**
- *
  *  Copyright notice
  *
  *  (c) 2012 DMK E-Business GmbH <dev@dmk-ebusiness.de>
@@ -30,46 +29,48 @@ tx_rnbase::load('tx_mksanitizedparameters_util_RegularExpression');
  * @subpackage tx_mksanitizedparameters
  * @author Hannes Bochmann <dev@dmk-ebusiness.de>
  */
-class tx_mksanitizedparameters_sanitizer_Alpha 
-	implements tx_mksanitizedparameters_interface_Sanitizer
+class tx_mksanitizedparameters_sanitizer_Alpha implements tx_mksanitizedparameters_interface_Sanitizer
 {
 
-	/**
-	 * @var string
-	 */
-	private static $regularExpressionForLetters = 'a-zA-Z-äöüÄÖÜéàèÉÈß';
-	
-	/**
-	 * (non-PHPdoc)
-	 * @see tx_mksanitizedparameters_interface_Sanitizer::sanitizeValue()
-	 */
-	public static function sanitizeValue($value) {
+    /**
+     * @var string
+     */
+    private static $regularExpressionForLetters = 'a-zA-Z-äöüÄÖÜéàèÉÈß';
+    
+    /**
+     * (non-PHPdoc)
+     * @see tx_mksanitizedparameters_interface_Sanitizer::sanitizeValue()
+     */
+    public static function sanitizeValue($value)
+    {
         return tx_mksanitizedparameters_util_RegularExpression::callPregReplace(
-        	'/[^' . self::getRegularExpressionForLetters() .']/', 
-        	(string) $value
+            '/[^' . self::getRegularExpressionForLetters() .']/',
+            (string) $value
         );
-	}
-	
-	/**
-	 * @param string $value
-	 * 
-	 * @return string
-	 */
-	public static function sanitizeValueAllowingWhitespaces($value) {
-		return tx_mksanitizedparameters_util_RegularExpression::callPregReplace(
-			'/[^' . self::getRegularExpressionForLetters() .' ]/', 
-			(string) $value
-		);
-	}
-	
-	/**
-	 * @return string
-	 */
-	public static function getRegularExpressionForLetters() {
-		return self::$regularExpressionForLetters;
-	}
+    }
+    
+    /**
+     * @param string $value
+     *
+     * @return string
+     */
+    public static function sanitizeValueAllowingWhitespaces($value)
+    {
+        return tx_mksanitizedparameters_util_RegularExpression::callPregReplace(
+            '/[^' . self::getRegularExpressionForLetters() .' ]/',
+            (string) $value
+        );
+    }
+    
+    /**
+     * @return string
+     */
+    public static function getRegularExpressionForLetters()
+    {
+        return self::$regularExpressionForLetters;
+    }
 }
 
-if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/sanitizer/class.tx_mksanitizedparameters_sanitizer_Alpha.php'])	{
-	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/sanitizer/class.tx_mksanitizedparameters_sanitizer_Alpha.php']);
+if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/sanitizer/class.tx_mksanitizedparameters_sanitizer_Alpha.php']) {
+    include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/sanitizer/class.tx_mksanitizedparameters_sanitizer_Alpha.php']);
 }
