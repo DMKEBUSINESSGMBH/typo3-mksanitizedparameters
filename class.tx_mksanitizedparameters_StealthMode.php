@@ -117,7 +117,7 @@ class tx_mksanitizedparameters_StealthMode
                 $arrayKey,
                 $arrayValues
             ),
-            'crdate'    => time()
+            'crdate'    => $GLOBALS['EXEC_TIME']
         );
         self::getDatabaseConnection()->doInsert(
             self::$storageDbTableName,
