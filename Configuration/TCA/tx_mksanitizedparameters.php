@@ -3,12 +3,24 @@ if (!defined('TYPO3_MODE')) {
     die('Access denied.');
 }
 
-$TCA['tx_mksanitizedparameters'] = array(
-    'ctrl' => $TCA['tx_mksanitizedparameters']['ctrl'],
+return array(
+    'ctrl' => array(
+        'title'     => 'LLL:EXT:mksanitizedparameters/locallang.xml:tx_mksanitizedparameters',
+        'label'     => 'name',
+        'label_alt'    => 'value',
+        'label_alt_force' => 1,
+        'default_sortby' => 'ORDER BY crdate',
+        'delete' => 'deleted',
+        'enablecolumns' => array(
+            'disabled' => 'hidden',
+        ),
+        'tstamp'    => 'tstamp',
+        'crdate'    => 'crdate',
+        'cruser_id' => 'cruser_id',
+    ),
     'interface' => array(
         'showRecordFieldList' => 'hidden,name,value,hash'
     ),
-    'feInterface' => $TCA['tx_mksanitizedparameters']['feInterface'],
     'columns' => array(
         'hidden' => array(
             'exclude' => 1,
