@@ -34,12 +34,9 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests
      * sanitize $_REQUEST, $_POST, $_GET before
      * Frontend/Backend Actions start.
      *
-     * @param array $parameters
-     * @param $parent
-     *
      * @return void
      */
-    public function sanitizeGlobalInputArrays(array $parameters, $parent)
+    public function sanitizeGlobalInputArrays()
     {
         $isStealthMode = tx_rnbase_configurations::getExtensionCfgValue(
             'mksanitizedparameters',
