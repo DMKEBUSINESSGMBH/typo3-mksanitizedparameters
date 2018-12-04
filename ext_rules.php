@@ -36,3 +36,7 @@ if (tx_rnbase_util_Extensions::isLoaded('powermail')) {
 if (tx_rnbase_util_Extensions::isLoaded('sr_feuser_register')) {
     require_once(tx_rnbase_util_Extensions::extPath($_EXTKEY).'rules/sr_feuser_register.php');
 }
+
+if (tx_rnbase_util_Extensions::isLoaded('form')) {
+    require_once(tx_rnbase_util_Extensions::extPath($_EXTKEY).'rules/form.php');
+}
