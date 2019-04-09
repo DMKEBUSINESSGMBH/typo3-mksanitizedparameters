@@ -29,7 +29,7 @@
     },
     "require": {
         "typo3/cms": "~6.2 || ~7.6 || ~8.7 || ~9.5",
-        "digedag/rn-base": ">=1.4"
+        "digedag/rn-base": "dev-migration_to_95"
     },
     "autoload": {
         "classmap": [
