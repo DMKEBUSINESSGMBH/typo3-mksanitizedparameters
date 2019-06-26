@@ -61,10 +61,7 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx
         tx_mklib_tests_Util::setExtConfVar('debugMode', 0, 'mksanitizedparameters');
         tx_mklib_tests_Util::setExtConfVar('logMode', 0, 'mksanitizedparameters');
 
-        if (tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
-            $GLOBALS['TBE_TEMPLATE'] =
-                tx_rnbase::makeInstance('TYPO3\CMS\Backend\Template\DocumentTemplate');
-        }
+        $GLOBALS['TBE_TEMPLATE'] = tx_rnbase::makeInstance('TYPO3\CMS\Backend\Template\DocumentTemplate');
         /*
          * warning "Cannot modify header information" abfangen.
          *
@@ -183,15 +180,9 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx
      */
     public function testHookInFrontendIsAvailableAndConfigured()
     {
-        if (tx_rnbase_util_TYPO3::isTYPO70OrHigher()) {
-            $indexTs = file_get_contents(PATH_typo3 . 'sysext/frontend/Classes/Http/RequestHandler.php');
-            $callHookLine =
-                strstr($indexTs, 'foreach ($GLOBALS[\'TYPO3_CONF_VARS\'][\'SC_OPTIONS\'][\'tslib/index_ts.php\'][\'preprocessRequest\'] as $hookFunction) {');
-        } else {
-            $indexTs = file_get_contents(PATH_typo3 . 'sysext/cms/tslib/index_ts.php');
-            $callHookLine =
-                strstr($indexTs, 'foreach ($TYPO3_CONF_VARS[\'SC_OPTIONS\'][\'tslib/index_ts.php\'][\'preprocessRequest\'] as $hookFunction) {');
-        }
+        $indexTs = file_get_contents(PATH_typo3 . 'sysext/frontend/Classes/Http/RequestHandler.php');
+        $callHookLine =
+            strstr($indexTs, 'foreach ($GLOBALS[\'TYPO3_CONF_VARS\'][\'SC_OPTIONS\'][\'tslib/index_ts.php\'][\'preprocessRequest\'] as $hookFunction) {');
 
 
         $this->assertNotEmpty($callHookLine, 'The line calling the FE hook wasn\'t found in '.PATH_typo3.'sysext/cms/tslib/index_ts.php');
