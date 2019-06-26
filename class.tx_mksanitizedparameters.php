@@ -495,7 +495,7 @@ class tx_mksanitizedparameters
     {
         tx_rnbase::load('tx_rnbase_util_Logger');
 
-        return tx_rnbase_util_Logger;
+        return 'tx_rnbase_util_Logger';
     }
 
     /**

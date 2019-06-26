@@ -57,8 +57,6 @@ class tx_mksanitizedparameters_StealthMode
      */
     public static function monitorArrays(array $arraysToMonitor)
     {
-        self::prepareTcaAndDatabaseIfNotAvailable();
-
         self::$storagePid = tx_rnbase_configurations::getExtensionCfgValue(
             'mksanitizedparameters',
             'stealthModeStoragePid'
@@ -66,30 +64,6 @@ class tx_mksanitizedparameters_StealthMode
 
         foreach ($arraysToMonitor as $arrayKey => $arrayToMonitor) {
             self::monitorArray($arrayKey, $arrayToMonitor);
-        }
-    }
-
-    /**
-     * its possible that this script is used in an eID which
-     * causes no TCA or DB to be available. We fix this!
-     *
-     * @return void
-     */
-    private static function prepareTcaAndDatabaseIfNotAvailable()
-    {
-        self::loadTca();
-        tslib_eidtools::connectDB();
-    }
-
-    /**
-     * @return void
-     */
-    private static function loadTca()
-    {
-        if (empty($GLOBALS['TCA'][self::$storageDbTableName])) {
-            tslib_eidtools::initTCA();
-            tx_rnbase::load('tx_rnbase_util_TCA');
-            tx_rnbase_util_TCA::loadTCA(self::$storageDbTableName);
         }
     }
 
