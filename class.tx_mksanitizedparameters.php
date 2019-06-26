@@ -79,9 +79,7 @@ class tx_mksanitizedparameters
      *          '__default'     => FILTER_SANITIZE_NUMBER_INT
      *
      *          //that's the way to call a custom filter!
-     *          //the custom class is loaded through tx_rnbase::load().
-     *          //If your custom class can't be loaded
-     *          //this way, then please load the class yourself before setting the rules
+     *          //make sure to have your custom class autoloaded.
      *          'someValue' => array(
      *              'filter'    => FILTER_CALLBACK,
      *              'options'   => array(
@@ -349,7 +347,6 @@ class tx_mksanitizedparameters
             tx_mksanitizedparameters_Rules::COMMON_RULES_KEY
         );
 
-        tx_rnbase::load('tx_rnbase_util_Arrays');
         $rulesForNextLevel[tx_mksanitizedparameters_Rules::COMMON_RULES_KEY] =
             tx_rnbase_util_Arrays::mergeRecursiveWithOverrule(
                 (array) $rulesFromCurrentLevel[tx_mksanitizedparameters_Rules::COMMON_RULES_KEY],
@@ -410,31 +407,12 @@ class tx_mksanitizedparameters
             $filters = $filterConfig;
         }
 
-        $this->loadCustomFilterCallbackClass($filterConfig);
-
         foreach ($filters as $filter) {
             $valueToSanitize =
                 filter_var($valueToSanitize, intval($filter), $filterConfig);
         }
 
         return $valueToSanitize;
-    }
-
-    /**
-     * @param array $filterConfig
-     *
-     * @return void
-     */
-    private function loadCustomFilterCallbackClass(array $filterConfig)
-    {
-        if (isset($filterConfig['options'][0]) ||
-            is_string($filterConfig['options'][0])
-        ) {
-            try {
-                tx_rnbase::load($filterConfig['options'][0]);
-            } catch (Exception $e) {
-            }
-        }
     }
 
     /**
@@ -493,8 +471,6 @@ class tx_mksanitizedparameters
      */
     protected function getLogger()
     {
-        tx_rnbase::load('tx_rnbase_util_Logger');
-
         return 'tx_rnbase_util_Logger';
     }
 
@@ -549,7 +525,6 @@ class tx_mksanitizedparameters
             'mksanitizedparameters',
             'debugMode'
         );
-        tx_rnbase::load('tx_rnbase_util_Network');
 
         return $debugModeByExtensionConfiguration || tx_rnbase_util_Network::isDevelopmentIp();
     }
@@ -559,8 +534,6 @@ class tx_mksanitizedparameters
      */
     protected function getDebugger()
     {
-        tx_rnbase::load('tx_rnbase_util_Debug');
-
         return 'tx_rnbase_util_Debug';
     }
 

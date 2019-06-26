@@ -21,9 +21,6 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  */
-tx_rnbase::load('tx_rnbase_tests_BaseTestCase');
-tx_rnbase::load('tx_mksanitizedparameters_util_RegularExpression');
-tx_rnbase::load('tx_mksanitizedparameters_sanitizer_Alpha');
 
 /**
  * @package TYPO3

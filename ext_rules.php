@@ -13,7 +13,6 @@ $_EXTKEY = 'mksanitizedparameters';
 // $rulesForFrontend = unserialize(HERE_COMES_YOU_SERIALIZED_ARRAY)
 // tx_mksanitizedparameters_Rules::addRulesForFrontend($rulesForFrontend);
 
-tx_rnbase::load('tx_mksanitizedparameters_Rules');
 
 require_once(tx_rnbase_util_Extensions::extPath($_EXTKEY).'rules/default.php');
 

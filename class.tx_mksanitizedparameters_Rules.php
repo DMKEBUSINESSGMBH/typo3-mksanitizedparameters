@@ -65,7 +65,6 @@ class tx_mksanitizedparameters_Rules
     public static function addRulesForFrontend(
         array $rules
     ) {
-        tx_rnbase::load('tx_rnbase_util_Arrays');
         self::$rulesForFrontend =
             tx_rnbase_util_Arrays::mergeRecursiveWithOverrule(
                 self::$rulesForFrontend,
@@ -85,7 +84,6 @@ class tx_mksanitizedparameters_Rules
     public static function addRulesForBackend(
         array $rules
     ) {
-        tx_rnbase::load('tx_rnbase_util_Arrays');
         self::$rulesForBackend =
             tx_rnbase_util_Arrays::mergeRecursiveWithOverrule(
                 self::$rulesForBackend,

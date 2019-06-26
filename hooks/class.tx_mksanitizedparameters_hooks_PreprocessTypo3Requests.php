@@ -49,14 +49,10 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests
         );
 
         if ($isStealthMode) {
-            tx_rnbase::load('tx_mksanitizedparameters_StealthMode');
             tx_mksanitizedparameters_StealthMode::monitorArrays(
                 $arraysToSanitize
             );
         } else {
-            tx_rnbase::load('tx_mksanitizedparameters');
-            tx_rnbase::load('tx_mksanitizedparameters_Rules');
-
             $mksanitizedparametersMainClass = $this->getMksanitizedparametersMainClass();
             $mksanitizedparametersMainClass->sanitizeArraysByRules(
                 $arraysToSanitize,

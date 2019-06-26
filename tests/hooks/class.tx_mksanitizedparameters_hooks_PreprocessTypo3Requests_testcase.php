@@ -27,10 +27,6 @@ require_once(tx_rnbase_util_Extensions::extPath('mksanitizedparameters', 'tests/
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['typo3/template.php']['preStartPageHook']['mksanitizedparameters'] =
     'EXT:mksanitizedparameters/tests/hooks/class.tx_mksanitizedparameters_hooks_PreprocessTypo3Requests.php:&tx_mksanitizedparameters_tests_hooks_PreprocessTypo3Requests->sanitizeGlobalInputArrays';
 
-tx_rnbase::load('tx_mksanitizedparameters');
-tx_rnbase::load('tx_mksanitizedparameters_Rules');
-tx_rnbase::load('tx_mklib_tests_Util');
-tx_rnbase::load('tx_rnbase_tests_BaseTestCase');
 
 /**
  * @package TYPO3
@@ -56,10 +52,10 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx
         );
         tx_mksanitizedparameters_Rules::addRulesForBackend($rulesForBackend);
 
-        tx_mklib_tests_Util::disableDevlog();
-        tx_mklib_tests_Util::storeExtConf('mksanitizedparameters');
-        tx_mklib_tests_Util::setExtConfVar('debugMode', 0, 'mksanitizedparameters');
-        tx_mklib_tests_Util::setExtConfVar('logMode', 0, 'mksanitizedparameters');
+        \DMK\Mklib\Utility\Tests::disableDevlog();
+        \DMK\Mklib\Utility\Tests::storeExtConf('mksanitizedparameters');
+        \DMK\Mklib\Utility\Tests::setExtConfVar('debugMode', 0, 'mksanitizedparameters');
+        \DMK\Mklib\Utility\Tests::setExtConfVar('logMode', 0, 'mksanitizedparameters');
 
         $GLOBALS['TBE_TEMPLATE'] = tx_rnbase::makeInstance('TYPO3\CMS\Backend\Template\DocumentTemplate');
         /*
@@ -133,7 +129,7 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx
         unset($_POST['testParameter']);
         unset($_GET['testParameter']);
 
-        tx_mklib_tests_Util::restoreExtConf('mksanitizedparameters');
+        \DMK\Mklib\Utility\Tests::restoreExtConf('mksanitizedparameters');
 
         // error handler zurücksetzen
         restore_error_handler();

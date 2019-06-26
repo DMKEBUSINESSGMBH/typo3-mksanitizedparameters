@@ -21,9 +21,6 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  */
-tx_rnbase::load('tx_mksanitizedparameters_interface_Sanitizer');
-tx_rnbase::load('tx_mksanitizedparameters_sanitizer_Alpha');
-tx_rnbase::load('tx_mksanitizedparameters_util_RegularExpression');
 
 /**
  * @package TYPO3

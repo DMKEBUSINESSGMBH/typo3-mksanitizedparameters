@@ -21,8 +21,6 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  */
-tx_rnbase::load('tx_mksanitizedparameters');
-tx_rnbase::load('tx_mksanitizedparameters_hooks_PreprocessTypo3Requests');
 
 /**
  * damit wir eigentliche klasse ersetzen können

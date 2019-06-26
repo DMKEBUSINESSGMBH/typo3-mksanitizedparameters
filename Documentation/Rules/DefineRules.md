@@ -39,9 +39,7 @@ Filter with own class
 array(
    'subArray' => array(
       //that's the way to call a custom filter!
-      //the custom class is loaded through tx_rnbase::load(). 
-      //If your custom class can't be loaded
-      //this way, then please load the class yourself before setting the rules
+      //make sure to have your custom class autoloaded.
       'someValue' => array(
          'filter'    => FILTER_CALLBACK,
          'options'   => array(

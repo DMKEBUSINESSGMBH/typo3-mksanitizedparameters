@@ -21,11 +21,6 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  */
-tx_rnbase::load('tx_mksanitizedparameters');
-tx_rnbase::load('tx_mklib_tests_Util');
-tx_rnbase::load('tx_rnbase_util_Logger');
-tx_rnbase::load('tx_rnbase_util_Debug');
-tx_rnbase::load('tx_rnbase_tests_BaseTestCase');
 
 /**
  * @package TYPO3
@@ -41,10 +36,10 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
      */
     protected function setUp()
     {
-        tx_mklib_tests_Util::disableDevlog();
-        tx_mklib_tests_Util::storeExtConf('mksanitizedparameters');
-        tx_mklib_tests_Util::setExtConfVar('debugMode', 0, 'mksanitizedparameters');
-        tx_mklib_tests_Util::setExtConfVar('logMode', 0, 'mksanitizedparameters');
+        \DMK\Mklib\Utility\Tests::disableDevlog();
+        \DMK\Mklib\Utility\Tests::storeExtConf('mksanitizedparameters');
+        \DMK\Mklib\Utility\Tests::setExtConfVar('debugMode', 0, 'mksanitizedparameters');
+        \DMK\Mklib\Utility\Tests::setExtConfVar('logMode', 0, 'mksanitizedparameters');
     }
 
     /**
@@ -53,7 +48,7 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
      */
     protected function tearDown()
     {
-        tx_mklib_tests_Util::restoreExtConf('mksanitizedparameters');
+        \DMK\Mklib\Utility\Tests::restoreExtConf('mksanitizedparameters');
     }
 
     /**
@@ -507,7 +502,7 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
      */
     public function testSanitizeArrayByRulesDoesNotCallLoggerIfLoggingEnabledButValueNotChanged()
     {
-        tx_mklib_tests_Util::setExtConfVar('logMode', 1, 'mksanitizedparameters');
+        \DMK\Mklib\Utility\Tests::setExtConfVar('logMode', 1, 'mksanitizedparameters');
 
         $arrayToSanitize = array(
           'parameter' => 'test'
@@ -539,7 +534,7 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
      */
     public function testSanitizeArrayByRulesDoesNotConsiderValueAsChangedIfHasWhitespaceAtBeginningOrEnd()
     {
-        tx_mklib_tests_Util::setExtConfVar('logMode', 1, 'mksanitizedparameters');
+        \DMK\Mklib\Utility\Tests::setExtConfVar('logMode', 1, 'mksanitizedparameters');
 
         $arrayToSanitize = array(
             'parameter' => ' test '
@@ -571,7 +566,7 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
      */
     public function testSanitizeArrayByRulesCallsLoggerCorrectIfLoggingEnabledAndValueChanged()
     {
-        tx_mklib_tests_Util::setExtConfVar('logMode', 1, 'mksanitizedparameters');
+        \DMK\Mklib\Utility\Tests::setExtConfVar('logMode', 1, 'mksanitizedparameters');
 
         $arrayToSanitize = array(
           'parameter' => '"test"'

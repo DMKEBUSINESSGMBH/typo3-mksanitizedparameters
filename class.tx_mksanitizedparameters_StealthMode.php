@@ -42,8 +42,6 @@ class tx_mksanitizedparameters_StealthMode
      */
     protected static function getDatabaseConnection()
     {
-        tx_rnbase::load('Tx_Rnbase_Database_Connection');
-
         return Tx_Rnbase_Database_Connection::getInstance();
     }
 
