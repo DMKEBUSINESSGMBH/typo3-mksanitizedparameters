@@ -170,12 +170,19 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx
      */
     public function testHookInFrontendIsAvailableAndConfigured()
     {
-        $indexTs = file_get_contents(PATH_typo3 . 'sysext/frontend/Classes/Http/RequestHandler.php');
-        $callHookLine =
-            strstr($indexTs, 'foreach ($GLOBALS[\'TYPO3_CONF_VARS\'][\'SC_OPTIONS\'][\'tslib/index_ts.php\'][\'preprocessRequest\'] as $hookFunction) {');
+        $indexTs = file_get_contents(
+            \Sys25\RnBase\Utility\Environment::getPublicTypo3Path() . 'sysext/frontend/Classes/Http/RequestHandler.php'
+        );
+        $callHookLine = strstr(
+            $indexTs,
+            'foreach ($GLOBALS[\'TYPO3_CONF_VARS\'][\'SC_OPTIONS\'][\'tslib/index_ts.php\'][\'preprocessRequest\'] as $hookFunction) {'
+        );
 
-
-        $this->assertNotEmpty($callHookLine, 'The line calling the FE hook wasn\'t found in '.PATH_typo3.'sysext/cms/tslib/index_ts.php');
+        $this->assertNotEmpty(
+            $callHookLine,
+            'The line calling the FE hook wasn\'t found in '.\Sys25\RnBase\Utility\Environment::getPublicTypo3Path().
+            'sysext/cms/tslib/index_ts.php'
+        );
 
         $this->assertTrue(
             in_array(
