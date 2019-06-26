@@ -1,6 +1,6 @@
 <?php
 /**
- *  Copyright notice
+ *  Copyright notice.
  *
  *  (c) 2012 DMK E-Business GmbH <dev@dmk-ebusiness.de>
  *  All rights reserved
@@ -23,16 +23,13 @@
  */
 
 /**
- * @package TYPO3
- * @subpackage tx_mksanitizedparameters
  * @author Hannes Bochmann <dev@dmk-ebusiness.de>
  */
 class tx_mksanitizedparameters_util_RegularExpression
 {
-
     /**
      * @param string $pattern
-     * @param mixed $value
+     * @param mixed  $value
      *
      * @return string
      */
@@ -43,5 +40,5 @@ class tx_mksanitizedparameters_util_RegularExpression
 }
 
 if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/util/class.tx_mksanitizedparameters_util_RegularExpression.php']) {
-    include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/util/class.tx_mksanitizedparameters_util_RegularExpression.php']);
+    include_once $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/util/class.tx_mksanitizedparameters_util_RegularExpression.php'];
 }

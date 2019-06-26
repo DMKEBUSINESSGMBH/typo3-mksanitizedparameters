@@ -1,6 +1,6 @@
 <?php
 /**
- *  Copyright notice
+ *  Copyright notice.
  *
  *  (c) 2012 DMK E-Business GmbH <dev@dmk-ebusiness.de>
  *  All rights reserved
@@ -24,15 +24,12 @@
 
 /**
  * Class to register and retrieve rules for
- * the parameters in the system
+ * the parameters in the system.
  *
- * @package TYPO3
- * @subpackage tx_mksanitizedparameters
  * @author Hannes Bochmann <dev@dmk-ebusiness.de>
  */
 class tx_mksanitizedparameters_Rules
 {
-
     /**
      * @var string
      */
@@ -59,8 +56,6 @@ class tx_mksanitizedparameters_Rules
      * to see how the rules must be passed.
      *
      * @param array $rules
-     *
-     * @return void
      */
     public static function addRulesForFrontend(
         array $rules
@@ -78,8 +73,6 @@ class tx_mksanitizedparameters_Rules
      * to see how the rules must be passed.
      *
      * @param array $rules
-     *
-     * @return void
      */
     public static function addRulesForBackend(
         array $rules
@@ -92,7 +85,7 @@ class tx_mksanitizedparameters_Rules
     }
 
     /**
-     * the default environment is Frontend
+     * the default environment is Frontend.
      *
      * @return array
      */
@@ -131,5 +124,5 @@ class tx_mksanitizedparameters_Rules
 }
 
 if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/util/class.tx_mksanitizedparameters_Rules.php']) {
-    include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/util/class.tx_mksanitizedparameters_Rules.php']);
+    include_once $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/util/class.tx_mksanitizedparameters_Rules.php'];
 }

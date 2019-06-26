@@ -1,6 +1,6 @@
 <?php
 /**
- *  Copyright notice
+ *  Copyright notice.
  *
  *  (c) 2012 DMK E-Business GmbH <dev@dmk-ebusiness.de>
  *  All rights reserved
@@ -23,13 +23,10 @@
  */
 
 /**
- * @package TYPO3
- * @subpackage tx_mksanitizedparameters
  * @author Hannes Bochmann <dev@dmk-ebusiness.de>
  */
 class tx_mksanitizedparameters_sanitizer_Alnum_testcase extends tx_rnbase_tests_BaseTestCase
 {
-
     /**
      * @group unit
      */

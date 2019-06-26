@@ -1,6 +1,6 @@
 <?php
 /**
- *  Copyright notice
+ *  Copyright notice.
  *
  *  (c) 2012 DMK E-Business GmbH <dev@dmk-ebusiness.de>
  *  All rights reserved
@@ -23,14 +23,11 @@
  */
 
 //wir brauchen einen eigenen Hook damit der Debug Mode überschrieben wird
-require_once(tx_rnbase_util_Extensions::extPath('mksanitizedparameters', 'tests/hooks/class.tx_mksanitizedparameters_hooks_PreprocessTypo3Requests.php'));
+require_once tx_rnbase_util_Extensions::extPath('mksanitizedparameters', 'tests/hooks/class.tx_mksanitizedparameters_hooks_PreprocessTypo3Requests.php');
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['typo3/template.php']['preStartPageHook']['mksanitizedparameters'] =
     'EXT:mksanitizedparameters/tests/hooks/class.tx_mksanitizedparameters_hooks_PreprocessTypo3Requests.php:&tx_mksanitizedparameters_tests_hooks_PreprocessTypo3Requests->sanitizeGlobalInputArrays';
 
-
 /**
- * @package TYPO3
- * @subpackage tx_mksanitizedparameters
  * @author Hannes Bochmann <dev@dmk-ebusiness.de>
  */
 class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx_rnbase_tests_BaseTestCase
@@ -38,7 +35,8 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx
     private $storedExtConfig;
 
     /**
-     * (non-PHPdoc)
+     * (non-PHPdoc).
+     *
      * @see PHPUnit_Framework_TestCase::setUp()
      */
     protected function setUp()
@@ -48,7 +46,7 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx
         $this->deactivateStealthMode($this->storedExtConfig);
 
         $rulesForBackend = array(
-            'testParameter' => FILTER_SANITIZE_NUMBER_INT
+            'testParameter' => FILTER_SANITIZE_NUMBER_INT,
         );
         tx_mksanitizedparameters_Rules::addRulesForBackend($rulesForBackend);
 
@@ -78,8 +76,6 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx
 
     /**
      * @param string $serializedExtConfig
-     *
-     * @return void
      */
     private function deactivateStealthMode($serializedExtConfig)
     {
@@ -94,12 +90,11 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx
     }
 
     /**
-     *
-     * @param integer $errno
+     * @param int    $errno
      * @param string $errstr
      * @param string $errfile
-     * @param integer $errline
-     * @param array $errcontext
+     * @param int    $errline
+     * @param array  $errcontext
      */
     public static function errorHandler($errno, $errstr, $errfile, $errline, $errcontext)
     {
@@ -107,7 +102,7 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx
             'Cannot modify header information - headers already sent by',
         );
         foreach ($ignoreMsg as $msg) {
-            if ((is_string($ignoreMsg) || is_numeric($ignoreMsg)) && strpos($errstr, $ignoreMsg) !== false) {
+            if ((is_string($ignoreMsg) || is_numeric($ignoreMsg)) && false !== strpos($errstr, $ignoreMsg)) {
                 // Don't execute PHP internal error handler
                 return false;
             }
@@ -117,7 +112,8 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx
     }
 
     /**
-     * (non-PHPdoc)
+     * (non-PHPdoc).
+     *
      * @see PHPUnit_Framework_TestCase::tearDown()
      */
     protected function tearDown()
@@ -171,7 +167,7 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx
     public function testHookInFrontendIsAvailableAndConfigured()
     {
         $indexTs = file_get_contents(
-            \Sys25\RnBase\Utility\Environment::getPublicTypo3Path() . 'sysext/frontend/Classes/Http/RequestHandler.php'
+            \Sys25\RnBase\Utility\Environment::getPublicTypo3Path().'sysext/frontend/Classes/Http/RequestHandler.php'
         );
         $callHookLine = strstr(
             $indexTs,

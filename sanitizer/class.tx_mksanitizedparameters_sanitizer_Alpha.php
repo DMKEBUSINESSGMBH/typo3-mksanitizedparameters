@@ -1,6 +1,6 @@
 <?php
 /**
- *  Copyright notice
+ *  Copyright notice.
  *
  *  (c) 2012 DMK E-Business GmbH <dev@dmk-ebusiness.de>
  *  All rights reserved
@@ -23,30 +23,28 @@
  */
 
 /**
- * @package TYPO3
- * @subpackage tx_mksanitizedparameters
  * @author Hannes Bochmann <dev@dmk-ebusiness.de>
  */
 class tx_mksanitizedparameters_sanitizer_Alpha implements tx_mksanitizedparameters_interface_Sanitizer
 {
-
     /**
      * @var string
      */
     private static $regularExpressionForLetters = 'a-zA-Z-äöüÄÖÜéàèÉÈß';
-    
+
     /**
-     * (non-PHPdoc)
+     * (non-PHPdoc).
+     *
      * @see tx_mksanitizedparameters_interface_Sanitizer::sanitizeValue()
      */
     public static function sanitizeValue($value)
     {
         return tx_mksanitizedparameters_util_RegularExpression::callPregReplace(
-            '/[^' . self::getRegularExpressionForLetters() .']/',
+            '/[^'.self::getRegularExpressionForLetters().']/',
             (string) $value
         );
     }
-    
+
     /**
      * @param string $value
      *
@@ -55,11 +53,11 @@ class tx_mksanitizedparameters_sanitizer_Alpha implements tx_mksanitizedparamete
     public static function sanitizeValueAllowingWhitespaces($value)
     {
         return tx_mksanitizedparameters_util_RegularExpression::callPregReplace(
-            '/[^' . self::getRegularExpressionForLetters() .' ]/',
+            '/[^'.self::getRegularExpressionForLetters().' ]/',
             (string) $value
         );
     }
-    
+
     /**
      * @return string
      */
@@ -70,5 +68,5 @@ class tx_mksanitizedparameters_sanitizer_Alpha implements tx_mksanitizedparamete
 }
 
 if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/sanitizer/class.tx_mksanitizedparameters_sanitizer_Alpha.php']) {
-    include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/sanitizer/class.tx_mksanitizedparameters_sanitizer_Alpha.php']);
+    include_once $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/sanitizer/class.tx_mksanitizedparameters_sanitizer_Alpha.php'];
 }

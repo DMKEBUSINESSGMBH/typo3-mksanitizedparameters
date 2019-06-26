@@ -1,6 +1,6 @@
 <?php
 /**
- *  Copyright notice
+ *  Copyright notice.
  *
  *  (c) 2012 DMK E-Business GmbH <dev@dmk-ebusiness.de>
  *  All rights reserved
@@ -26,8 +26,6 @@
  * Stores the given arrays to the DB so it can be checked
  * which parameters have which values.
  *
- * @package TYPO3
- * @subpackage tx_mksanitizedparameters
  * @author Hannes Bochmann <dev@dmk-ebusiness.de>
  */
 class tx_mksanitizedparameters_StealthMode
@@ -36,7 +34,7 @@ class tx_mksanitizedparameters_StealthMode
     private static $storageDbTableName = 'tx_mksanitizedparameters';
 
     /**
-     * returns the db connection
+     * returns the db connection.
      *
      * @return Tx_Rnbase_Database_Connection
      */
@@ -50,8 +48,6 @@ class tx_mksanitizedparameters_StealthMode
      * which parameters have which values.
      *
      * @param array $arraysToMonitor
-     *
-     * @return void
      */
     public static function monitorArrays(array $arraysToMonitor)
     {
@@ -67,9 +63,7 @@ class tx_mksanitizedparameters_StealthMode
 
     /**
      * @param string $arrayKey
-     * @param array $arrayValues
-     *
-     * @return void
+     * @param array  $arrayValues
      */
     public static function monitorArray($arrayKey, array $arrayValues)
     {
@@ -80,16 +74,16 @@ class tx_mksanitizedparameters_StealthMode
         }
 
         $dataToInsert = array(
-            'pid'        => self::$storagePid,
-            'name'    => $arrayKey,
-            'value'    => self::getArrayAsStringOutput(
+            'pid' => self::$storagePid,
+            'name' => $arrayKey,
+            'value' => self::getArrayAsStringOutput(
                 $arrayValues
             ),
-            'hash'        => self::getHashByArrayToMonitor(
+            'hash' => self::getHashByArrayToMonitor(
                 $arrayKey,
                 $arrayValues
             ),
-            'crdate'    => $GLOBALS['EXEC_TIME']
+            'crdate' => $GLOBALS['EXEC_TIME'],
         );
         self::getDatabaseConnection()->doInsert(
             self::$storageDbTableName,
@@ -99,7 +93,7 @@ class tx_mksanitizedparameters_StealthMode
 
     /**
      * @param string $arrayKey
-     * @param array $arrayToMonitor
+     * @param array  $arrayToMonitor
      *
      * @return bool
      */
@@ -112,14 +106,14 @@ class tx_mksanitizedparameters_StealthMode
             $arrayToMonitor
         );
 
-        $where = 'hash = "' . $arrayHash . '"';
+        $where = 'hash = "'.$arrayHash.'"';
 
         $selectResult = self::getDatabaseConnection()->doSelect(
             '*',
             self::$storageDbTableName,
             array(
                 'where' => $where,
-                'enablefieldsfe' => true
+                'enablefieldsfe' => true,
             )
         );
 
@@ -138,7 +132,7 @@ class tx_mksanitizedparameters_StealthMode
 
     /**
      * @param string $arrayKey
-     * @param array $arrayValues
+     * @param array  $arrayValues
      *
      * @return string
      */
@@ -149,5 +143,5 @@ class tx_mksanitizedparameters_StealthMode
 }
 
 if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/class.tx_mksanitizedparameters_StealthMode.php']) {
-    include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/class.tx_mksanitizedparameters_StealthMode.php']);
+    include_once $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/class.tx_mksanitizedparameters_StealthMode.php'];
 }

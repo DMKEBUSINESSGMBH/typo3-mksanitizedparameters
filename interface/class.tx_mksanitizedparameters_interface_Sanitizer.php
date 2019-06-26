@@ -1,6 +1,6 @@
 <?php
 /**
- *  Copyright notice
+ *  Copyright notice.
  *
  *  (c) 2012 DMK E-Business GmbH <dev@dmk-ebusiness.de>
  *  All rights reserved
@@ -23,15 +23,12 @@
  */
 
 /**
- * @package TYPO3
- * @subpackage tx_mksanitizedparameters
  * @author Hannes Bochmann <dev@dmk-ebusiness.de>
  */
 interface tx_mksanitizedparameters_interface_Sanitizer
 {
-
     /**
-     * do the actual sanitation
+     * do the actual sanitation.
      *
      * @param mixed $value
      *

@@ -1,6 +1,6 @@
 <?php
 /**
- *  Copyright notice
+ *  Copyright notice.
  *
  *  (c) 2012 DMK E-Business GmbH <dev@dmk-ebusiness.de>
  *  All rights reserved
@@ -23,13 +23,10 @@
  */
 
 /**
- * @package TYPO3
- * @subpackage tx_mksanitizedparameters
  * @author Hannes Bochmann <dev@dmk-ebusiness.de>
  */
 class tx_mksanitizedparameters_util_RegularExpression_testcase extends tx_rnbase_tests_BaseTestCase
 {
-
     /**
      * @group unit
      */
@@ -37,7 +34,7 @@ class tx_mksanitizedparameters_util_RegularExpression_testcase extends tx_rnbase
     {
         $testString = 'abc123#! def';
 
-        $pattern = '/[^' . tx_mksanitizedparameters_sanitizer_Alpha::getRegularExpressionForLetters() .']/';
+        $pattern = '/[^'.tx_mksanitizedparameters_sanitizer_Alpha::getRegularExpressionForLetters().']/';
         $this->assertEquals(
             'abcdef',
             tx_mksanitizedparameters_util_RegularExpression::callPregReplace(

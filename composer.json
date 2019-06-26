@@ -31,6 +31,9 @@
         "typo3/cms-core": "~8.7 || ~9.5",
         "digedag/rn-base": "dev-migration_to_95"
     },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "~2@stable"
+    },
     "autoload": {
         "classmap": [
             "hooks/",
@@ -43,5 +46,24 @@
             "class.tx_mksanitizedparameters_Rules.php",
             "class.tx_mksanitizedparameters_StealthMode.php"
         ]
+    },
+    "config": {
+        "vendor-dir": ".Build/vendor",
+        "bin-dir": ".Build/bin",
+        "preferred-install": {
+            "typo3/cms": "source"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "mkdir -p .Build/Web/typo3conf/ext/",
+            "[ -L .Build/Web/typo3conf/ext/mksanitizedparameters ] || ln -snvf ../../../../. .Build/Web/typo3conf/ext/mksanitizedparameters"
+        ]
+    },
+    "extra": {
+        "typo3/cms": {
+            "cms-package-dir": "{$vendor-dir}/typo3/cms",
+            "web-dir": ".Build/Web"
+        }
     }
 }

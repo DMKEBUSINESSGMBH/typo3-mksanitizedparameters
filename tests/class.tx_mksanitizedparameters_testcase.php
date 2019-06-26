@@ -1,6 +1,6 @@
 <?php
 /**
- *  Copyright notice
+ *  Copyright notice.
  *
  *  (c) 2012 DMK E-Business GmbH <dev@dmk-ebusiness.de>
  *  All rights reserved
@@ -23,15 +23,13 @@
  */
 
 /**
- * @package TYPO3
- * @subpackage tx_mksanitizedparameters
  * @author Hannes Bochmann <dev@dmk-ebusiness.de>
  */
 class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
 {
-
     /**
-     * (non-PHPdoc)
+     * (non-PHPdoc).
+     *
      * @see PHPUnit_Framework_TestCase::setUp()
      */
     protected function setUp()
@@ -43,7 +41,8 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
     }
 
     /**
-     * (non-PHPdoc)
+     * (non-PHPdoc).
+     *
      * @see PHPUnit_Framework_TestCase::tearDown()
      */
     protected function tearDown()
@@ -79,7 +78,7 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
     public function testSanitizeArrayByRulesReturnsUntouchedArrayIfRulesEmpty()
     {
         $arrayToSanitize = array(
-            'parameterNameToBeSanitized' => 'testValue'
+            'parameterNameToBeSanitized' => 'testValue',
         );
         $mainClass = $this->getMainClassMockWithoutDebugMode();
         $sanitizedArray = $mainClass->sanitizeArrayByRules(
@@ -100,10 +99,10 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
     public function testSanitizeArrayByRulesReturnsUntouchedArrayWithoutRulesForGivenParameter()
     {
         $arrayToSanitize = array(
-            'parameterNameWithoutRules' => 'testValue'
+            'parameterNameWithoutRules' => 'testValue',
         );
         $rules = array(
-            'unexistentParameter'    => FILTER_SANITIZE_NUMBER_INT
+            'unexistentParameter' => FILTER_SANITIZE_NUMBER_INT,
         );
         $mainClass = $this->getMainClassMockWithoutDebugMode();
         $sanitizedArray = $mainClass->sanitizeArrayByRules(
@@ -124,10 +123,10 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
     public function testSanitizeArrayByRulesWorksCorrectWithUnconfiguredValuesButDefaultRules()
     {
         $arrayToSanitize = array(
-            'parameterNameToBeSanitized'    => '1testValue'
+            'parameterNameToBeSanitized' => '1testValue',
         );
         $rules = array(
-            tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY    => FILTER_SANITIZE_NUMBER_INT
+            tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_NUMBER_INT,
         );
         $mainClass = $this->getMainClassMockWithoutDebugMode();
         $sanitizedArray = $mainClass->sanitizeArrayByRules(
@@ -136,7 +135,7 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
         );
 
         $this->assertEquals(
-            array('parameterNameToBeSanitized'    => '1'),
+            array('parameterNameToBeSanitized' => '1'),
             $sanitizedArray,
             'The array wasn\'t sanitized correct!'
         );
@@ -148,10 +147,10 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
     public function testSanitizeArrayByRulesWorksCorrectWithFlatArrayAndSingleFilterConfig()
     {
         $arrayToSanitize = array(
-            'parameterNameToBeSanitized'    => '1testValue'
+            'parameterNameToBeSanitized' => '1testValue',
         );
         $rules = array(
-            'parameterNameToBeSanitized'    => FILTER_SANITIZE_NUMBER_INT
+            'parameterNameToBeSanitized' => FILTER_SANITIZE_NUMBER_INT,
         );
         $mainClass = $this->getMainClassMockWithoutDebugMode();
         $sanitizedArray = $mainClass->sanitizeArrayByRules(
@@ -160,7 +159,7 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
         );
 
         $this->assertEquals(
-            array('parameterNameToBeSanitized'    => '1'),
+            array('parameterNameToBeSanitized' => '1'),
             $sanitizedArray,
             'The array wasn\'t sanitized correct!'
         );
@@ -172,17 +171,17 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
     public function testSanitizeArrayByRulesWorksCorrectWithFlatArrayAndFilterConfigAsArray()
     {
         $arrayToSanitize = array(
-            'parameterInRange'        => '<span>me&you</span>',
-            'parameterOutOfRange'    => '<span>me&you</span>'
+            'parameterInRange' => '<span>me&you</span>',
+            'parameterOutOfRange' => '<span>me&you</span>',
         );
         $rules = array(
-            'parameterInRange'    => array(
-                'filter'    => FILTER_SANITIZE_STRING,
+            'parameterInRange' => array(
+                'filter' => FILTER_SANITIZE_STRING,
             ),
-            'parameterOutOfRange'    => array(
-                'filter'    => FILTER_SANITIZE_STRING,
-                'flags'    => FILTER_FLAG_ENCODE_AMP
-            )
+            'parameterOutOfRange' => array(
+                'filter' => FILTER_SANITIZE_STRING,
+                'flags' => FILTER_FLAG_ENCODE_AMP,
+            ),
         );
         $mainClass = $this->getMainClassMockWithoutDebugMode();
         $sanitizedArray = $mainClass->sanitizeArrayByRules(
@@ -192,8 +191,8 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
 
         $this->assertEquals(
             array(
-                'parameterInRange'        => 'me&you',
-                'parameterOutOfRange'    => 'me&#38;you',
+                'parameterInRange' => 'me&you',
+                'parameterOutOfRange' => 'me&#38;you',
             ),
             $sanitizedArray,
             'The array wasn\'t sanitized correct!'
@@ -206,11 +205,11 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
     public function testSanitizeArrayByRulesWorksCorrectWithUnconfiguredValuesAndNoDefaultRules()
     {
         $arrayToSanitize = array(
-            'parameterNameToBeSanitized'        => '1testValue',
-            'parameterNameNotToBeSanitized'    => '1testValue',
+            'parameterNameToBeSanitized' => '1testValue',
+            'parameterNameNotToBeSanitized' => '1testValue',
         );
         $rules = array(
-            'parameterNameToBeSanitized'    => FILTER_SANITIZE_NUMBER_INT
+            'parameterNameToBeSanitized' => FILTER_SANITIZE_NUMBER_INT,
         );
         $mainClass = $this->getMainClassMockWithoutDebugMode();
         $sanitizedArray = $mainClass->sanitizeArrayByRules(
@@ -220,8 +219,8 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
 
         $this->assertEquals(
             array(
-                'parameterNameToBeSanitized'        => '1',
-                'parameterNameNotToBeSanitized'    => '1testValue',
+                'parameterNameToBeSanitized' => '1',
+                'parameterNameNotToBeSanitized' => '1testValue',
             ),
             $sanitizedArray,
             'The array wasn\'t sanitized correct!'
@@ -234,30 +233,30 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
     public function testSanitizeArrayByRulesWorksCorrectWithMultiDimensionalArray()
     {
         $arrayToSanitize = array(
-            'firstExtensionQualifier'    => array(
-                'parameterNameToBeSanitized'            => '1testValue',
-                'parameterNameToBeSanitizedByDefault'    => 'libgd<script>'
+            'firstExtensionQualifier' => array(
+                'parameterNameToBeSanitized' => '1testValue',
+                'parameterNameToBeSanitizedByDefault' => 'libgd<script>',
             ),
-            'secondExtensionQualifier'    => array(
-                'subArray'    => array(
-                    'parameterNameToBeSanitized' => '<span>me&you</span>'
-                )
+            'secondExtensionQualifier' => array(
+                'subArray' => array(
+                    'parameterNameToBeSanitized' => '<span>me&you</span>',
+                ),
             ),
-            'parameterNameToBeSanitizedByDefault'    => 'libgd<script>'
+            'parameterNameToBeSanitizedByDefault' => 'libgd<script>',
         );
         $rules = array(
             tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_ENCODED,
-            'firstExtensionQualifier'    => array(
-                'parameterNameToBeSanitized' => FILTER_SANITIZE_NUMBER_INT
+            'firstExtensionQualifier' => array(
+                'parameterNameToBeSanitized' => FILTER_SANITIZE_NUMBER_INT,
             ),
-            'secondExtensionQualifier'    => array(
-                'subArray'    => array(
-                    'parameterNameToBeSanitized'    => array(
-                        'filter'    => FILTER_SANITIZE_STRING,
-                        'flags'    => FILTER_FLAG_ENCODE_AMP
-                    )
-                )
-            )
+            'secondExtensionQualifier' => array(
+                'subArray' => array(
+                    'parameterNameToBeSanitized' => array(
+                        'filter' => FILTER_SANITIZE_STRING,
+                        'flags' => FILTER_FLAG_ENCODE_AMP,
+                    ),
+                ),
+            ),
         );
         $mainClass = $this->getMainClassMockWithoutDebugMode();
         $sanitizedArray = $mainClass->sanitizeArrayByRules(
@@ -266,16 +265,16 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
         );
 
         $expectedArray = array(
-            'firstExtensionQualifier'    => array(
-                'parameterNameToBeSanitized'            => 1,
-                'parameterNameToBeSanitizedByDefault'    => 'libgd%3Cscript%3E'
+            'firstExtensionQualifier' => array(
+                'parameterNameToBeSanitized' => 1,
+                'parameterNameToBeSanitizedByDefault' => 'libgd%3Cscript%3E',
             ),
-            'secondExtensionQualifier'    => array(
-                'subArray'    => array(
-                    'parameterNameToBeSanitized' => 'me&#38;you'
-                )
+            'secondExtensionQualifier' => array(
+                'subArray' => array(
+                    'parameterNameToBeSanitized' => 'me&#38;you',
+                ),
             ),
-            'parameterNameToBeSanitizedByDefault'    => 'libgd%3Cscript%3E'
+            'parameterNameToBeSanitizedByDefault' => 'libgd%3Cscript%3E',
         );
 
         $this->assertEquals(
@@ -291,15 +290,15 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
     public function testSanitizeArrayByRulesWorksCorrectWithMultiDimensionalArrayAndDefaultRulesOnlyForSubArray()
     {
         $arrayToSanitize = array(
-            'firstExtensionQualifier'    => array(
-                'parameterNameToBeSanitizedByDefault'    => '1testValue',
+            'firstExtensionQualifier' => array(
+                'parameterNameToBeSanitizedByDefault' => '1testValue',
             ),
-            'parameterNameToBeSanitizedByDefault'        => 'libgd<script>'
+            'parameterNameToBeSanitizedByDefault' => 'libgd<script>',
         );
         $rules = array(
             tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_ENCODED,
-            'firstExtensionQualifier'    => array(
-                tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_NUMBER_INT
+            'firstExtensionQualifier' => array(
+                tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_NUMBER_INT,
             ),
         );
         $mainClass = $this->getMainClassMockWithoutDebugMode();
@@ -309,10 +308,10 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
         );
 
         $expectedArray = array(
-            'firstExtensionQualifier'    => array(
-                'parameterNameToBeSanitizedByDefault'    => 1,
+            'firstExtensionQualifier' => array(
+                'parameterNameToBeSanitizedByDefault' => 1,
             ),
-            'parameterNameToBeSanitizedByDefault'        => 'libgd%3Cscript%3E'
+            'parameterNameToBeSanitizedByDefault' => 'libgd%3Cscript%3E',
         );
 
         $this->assertEquals(
@@ -328,16 +327,15 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
     public function testSanitizeArrayByRulesWorksCorrectWithSeveralConfiguredFiltersAsFilterArray()
     {
         $arrayToSanitize = array(
-            'parameterNameToBeSanitized'    =>
-            "<span>Is your name O'reilly & are sure about that?</span>",
+            'parameterNameToBeSanitized' => "<span>Is your name O'reilly & are sure about that?</span>",
         );
         $rules = array(
-            'parameterNameToBeSanitized'    => array(
-                'filter'    => array(
-                    FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES
+            'parameterNameToBeSanitized' => array(
+                'filter' => array(
+                    FILTER_SANITIZE_STRING, FILTER_SANITIZE_MAGIC_QUOTES,
                 ),
-                'flags'    => FILTER_FLAG_ENCODE_AMP
-            )
+                'flags' => FILTER_FLAG_ENCODE_AMP,
+            ),
         );
         $mainClass = $this->getMainClassMockWithoutDebugMode();
         $sanitizedArray = $mainClass->sanitizeArrayByRules(
@@ -347,8 +345,7 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
 
         $this->assertEquals(
             array(
-                'parameterNameToBeSanitized'    =>
-                'Is your name O&#39;reilly &#38; are sure about that?',
+                'parameterNameToBeSanitized' => 'Is your name O&#39;reilly &#38; are sure about that?',
             ),
             $sanitizedArray,
             'The array wasn\'t sanitized correct!'
@@ -361,13 +358,12 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
     public function testSanitizeArrayByRulesWorksCorrectWithSeveralConfiguredFiltersAsList()
     {
         $arrayToSanitize = array(
-            'parameterNameToBeSanitized'    =>
-            "<span>Is your name O'reilly & are sure about that?</span>",
+            'parameterNameToBeSanitized' => "<span>Is your name O'reilly & are sure about that?</span>",
         );
         $rules = array(
-            'parameterNameToBeSanitized'    => array(
-                FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES
-            )
+            'parameterNameToBeSanitized' => array(
+                FILTER_SANITIZE_STRING, FILTER_SANITIZE_MAGIC_QUOTES,
+            ),
         );
         $mainClass = $this->getMainClassMockWithoutDebugMode();
         $sanitizedArray = $mainClass->sanitizeArrayByRules(
@@ -377,8 +373,7 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
 
         $this->assertEquals(
             array(
-                'parameterNameToBeSanitized'    =>
-                'Is your name O&#39;reilly & are sure about that?',
+                'parameterNameToBeSanitized' => 'Is your name O&#39;reilly & are sure about that?',
             ),
             $sanitizedArray,
             'The array wasn\'t sanitized correct!'
@@ -391,16 +386,15 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
     public function testSanitizeArrayByRulesWorksCorrectWithCustomFilter()
     {
         $arrayToSanitize = array(
-            'parameterNameToBeSanitized'    =>
-            'abc123',
+            'parameterNameToBeSanitized' => 'abc123',
         );
         $rules = array(
-            'parameterNameToBeSanitized'    => array(
-                'filter'    => FILTER_CALLBACK,
-                   'options'    => array(
-                       'tx_mksanitizedparameters_sanitizer_Alpha','sanitizeValue'
-                )
-            )
+            'parameterNameToBeSanitized' => array(
+                'filter' => FILTER_CALLBACK,
+                   'options' => array(
+                       'tx_mksanitizedparameters_sanitizer_Alpha', 'sanitizeValue',
+                ),
+            ),
         );
         $mainClass = $this->getMainClassMockWithoutDebugMode();
         $sanitizedArray = $mainClass->sanitizeArrayByRules(
@@ -410,8 +404,7 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
 
         $this->assertEquals(
             array(
-                'parameterNameToBeSanitized'    =>
-                'abc',
+                'parameterNameToBeSanitized' => 'abc',
             ),
             $sanitizedArray,
             'The array wasn\'t sanitized correct!'
@@ -429,7 +422,7 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
           's' => 'acFNX7gVY8wm0mLQbxRaVr8nrnRbPywGb3tjkspp0HC77io/T94qEQbPHMePi2xpNtfpJut9bt2USUBfkCXmc/wKk1Unk7WX7XMoohSuI1BahtNV4DRfGKKpUJV6s+5cD7IET7IFjVLm/wmxs+hl/1Ve1MIjZe2L3VCs4VqmBsg=',
         );
         $rules = array(
-            tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY    => array(FILTER_SANITIZE_URL),
+            tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY => array(FILTER_SANITIZE_URL),
         );
         $mainClass = $this->getMainClassMockWithoutDebugMode();
         $sanitizedArray = $mainClass->sanitizeArrayByRules(
@@ -450,10 +443,10 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
     public function testSanitizeArrayByRulesDoesNotCallLoggerIfLoggingNotEnabledAndValueNotChanged()
     {
         $arrayToSanitize = array(
-          'parameter' => 'test'
+          'parameter' => 'test',
         );
         $rules = array(
-            tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY    => array(FILTER_SANITIZE_STRING),
+            tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY => array(FILTER_SANITIZE_STRING),
         );
 
         $mksanitizedparameters = $this->getMock('tx_mksanitizedparameters', array('getLogger'));
@@ -473,10 +466,10 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
     public function testSanitizeArrayByRulesDoesNotCallLoggerIfLoggingNotEnabledAndValueChanged()
     {
         $arrayToSanitize = array(
-          'parameter' => '"test"'
+          'parameter' => '"test"',
         );
         $rules = array(
-            tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY    => array(FILTER_SANITIZE_STRING),
+            tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY => array(FILTER_SANITIZE_STRING),
         );
 
         $mksanitizedparameters = $this->getMock(
@@ -505,10 +498,10 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
         \DMK\Mklib\Utility\Tests::setExtConfVar('logMode', 1, 'mksanitizedparameters');
 
         $arrayToSanitize = array(
-          'parameter' => 'test'
+          'parameter' => 'test',
         );
         $rules = array(
-            tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY    => array(FILTER_SANITIZE_STRING),
+            tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY => array(FILTER_SANITIZE_STRING),
         );
 
         $mksanitizedparameters = $this->getMock(
@@ -537,10 +530,10 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
         \DMK\Mklib\Utility\Tests::setExtConfVar('logMode', 1, 'mksanitizedparameters');
 
         $arrayToSanitize = array(
-            'parameter' => ' test '
+            'parameter' => ' test ',
         );
         $rules = array(
-            tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY    => array(FILTER_SANITIZE_STRING),
+            tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY => array(FILTER_SANITIZE_STRING),
         );
 
         $mksanitizedparameters = $this->getMock(
@@ -569,10 +562,10 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
         \DMK\Mklib\Utility\Tests::setExtConfVar('logMode', 1, 'mksanitizedparameters');
 
         $arrayToSanitize = array(
-          'parameter' => '"test"'
+          'parameter' => '"test"',
         );
         $rules = array(
-            tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY    => array(FILTER_SANITIZE_STRING),
+            tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY => array(FILTER_SANITIZE_STRING),
         );
 
         $mksanitizedparameters = $this->getMock(
@@ -591,10 +584,10 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
                 $mksanitizedparameters::MESSAGE_VALUE_HAS_CHANGED,
                 'mksanitizedparameters',
                 array(
-                    'Parameter Name:'                => 'parameter',
-                    'initialer Wert:'                => '"test"',
-                    'Wert nach Bereinigung:'        => '&#34;test&#34;',
-                    'komplettes Parameter Array'    => array('parameter' => '&#34;test&#34;')
+                    'Parameter Name:' => 'parameter',
+                    'initialer Wert:' => '"test"',
+                    'Wert nach Bereinigung:' => '&#34;test&#34;',
+                    'komplettes Parameter Array' => array('parameter' => '&#34;test&#34;'),
                 )
             );
 
@@ -614,15 +607,15 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
     public function testSanitizeArrayByRulesDoesNotCallDebuggerIfDebuggingNotEnabledAndValueNotChanged()
     {
         $arrayToSanitize = array(
-          'parameter' => 'test'
+          'parameter' => 'test',
         );
         $rules = array(
-            tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY    => array(FILTER_SANITIZE_STRING),
+            tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY => array(FILTER_SANITIZE_STRING),
         );
 
         $mksanitizedparameters = $this->getMock(
             'tx_mksanitizedparameters',
-            array('getDebugger','getDebugMode')
+            array('getDebugger', 'getDebugMode')
         );
         $mksanitizedparameters->expects($this->never())
             ->method('getDebugMode');
@@ -642,15 +635,15 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
     public function testSanitizeArrayByRulesDoesNotCallDebuggerIfDebuggingNotEnabledAndValueChanged()
     {
         $arrayToSanitize = array(
-          'parameter' => '"test"'
+          'parameter' => '"test"',
         );
         $rules = array(
-            tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY    => array(FILTER_SANITIZE_STRING),
+            tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY => array(FILTER_SANITIZE_STRING),
         );
 
         $mksanitizedparameters = $this->getMock(
             'tx_mksanitizedparameters',
-            array('getDebugger','getDebugMode')
+            array('getDebugger', 'getDebugMode')
         );
         $mksanitizedparameters->expects($this->once())
             ->method('getDebugMode')
@@ -671,15 +664,15 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
     public function testSanitizeArrayByRulesDoesNotCallDebuggerIfDebuggingEnabledButValueNotChanged()
     {
         $arrayToSanitize = array(
-          'parameter' => 'test'
+          'parameter' => 'test',
         );
         $rules = array(
-            tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY    => array(FILTER_SANITIZE_STRING),
+            tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY => array(FILTER_SANITIZE_STRING),
         );
 
         $mksanitizedparameters = $this->getMock(
             'tx_mksanitizedparameters',
-            array('getDebugger','getDebugMode')
+            array('getDebugger', 'getDebugMode')
         );
         $mksanitizedparameters->expects($this->never())
             ->method('getDebugMode');
@@ -699,15 +692,15 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
     public function testSanitizeArrayByRulesCallsDebuggerCorrectIfDebuggingEnabledAndValueChanged()
     {
         $arrayToSanitize = array(
-          'parameter' => '"test"'
+          'parameter' => '"test"',
         );
         $rules = array(
-            tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY    => array(FILTER_SANITIZE_STRING),
+            tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY => array(FILTER_SANITIZE_STRING),
         );
 
         $mksanitizedparameters = $this->getMock(
             'tx_mksanitizedparameters',
-            array('getDebugger','getDebugMode')
+            array('getDebugger', 'getDebugMode')
         );
         $mksanitizedparameters->expects($this->once())
             ->method('getDebugMode')
@@ -719,11 +712,11 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
             ->with(
                 array(
                     array(
-                        'Parameter Name:'                => 'parameter',
-                        'initialer Wert:'                => '"test"',
-                        'Wert nach Bereinigung:'        => '&#34;test&#34;',
-                        'komplettes Parameter Array'    => array('parameter' => '&#34;test&#34;')
-                    )
+                        'Parameter Name:' => 'parameter',
+                        'initialer Wert:' => '"test"',
+                        'Wert nach Bereinigung:' => '&#34;test&#34;',
+                        'komplettes Parameter Array' => array('parameter' => '&#34;test&#34;'),
+                    ),
                 ),
                 $mksanitizedparameters::MESSAGE_VALUE_HAS_CHANGED
             );
@@ -738,26 +731,25 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
         );
     }
 
-
     /**
      * @group unit
      */
     public function testSanitizeArrayByRulesPrefersSpecialRulesOverCommonRules()
     {
         $arrayToSanitize = array(
-            'parameterNameToBeSanitized'    => '"1testValue"'
+            'parameterNameToBeSanitized' => '"1testValue"',
         );
         $rules = array(
-            'parameterNameToBeSanitized'    => FILTER_SANITIZE_NUMBER_INT,
+            'parameterNameToBeSanitized' => FILTER_SANITIZE_NUMBER_INT,
             tx_mksanitizedparameters_Rules::COMMON_RULES_KEY => array(
-                'parameterNameToBeSanitized'    => FILTER_SANITIZE_STRING
+                'parameterNameToBeSanitized' => FILTER_SANITIZE_STRING,
             ),
-            tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY    => array(
-                'filter'    => FILTER_CALLBACK,
-                   'options'    => array(
-                       'tx_mksanitizedparameters_sanitizer_Alpha','sanitizeValue'
-                )
-            )
+            tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY => array(
+                'filter' => FILTER_CALLBACK,
+                   'options' => array(
+                       'tx_mksanitizedparameters_sanitizer_Alpha', 'sanitizeValue',
+                ),
+            ),
         );
         $mainClass = $this->getMainClassMockWithoutDebugMode();
         $sanitizedArray = $mainClass->sanitizeArrayByRules(
@@ -766,7 +758,7 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
         );
 
         $this->assertEquals(
-            array('parameterNameToBeSanitized'    => '1'),
+            array('parameterNameToBeSanitized' => '1'),
             $sanitizedArray,
             'The array wasn\'t sanitized correct!'
         );
@@ -778,19 +770,19 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
     public function testSanitizeArrayByRulesPrefersCommonRulesOverDefaultRules()
     {
         $arrayToSanitize = array(
-            'parameterNameToBeSanitized'    => '"1testValue"'
+            'parameterNameToBeSanitized' => '"1testValue"',
         );
         $rules = array(
-            'anotherParameterNameToBeSanitized'    => FILTER_SANITIZE_NUMBER_INT,
+            'anotherParameterNameToBeSanitized' => FILTER_SANITIZE_NUMBER_INT,
             tx_mksanitizedparameters_Rules::COMMON_RULES_KEY => array(
-                'parameterNameToBeSanitized'    => FILTER_SANITIZE_STRING
+                'parameterNameToBeSanitized' => FILTER_SANITIZE_STRING,
             ),
-            tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY    => array(
-                'filter'    => FILTER_CALLBACK,
-                   'options'    => array(
-                       'tx_mksanitizedparameters_sanitizer_Alpha','sanitizeValue'
-                )
-            )
+            tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY => array(
+                'filter' => FILTER_CALLBACK,
+                   'options' => array(
+                       'tx_mksanitizedparameters_sanitizer_Alpha', 'sanitizeValue',
+                ),
+            ),
         );
         $mainClass = $this->getMainClassMockWithoutDebugMode();
         $sanitizedArray = $mainClass->sanitizeArrayByRules(
@@ -799,7 +791,7 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
         );
 
         $this->assertEquals(
-            array('parameterNameToBeSanitized'    => '&#34;1testValue&#34;'),
+            array('parameterNameToBeSanitized' => '&#34;1testValue&#34;'),
             $sanitizedArray,
             'The array wasn\'t sanitized correct!'
         );
@@ -811,19 +803,19 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
     public function testSanitizeArrayByRulesUsesDefaultRulesIfNoSpecialsOrCommons()
     {
         $arrayToSanitize = array(
-            'parameterNameToBeSanitized'    => '"1testValue"'
+            'parameterNameToBeSanitized' => '"1testValue"',
         );
         $rules = array(
-            'anotherParameterNameToBeSanitized'    => FILTER_SANITIZE_NUMBER_INT,
+            'anotherParameterNameToBeSanitized' => FILTER_SANITIZE_NUMBER_INT,
             tx_mksanitizedparameters_Rules::COMMON_RULES_KEY => array(
-                'anotherParameterNameToBeSanitized'    => FILTER_SANITIZE_STRING
+                'anotherParameterNameToBeSanitized' => FILTER_SANITIZE_STRING,
             ),
-            tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY    => array(
-                'filter'    => FILTER_CALLBACK,
-                   'options'    => array(
-                       'tx_mksanitizedparameters_sanitizer_Alpha','sanitizeValue'
-                )
-            )
+            tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY => array(
+                'filter' => FILTER_CALLBACK,
+                   'options' => array(
+                       'tx_mksanitizedparameters_sanitizer_Alpha', 'sanitizeValue',
+                ),
+            ),
         );
         $mainClass = $this->getMainClassMockWithoutDebugMode();
         $sanitizedArray = $mainClass->sanitizeArrayByRules(
@@ -832,7 +824,7 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
         );
 
         $this->assertEquals(
-            array('parameterNameToBeSanitized'    => 'testValue'),
+            array('parameterNameToBeSanitized' => 'testValue'),
             $sanitizedArray,
             'The array wasn\'t sanitized correct!'
         );
@@ -845,20 +837,20 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
     {
         $arrayToSanitize = array(
             'myExt' => array(
-                'parameterNameToBeSanitized'    => '"1testValue"'
-            )
+                'parameterNameToBeSanitized' => '"1testValue"',
+            ),
         );
         $rules = array(
-            'anotherParameterNameToBeSanitized'    => FILTER_SANITIZE_NUMBER_INT,
+            'anotherParameterNameToBeSanitized' => FILTER_SANITIZE_NUMBER_INT,
             tx_mksanitizedparameters_Rules::COMMON_RULES_KEY => array(
-                'parameterNameToBeSanitized'    => FILTER_SANITIZE_STRING
+                'parameterNameToBeSanitized' => FILTER_SANITIZE_STRING,
             ),
-            tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY    => array(
-                'filter'    => FILTER_CALLBACK,
-                   'options'    => array(
-                       'tx_mksanitizedparameters_sanitizer_Alpha','sanitizeValue'
-                )
-            )
+            tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY => array(
+                'filter' => FILTER_CALLBACK,
+                   'options' => array(
+                       'tx_mksanitizedparameters_sanitizer_Alpha', 'sanitizeValue',
+                ),
+            ),
         );
         $mainClass = $this->getMainClassMockWithoutDebugMode();
         $sanitizedArray = $mainClass->sanitizeArrayByRules(
@@ -867,7 +859,7 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
         );
 
         $this->assertEquals(
-            array('myExt' => array('parameterNameToBeSanitized'    => '&#34;1testValue&#34;')),
+            array('myExt' => array('parameterNameToBeSanitized' => '&#34;1testValue&#34;')),
             $sanitizedArray,
             'The array wasn\'t sanitized correct!'
         );
@@ -880,18 +872,18 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
     {
         $arrayToSanitize = array(
             'myExt' => array(
-                'parameterNameToBeSanitized'    => '"1testValue"'
-            )
+                'parameterNameToBeSanitized' => '"1testValue"',
+            ),
         );
         $rules = array(
-            'myExt'    => array(
+            'myExt' => array(
                 tx_mksanitizedparameters_Rules::COMMON_RULES_KEY => array(
-                    'parameterNameToBeSanitized'    => FILTER_SANITIZE_NUMBER_INT
-                )
+                    'parameterNameToBeSanitized' => FILTER_SANITIZE_NUMBER_INT,
+                ),
             ),
             tx_mksanitizedparameters_Rules::COMMON_RULES_KEY => array(
-                'parameterNameToBeSanitized'    => FILTER_SANITIZE_STRING
-            )
+                'parameterNameToBeSanitized' => FILTER_SANITIZE_STRING,
+            ),
         );
         $mainClass = $this->getMainClassMockWithoutDebugMode();
         $sanitizedArray = $mainClass->sanitizeArrayByRules(
@@ -900,7 +892,7 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
         );
 
         $this->assertEquals(
-            array('myExt' => array('parameterNameToBeSanitized'    => '1')),
+            array('myExt' => array('parameterNameToBeSanitized' => '1')),
             $sanitizedArray,
             'The array wasn\'t sanitized correct!'
         );
@@ -913,14 +905,14 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
     {
         $arrayToSanitize = array(
             'myExt' => array(
-                'parameterNameToBeSanitized'    => '"1testValue"'
-            )
+                'parameterNameToBeSanitized' => '"1testValue"',
+            ),
         );
         $rules = array(
-            'myExt'    => array(
-                tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY =>  FILTER_SANITIZE_NUMBER_INT
+            'myExt' => array(
+                tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_NUMBER_INT,
             ),
-            tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY    => FILTER_SANITIZE_STRING
+            tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_STRING,
         );
         $mainClass = $this->getMainClassMockWithoutDebugMode();
         $sanitizedArray = $mainClass->sanitizeArrayByRules(
@@ -929,7 +921,7 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
         );
 
         $this->assertEquals(
-            array('myExt' => array('parameterNameToBeSanitized'    => '1')),
+            array('myExt' => array('parameterNameToBeSanitized' => '1')),
             $sanitizedArray,
             'The array wasn\'t sanitized correct!'
         );
@@ -942,19 +934,19 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
     {
         $arrayToSanitize = array(
             'myExt' => array(
-                'parameterNameToBeSanitized'        => '"1testValue"',
-                'anotherParameterNameToBeSanitized' => '"1testValue"'
-            )
+                'parameterNameToBeSanitized' => '"1testValue"',
+                'anotherParameterNameToBeSanitized' => '"1testValue"',
+            ),
         );
         $rules = array(
-            'myExt'    => array(
-                tx_mksanitizedparameters_Rules::COMMON_RULES_KEY =>  array(
-                    'parameterNameToBeSanitized' => FILTER_SANITIZE_NUMBER_INT
-                )
+            'myExt' => array(
+                tx_mksanitizedparameters_Rules::COMMON_RULES_KEY => array(
+                    'parameterNameToBeSanitized' => FILTER_SANITIZE_NUMBER_INT,
+                ),
             ),
-            tx_mksanitizedparameters_Rules::COMMON_RULES_KEY =>  array(
-                'anotherParameterNameToBeSanitized' => FILTER_SANITIZE_STRING
-            )
+            tx_mksanitizedparameters_Rules::COMMON_RULES_KEY => array(
+                'anotherParameterNameToBeSanitized' => FILTER_SANITIZE_STRING,
+            ),
         );
         $mainClass = $this->getMainClassMockWithoutDebugMode();
         $sanitizedArray = $mainClass->sanitizeArrayByRules(
@@ -965,9 +957,9 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
         $this->assertEquals(
             array(
                 'myExt' => array(
-                    'parameterNameToBeSanitized'        => '1',
-                    'anotherParameterNameToBeSanitized' => '&#34;1testValue&#34;'
-                )
+                    'parameterNameToBeSanitized' => '1',
+                    'anotherParameterNameToBeSanitized' => '&#34;1testValue&#34;',
+                ),
             ),
             $sanitizedArray,
             'The array wasn\'t sanitized correct!'
@@ -980,17 +972,17 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
     public function testSanitizeArrayByRulesWithRulesForSubArrayButSubArrayParameterItSelfIsGivenCastsFilterArrayConfigToIntegerResultingInEmptiedValue()
     {
         $arrayToSanitize = array(
-            'myExt' => 'test'
+            'myExt' => 'test',
         );
         $rules = array(
-            'myExt'    => array(
+            'myExt' => array(
                 'mySubParameter' => array(
-                    'filter'    => FILTER_CALLBACK,
-                    'options'    => array(
-                        'doesNotMatter','doesNotMatterToo'
-                    )
+                    'filter' => FILTER_CALLBACK,
+                    'options' => array(
+                        'doesNotMatter', 'doesNotMatterToo',
+                    ),
                 ),
-            )
+            ),
         );
 
         $mainClass = $this->getMainClassMockWithoutDebugMode();

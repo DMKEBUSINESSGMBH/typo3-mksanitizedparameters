@@ -1,6 +1,6 @@
 <?php
 /**
- *  Copyright notice
+ *  Copyright notice.
  *
  *  (c) 2012 DMK E-Business GmbH <dev@dmk-ebusiness.de>
  *  All rights reserved
@@ -23,18 +23,13 @@
  */
 
 /**
- * @package TYPO3
- * @subpackage tx_mksanitizedparameters
  * @author Hannes Bochmann <dev@dmk-ebusiness.de>
  */
 class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests
 {
-
     /**
      * sanitize $_REQUEST, $_POST, $_GET before
      * Frontend/Backend Actions start.
-     *
-     * @return void
      */
     public function sanitizeGlobalInputArrays()
     {
@@ -44,7 +39,7 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests
         );
         $arraysToSanitize = array(
             '$_POST' => &$_POST,
-            '$_GET' => &$_GET
+            '$_GET' => &$_GET,
         );
 
         if ($isStealthMode) {
@@ -62,7 +57,7 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests
 
     /**
      * wird in tests/hooks/class.ux_tx_mksanitizedparameters.php
-     * überschrieben damit debug mode abgeschaltet werden kann
+     * überschrieben damit debug mode abgeschaltet werden kann.
      *
      * @return tx_mksanitizedparameters
      */
@@ -73,5 +68,5 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests
 }
 
 if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/hooks/class.tx_mksanitizedparameters_hooks_PreprocessTypo3Requests.php']) {
-    include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/hooks/class.tx_mksanitizedparameters_hooks_PreprocessTypo3Requests.php']);
+    include_once $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/hooks/class.tx_mksanitizedparameters_hooks_PreprocessTypo3Requests.php'];
 }

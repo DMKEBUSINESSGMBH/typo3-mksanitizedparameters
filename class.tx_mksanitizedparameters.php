@@ -1,6 +1,6 @@
 <?php
 /**
- *  Copyright notice
+ *  Copyright notice.
  *
  *  (c) 2012 DMK E-Business GmbH <dev@dmk-ebusiness.de>
  *  All rights reserved
@@ -33,13 +33,10 @@
  *
  * for all possibilities look into the doc block of sanitizeArrayByRules
  *
- * @package TYPO3
- * @subpackage tx_mksanitizedparameters
  * @author Hannes Bochmann <dev@dmk-ebusiness.de>
  */
 class tx_mksanitizedparameters
 {
-
     /**
      * @var string
      */
@@ -274,7 +271,7 @@ class tx_mksanitizedparameters
     }
 
     /**
-     * @param mixed $rules
+     * @param mixed  $rules
      * @param string $nameToSanitize
      *
      * @return mixed
@@ -431,8 +428,6 @@ class tx_mksanitizedparameters
      * @param mixed $nameToSanitize
      * @param mixed $initialValueToSanitize
      * @param mixed $sanitizedValue
-     *
-     * @return void
      */
     private function handleLogging(
         array $arrayToSanitize,
@@ -457,11 +452,11 @@ class tx_mksanitizedparameters
                 self::MESSAGE_VALUE_HAS_CHANGED,
                 'mksanitizedparameters',
                 array(
-                    'Parameter Name:'                => $nameToSanitize,
-                    'initialer Wert:'                => $initialValueToSanitize,
-                    'Wert nach Bereinigung:'        => $sanitizedValue,
-                    'komplettes Parameter Array'    => $arrayToSanitize
-                )
+                    'Parameter Name:' => $nameToSanitize,
+                    'initialer Wert:' => $initialValueToSanitize,
+                    'Wert nach Bereinigung:' => $sanitizedValue,
+                    'komplettes Parameter Array' => $arrayToSanitize,
+                ),
             )
         );
     }
@@ -479,8 +474,6 @@ class tx_mksanitizedparameters
      * @param mixed $nameToSanitize
      * @param mixed $initialValueToSanitize
      * @param mixed $sanitizedValue
-     *
-     * @return void
      */
     private function handleDebugging(
         array $arrayToSanitize,
@@ -499,13 +492,13 @@ class tx_mksanitizedparameters
             array(
                 array(
                     array(
-                        'Parameter Name:'                => $nameToSanitize,
-                        'initialer Wert:'                => $initialValueToSanitize,
-                        'Wert nach Bereinigung:'        => $sanitizedValue,
-                        'komplettes Parameter Array'    => $arrayToSanitize
-                    )
+                        'Parameter Name:' => $nameToSanitize,
+                        'initialer Wert:' => $initialValueToSanitize,
+                        'Wert nach Bereinigung:' => $sanitizedValue,
+                        'komplettes Parameter Array' => $arrayToSanitize,
+                    ),
                 ),
-                self::MESSAGE_VALUE_HAS_CHANGED
+                self::MESSAGE_VALUE_HAS_CHANGED,
             )
         );
 
@@ -514,7 +507,6 @@ class tx_mksanitizedparameters
             ob_flush();
         }
     }
-
 
     /**
      * @return bool
@@ -540,8 +532,6 @@ class tx_mksanitizedparameters
     /**
      * @param array $arraysToSanitize
      * @param array $rules
-     *
-     * @return void
      */
     public function sanitizeArraysByRules(
         array &$arraysToSanitize,
@@ -557,5 +547,5 @@ class tx_mksanitizedparameters
 }
 
 if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/class.tx_mksanitizedparameters.php']) {
-    include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/class.tx_mksanitizedparameters.php']);
+    include_once $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/class.tx_mksanitizedparameters.php'];
 }
