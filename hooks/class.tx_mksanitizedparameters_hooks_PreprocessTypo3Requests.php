@@ -43,7 +43,6 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests
             'stealthMode'
         );
         $arraysToSanitize = array(
-            '$_COOKIE' => &$_COOKIE,
             '$_POST' => &$_POST,
             '$_GET' => &$_GET
         );

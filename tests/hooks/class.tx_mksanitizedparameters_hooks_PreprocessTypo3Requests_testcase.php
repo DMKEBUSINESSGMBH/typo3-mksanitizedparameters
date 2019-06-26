@@ -140,7 +140,6 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx
      */
     public function testHookIsCalledInBackendAndSanitizesRequestPostAndGetGlobals()
     {
-        $_COOKIE['testParameter'] = '2WithString';
         $_POST['testParameter'] = '2WithString';
         $_GET['testParameter'] = '2WithString';
 
@@ -148,11 +147,6 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx
         $template = tx_rnbase::makeInstance(tx_rnbase_util_Typo3Classes::getDocumentTemplateClass());
         $template->startPage('testPage');
 
-        $this->assertEquals(
-            2,
-            $_COOKIE['testParameter'],
-            'Parameter nicht bereinigt'
-        );
         $this->assertEquals(
             2,
             $_POST['testParameter'],
