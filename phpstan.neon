@@ -1,0 +1,9 @@
+parameters:
+    level: max
+    paths:
+        - "%currentWorkingDirectory%/Configuration"
+        - "%currentWorkingDirectory%/hooks"
+        - "%currentWorkingDirectory%/interface"
+        - "%currentWorkingDirectory%/rules"
+        - "%currentWorkingDirectory%/sanitizer"
+        - "%currentWorkingDirectory%/util"
