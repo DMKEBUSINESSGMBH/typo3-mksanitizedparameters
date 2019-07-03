@@ -7,3 +7,7 @@ parameters:
         - "%currentWorkingDirectory%/rules"
         - "%currentWorkingDirectory%/sanitizer"
         - "%currentWorkingDirectory%/util"
+        - "%currentWorkingDirectory%/class.tx_mksanitizedparameters.php"
+        - "%currentWorkingDirectory%/class.tx_mksanitizedparameters_Rules.php"
+        - "%currentWorkingDirectory%/class.tx_mksanitizedparameters_StealthMode.php"
+
