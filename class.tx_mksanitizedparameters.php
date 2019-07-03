@@ -354,8 +354,9 @@ class tx_mksanitizedparameters
     }
 
     /**
-     * @param array $rules
-     * @param mixed $defaultRules
+     * @param array $rulesForValue
+     * @param mixed $allRules
+     * @param mixed $rulesKey
      *
      * @return array
      */

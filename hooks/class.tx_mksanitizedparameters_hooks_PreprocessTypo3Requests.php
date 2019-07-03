@@ -63,7 +63,10 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests
      */
     protected function getMksanitizedparametersMainClass()
     {
-        return tx_rnbase::makeInstance('tx_mksanitizedparameters');
+        /** @var tx_mksanitizedparameters $class */
+         $class = tx_rnbase::makeInstance('tx_mksanitizedparameters');
+
+         return $class;
     }
 }
 

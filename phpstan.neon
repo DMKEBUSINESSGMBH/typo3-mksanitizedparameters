@@ -1,3 +1,5 @@
+includes:
+    - .Build/vendor/saschaegerer/phpstan-typo3/extension.neon
 parameters:
     level: max
     paths:
@@ -10,4 +12,5 @@ parameters:
         - "%currentWorkingDirectory%/class.tx_mksanitizedparameters.php"
         - "%currentWorkingDirectory%/class.tx_mksanitizedparameters_Rules.php"
         - "%currentWorkingDirectory%/class.tx_mksanitizedparameters_StealthMode.php"
+    bootstrap: %rootDir%/../../saschaegerer/phpstan-typo3/src/PhpstanTypo3Bootstrap.php
 
