@@ -30,6 +30,8 @@ class tx_mksanitizedparameters_util_RegularExpression
     /**
      * @param string $pattern
      * @param mixed  $value
+     *
+     * @return null|string|array
      */
     public static function callPregReplace($pattern, $value)
     {
