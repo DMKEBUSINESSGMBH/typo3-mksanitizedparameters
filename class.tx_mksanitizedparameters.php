@@ -355,14 +355,14 @@ class tx_mksanitizedparameters
 
     /**
      * @param array $rulesForValue
-     * @param mixed $allRules
+     * @param array $allRules
      * @param mixed $rulesKey
      *
      * @return array
      */
     private function injectRulesByKey(
         array $rulesForValue,
-        $allRules,
+        array $allRules,
         $rulesKey
     ) {
         if (!array_key_exists($rulesKey, $rulesForValue)) {
