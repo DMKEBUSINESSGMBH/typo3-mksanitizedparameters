@@ -43,7 +43,7 @@ class tx_mksanitizedparameters_sanitizer_Alnum implements tx_mksanitizedparamete
     /**
      * @param string $value
      *
-     * @return string
+     * @return null|string|array
      */
     public static function sanitizeValueAllowingWhitespaces($value)
     {

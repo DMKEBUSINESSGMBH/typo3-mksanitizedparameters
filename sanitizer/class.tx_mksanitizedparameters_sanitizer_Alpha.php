@@ -48,7 +48,7 @@ class tx_mksanitizedparameters_sanitizer_Alpha implements tx_mksanitizedparamete
     /**
      * @param string $value
      *
-     * @return string
+     * @return null|string|array
      */
     public static function sanitizeValueAllowingWhitespaces($value)
     {
