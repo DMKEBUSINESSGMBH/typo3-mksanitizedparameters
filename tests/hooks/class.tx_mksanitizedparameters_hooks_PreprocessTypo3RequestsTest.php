@@ -30,7 +30,7 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['typo3/template.php']['preStartPageHoo
 /**
  * @author Hannes Bochmann <dev@dmk-ebusiness.de>
  */
-class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx_rnbase_tests_BaseTestCase
+class tx_mksanitizedparameters_hooks_PreprocessTypo3RequestsTest extends tx_rnbase_tests_BaseTestCase
 {
     private $storedExtConfig;
 
@@ -41,6 +41,8 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests_testcase extends tx
      */
     protected function setUp()
     {
+        self::markTestIncomplete("\DMK\Mklib\Utility\Tests\ not found");
+
         $this->storedExtConfig =
             $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mksanitizedparameters'];
         $this->deactivateStealthMode($this->storedExtConfig);

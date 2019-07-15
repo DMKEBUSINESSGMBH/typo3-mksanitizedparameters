@@ -25,7 +25,7 @@
 /**
  * @author Hannes Bochmann <dev@dmk-ebusiness.de>
  */
-class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
+class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
 {
     /**
      * (non-PHPdoc).
@@ -34,6 +34,8 @@ class tx_mksanitizedparameters_testcase extends tx_rnbase_tests_BaseTestCase
      */
     protected function setUp()
     {
+        self::markTestIncomplete("\DMK\Mklib\Utility\Tests\ not found");
+
         \DMK\Mklib\Utility\Tests::disableDevlog();
         \DMK\Mklib\Utility\Tests::storeExtConf('mksanitizedparameters');
         \DMK\Mklib\Utility\Tests::setExtConfVar('debugMode', 0, 'mksanitizedparameters');
