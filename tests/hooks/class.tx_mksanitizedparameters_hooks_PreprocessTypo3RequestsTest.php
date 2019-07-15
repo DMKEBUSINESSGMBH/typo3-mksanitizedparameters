@@ -41,7 +41,6 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3RequestsTest extends tx_rnba
      */
     protected function setUp()
     {
-        self::markTestIncomplete("\DMK\Mklib\Utility\Tests\ not found");
 
         $this->storedExtConfig =
             $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mksanitizedparameters'];
@@ -56,6 +55,8 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3RequestsTest extends tx_rnba
         \DMK\Mklib\Utility\Tests::storeExtConf('mksanitizedparameters');
         \DMK\Mklib\Utility\Tests::setExtConfVar('debugMode', 0, 'mksanitizedparameters');
         \DMK\Mklib\Utility\Tests::setExtConfVar('logMode', 0, 'mksanitizedparameters');
+
+        self::markTestIncomplete(" A cache with identifier \"assets\" does not exist");
 
         $GLOBALS['TBE_TEMPLATE'] = tx_rnbase::makeInstance('TYPO3\CMS\Backend\Template\DocumentTemplate');
         /*
