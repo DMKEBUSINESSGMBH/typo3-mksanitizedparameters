@@ -37,7 +37,7 @@ class tx_mksanitizedparameters_tests_Rules extends tx_mksanitizedparameters_Rule
 /**
  * @author Hannes Bochmann <dev@dmk-ebusiness.de>
  */
-class tx_mksanitizedparameters_Rules_testcase extends tx_rnbase_tests_BaseTestCase
+class tx_mksanitizedparameters_RulesTest extends tx_rnbase_tests_BaseTestCase
 {
     /**
      * (non-PHPdoc).

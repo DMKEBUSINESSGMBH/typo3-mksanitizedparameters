@@ -25,7 +25,7 @@
 /**
  * @author Hannes Bochmann <dev@dmk-ebusiness.de>
  */
-class tx_mksanitizedparameters_sanitizer_Alnum_testcase extends tx_rnbase_tests_BaseTestCase
+class tx_mksanitizedparameters_sanitizer_AlnumTest extends tx_rnbase_tests_BaseTestCase
 {
     /**
      * @group unit

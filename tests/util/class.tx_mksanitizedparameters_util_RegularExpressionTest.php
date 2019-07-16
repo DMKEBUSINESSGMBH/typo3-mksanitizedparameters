@@ -25,47 +25,23 @@
 /**
  * @author Hannes Bochmann <dev@dmk-ebusiness.de>
  */
-class tx_mksanitizedparameters_sanitizer_Alpha_testcase extends tx_rnbase_tests_BaseTestCase
+class tx_mksanitizedparameters_util_RegularExpressionTest extends tx_rnbase_tests_BaseTestCase
 {
     /**
      * @group unit
      */
-    public function testSanitizeValueRemovesNonLetters()
+    public function testCallPregReplace()
     {
         $testString = 'abc123#! def';
 
+        $pattern = '/[^'.tx_mksanitizedparameters_sanitizer_Alpha::getRegularExpressionForLetters().']/';
         $this->assertEquals(
             'abcdef',
-            tx_mksanitizedparameters_sanitizer_Alpha::sanitizeValue($testString),
-            'String was not sanitized correct.'
-        );
-    }
-
-    /**
-     * @group unit
-     */
-    public function testSanitizeValueAllowingWhitespacesRemovesNonLetters()
-    {
-        $testString = 'abc123#! def';
-
-        $this->assertEquals(
-            'abc def',
-            tx_mksanitizedparameters_sanitizer_Alpha::sanitizeValueAllowingWhitespaces($testString),
-            'String was not sanitized correct.'
-        );
-    }
-
-    /**
-     * @group unit
-     */
-    public function testSanitizeValueWithUmlauts()
-    {
-        $testString = 'äbc';
-
-        $this->assertEquals(
-            'äbc',
-            tx_mksanitizedparameters_sanitizer_Alpha::sanitizeValue($testString),
-            'String was not sanitized correct.'
+            tx_mksanitizedparameters_util_RegularExpression::callPregReplace(
+                $pattern,
+                $testString
+            ),
+            'regex wurde nicht korrekt ausgeführt womit string nicht richtig ersetzt wurde.'
         );
     }
 }
