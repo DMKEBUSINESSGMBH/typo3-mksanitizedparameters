@@ -1,6 +1,11 @@
 mksanitizedparameters
 =======
 
+[![Latest Stable Version](https://img.shields.io/packagist/v/dmk/mksanitizedparameters.svg?maxAge=3600&style=flat-square)](https://packagist.org/packages/dmk/mksanitizedparameters)
+[![Total Downloads](https://img.shields.io/packagist/dt/dmk/mksanitizedparameters.svg?maxAge=3600&style=flat-square)](https://packagist.org/packages/dmk/mksanitizedparameters)
+[![Build Status](https://img.shields.io/travis/DMKEBUSINESSGMBH/typo3-mksanitizedparameters.svg?maxAge=3600&style=flat-square)](https://travis-ci.org/DMKEBUSINESSGMBH/typo3-mksanitizedparameters)
+[![License](https://img.shields.io/packagist/l/dmk/mksanitizedparameters.svg?maxAge=3600&style=flat-square)](https://packagist.org/packages/dmk/mksanitizedparameters)
+
 What does it do?
 ----------------
 
