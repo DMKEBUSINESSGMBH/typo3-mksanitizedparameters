@@ -41,9 +41,7 @@
             "hooks/",
             "interface/",
             "sanitizer/",
-            "util/"
-        ],
-        "files": [
+            "util/",
             "class.tx_mksanitizedparameters.php",
             "class.tx_mksanitizedparameters_Rules.php",
             "class.tx_mksanitizedparameters_StealthMode.php"
