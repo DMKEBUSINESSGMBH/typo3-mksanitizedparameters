@@ -24,7 +24,6 @@
         "issues": "https://github.com/DMKEBUSINESSGMBH/typo3-mksanitizedparameters"
     },
     "replace": {
-        "mksanitizedparameters": "self.version",
         "typo3-ter/mksanitizedparameters": "self.version"
     },
     "require": {
@@ -63,6 +62,7 @@
     "extra": {
         "typo3/cms": {
             "cms-package-dir": "{$vendor-dir}/typo3/cms",
+            "extension-key": "mksanitizedparameters",
             "web-dir": ".Build/Web"
         }
     }
