@@ -27,7 +27,7 @@
         "typo3-ter/mksanitizedparameters": "self.version"
     },
     "require": {
-        "typo3/cms-core": "~8.7 || ~9.5",
+        "typo3/cms-core": "^8.7.32 || ^9.5.23 || ^10.4.10",
         "digedag/rn-base": ">=1.10.0",
         "dmk/mklib": "~9.5"
     },
