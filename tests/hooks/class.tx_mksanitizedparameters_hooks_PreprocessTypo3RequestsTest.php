@@ -41,14 +41,13 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3RequestsTest extends tx_rnba
      */
     protected function setUp()
     {
-
         $this->storedExtConfig =
             $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mksanitizedparameters'];
         $this->deactivateStealthMode($this->storedExtConfig);
 
-        $rulesForBackend = array(
+        $rulesForBackend = [
             'testParameter' => FILTER_SANITIZE_NUMBER_INT,
-        );
+        ];
         tx_mksanitizedparameters_Rules::addRulesForBackend($rulesForBackend);
 
         \DMK\Mklib\Utility\Tests::disableDevlog();
@@ -56,7 +55,7 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3RequestsTest extends tx_rnba
         \DMK\Mklib\Utility\Tests::setExtConfVar('debugMode', 0, 'mksanitizedparameters');
         \DMK\Mklib\Utility\Tests::setExtConfVar('logMode', 0, 'mksanitizedparameters');
 
-        self::markTestIncomplete(" A cache with identifier \"assets\" does not exist");
+        self::markTestIncomplete(' A cache with identifier "assets" does not exist');
 
         $GLOBALS['TBE_TEMPLATE'] = tx_rnbase::makeInstance('TYPO3\CMS\Backend\Template\DocumentTemplate');
         /*
@@ -74,7 +73,7 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3RequestsTest extends tx_rnba
          *
          * Wir gehen also erst mal den Weg, den Fehler abzufangen.
          */
-        set_error_handler(array(__CLASS__, 'errorHandler'), E_WARNING);
+        set_error_handler([__CLASS__, 'errorHandler'], E_WARNING);
     }
 
     /**
@@ -86,7 +85,7 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3RequestsTest extends tx_rnba
             unserialize($serializedExtConfig);
 
         if (!is_array($extConfig)) {
-            $extConfig = array();
+            $extConfig = [];
         }
         $extConfig['stealthMode'] = 0;
         $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mksanitizedparameters'] = serialize($extConfig);
@@ -101,9 +100,9 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3RequestsTest extends tx_rnba
      */
     public static function errorHandler($errno, $errstr, $errfile, $errline, $errcontext)
     {
-        $ignoreMsg = array(
+        $ignoreMsg = [
             'Cannot modify header information - headers already sent by',
-        );
+        ];
         foreach ($ignoreMsg as $msg) {
             if ((is_string($ignoreMsg) || is_numeric($ignoreMsg)) && false !== strpos($errstr, $ignoreMsg)) {
                 // Don't execute PHP internal error handler

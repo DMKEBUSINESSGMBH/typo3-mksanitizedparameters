@@ -1,6 +1,6 @@
 <?php
 
-defined('TYPO3_MODE') || die('Access denied.');
+defined('TYPO3_MODE') || exit('Access denied.');
 
 //     $rulesForCaretaker = array(
 //         'st'        => FILTER_SANITIZE_STRING,

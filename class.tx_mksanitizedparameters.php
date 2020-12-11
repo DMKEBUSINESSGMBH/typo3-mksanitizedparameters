@@ -1,26 +1,27 @@
 <?php
-/**
- *  Copyright notice.
+
+/***************************************************************
+ * Copyright notice
  *
- *  (c) 2012 DMK E-Business GmbH <dev@dmk-ebusiness.de>
- *  All rights reserved
+ * (c) 2020 DMK E-BUSINESS GmbH <dev@dmk-ebusiness.de>
+ * All rights reserved
  *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
+ * This script is part of the TYPO3 project. The TYPO3 project is
+ * free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
+ * The GNU General Public License can be found at
+ * http://www.gnu.org/copyleft/gpl.html.
  *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * This script is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *  This copyright notice MUST APPEAR in all copies of the script!
- */
+ * This copyright notice MUST APPEAR in all copies of the script!
+ ***************************************************************/
 
 /**
  * Class to sanitize an array through the filter_var method.
@@ -33,7 +34,10 @@
  *
  * for all possibilities look into the doc block of sanitizeArrayByRules
  *
- * @author Hannes Bochmann <dev@dmk-ebusiness.de>
+ * @author Hannes Bochmann
+ * @author Michael Wagner
+ * @license http://www.gnu.org/licenses/lgpl.html
+ *          GNU Lesser General Public License, version 3 or later
  */
 class tx_mksanitizedparameters
 {
@@ -107,7 +111,6 @@ class tx_mksanitizedparameters
      *  '__common' => array(
      *      otherValueToo => array(FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES)
      *  ),
-     *
      *
      *  // default parameters configuration
      *  // will be used if no special and no common configuration is found for a parameter name
@@ -399,7 +402,7 @@ class tx_mksanitizedparameters
         if (isset($filterConfig['filter'])) {
             $filters = $filterConfig['filter'];
             unset($filterConfig['filter']);
-            $filters = !is_array($filters) ? array($filters) : $filters;
+            $filters = !is_array($filters) ? [$filters] : $filters;
         } else {
             $filters = $filterConfig;
         }
@@ -447,17 +450,17 @@ class tx_mksanitizedparameters
         // wir rufen die Methode mit call_user_func_array auf, da sie
         // statisch ist, womit wir diese nicht mocken könnten
         call_user_func_array(
-            array($this->getLogger(), 'warn'),
-            array(
+            [$this->getLogger(), 'warn'],
+            [
                 self::MESSAGE_VALUE_HAS_CHANGED,
                 'mksanitizedparameters',
-                array(
+                [
                     'Parameter Name:' => $nameToSanitize,
                     'initialer Wert:' => $initialValueToSanitize,
                     'Wert nach Bereinigung:' => $sanitizedValue,
                     'komplettes Parameter Array' => $arrayToSanitize,
-                ),
-            )
+                ],
+            ]
         );
     }
 
@@ -488,18 +491,18 @@ class tx_mksanitizedparameters
         // wir rufen die Methode mit call_user_func_array auf, da sie
         // statisch ist, womit wir diese nicht mocken könnten
         call_user_func_array(
-            array($this->getDebugger(), 'debug'),
-            array(
-                array(
-                    array(
+            [$this->getDebugger(), 'debug'],
+            [
+                [
+                    [
                         'Parameter Name:' => $nameToSanitize,
                         'initialer Wert:' => $initialValueToSanitize,
                         'Wert nach Bereinigung:' => $sanitizedValue,
                         'komplettes Parameter Array' => $arrayToSanitize,
-                    ),
-                ),
+                    ],
+                ],
                 self::MESSAGE_VALUE_HAS_CHANGED,
-            )
+            ]
         );
 
         if (TYPO3_MODE == 'FE') {

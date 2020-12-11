@@ -1,8 +1,6 @@
 <?php
 
-defined('TYPO3_MODE') || die('Access denied.');
-
-$_EXTKEY = 'mksanitizedparameters';
+defined('TYPO3_MODE') || exit('Access denied.');
 
 // sanitize in FE including eID
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['determineId-PostProc'][] =
@@ -13,4 +11,4 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['determine
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['typo3/template.php']['preStartPageHook']['mksanitizedparameters'] =
     'tx_mksanitizedparameters_hooks_PreprocessTypo3Requests->sanitizeGlobalInputArrays';
 
-require_once tx_rnbase_util_Extensions::extPath($_EXTKEY).'ext_rules.php';
+require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('mksanitizedparameters', 'ext_rules.php');

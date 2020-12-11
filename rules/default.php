@@ -1,6 +1,6 @@
 <?php
 
-defined('TYPO3_MODE') || die('Access denied.');
+defined('TYPO3_MODE') || exit('Access denied.');
 
 // $rulesForFrontend = array(
 //     tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY    => array(FILTER_SANITIZE_STRING, FILTER_SANITIZE_MAGIC_QUOTES),

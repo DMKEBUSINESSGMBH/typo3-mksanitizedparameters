@@ -29,8 +29,8 @@ class tx_mksanitizedparameters_tests_Rules extends tx_mksanitizedparameters_Rule
 {
     public static function clearRules()
     {
-        self::$rulesForBackend = array();
-        self::$rulesForFrontend = array();
+        self::$rulesForBackend = [];
+        self::$rulesForFrontend = [];
     }
 }
 
@@ -64,9 +64,9 @@ class tx_mksanitizedparameters_RulesTest extends tx_rnbase_tests_BaseTestCase
      */
     public function testAddingRulesInFrontend()
     {
-        $rulesForFrontend = array(
+        $rulesForFrontend = [
             'myParameterRule' => FILTER_SANITIZE_STRING,
-        );
+        ];
         tx_mksanitizedparameters_tests_Rules::addRulesForFrontend(
             $rulesForFrontend
         );
@@ -91,9 +91,9 @@ class tx_mksanitizedparameters_RulesTest extends tx_rnbase_tests_BaseTestCase
      */
     public function testAddingRulesInBackend()
     {
-        $rulesForBackend = array(
+        $rulesForBackend = [
             'myParameterRule' => FILTER_SANITIZE_STRING,
-        );
+        ];
         tx_mksanitizedparameters_tests_Rules::addRulesForBackend(
             $rulesForBackend
         );
@@ -118,9 +118,9 @@ class tx_mksanitizedparameters_RulesTest extends tx_rnbase_tests_BaseTestCase
      */
     public function testGetRulesForCurrentEnvironment()
     {
-        $rulesForBackend = array(
+        $rulesForBackend = [
             'myParameterRule' => FILTER_SANITIZE_STRING,
-        );
+        ];
         tx_mksanitizedparameters_tests_Rules::addRulesForBackend(
             $rulesForBackend
         );
@@ -145,16 +145,16 @@ class tx_mksanitizedparameters_RulesTest extends tx_rnbase_tests_BaseTestCase
      */
     public function testAddingRulesWithSeveralSubsequentCalls()
     {
-        $rulesForFrontend = array(
+        $rulesForFrontend = [
             'myParameterRule' => FILTER_SANITIZE_STRING,
-        );
+        ];
         tx_mksanitizedparameters_tests_Rules::addRulesForFrontend(
             $rulesForFrontend
         );
 
-        $otherRulesForFrontend = array(
+        $otherRulesForFrontend = [
             'myOtherParameterRule' => FILTER_SANITIZE_STRING,
-        );
+        ];
         tx_mksanitizedparameters_tests_Rules::addRulesForFrontend(
             $otherRulesForFrontend
         );
@@ -174,16 +174,16 @@ class tx_mksanitizedparameters_RulesTest extends tx_rnbase_tests_BaseTestCase
      */
     public function testAddingRulesWithSeveralSubsequentCallsOverwrittingCorrect()
     {
-        $rulesForFrontend = array(
+        $rulesForFrontend = [
             'myParameterRule' => FILTER_SANITIZE_STRING,
-        );
+        ];
         tx_mksanitizedparameters_tests_Rules::addRulesForFrontend(
             $rulesForFrontend
         );
 
-        $overwriteRulesForFrontend = array(
+        $overwriteRulesForFrontend = [
             'myParameterRule' => FILTER_SANITIZE_EMAIL,
-        );
+        ];
         tx_mksanitizedparameters_tests_Rules::addRulesForFrontend(
             $overwriteRulesForFrontend
         );
@@ -203,22 +203,22 @@ class tx_mksanitizedparameters_RulesTest extends tx_rnbase_tests_BaseTestCase
      */
     public function testCommonRulesAreMergedCorrectWhenAdded()
     {
-        $rulesForFrontend = array(
-            tx_mksanitizedparameters_Rules::COMMON_RULES_KEY => array(
+        $rulesForFrontend = [
+            tx_mksanitizedparameters_Rules::COMMON_RULES_KEY => [
                 'firstCommon' => FILTER_SANITIZE_STRING,
                 'secondCommon' => FILTER_SANITIZE_ENCODED,
-            ),
-        );
+            ],
+        ];
         tx_mksanitizedparameters_tests_Rules::addRulesForFrontend(
             $rulesForFrontend
         );
 
-        $overwriteRulesForFrontend = array(
-            tx_mksanitizedparameters_Rules::COMMON_RULES_KEY => array(
+        $overwriteRulesForFrontend = [
+            tx_mksanitizedparameters_Rules::COMMON_RULES_KEY => [
                 'firstCommon' => FILTER_SANITIZE_NUMBER_INT,
                 'thirdCommon' => FILTER_SANITIZE_ENCODED,
-            ),
-        );
+            ],
+        ];
         tx_mksanitizedparameters_tests_Rules::addRulesForFrontend(
             $overwriteRulesForFrontend
         );
@@ -226,13 +226,13 @@ class tx_mksanitizedparameters_RulesTest extends tx_rnbase_tests_BaseTestCase
         $addedParameterRules =
             tx_mksanitizedparameters_tests_Rules::getRulesForFrontend();
 
-        $expectedRules = array(
-            tx_mksanitizedparameters_Rules::COMMON_RULES_KEY => array(
+        $expectedRules = [
+            tx_mksanitizedparameters_Rules::COMMON_RULES_KEY => [
                 'firstCommon' => FILTER_SANITIZE_NUMBER_INT,
                 'secondCommon' => FILTER_SANITIZE_ENCODED,
                 'thirdCommon' => FILTER_SANITIZE_ENCODED,
-            ),
-        );
+            ],
+        ];
         $this->assertSame(
             $expectedRules,
             $addedParameterRules,
