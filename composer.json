@@ -46,6 +46,11 @@
             "class.tx_mksanitizedparameters_StealthMode.php"
         ]
     },
+    "autoload-dev": {
+        "classmap": [
+            "tests/"
+        ]
+    },
     "config": {
         "vendor-dir": ".Build/vendor",
         "bin-dir": ".Build/bin",
