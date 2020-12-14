@@ -1,9 +1,10 @@
 <?php
 
-defined('TYPO3_MODE') || exit('Access denied.');
+if (!defined('TYPO3_MODE')) {
+    exit('Access denied.');
+}
 
 // $rulesForFrontendVersion1
-
 \DMK\MkSanitizedParameters\Rules::addRulesForFrontend(
     [
         'tx_powermail_pi1' => [

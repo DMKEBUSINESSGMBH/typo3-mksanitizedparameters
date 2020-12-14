@@ -1,6 +1,8 @@
 <?php
 
-defined('TYPO3_MODE') || exit('Access denied.');
+if (!defined('TYPO3_MODE')) {
+    exit('Access denied.');
+}
 
 // $rulesForCaretaker
 \DMK\MkSanitizedParameters\Rules::addRulesForFrontend(
