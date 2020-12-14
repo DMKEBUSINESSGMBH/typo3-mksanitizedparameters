@@ -14,4 +14,4 @@ if (!\DMK\MkSanitizedParameters\Utility\Typo3Utility::isTypo3Version9OrHigher())
         \DMK\MkSanitizedParameters\Hook\Typo3RequestsHook::class.'->sanitizeGlobalInputArrays';
 }
 
-require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('mksanitizedparameters', 'ext_rules.php');
+\DMK\MkSanitizedParameters\Rules::loadDefaults();

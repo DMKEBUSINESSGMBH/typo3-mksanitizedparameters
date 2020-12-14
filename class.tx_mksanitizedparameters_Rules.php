@@ -27,103 +27,14 @@
  * Class to register and retrieve rules for
  * the parameters in the system.
  *
+ * @deprecated use \DMK\MkSanitizedParameters\Rules instead
+ *
  * @author Hannes Bochmann
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_mksanitizedparameters_Rules
+class tx_mksanitizedparameters_Rules extends \DMK\MkSanitizedParameters\Rules
 {
-    /**
-     * @var string
-     */
-    const COMMON_RULES_KEY = '__common';
-
-    /**
-     * @var string
-     */
-    const DEFAULT_RULES_KEY = '__default';
-
-    /**
-     * @var array
-     */
-    protected static $rulesForFrontend = [];
-
-    /**
-     * @var array
-     */
-    protected static $rulesForBackend = [];
-
-    /**
-     * look into the doc of
-     * tx_mksanitizedparameters::sanitizeArrayByRules()
-     * to see how the rules must be passed.
-     *
-     * @param array $rules
-     */
-    public static function addRulesForFrontend(
-        array $rules
-    ) {
-        self::$rulesForFrontend =
-            tx_rnbase_util_Arrays::mergeRecursiveWithOverrule(
-                self::$rulesForFrontend,
-                $rules
-            );
-    }
-
-    /**
-     * look into the doc of
-     * tx_mksanitizedparameters::sanitizeArrayByRules()
-     * to see how the rules must be passed.
-     *
-     * @param array $rules
-     */
-    public static function addRulesForBackend(
-        array $rules
-    ) {
-        self::$rulesForBackend =
-            tx_rnbase_util_Arrays::mergeRecursiveWithOverrule(
-                self::$rulesForBackend,
-                $rules
-            );
-    }
-
-    /**
-     * the default environment is Frontend.
-     *
-     * @return array
-     */
-    public static function getRulesForCurrentEnvironment()
-    {
-        switch (TYPO3_MODE) {
-            case 'FE':
-            default:
-                $parameterRulesForCurrentEnvironment =
-                    self::getRulesForFrontend();
-                break;
-            case 'BE':
-                $parameterRulesForCurrentEnvironment =
-                    self::getRulesForBackend();
-                break;
-        }
-
-        return $parameterRulesForCurrentEnvironment;
-    }
-
-    /**
-     * @return array
-     */
-    public static function getRulesForFrontend()
-    {
-        return self::$rulesForFrontend;
-    }
-
-    /**
-     * @return array
-     */
-    public static function getRulesForBackend()
-    {
-        return self::$rulesForBackend;
-    }
 }
 
 if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/util/class.tx_mksanitizedparameters_Rules.php']) {
