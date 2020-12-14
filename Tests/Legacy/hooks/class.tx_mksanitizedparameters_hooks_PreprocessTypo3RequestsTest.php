@@ -66,7 +66,7 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3RequestsTest extends \PHPUni
 
         $params = [];
         \TYPO3\CMS\Core\Utility\GeneralUtility::callUserFunction(
-            'tx_mksanitizedparameters_hooks_PreprocessTypo3Requests->sanitizeGlobalInputArrays',
+            tx_mksanitizedparameters_hooks_PreprocessTypo3Requests::class.'->sanitizeGlobalInputArrays',
             $params,
             $this
         );

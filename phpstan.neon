@@ -7,6 +7,7 @@ parameters:
         - %currentWorkingDirectory%/ext_localconf.php
         - %currentWorkingDirectory%/ext_emconf.php
     reportUnmatchedIgnoredErrors: false
+    excludes_analyse:
+        - %currentWorkingDirectory%/Classes/Legacy/*
     ignoreErrors:
         - '#Constant TYPO3_MODE not found#'
-        - '#Undefined variable: \$_EXTKEY#'

@@ -23,8 +23,14 @@
  */
 
 /**
+ * @deprecated use \DMK\MkSanitizedParameters\Sanitizer\AlnumSanitizer instead
+ *
  * @author Hannes Bochmann
+ * @license http://www.gnu.org/licenses/lgpl.html
+ *          GNU Lesser General Public License, version 3 or later
+ *
+ * @SuppressWarnings(PHPMD)
  */
-class tx_mksanitizedparameters_sanitizer_Alpha extends \DMK\MkSanitizedParameters\Sanitizer\AlphaSanitizer
+class tx_mksanitizedparameters_sanitizer_Alnum extends \DMK\MkSanitizedParameters\Sanitizer\AlnumSanitizer
 {
 }

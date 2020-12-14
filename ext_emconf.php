@@ -38,13 +38,11 @@ $EM_CONF['mksanitizedparameters'] = [
     ],
     'suggests' => [],
     'autoload' => [
+        'psr-4' => [
+            'DMK\\MkSanitizedParameters\\' => 'Classes',
+        ],
         'classmap' => [
-            'Classes/',
-            'sanitizer',
-            'hooks',
-            'class.tx_mksanitizedparameters.php',
-            'class.tx_mksanitizedparameters_Rules.php',
-            'class.tx_mksanitizedparameters_StealthMode.php',
+            'Classes/Legacy',
         ],
     ],
 ];

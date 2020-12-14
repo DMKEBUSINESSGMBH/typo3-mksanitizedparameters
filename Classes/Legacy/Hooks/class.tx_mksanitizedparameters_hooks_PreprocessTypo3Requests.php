@@ -24,10 +24,14 @@
  ***************************************************************/
 
 /**
+ * @deprecated use \DMK\MkSanitizedParameters\Hook\Typo3RequestsHook instead
+ *
  * @author Hannes Bochmann
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
+ *
+ * @SuppressWarnings(PHPMD)
  */
 class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests extends \DMK\MkSanitizedParameters\Hook\Typo3RequestsHook
 {

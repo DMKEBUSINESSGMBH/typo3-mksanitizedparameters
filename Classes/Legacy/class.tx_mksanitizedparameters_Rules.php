@@ -32,6 +32,8 @@
  * @author Hannes Bochmann
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
+ *
+ * @SuppressWarnings(PHPMD)
  */
 class tx_mksanitizedparameters_Rules extends \DMK\MkSanitizedParameters\Rules
 {
