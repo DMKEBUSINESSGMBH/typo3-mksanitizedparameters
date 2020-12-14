@@ -31,6 +31,7 @@ use DMK\MkSanitizedParameters\Domain\Repository\MonitorRepository;
 use DMK\MkSanitizedParameters\Input\InputInterface;
 use DMK\MkSanitizedParameters\Utility\ConfigurationUtility;
 use DMK\MkSanitizedParameters\Utility\FilterUtility;
+use DMK\MkSanitizedParameters\Utility\RulesUtility;
 use InvalidArgumentException;
 use TYPO3\CMS\Core\Log\Logger;
 use TYPO3\CMS\Core\Log\LogManager;
@@ -114,9 +115,19 @@ final class Factory
      *
      * @return FilterUtility
      */
-    public static function getFilter(): FilterUtility
+    public static function getFilterUtility(): FilterUtility
     {
         return Factory::makeInstance(FilterUtility::class);
+    }
+
+    /**
+     * Returns the filter utility.
+     *
+     * @return RulesUtility
+     */
+    public static function getRulesUtility(): RulesUtility
+    {
+        return Factory::makeInstance(RulesUtility::class);
     }
 
     /**
