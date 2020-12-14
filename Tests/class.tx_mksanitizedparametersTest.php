@@ -2,7 +2,7 @@
 /**
  *  Copyright notice.
  *
- *  (c) 2012 DMK E-Business GmbH <dev@dmk-ebusiness.de>
+ *  (c) 2020 DMK E-Business GmbH <dev@dmk-ebusiness.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -23,52 +23,53 @@
  */
 
 /**
- * @author Hannes Bochmann <dev@dmk-ebusiness.de>
+ * @author Hannes Bochmann
+ * @author Michael Wagner
+ * @license http://www.gnu.org/licenses/lgpl.html
+ *          GNU Lesser General Public License, version 3 or later
  */
-class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
+class tx_mksanitizedparametersTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * (non-PHPdoc).
-     *
-     * @see PHPUnit_Framework_TestCase::setUp()
-     */
+    protected $backup = [];
+
     protected function setUp()
     {
-        \DMK\Mklib\Utility\Tests::disableDevlog();
-        \DMK\Mklib\Utility\Tests::storeExtConf('mksanitizedparameters');
-        \DMK\Mklib\Utility\Tests::setExtConfVar('debugMode', 0, 'mksanitizedparameters');
-        \DMK\Mklib\Utility\Tests::setExtConfVar('logMode', 0, 'mksanitizedparameters');
-    }
+        $this->backup = [
+            '_SERVER' => $_SERVER,
+            'TYPO3_CONF_VARS' => $GLOBALS['TYPO3_CONF_VARS'],
+        ];
+        $_SERVER['REMOTE_ADDR'] = 'testip';
+        $GLOBALS['TYPO3_CONF_VARS']['SYS']['devIPmask'] = 'testip';
 
-    /**
-     * (non-PHPdoc).
-     *
-     * @see PHPUnit_Framework_TestCase::tearDown()
-     */
-    protected function tearDown()
-    {
-        \DMK\Mklib\Utility\Tests::restoreExtConf('mksanitizedparameters');
-    }
-
-    /**
-     * @group unit
-     */
-    public function testGetLogger()
-    {
-        self::assertEquals(
-            'tx_rnbase_util_Logger',
-            $this->callInaccessibleMethod(tx_rnbase::makeInstance('tx_mksanitizedparameters'), 'getLogger')
+        $this->setExtConf(
+            [
+                'debugMode' => 0,
+                'logMode' => 0,
+            ]
         );
     }
 
-    /**
-     * @group unit
-     */
-    public function testGetDebugger()
+    protected function tearDown()
     {
-        self::assertEquals(
-            'tx_rnbase_util_Debug',
-            $this->callInaccessibleMethod(tx_rnbase::makeInstance('tx_mksanitizedparameters'), 'getDebugger')
+        $_SERVER = $this->backup['_SERVER'];
+        $GLOBALS['TYPO3_CONF_VARS'] = $this->backup['TYPO3_CONF_VARS'];
+    }
+
+    protected function setExtConf(array $extConf)
+    {
+        $config = \DMK\MkSanitizedParameters\Factory::getConfiguration();
+        // force ext conf creation
+        $config->isStealthMode();
+        // now override the extconf array property
+        $reflector = new ReflectionClass(get_class($config));
+        $property = $reflector->getProperty('extensionConfiguration');
+        $property->setAccessible(true);
+        $property->setValue(
+            $config,
+            array_merge(
+                $property->getValue($config),
+                $extConf
+            )
         );
     }
 
@@ -80,7 +81,9 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
         $arrayToSanitize = [
             'parameterNameToBeSanitized' => 'testValue',
         ];
-        $mainClass = $this->getMainClassMockWithoutDebugMode();
+
+        /* @var $mainClass tx_mksanitizedparameters */
+        $mainClass = \DMK\MkSanitizedParameters\Factory::makeInstance('tx_mksanitizedparameters');
         $sanitizedArray = $mainClass->sanitizeArrayByRules(
             $arrayToSanitize,
             []
@@ -104,7 +107,8 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
         $rules = [
             'unexistentParameter' => FILTER_SANITIZE_NUMBER_INT,
         ];
-        $mainClass = $this->getMainClassMockWithoutDebugMode();
+        /* @var $mainClass tx_mksanitizedparameters */
+        $mainClass = \DMK\MkSanitizedParameters\Factory::makeInstance('tx_mksanitizedparameters');
         $sanitizedArray = $mainClass->sanitizeArrayByRules(
             $arrayToSanitize,
             $rules
@@ -122,15 +126,14 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
      */
     public function testSanitizeArrayByRulesWorksCorrectWithUnconfiguredValuesButDefaultRules()
     {
-        self::markTestIncomplete();
-
         $arrayToSanitize = [
             'parameterNameToBeSanitized' => '1testValue',
         ];
         $rules = [
             tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_NUMBER_INT,
         ];
-        $mainClass = $this->getMainClassMockWithoutDebugMode();
+        /* @var $mainClass tx_mksanitizedparameters */
+        $mainClass = \DMK\MkSanitizedParameters\Factory::makeInstance('tx_mksanitizedparameters');
         $sanitizedArray = $mainClass->sanitizeArrayByRules(
             $arrayToSanitize,
             $rules
@@ -148,15 +151,14 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
      */
     public function testSanitizeArrayByRulesWorksCorrectWithFlatArrayAndSingleFilterConfig()
     {
-        self::markTestIncomplete();
-
         $arrayToSanitize = [
             'parameterNameToBeSanitized' => '1testValue',
         ];
         $rules = [
             'parameterNameToBeSanitized' => FILTER_SANITIZE_NUMBER_INT,
         ];
-        $mainClass = $this->getMainClassMockWithoutDebugMode();
+        /* @var $mainClass tx_mksanitizedparameters */
+        $mainClass = \DMK\MkSanitizedParameters\Factory::makeInstance('tx_mksanitizedparameters');
         $sanitizedArray = $mainClass->sanitizeArrayByRules(
             $arrayToSanitize,
             $rules
@@ -174,8 +176,6 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
      */
     public function testSanitizeArrayByRulesWorksCorrectWithFlatArrayAndFilterConfigAsArray()
     {
-        self::markTestIncomplete();
-
         $arrayToSanitize = [
             'parameterInRange' => '<span>me&you</span>',
             'parameterOutOfRange' => '<span>me&you</span>',
@@ -189,7 +189,8 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
                 'flags' => FILTER_FLAG_ENCODE_AMP,
             ],
         ];
-        $mainClass = $this->getMainClassMockWithoutDebugMode();
+        /* @var $mainClass tx_mksanitizedparameters */
+        $mainClass = \DMK\MkSanitizedParameters\Factory::makeInstance('tx_mksanitizedparameters');
         $sanitizedArray = $mainClass->sanitizeArrayByRules(
             $arrayToSanitize,
             $rules
@@ -210,8 +211,6 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
      */
     public function testSanitizeArrayByRulesWorksCorrectWithUnconfiguredValuesAndNoDefaultRules()
     {
-        self::markTestIncomplete();
-
         $arrayToSanitize = [
             'parameterNameToBeSanitized' => '1testValue',
             'parameterNameNotToBeSanitized' => '1testValue',
@@ -219,7 +218,8 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
         $rules = [
             'parameterNameToBeSanitized' => FILTER_SANITIZE_NUMBER_INT,
         ];
-        $mainClass = $this->getMainClassMockWithoutDebugMode();
+        /* @var $mainClass tx_mksanitizedparameters */
+        $mainClass = \DMK\MkSanitizedParameters\Factory::makeInstance('tx_mksanitizedparameters');
         $sanitizedArray = $mainClass->sanitizeArrayByRules(
             $arrayToSanitize,
             $rules
@@ -240,8 +240,6 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
      */
     public function testSanitizeArrayByRulesWorksCorrectWithMultiDimensionalArray()
     {
-        self::markTestIncomplete();
-
         $arrayToSanitize = [
             'firstExtensionQualifier' => [
                 'parameterNameToBeSanitized' => '1testValue',
@@ -268,7 +266,8 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
                 ],
             ],
         ];
-        $mainClass = $this->getMainClassMockWithoutDebugMode();
+        /* @var $mainClass tx_mksanitizedparameters */
+        $mainClass = \DMK\MkSanitizedParameters\Factory::makeInstance('tx_mksanitizedparameters');
         $sanitizedArray = $mainClass->sanitizeArrayByRules(
             $arrayToSanitize,
             $rules
@@ -299,8 +298,6 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
      */
     public function testSanitizeArrayByRulesWorksCorrectWithMultiDimensionalArrayAndDefaultRulesOnlyForSubArray()
     {
-        self::markTestIncomplete();
-
         $arrayToSanitize = [
             'firstExtensionQualifier' => [
                 'parameterNameToBeSanitizedByDefault' => '1testValue',
@@ -313,7 +310,8 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
                 tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_NUMBER_INT,
             ],
         ];
-        $mainClass = $this->getMainClassMockWithoutDebugMode();
+        /* @var $mainClass tx_mksanitizedparameters */
+        $mainClass = \DMK\MkSanitizedParameters\Factory::makeInstance('tx_mksanitizedparameters');
         $sanitizedArray = $mainClass->sanitizeArrayByRules(
             $arrayToSanitize,
             $rules
@@ -338,8 +336,6 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
      */
     public function testSanitizeArrayByRulesWorksCorrectWithSeveralConfiguredFiltersAsFilterArray()
     {
-        self::markTestIncomplete();
-
         $arrayToSanitize = [
             'parameterNameToBeSanitized' => "<span>Is your name O'reilly & are sure about that?</span>",
         ];
@@ -351,7 +347,8 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
                 'flags' => FILTER_FLAG_ENCODE_AMP,
             ],
         ];
-        $mainClass = $this->getMainClassMockWithoutDebugMode();
+        /* @var $mainClass tx_mksanitizedparameters */
+        $mainClass = \DMK\MkSanitizedParameters\Factory::makeInstance('tx_mksanitizedparameters');
         $sanitizedArray = $mainClass->sanitizeArrayByRules(
             $arrayToSanitize,
             $rules
@@ -371,18 +368,19 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
      */
     public function testSanitizeArrayByRulesWorksCorrectWithSeveralConfiguredFiltersAsList()
     {
-        self::markTestIncomplete();
-
         $arrayToSanitize = [
             'parameterNameToBeSanitized' => "<span>Is your name O'reilly & are sure about that?</span>",
         ];
         $rules = [
             'parameterNameToBeSanitized' => [
-                FILTER_SANITIZE_STRING, FILTER_SANITIZE_MAGIC_QUOTES,
+                FILTER_SANITIZE_STRING,
+                FILTER_SANITIZE_MAGIC_QUOTES,
             ],
         ];
-        $mainClass = $this->getMainClassMockWithoutDebugMode();
-        $sanitizedArray = $mainClass->sanitizeArrayByRules(
+
+        /* @var $mksanitizedparameters tx_mksanitizedparameters */
+        $mksanitizedparameters = \DMK\MkSanitizedParameters\Factory::makeInstance('tx_mksanitizedparameters');
+        $sanitizedArray = $mksanitizedparameters->sanitizeArrayByRules(
             $arrayToSanitize,
             $rules
         );
@@ -401,8 +399,6 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
      */
     public function testSanitizeArrayByRulesWorksCorrectWithCustomFilter()
     {
-        self::markTestIncomplete();
-
         $arrayToSanitize = [
             'parameterNameToBeSanitized' => 'abc123',
         ];
@@ -414,7 +410,8 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
                 ],
             ],
         ];
-        $mainClass = $this->getMainClassMockWithoutDebugMode();
+        /* @var $mainClass tx_mksanitizedparameters */
+        $mainClass = \DMK\MkSanitizedParameters\Factory::makeInstance('tx_mksanitizedparameters');
         $sanitizedArray = $mainClass->sanitizeArrayByRules(
             $arrayToSanitize,
             $rules
@@ -442,7 +439,8 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
         $rules = [
             tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY => [FILTER_SANITIZE_URL],
         ];
-        $mainClass = $this->getMainClassMockWithoutDebugMode();
+        /* @var $mainClass tx_mksanitizedparameters */
+        $mainClass = \DMK\MkSanitizedParameters\Factory::makeInstance('tx_mksanitizedparameters');
         $sanitizedArray = $mainClass->sanitizeArrayByRules(
             $arrayToSanitize,
             $rules
@@ -470,7 +468,8 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
         $mksanitizedparameters = $this->getMock('tx_mksanitizedparameters', ['getLogger']);
 
         $mksanitizedparameters->expects($this->never())
-            ->method('getLogger');
+            ->method('getLogger')
+            ->willReturn($this->createMock(\TYPO3\CMS\Core\Log\Logger::class));
 
         $mksanitizedparameters->sanitizeArrayByRules(
             $arrayToSanitize,
@@ -483,8 +482,6 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
      */
     public function testSanitizeArrayByRulesDoesNotCallLoggerIfLoggingNotEnabledAndValueChanged()
     {
-        self::markTestIncomplete();
-
         $arrayToSanitize = [
           'parameter' => '"test"',
         ];
@@ -515,8 +512,6 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
      */
     public function testSanitizeArrayByRulesDoesNotCallLoggerIfLoggingEnabledButValueNotChanged()
     {
-        \DMK\Mklib\Utility\Tests::setExtConfVar('logMode', 1, 'mksanitizedparameters');
-
         $arrayToSanitize = [
           'parameter' => 'test',
         ];
@@ -547,8 +542,6 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
      */
     public function testSanitizeArrayByRulesDoesNotConsiderValueAsChangedIfHasWhitespaceAtBeginningOrEnd()
     {
-        \DMK\Mklib\Utility\Tests::setExtConfVar('logMode', 1, 'mksanitizedparameters');
-
         $arrayToSanitize = [
             'parameter' => ' test ',
         ];
@@ -579,9 +572,12 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
      */
     public function testSanitizeArrayByRulesCallsLoggerCorrectIfLoggingEnabledAndValueChanged()
     {
-        self::markTestIncomplete();
-
-        \DMK\Mklib\Utility\Tests::setExtConfVar('logMode', 1, 'mksanitizedparameters');
+        $this->setExtConf(
+            [
+                'debugMode' => 0,
+                'logMode' => 1,
+            ]
+        );
 
         $arrayToSanitize = [
           'parameter' => '"test"',
@@ -590,21 +586,18 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
             tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY => [FILTER_SANITIZE_STRING],
         ];
 
+        /* @var $mainClass \tx_mksanitizedparameters*/
+        $mksanitizedparameters = \DMK\MkSanitizedParameters\Factory::makeInstance('tx_mksanitizedparameters');
         $mksanitizedparameters = $this->getMock(
             'tx_mksanitizedparameters',
-            ['getDebugMode', 'getLogger']
+            ['getLogger']
         );
 
-        $mksanitizedparameters->expects($this->any())
-            ->method('getDebugMode')
-            ->will($this->returnValue(false));
-
-        $logger = $this->getMock('stdClass', ['warn']);
+        $logger = $this->createMock(\TYPO3\CMS\Core\Log\Logger::class);
         $logger->expects($this->once())
-            ->method('warn')
+            ->method('warning')
             ->with(
                 $mksanitizedparameters::MESSAGE_VALUE_HAS_CHANGED,
-                'mksanitizedparameters',
                 [
                     'Parameter Name:' => 'parameter',
                     'initialer Wert:' => '"test"',
@@ -656,7 +649,12 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
      */
     public function testSanitizeArrayByRulesDoesNotCallDebuggerIfDebuggingNotEnabledAndValueChanged()
     {
-        self::markTestIncomplete();
+        $this->setExtConf(
+            [
+                'debugMode' => 0,
+                'logMode' => 1,
+            ]
+        );
 
         $arrayToSanitize = [
           'parameter' => '"test"',
@@ -667,14 +665,11 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
 
         $mksanitizedparameters = $this->getMock(
             'tx_mksanitizedparameters',
-            ['getDebugger', 'getDebugMode']
+            ['echoDebug']
         );
-        $mksanitizedparameters->expects($this->once())
-            ->method('getDebugMode')
-            ->will($this->returnValue(false));
 
         $mksanitizedparameters->expects($this->never())
-            ->method('getDebugger');
+            ->method('echoDebug');
 
         $mksanitizedparameters->sanitizeArrayByRules(
             $arrayToSanitize,
@@ -715,7 +710,12 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
      */
     public function testSanitizeArrayByRulesCallsDebuggerCorrectIfDebuggingEnabledAndValueChanged()
     {
-        self::markTestIncomplete();
+        $this->setExtConf(
+            [
+                'debugMode' => 1,
+                'logMode' => 0,
+            ]
+        );
 
         $arrayToSanitize = [
           'parameter' => '"test"',
@@ -726,30 +726,19 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
 
         $mksanitizedparameters = $this->getMock(
             'tx_mksanitizedparameters',
-            ['getDebugger', 'getDebugMode']
+            ['echoDebug']
         );
-        $mksanitizedparameters->expects($this->once())
-            ->method('getDebugMode')
-            ->will($this->returnValue(true));
 
-        $debugger = $this->getMock('stdClass', ['debug']);
-        $debugger->expects($this->once())
-            ->method('debug')
+        $mksanitizedparameters->expects($this->once())
+            ->method('echoDebug')
             ->with(
                 [
-                    [
-                        'Parameter Name:' => 'parameter',
-                        'initialer Wert:' => '"test"',
-                        'Wert nach Bereinigung:' => '&#34;test&#34;',
-                        'komplettes Parameter Array' => ['parameter' => '&#34;test&#34;'],
-                    ],
-                ],
-                $mksanitizedparameters::MESSAGE_VALUE_HAS_CHANGED
+                    'Parameter Name:' => 'parameter',
+                    'initialer Wert:' => '"test"',
+                    'Wert nach Bereinigung:' => '&#34;test&#34;',
+                    'komplettes Parameter Array' => ['parameter' => '&#34;test&#34;'],
+                ]
             );
-
-        $mksanitizedparameters->expects($this->once())
-            ->method('getDebugger')
-            ->will($this->returnValue($debugger));
 
         $mksanitizedparameters->sanitizeArrayByRules(
             $arrayToSanitize,
@@ -762,8 +751,6 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
      */
     public function testSanitizeArrayByRulesPrefersSpecialRulesOverCommonRules()
     {
-        self::markTestIncomplete();
-
         $arrayToSanitize = [
             'parameterNameToBeSanitized' => '"1testValue"',
         ];
@@ -779,7 +766,8 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
                 ],
             ],
         ];
-        $mainClass = $this->getMainClassMockWithoutDebugMode();
+        /* @var $mainClass tx_mksanitizedparameters */
+        $mainClass = \DMK\MkSanitizedParameters\Factory::makeInstance('tx_mksanitizedparameters');
         $sanitizedArray = $mainClass->sanitizeArrayByRules(
             $arrayToSanitize,
             $rules
@@ -797,8 +785,6 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
      */
     public function testSanitizeArrayByRulesPrefersCommonRulesOverDefaultRules()
     {
-        self::markTestIncomplete();
-
         $arrayToSanitize = [
             'parameterNameToBeSanitized' => '"1testValue"',
         ];
@@ -814,7 +800,8 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
                 ],
             ],
         ];
-        $mainClass = $this->getMainClassMockWithoutDebugMode();
+        /* @var $mainClass tx_mksanitizedparameters */
+        $mainClass = \DMK\MkSanitizedParameters\Factory::makeInstance('tx_mksanitizedparameters');
         $sanitizedArray = $mainClass->sanitizeArrayByRules(
             $arrayToSanitize,
             $rules
@@ -832,8 +819,6 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
      */
     public function testSanitizeArrayByRulesUsesDefaultRulesIfNoSpecialsOrCommons()
     {
-        self::markTestIncomplete();
-
         $arrayToSanitize = [
             'parameterNameToBeSanitized' => '"1testValue"',
         ];
@@ -849,7 +834,8 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
                 ],
             ],
         ];
-        $mainClass = $this->getMainClassMockWithoutDebugMode();
+        /* @var $mainClass tx_mksanitizedparameters */
+        $mainClass = \DMK\MkSanitizedParameters\Factory::makeInstance('tx_mksanitizedparameters');
         $sanitizedArray = $mainClass->sanitizeArrayByRules(
             $arrayToSanitize,
             $rules
@@ -867,8 +853,6 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
      */
     public function testSanitizeArrayByRulesPrefersCommonRulesOverDefaultRulesWhenParameterNameInSubArray()
     {
-        self::markTestIncomplete();
-
         $arrayToSanitize = [
             'myExt' => [
                 'parameterNameToBeSanitized' => '"1testValue"',
@@ -886,7 +870,8 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
                 ],
             ],
         ];
-        $mainClass = $this->getMainClassMockWithoutDebugMode();
+        /* @var $mainClass tx_mksanitizedparameters */
+        $mainClass = \DMK\MkSanitizedParameters\Factory::makeInstance('tx_mksanitizedparameters');
         $sanitizedArray = $mainClass->sanitizeArrayByRules(
             $arrayToSanitize,
             $rules
@@ -904,8 +889,6 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
      */
     public function testSanitizeArrayByRulesUsesCommonRulesInSubArrayEvenIfCommonRulesInMainArray()
     {
-        self::markTestIncomplete();
-
         $arrayToSanitize = [
             'myExt' => [
                 'parameterNameToBeSanitized' => '"1testValue"',
@@ -921,11 +904,21 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
                 'parameterNameToBeSanitized' => FILTER_SANITIZE_STRING,
             ],
         ];
-        $mainClass = $this->getMainClassMockWithoutDebugMode();
+
+        /* @var $mainClass \tx_mksanitizedparameters*/
+        $mainClass = \DMK\MkSanitizedParameters\Factory::makeInstance('tx_mksanitizedparameters');
         $sanitizedArray = $mainClass->sanitizeArrayByRules(
             $arrayToSanitize,
             $rules
         );
+
+//        echo '<h1>DEBUG: ' . __FILE__ . ' Line: ' . __LINE__ . '</h1><pre>' . var_export(array(
+//                        '$arrayToSanitize' => $arrayToSanitize,
+//                        '$rules' => $rules,
+//                        '$sanitizedArray' => $sanitizedArray,
+//
+//                ), true) . '</pre>';
+//        exit('DEBUG: ' . __FILE__ . ' Line: ' . __LINE__);
 
         $this->assertEquals(
             ['myExt' => ['parameterNameToBeSanitized' => '1']],
@@ -939,8 +932,6 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
      */
     public function testSanitizeArrayByRulesUsesDefaultRulesInSubArrayEvenIfDefaultRulesInMainArray()
     {
-        self::markTestIncomplete();
-
         $arrayToSanitize = [
             'myExt' => [
                 'parameterNameToBeSanitized' => '"1testValue"',
@@ -952,7 +943,9 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
             ],
             tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_STRING,
         ];
-        $mainClass = $this->getMainClassMockWithoutDebugMode();
+
+        /* @var $mainClass \tx_mksanitizedparameters*/
+        $mainClass = \DMK\MkSanitizedParameters\Factory::makeInstance('tx_mksanitizedparameters');
         $sanitizedArray = $mainClass->sanitizeArrayByRules(
             $arrayToSanitize,
             $rules
@@ -970,8 +963,6 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
      */
     public function testSanitizeArrayByRulesMergesAndOverwritesCommonConfigIntoSubsequentLevels()
     {
-        self::markTestIncomplete();
-
         $arrayToSanitize = [
             'myExt' => [
                 'parameterNameToBeSanitized' => '"1testValue"',
@@ -988,7 +979,9 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
                 'anotherParameterNameToBeSanitized' => FILTER_SANITIZE_STRING,
             ],
         ];
-        $mainClass = $this->getMainClassMockWithoutDebugMode();
+
+        /* @var $mainClass \tx_mksanitizedparameters*/
+        $mainClass = \DMK\MkSanitizedParameters\Factory::makeInstance('tx_mksanitizedparameters');
         $sanitizedArray = $mainClass->sanitizeArrayByRules(
             $arrayToSanitize,
             $rules
@@ -1011,8 +1004,6 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
      */
     public function testSanitizeArrayByRulesWithRulesForSubArrayButSubArrayParameterItSelfIsGivenCastsFilterArrayConfigToIntegerResultingInEmptiedValue()
     {
-        self::markTestIncomplete();
-
         $arrayToSanitize = [
             'myExt' => 'test',
         ];
@@ -1027,7 +1018,8 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
             ],
         ];
 
-        $mainClass = $this->getMainClassMockWithoutDebugMode();
+        /* @var $mainClass tx_mksanitizedparameters */
+        $mainClass = \DMK\MkSanitizedParameters\Factory::makeInstance('tx_mksanitizedparameters');
         $sanitizedArray = $mainClass->sanitizeArrayByRules(
             $arrayToSanitize,
             $rules
@@ -1041,19 +1033,73 @@ class tx_mksanitizedparametersTest extends tx_rnbase_tests_BaseTestCase
     }
 
     /**
-     * @return tx_mksanitizedparameters
+     * Wrapper for deprecated getMock method.
+     *
+     * Taken From nimut/testing-framework
+     *
+     * @param string $originalClassName
+     * @param array  $methods
+     * @param array  $arguments
+     * @param string $mockClassName
+     * @param bool   $callOriginalConstructor
+     * @param bool   $callOriginalClone
+     * @param bool   $callAutoload
+     * @param bool   $cloneArguments
+     * @param bool   $callOriginalMethods
+     * @param null   $proxyTarget
+     *
+     * @throws \PHPUnit_Framework_Exception
+     *
+     * @return \PHPUnit_Framework_MockObject_MockObject
      */
-    private function getMainClassMockWithoutDebugMode()
-    {
-        $mksanitizedparameters = $this->getMock(
-            'tx_mksanitizedparameters',
-            ['getDebugMode']
+    protected function getMock(
+        $originalClassName,
+        $methods = [],
+        array $arguments = [],
+        $mockClassName = '',
+        $callOriginalConstructor = true,
+        $callOriginalClone = true,
+        $callAutoload = true,
+        $cloneArguments = false,
+        $callOriginalMethods = false,
+        $proxyTarget = null
+    ) {
+        if (method_exists($this, 'createMock')) {
+            $mockBuilder = $this->getMockBuilder($originalClassName)
+                ->setMethods($methods)
+                ->setConstructorArgs($arguments)
+                ->setMockClassName($mockClassName)
+                ->setProxyTarget($proxyTarget);
+            if (!$callOriginalConstructor) {
+                $mockBuilder->disableOriginalConstructor();
+            }
+            if (!$callOriginalClone) {
+                $mockBuilder->disableOriginalClone();
+            }
+            if (!$callAutoload) {
+                $mockBuilder->disableAutoload();
+            }
+            if ($cloneArguments) {
+                $mockBuilder->enableArgumentCloning();
+            }
+            if ($callOriginalMethods) {
+                $mockBuilder->enableProxyingToOriginalMethods();
+            }
+
+            return $mockBuilder->getMock();
+        }
+
+        return parent::getMock(
+            $originalClassName,
+            $methods,
+            $arguments,
+            $mockClassName,
+            $callOriginalConstructor,
+            $callOriginalClone,
+            $callAutoload,
+            $cloneArguments,
+            $callOriginalMethods,
+            $proxyTarget
         );
-
-        $mksanitizedparameters->expects($this->any())
-            ->method('getDebugMode')
-            ->will($this->returnValue(false));
-
-        return $mksanitizedparameters;
     }
 }

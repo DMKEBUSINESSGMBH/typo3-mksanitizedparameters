@@ -2,7 +2,7 @@
 /**
  *  Copyright notice.
  *
- *  (c) 2012 DMK E-Business GmbH <dev@dmk-ebusiness.de>
+ *  (c) 2020 DMK E-Business GmbH <dev@dmk-ebusiness.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -35,9 +35,12 @@ class tx_mksanitizedparameters_tests_Rules extends tx_mksanitizedparameters_Rule
 }
 
 /**
- * @author Hannes Bochmann <dev@dmk-ebusiness.de>
+ * @author Hannes Bochmann
+ * @author Michael Wagner
+ * @license http://www.gnu.org/licenses/lgpl.html
+ *          GNU Lesser General Public License, version 3 or later
  */
-class tx_mksanitizedparameters_RulesTest extends tx_rnbase_tests_BaseTestCase
+class tx_mksanitizedparameters_RulesTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * (non-PHPdoc).
