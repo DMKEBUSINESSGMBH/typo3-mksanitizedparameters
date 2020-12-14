@@ -30,6 +30,8 @@ namespace DMK\MkSanitizedParameters;
 use DMK\MkSanitizedParameters\Domain\Repository\MonitorRepository;
 use DMK\MkSanitizedParameters\Input\InputInterface;
 use DMK\MkSanitizedParameters\Utility\ConfigurationUtility;
+use DMK\MkSanitizedParameters\Utility\FilterUtility;
+use InvalidArgumentException;
 use TYPO3\CMS\Core\Log\Logger;
 use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -88,7 +90,7 @@ final class Factory
                 'The input "%1$s" '.'has to implement the "%2$s" interface',
                 ...[get_class($input), InputInterface::class]
             );
-            throw new \InvalidArgumentException($errorMessage);
+            throw new InvalidArgumentException($errorMessage);
         }
 
         return $input;
@@ -102,6 +104,16 @@ final class Factory
     public static function getConfiguration(): ConfigurationUtility
     {
         return Factory::makeInstance(ConfigurationUtility::class);
+    }
+
+    /**
+     * Returns the filter utility.
+     *
+     * @return FilterUtility
+     */
+    public static function getFilter(): FilterUtility
+    {
+        return Factory::makeInstance(FilterUtility::class);
     }
 
     /**

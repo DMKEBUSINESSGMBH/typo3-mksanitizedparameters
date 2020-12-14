@@ -241,6 +241,8 @@ class Sanitizer
             return $arrayToSanitize;
         }
 
+        $filter = Factory::getFilter();
+
         foreach ($arrayToSanitize as $nameToSanitize => &$valueToSanitize) {
             $initialValueToSanitize = $valueToSanitize;
 
@@ -264,13 +266,13 @@ class Sanitizer
                     $rulesForValue
                 );
             } elseif (!empty($rulesForValue)) {
-                $valueToSanitize = $this->sanitizeValueByRule(
+                $valueToSanitize = $filter->sanitizeByRule(
                     $valueToSanitize,
                     $rulesForValue
                 );
             }
 
-            if ($this->valueToSanitizeHasChanged($initialValueToSanitize, $valueToSanitize)) {
+            if ($filter->isValueChanged($initialValueToSanitize, $valueToSanitize)) {
                 $this->handleDebugging(
                     $arrayToSanitize,
                     $nameToSanitize,
@@ -298,7 +300,9 @@ class Sanitizer
      */
     private function getRulesForValue(array $rules, string $nameToSanitize)
     {
-        if (!$rulesForValue = $this->getSpecialRulesByName($rules, $nameToSanitize)) {
+        $rulesForValue = $this->getSpecialRulesByName($rules, $nameToSanitize);
+
+        if (!$rulesForValue) {
             $rulesForValue = $this->getCommonRulesByName($rules, $nameToSanitize);
         }
 
@@ -399,84 +403,6 @@ class Sanitizer
     }
 
     /**
-     * @param string|array $valueToSanitize
-     * @param int $rule
-     *
-     * @return string|array
-     */
-    private function sanitizeValueByRule($valueToSanitize, $rule)
-    {
-        if (!is_array($rule)) {
-            return filter_var($valueToSanitize, $this->normalizeFilter($rule));
-        } else {
-            return $this->sanitizeValueByFilterConfig($valueToSanitize, $rule);
-        }
-    }
-
-    /**
-     * @param string|array $valueToSanitize
-     * @param array $filterConfig
-     *
-     * @return string|array
-     */
-    private function sanitizeValueByFilterConfig(
-        $valueToSanitize,
-        array $filterConfig
-    ) {
-        if (isset($filterConfig['filter'])) {
-            $filters = $filterConfig['filter'];
-            unset($filterConfig['filter']);
-            $filters = !is_array($filters) ? [$filters] : $filters;
-        } else {
-            $filters = $filterConfig;
-        }
-
-        foreach ($filters as $filter) {
-            if (!is_scalar($filter)) {
-                $filter = (int) $filter;
-            }
-            $valueToSanitize = filter_var($valueToSanitize, $this->normalizeFilter($filter), $filterConfig);
-        }
-
-        return $valueToSanitize;
-    }
-
-    /**
-     * @param int|string $filter
-     *
-     * @return int
-     */
-    private function normalizeFilter($filter): int
-    {
-        if (is_string($filter) && defined($filter)) {
-            $filter = (int) constant($filter);
-        }
-
-        // @TODO: remove after dropping support for php 7.2 and add support for php 8
-        // @see https://wiki.php.net/rfc/deprecations_php_7_4#filter_sanitize_magic_quotes
-        if ((
-            defined('FILTER_SANITIZE_MAGIC_QUOTES') &&
-            constant('FILTER_SANITIZE_MAGIC_QUOTES') === $filter &&
-            defined('FILTER_SANITIZE_ADD_SLASHES')
-        )) {
-            $filter = (int) constant('FILTER_SANITIZE_ADD_SLASHES');
-        }
-
-        return (int) $filter;
-    }
-
-    /**
-     * @param mixed $initialValueToSanitize
-     * @param mixed $valueToSanitize
-     *
-     * @return bool
-     */
-    private function valueToSanitizeHasChanged($initialValueToSanitize, $valueToSanitize): bool
-    {
-        return $initialValueToSanitize != $valueToSanitize;
-    }
-
-    /**
      * @param array $arrayToSanitize
      * @param mixed $nameToSanitize
      * @param mixed $initialValueToSanitize
@@ -516,6 +442,9 @@ class Sanitizer
      * @param mixed $nameToSanitize
      * @param mixed $initialValueToSanitize
      * @param mixed $sanitizedValue
+     *
+     * @TODO Refactor, dont echo directly, do not change output
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     private function handleDebugging(
         array $arrayToSanitize,
