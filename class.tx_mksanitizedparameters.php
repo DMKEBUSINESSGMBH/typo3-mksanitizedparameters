@@ -34,7 +34,7 @@
  *
  * for all possibilities look into the doc block of sanitizeArrayByRules
  *
- * @deprecated use \DMK\MkSanitizedParameters\Sanitizer\Sanitizer instead
+ * @deprecated use \DMK\MkSanitizedParameters\Sanitizer instead
  *
  * @author Hannes Bochmann
  * @author Michael Wagner

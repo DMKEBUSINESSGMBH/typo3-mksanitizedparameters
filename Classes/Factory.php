@@ -28,7 +28,7 @@ namespace DMK\MkSanitizedParameters;
  ***************************************************************/
 
 use DMK\MkSanitizedParameters\Domain\Repository\MonitorRepository;
-use DMK\MkSanitizedParameters\Sanitizer\InputInterface;
+use DMK\MkSanitizedParameters\Input\InputInterface;
 use DMK\MkSanitizedParameters\Utility\ConfigurationUtility;
 use TYPO3\CMS\Core\Log\Logger;
 use TYPO3\CMS\Core\Log\LogManager;

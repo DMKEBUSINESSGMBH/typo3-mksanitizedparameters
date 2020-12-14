@@ -28,10 +28,10 @@ namespace DMK\MkSanitizedParameters\Middleware;
  ***************************************************************/
 
 use DMK\MkSanitizedParameters\Factory;
-use DMK\MkSanitizedParameters\Sanitizer\GlobalGetRequestInput;
-use DMK\MkSanitizedParameters\Sanitizer\GlobalPostRequestInput;
-use DMK\MkSanitizedParameters\Sanitizer\ServerRequestBodyInput;
-use DMK\MkSanitizedParameters\Sanitizer\ServerRequestQueryInput;
+use DMK\MkSanitizedParameters\Input\GlobalGetRequestInput;
+use DMK\MkSanitizedParameters\Input\GlobalPostRequestInput;
+use DMK\MkSanitizedParameters\Input\ServerRequestBodyInput;
+use DMK\MkSanitizedParameters\Input\ServerRequestQueryInput;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;

@@ -27,7 +27,7 @@ namespace DMK\MkSanitizedParameters;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use DMK\MkSanitizedParameters\Sanitizer\InputInterface;
+use DMK\MkSanitizedParameters\Input\InputInterface;
 use DMK\MkSanitizedParameters\Utility\DebugUtility;
 use TYPO3\CMS\Core\Log\Logger;
 use TYPO3\CMS\Core\Utility\ArrayUtility;

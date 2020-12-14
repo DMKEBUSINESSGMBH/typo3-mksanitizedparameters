@@ -56,7 +56,7 @@ class tx_mksanitizedparameters_StealthMode extends \DMK\MkSanitizedParameters\Mo
         $monitor = \DMK\MkSanitizedParameters\Factory::getMonitor();
         $monitor->monitorInput(
             \DMK\MkSanitizedParameters\Factory::createInput(
-                \DMK\MkSanitizedParameters\Sanitizer\ArrayInput::class,
+                \DMK\MkSanitizedParameters\Input\ArrayInput::class,
                 ...[$arrayKey, $arrayValues]
             )
         );

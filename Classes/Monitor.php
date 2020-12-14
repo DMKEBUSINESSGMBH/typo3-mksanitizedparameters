@@ -27,7 +27,7 @@ namespace DMK\MkSanitizedParameters;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use DMK\MkSanitizedParameters\Sanitizer\InputInterface;
+use DMK\MkSanitizedParameters\Input\InputInterface;
 
 /**
  * Stores the given arrays to the DB so it can be checked

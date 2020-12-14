@@ -28,8 +28,8 @@ namespace DMK\MkSanitizedParameters\Hook;
  ***************************************************************/
 
 use DMK\MkSanitizedParameters\Factory;
-use DMK\MkSanitizedParameters\Sanitizer\GlobalGetRequestInput;
-use DMK\MkSanitizedParameters\Sanitizer\GlobalPostRequestInput;
+use DMK\MkSanitizedParameters\Input\GlobalGetRequestInput;
+use DMK\MkSanitizedParameters\Input\GlobalPostRequestInput;
 
 /**
  * @author Hannes Bochmann

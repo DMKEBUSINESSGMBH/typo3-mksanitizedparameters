@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DMK\MkSanitizedParameters\Sanitizer;
+namespace DMK\MkSanitizedParameters\Input;
 
 /***************************************************************
  * Copyright notice

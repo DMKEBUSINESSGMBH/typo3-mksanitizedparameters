@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DMK\MkSanitizedParameters\Sanitizer;
+namespace DMK\MkSanitizedParameters\Input;
 
 use Psr\Http\Message\ServerRequestInterface;
 
