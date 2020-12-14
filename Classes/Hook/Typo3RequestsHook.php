@@ -1,5 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
+namespace DMK\MkSanitizedParameters\Hook;
+
 /***************************************************************
  * Copyright notice
  *
@@ -23,12 +27,35 @@
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use DMK\MkSanitizedParameters\Factory;
+use DMK\MkSanitizedParameters\Sanitizer\GlobalGetRequestInput;
+use DMK\MkSanitizedParameters\Sanitizer\GlobalPostRequestInput;
+
 /**
  * @author Hannes Bochmann
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests extends \DMK\MkSanitizedParameters\Hook\Typo3RequestsHook
+class Typo3RequestsHook
 {
+    /**
+     * sanitize $_REQUEST, $_POST, $_GET before
+     * Frontend/Backend Actions start.
+     */
+    public function sanitizeGlobalInputArrays(): void
+    {
+        $inputs = [
+            Factory::createInput(GlobalGetRequestInput::class),
+            Factory::createInput(GlobalPostRequestInput::class),
+        ];
+
+        if (Factory::getMonitor()->isEnabled()) {
+            Factory::getMonitor()->monitorInput(...$inputs);
+
+            return;
+        }
+
+        Factory::getSanitizer()->sanitizeInput(...$inputs);
+    }
 }

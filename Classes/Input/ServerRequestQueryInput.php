@@ -1,5 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
+namespace DMK\MkSanitizedParameters\Sanitizer;
+
+use Psr\Http\Message\ServerRequestInterface;
+
 /***************************************************************
  * Copyright notice
  *
@@ -24,11 +30,46 @@
  ***************************************************************/
 
 /**
- * @author Hannes Bochmann
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests extends \DMK\MkSanitizedParameters\Hook\Typo3RequestsHook
+class ServerRequestQueryInput implements InputInterface
 {
+    /**
+     * @var ServerRequestInterface
+     */
+    protected $request;
+
+    public function __construct(ServerRequestInterface $request)
+    {
+        $this->request = $request;
+    }
+
+    public function getServerRequest(): ServerRequestInterface
+    {
+        return $this->request;
+    }
+
+    public function getName(): string
+    {
+        return 'ServerRequestQuery';
+    }
+
+    public function isSanitizingNecessary(): bool
+    {
+        $params = $this->request->getQueryParams();
+
+        return is_array($params) && !empty($params);
+    }
+
+    public function getInputArray(): array
+    {
+        return $this->isSanitizingNecessary() ? $this->request->getQueryParams() : [];
+    }
+
+    public function setCleanedInputArray(array $cleaned): void
+    {
+        $this->request = $this->request->withQueryParams($cleaned);
+    }
 }

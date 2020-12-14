@@ -1,5 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
+namespace DMK\MkSanitizedParameters\Utility;
+
 /***************************************************************
  * Copyright notice
  *
@@ -23,12 +27,27 @@
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Core\Utility\VersionNumberUtility;
+
 /**
- * @author Hannes Bochmann
+ * TYPO3 Utility class.
+ *
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests extends \DMK\MkSanitizedParameters\Hook\Typo3RequestsHook
+final class Typo3Utility
 {
+    /**
+     * Returns a storage.
+     *
+     * @return bool
+     */
+    public static function isTypo3Version9OrHigher()
+    {
+        return VersionNumberUtility::convertVersionNumberToInteger(
+                VersionNumberUtility::getNumericTypo3Version()
+            ) >= 9000000
+            ;
+    }
 }

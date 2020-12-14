@@ -1,5 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
+namespace DMK\MkSanitizedParameters\Sanitizer;
+
 /***************************************************************
  * Copyright notice
  *
@@ -24,11 +28,29 @@
  ***************************************************************/
 
 /**
- * @author Hannes Bochmann
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests extends \DMK\MkSanitizedParameters\Hook\Typo3RequestsHook
+class GlobalGetRequestInput implements InputInterface
 {
+    public function getName(): string
+    {
+        return 'GlobalGet';
+    }
+
+    public function isSanitizingNecessary(): bool
+    {
+        return !empty($_GET);
+    }
+
+    public function getInputArray(): array
+    {
+        return $_GET;
+    }
+
+    public function setCleanedInputArray(array $cleaned): void
+    {
+        $_GET = $cleaned;
+    }
 }

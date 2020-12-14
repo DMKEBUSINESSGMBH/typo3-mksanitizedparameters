@@ -1,5 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
+namespace DMK\MkSanitizedParameters\Sanitizer;
+
 /***************************************************************
  * Copyright notice
  *
@@ -24,11 +28,36 @@
  ***************************************************************/
 
 /**
- * @author Hannes Bochmann
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_mksanitizedparameters_hooks_PreprocessTypo3Requests extends \DMK\MkSanitizedParameters\Hook\Typo3RequestsHook
+class ServerRequestBodyInput extends ServerRequestQueryInput implements InputInterface
 {
+    public function getName(): string
+    {
+        return 'ServerRequestBody';
+    }
+
+    public function isSanitizingNecessary(): bool
+    {
+        $body = $this->request->getParsedBody();
+
+        if (!is_array($body)) {
+            //@TODO: sanitizing of objects not supported yet!
+            return false;
+        }
+
+        return !empty($body);
+    }
+
+    public function getInputArray(): array
+    {
+        return $this->isSanitizingNecessary() ? $this->request->getParsedBody() : [];
+    }
+
+    public function setCleanedInputArray(array $cleaned): void
+    {
+        $this->request = $this->request->withParsedBody($cleaned);
+    }
 }
