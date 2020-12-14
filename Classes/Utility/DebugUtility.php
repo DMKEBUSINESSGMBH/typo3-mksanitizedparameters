@@ -42,13 +42,13 @@ final class DebugUtility
      *
      * Directly echos out debug information as HTML (or plain in CLI context)
      *
-     * @param string $var
+     * @param mixed $data
      * @param string $header
      * @param string $group
      */
-    public static function debug($var = '', $header = 'Debug', $group = 'MkSanitizedParameters')
+    public static function debug($data, $header = 'Debug', $group = 'MkSanitizedParameters'): void
     {
-        \TYPO3\CMS\Core\Utility\DebugUtility::debug($var, $header, $group);
+        \TYPO3\CMS\Core\Utility\DebugUtility::debug($data, $header, $group);
     }
 
     /**

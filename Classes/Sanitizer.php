@@ -61,16 +61,19 @@ class Sanitizer
         }
     }
 
+    /**
+     * @return array<string, int|string|array>
+     */
     protected function getRules(): array
     {
         return Rules::getRulesForCurrentEnvironment();
     }
 
     /**
-     * @param array $arrayToSanitize
-     * @param array $rules
+     * @param array<string, mixed> $arrayToSanitize
+     * @param array<string, int|string|array> $rules
      *
-     * @return array
+     * @return array<string, mixed>
      *
      * Sample rules:
      *
@@ -293,12 +296,12 @@ class Sanitizer
     }
 
     /**
-     * @param array  $rules
+     * @param array<string, int|string|array> $rules
      * @param string $nameToSanitize
      *
-     * @return array
+     * @return array<string, int|string|array>
      */
-    private function getRulesForValue(array $rules, string $nameToSanitize)
+    private function getRulesForValue(array $rules, string $nameToSanitize): array
     {
         $rulesForValue = $this->getSpecialRulesByName($rules, $nameToSanitize);
 
@@ -313,18 +316,24 @@ class Sanitizer
         return $rulesForValue;
     }
 
+
     /**
-     * @return array
+     * @param array<string, int|string|array> $rules
+     * @param string $nameToSanitize
+     *
+     * @return array<string, int|string|array>|null
      */
-    private function getSpecialRulesByName($rules, $nameToSanitize)
+    private function getSpecialRulesByName(array $rules, string $nameToSanitize): ?array
     {
         return isset($rules[$nameToSanitize]) ? $rules[$nameToSanitize] : null;
     }
 
     /**
-     * @return mixed
+     * @param array<string, int|string|array> $rules
+     * @param string $nameToSanitize
+     * @return array<string, int|string|array>|null
      */
-    private function getCommonRulesByName($rules, $nameToSanitize)
+    private function getCommonRulesByName(array $rules, string $nameToSanitize): ?array
     {
         return
             (
@@ -334,10 +343,10 @@ class Sanitizer
     }
 
     /**
-     * @param array $rulesFromCurrentLevel
-     * @param array $rulesForNextLevel
+     * @param array<string, int|string|array> $rulesFromCurrentLevel
+     * @param array<string, int|string|array> $rulesForNextLevel
      *
-     * @return array
+     * @return array<string, int|string|array>
      */
     private function injectDefaultRulesFromCurrentIntoNextLevelIfNotSet(
         array $rulesFromCurrentLevel,
@@ -353,10 +362,10 @@ class Sanitizer
     }
 
     /**
-     * @param array $rulesFromCurrentLevel
-     * @param array $rulesForNextLevel
+     * @param array<string, int|string|array> $rulesFromCurrentLevel
+     * @param array<string, int|string|array> $rulesForNextLevel
      *
-     * @return array
+     * @return array<string, int|string|array>
      */
     private function injectCommonRulesFromCurrentIntoNextLevelIfNotSet(
         array $rulesFromCurrentLevel,
@@ -384,11 +393,11 @@ class Sanitizer
     }
 
     /**
-     * @param array $rulesForValue
-     * @param array $allRules
+     * @param array<string, int|string|array> $rulesForValue
+     * @param array<string, int|string|array> $allRules
      * @param string $rulesKey
      *
-     * @return array
+     * @return array<string, int|string|array>
      */
     private function injectRulesByKey(
         array $rulesForValue,
@@ -403,7 +412,7 @@ class Sanitizer
     }
 
     /**
-     * @param array $arrayToSanitize
+     * @param array<string, int|string|array> $arrayToSanitize
      * @param mixed $nameToSanitize
      * @param mixed $initialValueToSanitize
      * @param mixed $sanitizedValue
@@ -438,7 +447,7 @@ class Sanitizer
     }
 
     /**
-     * @param array $arrayToSanitize
+     * @param array<string, int|string|array> $arrayToSanitize
      * @param mixed $nameToSanitize
      * @param mixed $initialValueToSanitize
      * @param mixed $sanitizedValue
@@ -474,7 +483,7 @@ class Sanitizer
     /**
      * Just a wrapper for DebugUtility::debug.
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      */
     protected function echoDebug(array $data): void
     {

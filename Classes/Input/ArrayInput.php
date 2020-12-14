@@ -39,31 +39,49 @@ class ArrayInput implements InputInterface
      */
     private $name;
     /**
-     * @var array
+     * @var array<string, int|string|array>
      */
     private $data;
 
+    /**
+     * ArrayInput constructor.
+     *
+     * @param string $name
+     * @param array<string, int|string|array> $data
+     */
     public function __construct(string $name, array $data)
     {
         $this->name = $name;
         $this->data = $data;
     }
 
+    /**
+     * @return string
+     */
     public function getName(): string
     {
         return $this->name;
     }
 
+    /**
+     * @return bool
+     */
     public function isSanitizingNecessary(): bool
     {
         return !empty($this->data);
     }
 
+    /**
+     * @return array<string, int|string|array>
+     */
     public function getInputArray(): array
     {
         return $this->data;
     }
 
+    /**
+     * @param array<string, int|string|array> $cleaned
+     */
     public function setCleanedInputArray(array $cleaned): void
     {
         $this->data = $cleaned;

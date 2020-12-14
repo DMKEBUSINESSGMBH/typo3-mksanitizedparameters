@@ -37,14 +37,18 @@ use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
  */
 class ConfigurationUtility implements \TYPO3\CMS\Core\SingletonInterface
 {
+    /**
+     * @var array<string, string>
+     */
     protected $extensionConfiguration = null;
 
     /**
      * The extension configuration!
      *
      * @param string $key
+     * @param mixed $default
      *
-     * @return int|string|null
+     * @return int|string|mixed|null
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */

@@ -77,7 +77,10 @@ final class Factory
     }
 
     /**
-     * Returns a Inpui instance.
+     * Returns a input instance.
+     *
+     * @param string $inputClassName
+     * @param mixed ...$arguments
      *
      * @return InputInterface
      */

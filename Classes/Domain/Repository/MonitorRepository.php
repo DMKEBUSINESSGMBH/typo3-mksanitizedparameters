@@ -133,7 +133,7 @@ class MonitorRepository
     }
 
     /**
-     * @param array $array
+     * @param array<string, int|string|array> $array
      *
      * @return string
      */

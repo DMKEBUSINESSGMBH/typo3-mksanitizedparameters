@@ -38,10 +38,10 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class FilterUtility
 {
     /**
-     * @param string|array $valueToSanitize
-     * @param int|string|array $rule
+     * @param mixed $valueToSanitize
+     * @param int|string|array<string, int|string|array> $rule
      *
-     * @return string|array
+     * @return mixed
      */
     public function sanitizeByRule($valueToSanitize, $rule)
     {
@@ -53,10 +53,10 @@ class FilterUtility
     }
 
     /**
-     * @param string|array $valueToSanitize
-     * @param array $filterConfig
+     * @param mixed $valueToSanitize
+     * @param array<string, int|string|array> $filterConfig
      *
-     * @return string|array
+     * @return mixed
      */
     protected function sanitizeByConfig(
         $valueToSanitize,

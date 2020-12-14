@@ -57,12 +57,12 @@ class Rules
     protected static $defaultsLoaded = false;
 
     /**
-     * @var array
+     * @var array<string, int|string|array>
      */
     protected static $rulesForFrontend = [];
 
     /**
-     * @var array
+     * @var array<string, int|string|array>
      */
     protected static $rulesForBackend = [];
 
@@ -125,7 +125,7 @@ class Rules
      * tx_mksanitizedparameters::sanitizeArrayByRules()
      * to see how the rules must be passed.
      *
-     * @param array $rules
+     * @param array<string, int|string|array> $rules
      */
     public static function addRulesForFrontend(
         array $rules
@@ -138,7 +138,7 @@ class Rules
      * tx_mksanitizedparameters::sanitizeArrayByRules()
      * to see how the rules must be passed.
      *
-     * @param array $rules
+     * @param array<string, int|string|array> $rules
      */
     public static function addRulesForBackend(
         array $rules
@@ -149,7 +149,7 @@ class Rules
     /**
      * the default environment is Frontend.
      *
-     * @return array
+     * @return array<string, int|string|array>
      */
     public static function getRulesForCurrentEnvironment(): array
     {
@@ -167,7 +167,7 @@ class Rules
     }
 
     /**
-     * @return array
+     * @return array<string, int|string|array>
      */
     public static function getRulesForFrontend()
     {
@@ -175,7 +175,7 @@ class Rules
     }
 
     /**
-     * @return array
+     * @return array<string, int|string|array>
      */
     public static function getRulesForBackend()
     {

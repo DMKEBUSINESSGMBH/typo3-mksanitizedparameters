@@ -1,6 +1,8 @@
 <?php
 
-defined('TYPO3_MODE') || exit('Access denied.');
+if (defined('TYPO3_MODE')) {
+    exit('Access denied.');
+}
 
 // register old tslib and template hooks. after TYPO3 9 we use a middleware!
 if (!\DMK\MkSanitizedParameters\Utility\Typo3Utility::isTypo3Version9OrHigher()) {
