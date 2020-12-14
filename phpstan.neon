@@ -1,0 +1,17 @@
+parameters:
+    level: 1
+    autoload_files:
+        - "%currentWorkingDirectory%/.Build/vendor/autoload.php"
+        - "%currentWorkingDirectory%/Resources/Private/PHP/Composer/autoload.php"
+    paths:
+        - %currentWorkingDirectory%/Classes
+        - %currentWorkingDirectory%/ext_localconf.php
+        - %currentWorkingDirectory%/ext_tables.php
+        - %currentWorkingDirectory%/ext_emconf.php
+    reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+        - '#Constant TYPO3_MODE not found#'
+        - '#Undefined variable: \$_EXTKEY#'
+        -
+            message: '/Call to an undefined static method/'
+            path: %currentWorkingDirectory%/Classes/Utility/ComposerUtility.php
