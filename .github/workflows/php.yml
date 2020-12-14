@@ -1,0 +1,16 @@
+name: PHP Checks
+
+on: [push, pull_request]
+
+jobs:
+    phpcs:
+        name: PHPCS
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@master
+            - name: Setup PHP
+              uses: shivammathur/setup-php@master
+              with:
+                  php-version: 7.4
+            - run: composer require friendsofphp/php-cs-fixer
+            - run: .Build/bin/php-cs-fixer fix --dry-run --diff
