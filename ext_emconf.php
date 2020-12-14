@@ -40,11 +40,11 @@ $EM_CONF['mksanitizedparameters'] = [
     'autoload' => [
         'classmap' => [
             'Classes/',
-            "sanitizer",
-            "hooks",
-            "class.tx_mksanitizedparameters.php",
-            "class.tx_mksanitizedparameters_Rules.php",
-            "class.tx_mksanitizedparameters_StealthMode.php"
+            'sanitizer',
+            'hooks',
+            'class.tx_mksanitizedparameters.php',
+            'class.tx_mksanitizedparameters_Rules.php',
+            'class.tx_mksanitizedparameters_StealthMode.php',
         ],
     ],
 ];
