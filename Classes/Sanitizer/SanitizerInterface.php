@@ -1,5 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
+namespace DMK\MkSanitizedParameters\Sanitizer;
+
 /***************************************************************
  * Copyright notice
  *
@@ -25,23 +29,18 @@
 
 /**
  * @author Hannes Bochmann
+ * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_mksanitizedparameters_util_RegularExpression
+interface SanitizerInterface
 {
     /**
-     * @param string $pattern
-     * @param mixed  $value
+     * do the actual sanitation.
      *
-     * @return string
+     * @param mixed $value
+     *
+     * @return mixed
      */
-    public static function callPregReplace($pattern, $value)
-    {
-        return preg_replace($pattern, '', $value);
-    }
-}
-
-if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/util/class.tx_mksanitizedparameters_util_RegularExpression.php']) {
-    include_once $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/mksanitizedparameters/util/class.tx_mksanitizedparameters_util_RegularExpression.php'];
+    public static function sanitizeValue(string $value): string;
 }

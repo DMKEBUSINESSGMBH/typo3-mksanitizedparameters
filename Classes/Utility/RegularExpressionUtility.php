@@ -1,5 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
+namespace DMK\MkSanitizedParameters\Utility;
+
 /***************************************************************
  * Copyright notice
  *
@@ -24,18 +28,23 @@
  ***************************************************************/
 
 /**
+ * Regular expression utility.
+ *
  * @author Hannes Bochmann
+ * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-interface tx_mksanitizedparameters_interface_Sanitizer
+final class RegularExpressionUtility
 {
     /**
-     * do the actual sanitation.
+     * @param string $pattern
+     * @param string  $value
      *
-     * @param mixed $value
-     *
-     * @return mixed
+     * @return string
      */
-    public static function sanitizeValue($value);
+    public static function remove(string $pattern, string $value): string
+    {
+        return preg_replace($pattern, '', $value);
+    }
 }
