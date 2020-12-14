@@ -38,9 +38,9 @@ interface SanitizerInterface
     /**
      * do the actual sanitation.
      *
-     * @param mixed $value
+     * @param string $value
      *
-     * @return mixed
+     * @return string
      */
     public static function sanitizeValue(string $value): string;
 }

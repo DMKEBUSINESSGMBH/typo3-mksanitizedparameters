@@ -97,13 +97,18 @@ class GlobalInputSanitizerMiddleware implements MiddlewareInterface
      */
     protected function sanitizeQueryInput(ServerRequestInterface $request): ServerRequestInterface
     {
+        /* @var $queryInput ServerRequestQueryInput */
         $queryInput = Factory::createInput(
             ServerRequestQueryInput::class,
             $request
         );
         Factory::getSanitizer()->sanitizeInput($queryInput);
 
-        return $queryInput->getServerRequest();
+        if ($queryInput instanceof ServerRequestQueryInput) {
+            return $queryInput->getServerRequest();
+        }
+
+        return $request;
     }
 
     /**
@@ -113,12 +118,17 @@ class GlobalInputSanitizerMiddleware implements MiddlewareInterface
      */
     protected function sanitizeBodyInput(ServerRequestInterface $request): ServerRequestInterface
     {
-        $queryInput = Factory::createInput(
+        /* @var $bodyInput ServerRequestBodyInput */
+        $bodyInput = Factory::createInput(
             ServerRequestBodyInput::class,
             $request
         );
-        Factory::getSanitizer()->sanitizeInput($queryInput);
+        Factory::getSanitizer()->sanitizeInput($bodyInput);
 
-        return $queryInput->getServerRequest();
+        if ($bodyInput instanceof ServerRequestQueryInput) {
+            return $bodyInput->getServerRequest();
+        }
+
+        return $request;
     }
 }

@@ -75,6 +75,8 @@ class MonitorRepository
     }
 
     /**
+     * @param InputInterface $input
+     *
      * @return int
      */
     public function countByInput(InputInterface $input): int
@@ -121,8 +123,7 @@ class MonitorRepository
     }
 
     /**
-     * @param string $arrayKey
-     * @param array  $arrayValues
+     * @param InputInterface $input
      *
      * @return string
      */

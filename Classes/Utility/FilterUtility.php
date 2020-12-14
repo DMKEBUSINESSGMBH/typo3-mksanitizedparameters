@@ -105,8 +105,8 @@ class FilterUtility
     }
 
     /**
-     * @param mixed $initialValueToSanitize
-     * @param mixed $valueToSanitize
+     * @param mixed $initialValue
+     * @param mixed $sanitizedValue
      *
      * @return bool
      */
