@@ -2,9 +2,6 @@
 
 namespace DMK\MkSanitizedParameters\Utility;
 
-use DMK\MkSanitizedParameters\Factory;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-
 /***************************************************************
  * Copyright notice
  *
@@ -39,7 +36,7 @@ class FilterUtility
 {
     /**
      * @param mixed $valueToSanitize
-     * @param int|string|array<string, int|string|array> $rule
+     * @param int|string|array<int|string, int|string|array>|null $rule
      *
      * @return mixed
      */
@@ -53,8 +50,8 @@ class FilterUtility
     }
 
     /**
-     * @param mixed $valueToSanitize
-     * @param array<string, int|string|array> $filterConfig
+     * @param int|string $valueToSanitize
+     * @param array<int|string, int|string|array> $filterConfig
      *
      * @return mixed
      */
@@ -70,11 +67,14 @@ class FilterUtility
             $filters = !is_array($filters) ? [$filters] : $filters;
         }
 
+        $filterConfig = $this->normalizeFilterConfig($filterConfig);
+
         foreach ($filters as $filter) {
-            if (!is_scalar($filter)) {
-                $filter = (int) $filter;
-            }
-            $valueToSanitize = filter_var($valueToSanitize, $this->normalizeFilter($filter), $filterConfig);
+            $valueToSanitize = filter_var(
+                $valueToSanitize,
+                $this->normalizeFilter($filter),
+                $filterConfig
+            );
         }
 
         return $valueToSanitize;
@@ -102,6 +102,33 @@ class FilterUtility
         }
 
         return (int) $filter;
+    }
+
+    /**
+     * @param array<int|string, int|string|array> $config
+     *
+     * @return int|array<string, int|string|array>|null
+     */
+    protected function normalizeFilterConfig(array $config)
+    {
+        if (!is_array($config)) {
+            return $this->normalizeFilter($config);
+        }
+
+        $normalized = [];
+
+        if (isset($config['flags'])) {
+            $normalized['flags'] = $config['flags'];
+        }
+        if (isset($config['options'])) {
+            $normalized['options'] = $config['options'];
+        }
+
+        if (empty($normalized)) {
+            return null;
+        }
+
+        return $normalized;
     }
 
     /**
