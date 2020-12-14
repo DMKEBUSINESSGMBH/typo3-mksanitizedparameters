@@ -31,6 +31,8 @@ namespace DMK\MkSanitizedParameters\Input;
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
+ *
+ * @SuppressWarnings(PHPMD.Superglobals)
  */
 class GlobalGetRequestInput implements InputInterface
 {

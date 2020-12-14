@@ -156,16 +156,14 @@ class Rules
         switch (TYPO3_MODE) {
             case 'FE':
             default:
-                $parameterRulesForCurrentEnvironment =
-                    self::getRulesForFrontend();
+                $rules = self::getRulesForFrontend();
                 break;
             case 'BE':
-                $parameterRulesForCurrentEnvironment =
-                    self::getRulesForBackend();
+                $rules = self::getRulesForBackend();
                 break;
         }
 
-        return $parameterRulesForCurrentEnvironment;
+        return $rules;
     }
 
     /**

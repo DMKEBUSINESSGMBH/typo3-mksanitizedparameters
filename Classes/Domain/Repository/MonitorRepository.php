@@ -98,13 +98,13 @@ class MonitorRepository
     /**
      * @param InputInterface $input
      *
-     * @return int|null
+     * @return string|null
      */
     public function insertInput(InputInterface $input): ?string
     {
         $inputRecord = [
             'name' => $input->getName(),
-            'crdate' => $GLOBALS['EXEC_TIME'],
+            'crdate' => time(),
             'pid' => Factory::getConfiguration()->getStealthModeStoragePid(),
             'hash' => $this->createHashForInput($input),
             'value' => $this->getValuesOutput($input->getInputArray()),

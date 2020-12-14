@@ -107,7 +107,7 @@ class ConfigurationUtility implements \TYPO3\CMS\Core\SingletonInterface
     /**
      * Is the stealth mode enabled?
      *
-     * @return bool
+     * @return int
      */
     public function getStealthModeStoragePid(): int
     {

@@ -61,6 +61,8 @@ final class DebugUtility
 
     /**
      * @return bool
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public static function isDevelopmentIp(): bool
     {
