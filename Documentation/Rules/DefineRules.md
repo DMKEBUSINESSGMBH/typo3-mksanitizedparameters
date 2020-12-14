@@ -15,88 +15,101 @@ Include filter
 
 Filter can be defined as follows: (this is also the order in which filter configuration is looked up. first will serve)
 
-~~~~ {.sourceCode .php}
+```php
 array(
-   '__default' => FILTER_SANITIZE_STRING
+   \DMK\MkSanitizedParameters\Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_STRING,
    //OR
-   '__default' => array(
+   \DMK\MkSanitizedParameters\Rules::DEFAULT_RULES_KEY => array(
       'filter' => array(
-         FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES   
+         FILTER_SANITIZE_STRING,
+         FILTER_SANITIZE_ADD_SLASHES,
       ),
-      'flags'  => FILTER_FLAG_ENCODE_AMP
-   )
+      'flags' => FILTER_FLAG_ENCODE_AMP,
+   ),
    //OR
-   '__default' => array(
-      FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES   
+   \DMK\MkSanitizedParameters\Rules::DEFAULT_RULES_KEY => array(
+      FILTER_SANITIZE_STRING,
+      FILTER_SANITIZE_ADD_SLASHES,
    )
-)
-~~~~
+);
+```
 
 Filter with own class
 ---------------------
 
-~~~~ {.sourceCode .php}
+```php
 array(
    'subArray' => array(
       //that's the way to call a custom filter!
       //make sure to have your custom class autoloaded.
       'someValue' => array(
-         'filter'    => FILTER_CALLBACK,
-         'options'   => array(
-            'tx_mksanitizedparameters_sanitizer_Alpha','sanitizeValue'
-         )
-      )
-   )
-)
-~~~~
+         'filter' => FILTER_CALLBACK,
+         'options' => array(
+            \DMK\MkSanitizedParameters\Sanitizer\AlphaSanitizer::class,
+            'sanitizeValue',
+         ),
+      ),
+   ),
+);
+```
 
 Special rules
 -------------
 
-~~~~ {.sourceCode .php}
+```php
 array(
    'myParameterQualifier' => array(
-      'uid' => FILTER_SANITIZE_NUMBER_INT
+      'uid' => FILTER_SANITIZE_NUMBER_INT,
       'searchWord' => array(
          'filter' => array(
-            FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES   
+            FILTER_SANITIZE_STRING,
+            FILTER_SANITIZE_ADD_SLASHES   ,
          ),
-         'flags'  => FILTER_FLAG_ENCODE_AMP
+         'flags' => FILTER_FLAG_ENCODE_AMP,
       ),
       'subArray' => array(
          //so all unconfigured parameters inside subArray will get
          //the following default sanitization
-         '__default'    => FILTER_SANITIZE_NUMBER_INT
-      )
-   )
-)    
-~~~~
+         \DMK\MkSanitizedParameters\Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_NUMBER_INT,
+      ),
+   ),
+);
+```
 
 Common rules
 ------------
 
 Will be inherited in lower levels. You can also overwrite common rules in lower levels. This means the lower the rule is, the higher is it's priority.
 
-~~~~ {.sourceCode .php}
+```php
 array(
-   '__common' => array(
+   \DMK\MkSanitizedParameters\Rules::COMMON_RULES_KEY => array(
       // no matter at which position every parameter with the name someOtherValueToo
       // will be sanitized with the following configuration as long as there is no
       // special configuration
-      'someOtherValueToo' => array(FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES)  
+      'someOtherValueToo' => array(
+          FILTER_SANITIZE_STRING,
+          FILTER_SANITIZE_ADD_SLASHES,
+      ),
    ),
    'myExt' => array(
       // this will overwrite the common rules for someOtherValueToo inside myExt.   
       // the common config for otherValueToo is availabe, too
-      '__common' => array(
-         'someOtherValueToo' => array(FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES)  
+      \DMK\MkSanitizedParameters\Rules::COMMON_RULES_KEY => array(
+         'someOtherValueToo' => array(
+             FILTER_SANITIZE_STRING,
+             FILTER_SANITIZE_ADD_SLASHES,
+         ),
       ),
    ),
-   '__common' => array(
-      'otherValueToo' => array(FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES)   
+   \DMK\MkSanitizedParameters\Rules::COMMON_RULES_KEY => array(
+      'otherValueToo' => array(
+          FILTER_SANITIZE_STRING,
+          FILTER_SANITIZE_ADD_SLASHES,
+      ),
    ),
-) 
-~~~~
+);
+```
 
 Hint for inheritance of common rules
 ------------------------------------
@@ -105,148 +118,167 @@ Filter configs with a array which contains the key "filter" have higher priority
 
 So if you have the following config:
 
-~~~~ {.sourceCode .php}
-'__common' => array(
-   'commonValue' => array(
-      FILTER_SANITIZE_NUMBER_INT,...
-   )
-)
-~~~~
+```php
+array(
+    \DMK\MkSanitizedParameters\Rules::COMMON_RULES_KEY => array(
+       'commonValue' => array(
+          FILTER_SANITIZE_NUMBER_INT,
+       ),
+    ),
+);
+```
 
 Which is overwritten in a lower level:
 
-~~~~ {.sourceCode .php}
-'__common' => array(
-   'commonValue' => array(
-      'filter' => array(
-         FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES   
-      ),
-      'flags'  => FILTER_FLAG_ENCODE_AMP
-   )
-)
-~~~~
+```php
+array(
+    \DMK\MkSanitizedParameters\Rules::COMMON_RULES_KEY => array(
+       'commonValue' => array(
+          'filter' => array(
+             FILTER_SANITIZE_STRING,
+             FILTER_SANITIZE_ADD_SLASHES, 
+          ),
+          'flags'  => FILTER_FLAG_ENCODE_AMP,
+       ),
+    ),
+);
+```
 
 And again is overwritten in an even lower level:
 
-~~~~ {.sourceCode .php}
-'__common' => array(
-   'commonValue' => array(
-      FILTER_SANITIZE_NUMBER_INT,...
-   )
-)
-~~~~
+```php
+array(
+    \DMK\MkSanitizedParameters\Rules::COMMON_RULES_KEY => array(
+       'commonValue' => array(
+          FILTER_SANITIZE_NUMBER_INT,
+       ),
+    ),
+);
+```
 
 Than the following filter config is used in the lowest level:
 
-~~~~ {.sourceCode .php}
-'__common' => array(
-   'commonValue' => array(
-      'filter' => array(
-         FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES   
-      ),
-      'flags'  => FILTER_FLAG_ENCODE_AMP
-   )
-)
-~~~~
+```php
+array(
+    \DMK\MkSanitizedParameters\Rules::COMMON_RULES_KEY => array(
+       'commonValue' => array(
+          'filter' => array(
+             FILTER_SANITIZE_STRING,
+             FILTER_SANITIZE_ADD_SLASHES,
+          ),
+          'flags' => FILTER_FLAG_ENCODE_AMP,
+       ),
+    ),
+);
+```
 
 The filter config for the lowest level should be therefore as follows:
 
-~~~~ {.sourceCode .php}
-'__common' => array(
-   'commonValue' => FILTER_SANITIZE_NUMBER_INT
-)
-~~~~
+```php
+array(
+    \DMK\MkSanitizedParameters\Rules::COMMON_RULES_KEY => array(
+       'commonValue' => FILTER_SANITIZE_NUMBER_INT,
+    ),
+);
+```
 
 or
 
-~~~~ {.sourceCode .php}
-'__common' => array(
-   'commonValue' => array(
-      'filter' => array(
-         FILTER_SANITIZE_NUMBER_INT,...
-      )
-   )
-)
-~~~~
+```php
+array(
+    \DMK\MkSanitizedParameters\Rules::COMMON_RULES_KEY => array(
+       'commonValue' => array(
+          'filter' => array(
+             FILTER_SANITIZE_NUMBER_INT,
+          )
+       )
+    ),
+);
+```
 
 Default rules
 -------------
 
 Will be inherited to lower levels if they don't have a config.
 
-~~~~ {.sourceCode .php}
+```php
 array(
-   'myExt => array(
+   'myExt' => array(
       // this will overwrite the default rules for everything inside myExt
-      default' => array(
-         FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES   
+      'default' => array(
+         FILTER_SANITIZE_STRING,
+         FILTER_SANITIZE_ADD_SLASHES,
       ),
    ),
-   '__default' => FILTER_SANITIZE_STRING  
-)
-~~~~
+   \DMK\MkSanitizedParameters\Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_STRING , 
+);
+```
 
 Example
 -------
 
 Parameter array:
 
-~~~~ {.sourceCode .php}
+```php
 array(
    'myParameterQualifier' => array(
-      'uid' => 1
+      'uid' => 1,
       'searchWord' => 'johndoe',
       'subArray' => array(
-         'someOtherValue' => ...
-         'someOtherValueToo' => ...
+         'someOtherValue' => '...',
+         'someOtherValueToo' => '...',
       ),
-      'someOtherValueToo' => ...
+      'someOtherValueToo' => '...',
    ),
-   'nextParameterQualifier' => ...
-)
-~~~~
+   'nextParameterQualifier' => '...',
+);
+```
 
 Config:
 
-~~~~ {.sourceCode .php}
+```php
 array(
    'myParameterQualifier' => array(
-      'uid' => FILTER_SANITIZE_NUMBER_INT
+      'uid' => FILTER_SANITIZE_NUMBER_INT,
       'searchWord' => array(
          'filter' => array(
-            FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES   
+            FILTER_SANITIZE_STRING,
+            FILTER_SANITIZE_ADD_SLASHES,
          ),
-         'flags'  => FILTER_FLAG_ENCODE_AMP
+         'flags' => FILTER_FLAG_ENCODE_AMP,
       ),
       'subArray' => array(
          //so all unconfigured parameters inside subArray will get
          //the following default sanitization
-         '__default'    => FILTER_SANITIZE_NUMBER_INT
+         \DMK\MkSanitizedParameters\Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_NUMBER_INT,
       )
    ),
-   tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_STRING,
-   tx_mksanitizedparameters_Rules::COMMON_RULES_KEY => array(
+   \DMK\MkSanitizedParameters\Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_STRING,
+   \DMK\MkSanitizedParameters\Rules::COMMON_RULES_KEY => array(
       // no matter at which position every parameter with the name someOtherValueToo
       // will be sanitized with the following configuration as long as there is no
       // special configuration
-      'someOtherValueToo' => array(FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES)  
+      'someOtherValueToo' => array(
+          FILTER_SANITIZE_STRING,
+          FILTER_SANITIZE_ADD_SLASHES,
+      ),  
    ),
-)
-~~~~
+);
+```
 
 Those rules would be used for the parameter array:
 
-~~~~ {.sourceCode .php}
+```php
 array(
    'myParameterQualifier' => array(
-      'uid' => the special rule will be used
-      'searchWord' => the special rule will be used,
+      'uid' => 'the special rule will be used',
+      'searchWord' => 'the special rule will be used',
       'subArray' => array(
-         'someOtherValue' => the default rule of subarray will be used
-         'someOtherValueToo' => the common rule will be used
+         'someOtherValue' => 'the default rule of subarray will be used',
+         'someOtherValueToo' => 'the common rule will be used',
       ),
-      'someOtherValueToo' => the common rule will be used
+      'someOtherValueToo' => 'the common rule will be used',
    ),
-   'nextParameterQualifier' => the default rule of the root will be used
-)
-~~~~
+   'nextParameterQualifier' => 'the default rule of the root will be used',
+);
+```
