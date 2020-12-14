@@ -90,17 +90,18 @@ abstract class AbstractTestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Remove all rules from rules config class
+     * Remove all rules from rules config class.
      */
-    protected static function resetRules() {
+    protected static function resetRules()
+    {
         $rulesReflection = new ReflectionClass(Rules::class);
 
         $rulesForFrontend = $rulesReflection->getProperty('rulesForFrontend');
-        $rulesForFrontend->setAccessible( true );
+        $rulesForFrontend->setAccessible(true);
         $rulesForFrontend->setValue(null, []);
 
         $rulesForBackend = $rulesReflection->getProperty('rulesForBackend');
-        $rulesForBackend->setAccessible( true );
+        $rulesForBackend->setAccessible(true);
         $rulesForBackend->setValue(null, []);
     }
 
