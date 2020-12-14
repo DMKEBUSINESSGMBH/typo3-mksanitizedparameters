@@ -28,51 +28,8 @@
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_mksanitizedparametersTest extends \PHPUnit\Framework\TestCase
+class tx_mksanitizedparametersTest extends \DMK\MkSanitizedParameters\AbstractTestCase
 {
-    protected $backup = [];
-
-    protected function setUp()
-    {
-        $this->backup = [
-            '_SERVER' => $_SERVER,
-            'TYPO3_CONF_VARS' => $GLOBALS['TYPO3_CONF_VARS'],
-        ];
-        $_SERVER['REMOTE_ADDR'] = 'testip';
-        $GLOBALS['TYPO3_CONF_VARS']['SYS']['devIPmask'] = 'testip';
-
-        $this->setExtConf(
-            [
-                'debugMode' => 0,
-                'logMode' => 0,
-            ]
-        );
-    }
-
-    protected function tearDown()
-    {
-        $_SERVER = $this->backup['_SERVER'];
-        $GLOBALS['TYPO3_CONF_VARS'] = $this->backup['TYPO3_CONF_VARS'];
-    }
-
-    protected function setExtConf(array $extConf)
-    {
-        $config = \DMK\MkSanitizedParameters\Factory::getConfiguration();
-        // force ext conf creation
-        $config->isStealthMode();
-        // now override the extconf array property
-        $reflector = new ReflectionClass(get_class($config));
-        $property = $reflector->getProperty('extensionConfiguration');
-        $property->setAccessible(true);
-        $property->setValue(
-            $config,
-            array_merge(
-                $property->getValue($config),
-                $extConf
-            )
-        );
-    }
-
     /**
      * @group unit
      */
