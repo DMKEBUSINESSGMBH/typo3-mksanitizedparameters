@@ -27,28 +27,26 @@
         "typo3-ter/mksanitizedparameters": "self.version"
     },
     "require": {
-        "typo3/cms-core": "^8.7.32 || ^9.5.23 || ^10.4.10",
-        "digedag/rn-base": ">=1.10.0"
+        "typo3/cms-core": "^8.7.32 || ^9.5.23 || ^10.4.10"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "~2@stable",
-        "dmk/mklib": "~9.5",
         "nimut/testing-framework": "^4.0"
     },
     "autoload": {
+        "psr-4": {
+            "DMK\\MkSanitizedParameters\\": "Classes"
+        },
         "classmap": [
-            "hooks/",
-            "interface/",
-            "sanitizer/",
-            "util/",
+            "sanitizer",
+            "hooks",
             "class.tx_mksanitizedparameters.php",
-            "class.tx_mksanitizedparameters_Rules.php",
-            "class.tx_mksanitizedparameters_StealthMode.php"
+            "class.tx_mksanitizedparameters_Rules.php"
         ]
     },
     "autoload-dev": {
         "classmap": [
-            "tests/"
+            "Tests/"
         ]
     },
     "config": {
@@ -61,7 +59,8 @@
     "scripts": {
         "post-autoload-dump": [
             "mkdir -p .Build/Web/typo3conf/ext/",
-            "[ -L .Build/Web/typo3conf/ext/mksanitizedparameters ] || ln -snvf ../../../../. .Build/Web/typo3conf/ext/mksanitizedparameters"
+            "[ -L .Build/Web/typo3conf/ext/mksanitizedparameters ] || ln -snvf ../../../../. .Build/Web/typo3conf/ext/mksanitizedparameters",
+            "[ -L .Build/Web/typo3conf/LocalConfiguration.php ] || ln -snvf ../../../Tests/Fixtures/LocalConfiguration.php .Build/Web/typo3conf/LocalConfiguration.php"
         ],
         "test:phpcs": [
             "[ -e .Build/bin/php-cs-fixer ] || composer update --ansi",

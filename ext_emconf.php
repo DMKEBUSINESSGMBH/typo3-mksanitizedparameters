@@ -17,7 +17,7 @@ $EM_CONF['mksanitizedparameters'] = [
     'author_email' => 'dev@dmk-ebusiness.de',
     'author_company' => 'DMK E-BUSINESS GmbH',
     'shy' => '',
-    'dependencies' => 'rn_base',
+    'dependencies' => '',
     'version' => '9.5.1',
     'conflicts' => '',
     'priority' => 'top',
@@ -31,7 +31,6 @@ $EM_CONF['mksanitizedparameters'] = [
     'lockType' => '',
     'constraints' => [
         'depends' => [
-            'rn_base' => '1.10.0-',
             'typo3' => '8.7.0-10.4.99',
         ],
         'conflicts' => [],

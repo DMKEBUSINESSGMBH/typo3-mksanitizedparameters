@@ -1,6 +1,4 @@
-/.buildpath
-/.project
-/.settings
 /.Build
+/var
 /.php_cs.cache
 /composer.lock
