@@ -61,11 +61,18 @@ class DebugUtility implements SingletonInterface
     /**
      * Echos out debug information as HTML (or plain in CLI context)
      * after class destruction (after typo3 is ready and php shuts down).
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function __destruct()
     {
         foreach ($this->debugStack as $debug) {
             \TYPO3\CMS\Core\Utility\DebugUtility::debug(...$debug);
+        }
+
+        if (TYPO3_MODE == 'FE') {
+            $GLOBALS['TYPO3_CONF_VARS']['FE']['compressionLevel'] = 0;
+            ob_flush();
         }
     }
 

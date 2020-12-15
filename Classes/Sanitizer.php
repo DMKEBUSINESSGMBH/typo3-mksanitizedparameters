@@ -331,9 +331,6 @@ class Sanitizer
      * @param mixed $nameToSanitize
      * @param mixed $initialValueToSanitize
      * @param mixed $sanitizedValue
-     *
-     * @TODO Refactor, dont echo directly, do not change output
-     * @SuppressWarnings(PHPMD.Superglobals)
      */
     private function handleDebugging(
         array $arrayToSanitize,
@@ -353,11 +350,6 @@ class Sanitizer
                 'komplettes Parameter Array' => $arrayToSanitize,
             ]
         );
-
-        if (TYPO3_MODE == 'FE') {
-            $GLOBALS['TYPO3_CONF_VARS']['FE']['compressionLevel'] = 0;
-            ob_flush();
-        }
     }
 
     /**
