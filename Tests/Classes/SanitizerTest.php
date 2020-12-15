@@ -63,7 +63,7 @@ class SanitizerTest extends AbstractTestCase
     {
         return [
             // sanitize array by rules returns untouched array if rules empty
-            'SanitizeArrayByRulesReturnsUntouchedArrayIfRulesEmpty' => [
+            __LINE__.':SanitizeArrayByRulesReturnsUntouchedArrayIfRulesEmpty' => [
                 '$inputData' => [
                     'parameterNameToBeSanitized' => '1testValue',
                 ],
@@ -73,7 +73,7 @@ class SanitizerTest extends AbstractTestCase
                 ],
             ],
             // sanitize array by rules returns untouched array without rules for given parameter
-            'SanitizeArrayByRulesReturnsUntouchedArrayWithoutRulesForGivenParameter' => [
+            __LINE__.':SanitizeArrayByRulesReturnsUntouchedArrayWithoutRulesForGivenParameter' => [
                 '$inputData' => [
                     'parameterNameWithoutRules' => '1testValue',
                 ],
@@ -85,7 +85,7 @@ class SanitizerTest extends AbstractTestCase
                 ],
             ],
             // sanitize array by rules works correct with unconfigured values but default rules
-            'SanitizeArrayByRulesWorksCorrectWithUnconfiguredValuesButDefaultRules' => [
+            __LINE__.':SanitizeArrayByRulesWorksCorrectWithUnconfiguredValuesButDefaultRules' => [
                 '$inputData' => [
                     'parameterNameToBeSanitized' => '1testValue',
                 ],
@@ -97,7 +97,7 @@ class SanitizerTest extends AbstractTestCase
                 ],
             ],
             // sanitize array by rules works correct with flat array and single filter config
-            'SanitizeArrayByRulesWorksCorrectWithFlatArrayAndSingleFilterConfig' => [
+            __LINE__.':SanitizeArrayByRulesWorksCorrectWithFlatArrayAndSingleFilterConfig' => [
                 '$inputData' => [
                     'parameterNameToBeSanitized' => '1testValue',
                 ],
@@ -109,7 +109,7 @@ class SanitizerTest extends AbstractTestCase
                 ],
             ],
             // sanitize array by rules works correct with flat array and filter config as array
-            'SanitizeArrayByRulesWorksCorrectWithFlatArrayAndFilterConfigAsArray' => [
+            __LINE__.':SanitizeArrayByRulesWorksCorrectWithFlatArrayAndFilterConfigAsArray' => [
                 '$inputData' => [
                     'parameterInRange' => '<span>me&you</span>',
                     'parameterOutOfRange' => '<span>me&you</span>',
@@ -129,7 +129,7 @@ class SanitizerTest extends AbstractTestCase
                 ],
             ],
             // sanitize array by rules works correct with unconfigured values and no default rules
-            'SanitizeArrayByRulesWorksCorrectWithUnconfiguredValuesAndNoDefaultRules' => [
+            __LINE__.':SanitizeArrayByRulesWorksCorrectWithUnconfiguredValuesAndNoDefaultRules' => [
                 '$inputData' => [
                     'parameterNameToBeSanitized' => '1testValue',
                     'parameterNameNotToBeSanitized' => '1testValue',
@@ -143,7 +143,7 @@ class SanitizerTest extends AbstractTestCase
                 ],
             ],
             // sanitize array by rules works correct with multi dimensional array
-            'SanitizeArrayByRulesWorksCorrectWithMultiDimensionalArray' => [
+            __LINE__.':SanitizeArrayByRulesWorksCorrectWithMultiDimensionalArray' => [
                 '$inputData' => [
                     'firstExtensionQualifier' => [
                         'parameterNameToBeSanitized' => '1testValue',
@@ -184,7 +184,7 @@ class SanitizerTest extends AbstractTestCase
                 ],
             ],
             // sanitize array by rules works correct with multi dimensional array and default rules only for sub array
-            'SanitizeArrayByRulesWorksCorrectWithMultiDimensionalArrayAndDefaultRulesOnlyForSubArray' => [
+            __LINE__.':SanitizeArrayByRulesWorksCorrectWithMultiDimensionalArrayAndDefaultRulesOnlyForSubArray' => [
                 '$inputData' => [
                     'firstExtensionQualifier' => [
                         'parameterNameToBeSanitizedByDefault' => '1testValue',
@@ -205,7 +205,7 @@ class SanitizerTest extends AbstractTestCase
                 ],
             ],
             // sanitize array by rules works correct with several configured filters as filter array
-            'SanitizeArrayByRulesWorksCorrectWithSeveralConfiguredFiltersAsFilterArray' => [
+            __LINE__.':SanitizeArrayByRulesWorksCorrectWithSeveralConfiguredFiltersAsFilterArray' => [
                 '$inputData' => [
                     'parameterNameToBeSanitized' => '<span>Is your name O\'reilly & are sure about that?</span>',
                 ],
@@ -223,7 +223,7 @@ class SanitizerTest extends AbstractTestCase
                 ],
             ],
             // sanitize array by rules works correct with several configured filters as list
-            'SanitizeArrayByRulesWorksCorrectWithSeveralConfiguredFiltersAsList' => [
+            __LINE__.':SanitizeArrayByRulesWorksCorrectWithSeveralConfiguredFiltersAsList' => [
                 '$inputData' => [
                     'parameterNameToBeSanitized' => '<span>Is your name O\'reilly & are sure about that?</span>',
                 ],
@@ -238,7 +238,7 @@ class SanitizerTest extends AbstractTestCase
                 ],
             ],
             // sanitize array by rules works correct with custom filter
-            'SanitizeArrayByRulesWorksCorrectWithCustomFilter' => [
+            __LINE__.':SanitizeArrayByRulesWorksCorrectWithCustomFilter' => [
                 '$inputData' => [
                     'parameterNameToBeSanitized' => 'abc123',
                 ],
@@ -252,6 +252,169 @@ class SanitizerTest extends AbstractTestCase
                 ],
                 '$sanitizedData' => [
                     'parameterNameToBeSanitized' => 'abc',
+                ],
+            ],
+            // sanitize array by rules prefers special rules over common rules
+            __LINE__.':SanitizeArrayByRulesPrefersSpecialRulesOverCommonRules' => [
+                '$inputData' => [
+                    'parameterNameToBeSanitized' => '"1testValue"',
+                ],
+                '$rules' => [
+                    'parameterNameToBeSanitized' => FILTER_SANITIZE_NUMBER_INT,
+                    Rules::COMMON_RULES_KEY => [
+                        'parameterNameToBeSanitized' => FILTER_SANITIZE_STRING,
+                    ],
+                    Rules::DEFAULT_RULES_KEY => [
+                        'filter' => FILTER_CALLBACK,
+                        'options' => [
+                            'tx_mksanitizedparameters_sanitizer_Alpha', 'sanitizeValue',
+                        ],
+                    ],
+                ],
+                '$sanitizedData' => [
+                    'parameterNameToBeSanitized' => '1',
+                ],
+            ],
+            // sanitize array by rules prefers common rules over default rules
+            __LINE__.':SanitizeArrayByRulesPrefersCommonRulesOverDefaultRules' => [
+                '$inputData' => [
+                    'parameterNameToBeSanitized' => '"1testValue"',
+                ],
+                '$rules' => [
+                    'anotherParameterNameToBeSanitized' => FILTER_SANITIZE_NUMBER_INT,
+                    Rules::COMMON_RULES_KEY => [
+                        'parameterNameToBeSanitized' => FILTER_SANITIZE_STRING,
+                    ],
+                    Rules::DEFAULT_RULES_KEY => [
+                        'filter' => FILTER_CALLBACK,
+                        'options' => [
+                            'tx_mksanitizedparameters_sanitizer_Alpha', 'sanitizeValue',
+                        ],
+                    ],
+                ],
+                '$sanitizedData' => [
+                    'parameterNameToBeSanitized' => '&#34;1testValue&#34;',
+                ],
+            ],
+            // sanitize array by rules uses default rules if no specials or commons
+            __LINE__.':SanitizeArrayByRulesUsesDefaultRulesIfNoSpecialsOrCommons' => [
+                '$inputData' => [
+                    'parameterNameToBeSanitized' => '"1testValue"',
+                ],
+                '$rules' => [
+                    'anotherParameterNameToBeSanitized' => FILTER_SANITIZE_NUMBER_INT,
+                    Rules::COMMON_RULES_KEY => [
+                        'anotherParameterNameToBeSanitized' => FILTER_SANITIZE_STRING,
+                    ],
+                    Rules::DEFAULT_RULES_KEY => [
+                        'filter' => FILTER_CALLBACK,
+                        'options' => [
+                            'tx_mksanitizedparameters_sanitizer_Alpha', 'sanitizeValue',
+                        ],
+                    ],
+                ],
+                '$sanitizedData' => [
+                    'parameterNameToBeSanitized' => 'testValue',
+                ],
+            ],
+            // sanitize array by rules prefers common rules over default rules when parameter name in sub array
+            __LINE__.':SanitizeArrayByRulesPrefersCommonRulesOverDefaultRulesWhenParameterNameInSubArray' => [
+                '$inputData' => [
+                    'myExt' => ['parameterNameToBeSanitized' => '"1testValue"'],
+                ],
+                '$rules' => [
+                    'anotherParameterNameToBeSanitized' => FILTER_SANITIZE_NUMBER_INT,
+                    Rules::COMMON_RULES_KEY => [
+                        'parameterNameToBeSanitized' => FILTER_SANITIZE_STRING,
+                    ],
+                    Rules::DEFAULT_RULES_KEY => [
+                        'filter' => FILTER_CALLBACK,
+                        'options' => [
+                            'tx_mksanitizedparameters_sanitizer_Alpha', 'sanitizeValue',
+                        ],
+                    ],
+                ],
+                '$sanitizedData' => [
+                    'myExt' => ['parameterNameToBeSanitized' => '&#34;1testValue&#34;'],
+                ],
+            ],
+            // Sanitize Array By Rules Uses Common Rules In Sub Array Even If Common Rules In Main Array
+            __LINE__.':SanitizeArrayByRulesUsesCommonRulesInSubArrayEvenIfCommonRulesInMainArray' => [
+                '$inputData' => [
+                    'myExt' => ['parameterNameToBeSanitized' => '"1testValue"'],
+                ],
+                '$rules' => [
+                    'myExt' => [
+                        Rules::COMMON_RULES_KEY => [
+                            'parameterNameToBeSanitized' => FILTER_SANITIZE_NUMBER_INT,
+                        ],
+                    ],
+                    Rules::COMMON_RULES_KEY => [
+                        'parameterNameToBeSanitized' => FILTER_SANITIZE_STRING,
+                    ],
+                ],
+                '$sanitizedData' => [
+                    'myExt' => ['parameterNameToBeSanitized' => '1'],
+                ],
+            ],
+            // sanitize array by rules uses default rules in sub array even if default rules in main array
+            __LINE__.':SanitizeArrayByRulesUsesDefaultRulesInSubArrayEvenIfDefaultRulesInMainArray' => [
+                '$inputData' => [
+                    'myExt' => ['parameterNameToBeSanitized' => '"1testValue"'],
+                ],
+                '$rules' => [
+                    'myExt' => [
+                        Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_NUMBER_INT,
+                    ],
+                    Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_STRING,
+                ],
+                '$sanitizedData' => [
+                    'myExt' => ['parameterNameToBeSanitized' => '1'],
+                ],
+            ],
+            // sanitize array by rules merges and overwrites common config into subsequent levels
+            __LINE__.':SanitizeArrayByRulesMergesAndOverwritesCommonConfigIntoSubsequentLevels' => [
+                '$inputData' => [
+                    'myExt' => [
+                        'parameterNameToBeSanitized' => '"1testValue"',
+                        'anotherParameterNameToBeSanitized' => '"1testValue"',
+                    ],
+                ],
+                '$rules' => [
+                    'myExt' => [
+                        Rules::COMMON_RULES_KEY => [
+                            'parameterNameToBeSanitized' => FILTER_SANITIZE_NUMBER_INT,
+                        ],
+                    ],
+                    Rules::COMMON_RULES_KEY => [
+                        'anotherParameterNameToBeSanitized' => FILTER_SANITIZE_STRING,
+                    ],
+                ],
+                '$sanitizedData' => [
+                    'myExt' => [
+                        'parameterNameToBeSanitized' => '1',
+                        'anotherParameterNameToBeSanitized' => '&#34;1testValue&#34;',
+                    ],
+                ],
+            ],
+            // sanitize array by rules with rules for sub array but sub array parameter
+            // it self is given casts filter array config to integer resulting in emptied value
+            __LINE__.':SanitizeArrayByRulesWithRulesForSubArrayButSubArrayParameterItSelfIsGivenCastsFilterArrayConfigToIntegerResultingInEmptiedValue' => [
+                '$inputData' => [
+                    'myExt' => 'test',
+                ],
+                '$rules' => [
+                    'myExt' => [
+                        'mySubParameter' => [
+                            'filter' => FILTER_CALLBACK,
+                            'options' => [
+                                'doesNotMatter', 'doesNotMatterToo',
+                            ],
+                        ],
+                    ],
+                ],
+                '$sanitizedData' => [
+                    'myExt' => '',
                 ],
             ],
         ];
