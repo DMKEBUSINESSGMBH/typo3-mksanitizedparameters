@@ -61,11 +61,11 @@ class DebugUtility implements SingletonInterface
     /**
      * Directly echos out debug information as HTML (or plain in CLI context).
      *
-     * @param array<string, int|string|array> $data
+     * @param mixed $data
      * @param string $header
      * @param string $group
      */
-    public function echoDebug(array $data, string $header = 'Debug', string $group = 'MkSanitizedParameters'): void
+    public function echoDebug($data, string $header = 'Debug', string $group = 'MkSanitizedParameters'): void
     {
         \TYPO3\CMS\Core\Utility\DebugUtility::debug($data, $header, $group);
     }

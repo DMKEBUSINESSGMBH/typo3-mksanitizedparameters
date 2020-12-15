@@ -29,6 +29,9 @@ namespace DMK\MkSanitizedParameters\Utility;
 
 use DMK\MkSanitizedParameters\AbstractTestCase;
 use DMK\MkSanitizedParameters\Factory;
+use ReflectionObject;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * @author Michael Wagner
@@ -115,5 +118,89 @@ class ConfigurationUtilityTest extends AbstractTestCase
     {
         $this->setExtConf(['stealthModeStoragePid' => 7]);
         $this->assertSame(7, Factory::getConfiguration()->getStealthModeStoragePid());
+    }
+
+    /**
+     * @test
+     * @group unit
+     * @dataProvider getExtensionConfigurationLoadsCorrectData
+     */
+    public function getExtensionConfigurationLoadsCorrect(
+        array $configuration,
+        bool $isDebugMode,
+        bool $isLogMode,
+        bool $isStealthMode,
+        int $stealthModeStoragePid
+    ) {
+        $config = \DMK\MkSanitizedParameters\Factory::getConfiguration();
+        // now override the extconf array property
+        $configReflection = new ReflectionObject($config);
+        $extensionConfigurationProperty = $configReflection->getProperty('extensionConfiguration');
+        $extensionConfigurationProperty->setAccessible(true);
+        $extensionConfigurationProperty->setValue($config, null);
+
+        // legacy configuration
+        $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mksanitizedparameters'] = serialize($configuration);
+
+        // typo3 9 or later config
+        $extensionConfiguration = $this->prophesize(ExtensionConfiguration::class);
+        if (Typo3Utility::isTypo3Version9OrHigher()) {
+            $extensionConfiguration
+                ->get('mksanitizedparameters', '')
+                ->shouldBeCalledOnce()
+                ->willReturn($configuration);
+        } else {
+            $extensionConfiguration
+                ->get('mksanitizedparameters', '')
+                ->shouldNotBeCalled();
+        }
+        GeneralUtility::addInstance(ExtensionConfiguration::class, $extensionConfiguration->reveal());
+
+        $extensionConfigurationMethod = $configReflection->getMethod('getExtensionConfiguration');
+        $extensionConfigurationMethod->setAccessible(true);
+        $this->assertSame(
+            'leer',
+            $extensionConfigurationMethod->invokeArgs($config, ['gibtEsNicht', 'leer'])
+        );
+
+        $this->assertSame($isDebugMode, Factory::getConfiguration()->isDebugMode());
+        $this->assertSame($isLogMode, Factory::getConfiguration()->isLogMode());
+        $this->assertSame($isStealthMode, Factory::getConfiguration()->isStealthMode());
+        $this->assertSame($stealthModeStoragePid, Factory::getConfiguration()->getStealthModeStoragePid());
+    }
+
+    /**
+     * Testdata for getExtensionConfigurationLoadsCorrect.
+     *
+     * @return array[]
+     */
+    public function getExtensionConfigurationLoadsCorrectData()
+    {
+        return [
+            __LINE__.':1,1,0,14' => [
+                [
+                    'debugMode' => '1',
+                    'logMode' => 'true',
+                    'stealthMode' => '0',
+                    'stealthModeStoragePid' => '14',
+                ],
+                true,
+                true,
+                false,
+                14,
+            ],
+            __LINE__.'0,0,1,57' => [
+                [
+                    'debugMode' => '0',
+                    'logMode' => '0',
+                    'stealthMode' => 'false',
+                    'stealthModeStoragePid' => '57acht',
+                ],
+                false,
+                false,
+                true,
+                57,
+            ],
+        ];
     }
 }
