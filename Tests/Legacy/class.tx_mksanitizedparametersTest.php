@@ -876,14 +876,6 @@ class tx_mksanitizedparametersTest extends \DMK\MkSanitizedParameters\AbstractTe
             $rules
         );
 
-//        echo '<h1>DEBUG: ' . __FILE__ . ' Line: ' . __LINE__ . '</h1><pre>' . var_export(array(
-//                        '$arrayToSanitize' => $arrayToSanitize,
-//                        '$rules' => $rules,
-//                        '$sanitizedArray' => $sanitizedArray,
-//
-//                ), true) . '</pre>';
-//        exit('DEBUG: ' . __FILE__ . ' Line: ' . __LINE__);
-
         $this->assertEquals(
             ['myExt' => ['parameterNameToBeSanitized' => '1']],
             $sanitizedArray,

@@ -36,21 +36,21 @@ class FilterUtility
 {
     /**
      * @param mixed $valueToSanitize
-     * @param int|string|array<int|string, int|string|array>|null $rule
+     * @param int|string|array<int|string, int|string|array>|null $filterOrFilterConfig
      *
      * @return mixed
      */
-    public function sanitizeByRule($valueToSanitize, $rule)
+    public function sanitizeByRule($valueToSanitize, $filterOrFilterConfig)
     {
-        if (!is_array($rule)) {
-            return filter_var($valueToSanitize, $this->normalizeFilter($rule));
+        if (!is_array($filterOrFilterConfig)) {
+            return $this->filterValue($valueToSanitize, $filterOrFilterConfig);
         }
 
-        return $this->sanitizeByConfig($valueToSanitize, $rule);
+        return $this->sanitizeByConfig($valueToSanitize, $filterOrFilterConfig);
     }
 
     /**
-     * @param int|string $valueToSanitize
+     * @param mixed $valueToSanitize
      * @param array<int|string, int|string|array> $filterConfig
      *
      * @return mixed
@@ -70,14 +70,61 @@ class FilterUtility
         $filterConfig = $this->normalizeFilterConfig($filterConfig);
 
         foreach ($filters as $filter) {
-            $valueToSanitize = filter_var(
-                $valueToSanitize,
-                $this->normalizeFilter($filter),
-                $filterConfig
-            );
+            $valueToSanitize = $this->filterValue($valueToSanitize, $filter, $filterConfig);
         }
 
         return $valueToSanitize;
+    }
+
+    /**
+     * @param mixed $valueToSanitize
+     * @param int|string $filter
+     * @param int|array<string, int|string|array>|null $filterConfig
+     *
+     * @return mixed
+     */
+    private function filterValue($valueToSanitize, $filter = FILTER_DEFAULT, $filterConfig = null)
+    {
+        // for wrong filter we clear the value
+        // @see testSanitizeArrayByRulesWithRulesForSubArrayButSubArrayParameterItSelfIsGivenCastsFilterArrayConfigToIntegerResultingInEmptiedValue
+        if (!$this->isValidFilter($filter)) {
+            return '';
+        }
+
+        return filter_var(
+            $valueToSanitize,
+            $this->normalizeFilter($filter),
+            $filterConfig
+        );
+    }
+
+    /**
+     * Is the given filter a valid id?
+     * Ids normally between 257 - 1024.
+     *
+     * @param int|string $filter
+     *
+     * @return bool
+     */
+    protected function isValidFilter($filter): bool
+    {
+        return isset($this->getValidFilters()[$this->normalizeFilter($filter)]);
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    protected function getValidFilters(): array
+    {
+        static $filters;
+
+        if (null === $filters) {
+            $filters = filter_list();
+            $filters = array_combine($filters, array_map('filter_id', $filters));
+            $filters = array_flip($filters);
+        }
+
+        return $filters;
     }
 
     /**
