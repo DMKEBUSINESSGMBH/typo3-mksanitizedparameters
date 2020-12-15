@@ -59,6 +59,18 @@ class DebugUtility implements SingletonInterface
     }
 
     /**
+     * Directly echos out debug information as HTML (or plain in CLI context).
+     *
+     * @param array<string, int|string|array> $data
+     * @param string $header
+     * @param string $group
+     */
+    public function echoDebug(array $data, string $header = 'Debug', string $group = 'MkSanitizedParameters'): void
+    {
+        \TYPO3\CMS\Core\Utility\DebugUtility::debug($data, $header, $group);
+    }
+
+    /**
      * Echos out debug information as HTML (or plain in CLI context)
      * after class destruction (after typo3 is ready and php shuts down).
      *
@@ -66,8 +78,11 @@ class DebugUtility implements SingletonInterface
      */
     public function __destruct()
     {
-        foreach ($this->debugStack as $debug) {
-            \TYPO3\CMS\Core\Utility\DebugUtility::debug(...$debug);
+        $debugStack = $this->debugStack;
+        $this->debugStack = [];
+
+        foreach ($debugStack as $stackEntry) {
+            $this->echoDebug(...$stackEntry);
         }
 
         if (TYPO3_MODE == 'FE') {

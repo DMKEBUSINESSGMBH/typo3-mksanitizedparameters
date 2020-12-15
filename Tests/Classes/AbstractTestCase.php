@@ -27,7 +27,9 @@ namespace DMK\MkSanitizedParameters;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use DMK\MkSanitizedParameters\Utility\DebugUtility;
 use ReflectionClass;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * @author Michael Wagner
@@ -64,6 +66,7 @@ abstract class AbstractTestCase extends \PHPUnit\Framework\TestCase
         $GLOBALS['TYPO3_CONF_VARS'] = $this->backup['TYPO3_CONF_VARS'];
 
         $this->resetRules();
+        $this->resetDebugger();
     }
 
     /**
@@ -103,6 +106,24 @@ abstract class AbstractTestCase extends \PHPUnit\Framework\TestCase
         $rulesForBackend = $rulesReflection->getProperty('rulesForBackend');
         $rulesForBackend->setAccessible(true);
         $rulesForBackend->setValue(null, []);
+    }
+
+    /**
+     * Remove all rules from rules config class.
+     */
+    protected static function resetDebugger()
+    {
+        // first remove all debugs
+        $debuggerReflection = new ReflectionClass(DebugUtility::class);
+        $debugStackReflection = $debuggerReflection->getProperty('debugStack');
+        $debugStackReflection->setAccessible(true);
+        $debugStackReflection->setValue(Factory::getDebugger(), []);
+
+        // now destroy instance
+        GeneralUtility::removeSingletonInstance(
+            DebugUtility::class,
+            Factory::getDebugger()
+        );
     }
 
     /**
