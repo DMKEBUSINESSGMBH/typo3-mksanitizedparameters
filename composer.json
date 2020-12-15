@@ -63,7 +63,7 @@
         "post-autoload-dump": [
             "mkdir -p .Build/Web/typo3conf/ext/",
             "[ -L .Build/Web/typo3conf/ext/mksanitizedparameters ] || ln -snvf ../../../../. .Build/Web/typo3conf/ext/mksanitizedparameters",
-            "[ -L .Build/Web/typo3conf/LocalConfiguration.php ] || ln -snvf ../../../Tests/Fixtures/LocalConfiguration.php .Build/Web/typo3conf/LocalConfiguration.php"
+            "[ -f .Build/Web/typo3conf/LocalConfiguration.php ] || cp Tests/Fixtures/LocalConfiguration.php .Build/Web/typo3conf/LocalConfiguration.php"
         ],
         "lint:php": [
             "[ -e .Build/bin/parallel-lint ] || composer update",
