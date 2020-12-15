@@ -142,19 +142,15 @@ class ConfigurationUtilityTest extends AbstractTestCase
         // legacy configuration
         $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mksanitizedparameters'] = serialize($configuration);
 
-        // typo3 9 or later config
-        $extensionConfiguration = $this->prophesize(ExtensionConfiguration::class);
+        // config loading for typo3 9 or later
         if (Typo3Utility::isTypo3Version9OrHigher()) {
+            $extensionConfiguration = $this->prophesize(ExtensionConfiguration::class);
             $extensionConfiguration
                 ->get('mksanitizedparameters', '')
                 ->shouldBeCalledOnce()
                 ->willReturn($configuration);
-        } else {
-            $extensionConfiguration
-                ->get('mksanitizedparameters', '')
-                ->shouldNotBeCalled();
+            GeneralUtility::addInstance(ExtensionConfiguration::class, $extensionConfiguration->reveal());
         }
-        GeneralUtility::addInstance(ExtensionConfiguration::class, $extensionConfiguration->reveal());
 
         $extensionConfigurationMethod = $configReflection->getMethod('getExtensionConfiguration');
         $extensionConfigurationMethod->setAccessible(true);
