@@ -53,13 +53,7 @@ class Monitor
      */
     public function monitorInput(InputInterface ...$inputs): void
     {
-        echo '<h1>DEBUG: '.__FILE__.' Line: '.__LINE__.'</h1><pre>'.var_export([
-                count($inputs),
-            ], true).'</pre>';
         foreach ($inputs as $input) {
-            echo '<h1>DEBUG: '.__FILE__.' Line: '.__LINE__.'</h1><pre>'.var_export([
-                    $input->getName(), $input->isSanitizingNecessary(),
-                ], true).'</pre>';
             if (!$input->isSanitizingNecessary()) {
                 return;
             }
@@ -73,17 +67,11 @@ class Monitor
      */
     protected function writeInput(InputInterface $input): void
     {
-        echo '<h1>DEBUG: '.__FILE__.' Line: '.__LINE__.'</h1><pre>'.var_export([
-                $input->getName(), $input->isSanitizingNecessary(),
-            ], true).'</pre>';
         if (!$input->isSanitizingNecessary()) {
             return;
         }
 
         $repo = Factory::getMonitorRepository();
-        echo '<h1>DEBUG: '.__FILE__.' Line: '.__LINE__.'</h1><pre>'.var_export([
-                $input->getName(), $repo->countByInput($input),
-            ], true).'</pre>';
 
         if ($repo->countByInput($input) > 0) {
             return;
