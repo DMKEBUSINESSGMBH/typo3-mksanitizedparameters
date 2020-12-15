@@ -30,6 +30,7 @@ namespace DMK\MkSanitizedParameters;
 use DMK\MkSanitizedParameters\Domain\Repository\MonitorRepository;
 use DMK\MkSanitizedParameters\Input\InputInterface;
 use DMK\MkSanitizedParameters\Utility\ConfigurationUtility;
+use DMK\MkSanitizedParameters\Utility\DebugUtility;
 use DMK\MkSanitizedParameters\Utility\FilterUtility;
 use DMK\MkSanitizedParameters\Utility\RulesUtility;
 use InvalidArgumentException;
@@ -131,7 +132,7 @@ final class Factory
     }
 
     /**
-     * Returns the configuration utility.
+     * Returns a logger instance.
      *
      * @return Logger
      */
@@ -142,6 +143,18 @@ final class Factory
         );
 
         return $logManager->getLogger($name);
+    }
+
+    /**
+     * Returns the debug utility instance.
+     *
+     * @return DebugUtility
+     */
+    public static function getDebugger(): DebugUtility
+    {
+        return Factory::makeInstance(
+            DebugUtility::class
+        );
     }
 
     /**

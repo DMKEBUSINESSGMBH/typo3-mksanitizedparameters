@@ -2,9 +2,6 @@
 
 namespace DMK\MkSanitizedParameters\Utility;
 
-use DMK\MkSanitizedParameters\Factory;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-
 /***************************************************************
  * Copyright notice
  *
@@ -28,6 +25,10 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use DMK\MkSanitizedParameters\Factory;
+use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * Debug Utility class.
  *
@@ -35,20 +36,37 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-final class DebugUtility
+class DebugUtility implements SingletonInterface
 {
     /**
-     * Debug.
+     * @var array[]
+     */
+    protected $debugStack = [];
+
+    /**
+     * Store a Debug in local stack.
      *
-     * Directly echos out debug information as HTML (or plain in CLI context)
+     * We can't echo the debug directly,
+     * mksanitizedparameters runs bevor typo3 has send any headers.
      *
-     * @param mixed $data
+     * @param array<string, int|string|array> $data
      * @param string $header
      * @param string $group
      */
-    public static function debug($data, $header = 'Debug', $group = 'MkSanitizedParameters'): void
+    public function debug(array $data, string $header = 'Debug', string $group = 'MkSanitizedParameters'): void
     {
-        \TYPO3\CMS\Core\Utility\DebugUtility::debug($data, $header, $group);
+        $this->debugStack[] = [$data, $header, $group];
+    }
+
+    /**
+     * Echos out debug information as HTML (or plain in CLI context)
+     * after class destruction (after typo3 is ready and php shuts down).
+     */
+    public function __destruct()
+    {
+        foreach ($this->debugStack as $debug) {
+            \TYPO3\CMS\Core\Utility\DebugUtility::debug(...$debug);
+        }
     }
 
     /**

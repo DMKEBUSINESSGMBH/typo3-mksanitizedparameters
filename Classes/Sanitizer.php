@@ -345,7 +345,7 @@ class Sanitizer
             return;
         }
 
-        $this->echoDebug(
+        $this->getDebugger()->debug(
             [
                 'Parameter Name:' => $nameToSanitize,
                 'initialer Wert:' => $initialValueToSanitize,
@@ -361,15 +361,10 @@ class Sanitizer
     }
 
     /**
-     * Just a wrapper for DebugUtility::debug.
-     *
-     * @param array<string, mixed> $data
+     * @return DebugUtility
      */
-    protected function echoDebug(array $data): void
+    protected function getDebugger(): DebugUtility
     {
-        DebugUtility::debug(
-            $data,
-            self::MESSAGE_VALUE_HAS_CHANGED
-        );
+        return Factory::getDebugger();
     }
 }

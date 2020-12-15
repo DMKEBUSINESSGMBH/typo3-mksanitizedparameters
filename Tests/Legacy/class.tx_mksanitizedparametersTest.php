@@ -22,6 +22,8 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  */
 
+use DMK\MkSanitizedParameters\Utility\DebugUtility;
+
 /**
  * @author Hannes Bochmann
  * @author Michael Wagner
@@ -681,13 +683,9 @@ class tx_mksanitizedparametersTest extends \DMK\MkSanitizedParameters\AbstractTe
             tx_mksanitizedparameters_Rules::DEFAULT_RULES_KEY => [FILTER_SANITIZE_STRING],
         ];
 
-        $mksanitizedparameters = $this->getMock(
-            'tx_mksanitizedparameters',
-            ['echoDebug']
-        );
-
-        $mksanitizedparameters->expects($this->once())
-            ->method('echoDebug')
+        $debugger = $this->getMock(DebugUtility::class);
+        $debugger->expects($this->once())
+            ->method('debug')
             ->with(
                 [
                     'Parameter Name:' => 'parameter',
@@ -696,6 +694,15 @@ class tx_mksanitizedparametersTest extends \DMK\MkSanitizedParameters\AbstractTe
                     'komplettes Parameter Array' => ['parameter' => '&#34;test&#34;'],
                 ]
             );
+
+        $mksanitizedparameters = $this->getMock(
+            'tx_mksanitizedparameters',
+            ['getDebugger']
+        );
+
+        $mksanitizedparameters->expects($this->once())
+            ->method('getDebugger')
+            ->willReturn($debugger);
 
         $mksanitizedparameters->sanitizeArrayByRules(
             $arrayToSanitize,
