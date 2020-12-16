@@ -7,7 +7,9 @@ v10.0.0
  *  add TYPO3 10 LTS support
  *  add middleware and server request sanitizing for fe and be
  *  drip TYPO3 7.6 support
- *  complete refactoring of codebase
+ *  complete refactoring of codebase  
+    (new sanitizer, monitor, inputs, repository, filter, logger, debugger, rules, filters, ...)
+ *  lot of unitttests added
 
 v9.5.0
  *  added TYPO3 9.5 support
