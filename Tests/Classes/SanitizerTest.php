@@ -59,9 +59,23 @@ class SanitizerTest extends AbstractTestCase
      *
      * @return array[]
      */
-    public function getSanitizeInputData()
+    public static function getSanitizeInputData()
     {
         return [
+            // sanitize array by rules returns untouched array if rules empty
+            __LINE__.':SanitizeArrayByRulesReturnsUntouchedArrayIfRulesEmpty' => [
+                '$inputData' => [
+                    'get' => '4a',
+                    'post' => '7b',
+                ],
+                '$rules' => [
+                    Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_NUMBER_INT,
+                ],
+                '$sanitizedData' => [
+                    'get' => '4',
+                    'post' => '7',
+                ],
+            ],
             // sanitize array by rules returns untouched array if rules empty
             __LINE__.':SanitizeArrayByRulesReturnsUntouchedArrayIfRulesEmpty' => [
                 '$inputData' => [

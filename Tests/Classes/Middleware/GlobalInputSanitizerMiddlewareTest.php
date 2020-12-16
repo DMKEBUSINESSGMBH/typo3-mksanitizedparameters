@@ -33,8 +33,8 @@ use DMK\MkSanitizedParameters\Input\GlobalPostRequestInput;
 use DMK\MkSanitizedParameters\Input\ServerRequestBodyInput;
 use DMK\MkSanitizedParameters\Input\ServerRequestQueryInput;
 use DMK\MkSanitizedParameters\Monitor;
-use DMK\MkSanitizedParameters\Rules;
 use DMK\MkSanitizedParameters\Sanitizer;
+use DMK\MkSanitizedParameters\SanitizerTest;
 use DMK\MkSanitizedParameters\Utility\Typo3Utility;
 use Prophecy\Argument;
 use Psr\Http\Message\ResponseInterface;
@@ -145,28 +145,30 @@ class GlobalInputSanitizerMiddlewareTest extends AbstractTestCase
     /**
      * @test
      * @group unit
+     * @dataProvider getProcessCallsSanitizerAndSanitizesCorrectByRulesData
      */
-    public function processCallsSanitizerAndSanitizesCorrectByRules()
-    {
+    public function processCallsSanitizerAndSanitizesCorrectByRules(
+        array $inputData,
+        array $rules,
+        array $sanitizedData
+    ) {
         $this->setExtConf(['stealthMode' => '0']);
-        $this->addRules([
-            Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_NUMBER_INT,
-        ]);
+        $this->addRules($rules);
 
         $middleware = new GlobalInputSanitizerMiddleware();
 
         $request = new ServerRequest();
-        $request = $request->withQueryParams(['get' => '4a']);
-        $request = $request->withParsedBody(['post' => '7b']);
+        $request = $request->withQueryParams($inputData);
+        $request = $request->withParsedBody($inputData);
 
         $response = $this->prophesize(ResponseInterface::class);
         $handler = $this->prophesize(RequestHandlerInterface::class);
         // check if the right cleaned server request was handled
         $handler->handle(
             Argument::that(
-                function (ServerRequest $cleanedRequest) {
-                    $this->assertSame(['get' => '4'], $cleanedRequest->getQueryParams());
-                    $this->assertSame(['post' => '7'], $cleanedRequest->getParsedBody());
+                function (ServerRequest $cleanedRequest) use ($sanitizedData) {
+                    $this->assertSame($sanitizedData, $cleanedRequest->getQueryParams());
+                    $this->assertSame($sanitizedData, $cleanedRequest->getParsedBody());
 
                     return true;
                 }
@@ -177,5 +179,15 @@ class GlobalInputSanitizerMiddlewareTest extends AbstractTestCase
             $response->reveal(),
             $middleware->process($request, $handler->reveal())
         );
+    }
+
+    /**
+     * Returns the required data for sanitizeInput test.
+     *
+     * @return array[]
+     */
+    public function getProcessCallsSanitizerAndSanitizesCorrectByRulesData()
+    {
+        return SanitizerTest::getSanitizeInputData();
     }
 }
