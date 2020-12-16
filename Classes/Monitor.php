@@ -43,7 +43,7 @@ class Monitor
     /**
      * @return bool
      */
-    public static function isEnabled(): bool
+    public function isEnabled(): bool
     {
         return Factory::getConfiguration()->isStealthMode();
     }

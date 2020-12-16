@@ -28,7 +28,7 @@
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_mksanitizedparameters_hooks_PreprocessTypo3RequestsTest extends \PHPUnit\Framework\TestCase
+class tx_mksanitizedparameters_hooks_PreprocessTypo3RequestsTest extends \DMK\MkSanitizedParameters\AbstractTestCase
 {
     /**
      * (non-PHPdoc).
@@ -37,19 +37,7 @@ class tx_mksanitizedparameters_hooks_PreprocessTypo3RequestsTest extends \PHPUni
      */
     protected function setUp()
     {
-        $config = \DMK\MkSanitizedParameters\Factory::getConfiguration();
-        if ($config->isStealthMode()) {
-            $reflector = new ReflectionClass(get_class($config));
-            $property = $reflector->getProperty('extensionConfiguration');
-            $property->setAccessible(true);
-            $property->setValue(
-                $config,
-                array_merge(
-                    $property->getValue($config),
-                    ['stealthMode' => 0]
-                )
-            );
-        }
+        parent::setUp();
 
         tx_mksanitizedparameters_Rules::addRulesForBackend([
             'testParameter' => FILTER_SANITIZE_NUMBER_INT,

@@ -47,7 +47,6 @@ final class Typo3Utility
     {
         return VersionNumberUtility::convertVersionNumberToInteger(
                 VersionNumberUtility::getNumericTypo3Version()
-            ) >= 9000000
-            ;
+            ) >= 9000000;
     }
 }
