@@ -53,14 +53,14 @@ class GlobalInputSanitizerMiddlewareTest extends AbstractTestCase
 {
     protected function setUp()
     {
+        parent::setUp();
+
         if (!Typo3Utility::isTypo3Version9OrHigher()) {
             $this->markTestSkipped(
                 'Middleware support was added in TYPO3 9.'
                 .' We skip tests for '.VersionNumberUtility::getCurrentTypo3Version().'.'
             );
         }
-
-        parent::setUp();
     }
 
     /**
@@ -126,11 +126,11 @@ class GlobalInputSanitizerMiddlewareTest extends AbstractTestCase
         )->shouldBeCalled();
         // second is to sanitize get request
         $sanitizer->sanitizeInput(
-            Argument::type(ServerRequestQueryInput::class),
+            Argument::type(ServerRequestQueryInput::class)
         )->shouldBeCalled();
         // third call is to sanitize get post
         $sanitizer->sanitizeInput(
-            Argument::type(ServerRequestBodyInput::class),
+            Argument::type(ServerRequestBodyInput::class)
         )->shouldBeCalled();
         GeneralUtility::addInstance(Sanitizer::class, $sanitizer->reveal());
         GeneralUtility::addInstance(Sanitizer::class, $sanitizer->reveal());
