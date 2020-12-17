@@ -251,7 +251,7 @@ class Sanitizer
 
             $rulesForValue = $rulesUtil->getRulesForValue(
                 $rules,
-                $nameToSanitize
+                (string) $nameToSanitize
             );
 
             if (is_array($valueToSanitize)) {
