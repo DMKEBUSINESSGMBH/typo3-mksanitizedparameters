@@ -42,9 +42,9 @@ class RulesUtility
      * @param array<string, int|string|array> $rules
      * @param string $nameToSanitize
      *
-     * @return array<string, int|string|array>|null
+     * @return array<string, int|string|array>
      */
-    public function getRulesForValue(array $rules, string $nameToSanitize): ?array
+    public function getRulesForValue(array $rules, string $nameToSanitize): array
     {
         $rulesForValue = $this->getSpecialRulesByName($rules, $nameToSanitize);
 
@@ -57,7 +57,7 @@ class RulesUtility
         }
 
         if (empty($rulesForValue)) {
-            return null;
+            return [];
         }
 
         if (!is_array($rulesForValue)) {
