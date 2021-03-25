@@ -105,7 +105,8 @@
         "typo3/cms": {
             "cms-package-dir": "{$vendor-dir}/typo3/cms",
             "extension-key": "mksanitizedparameters",
-            "web-dir": ".Build/Web"
+            "web-dir": ".Build/Web",
+            "app-dir": ".Build"
         }
     }
 }
