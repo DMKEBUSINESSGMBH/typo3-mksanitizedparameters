@@ -2,6 +2,31 @@
 
 declare(strict_types=1);
 
+/*
+ * Copyright notice
+ *
+ * (c) DMK E-BUSINESS GmbH <dev@dmk-ebusiness.de>
+ * All rights reserved
+ *
+ * This file is part of the "mksanitizedparameters" Extension for TYPO3 CMS.
+ *
+ * This script is part of the TYPO3 project. The TYPO3 project is
+ * free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * GNU Lesser General Public License can be found at
+ * www.gnu.org/licenses/lgpl.html
+ *
+ * This script is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * This copyright notice MUST APPEAR in all copies of the script!
+ */
+
 namespace DMK\MkSanitizedParameters;
 
 /***************************************************************
@@ -42,7 +67,7 @@ class Sanitizer
     /**
      * @var string
      */
-    const MESSAGE_VALUE_HAS_CHANGED = 'Ein Wert wurde von mksanitizedparameters verändert!';
+    public const MESSAGE_VALUE_HAS_CHANGED = 'Ein Wert wurde von mksanitizedparameters verändert!';
 
     public function sanitizeInput(InputInterface ...$inputs): void
     {
@@ -61,7 +86,7 @@ class Sanitizer
     }
 
     /**
-     * @return array<string, int|string|array>
+     * @return array<string, mixed>
      */
     protected function getRules(): array
     {
@@ -70,7 +95,7 @@ class Sanitizer
 
     /**
      * @param array<string, mixed> $arrayToSanitize
-     * @param array<string, int|string|array> $rules
+     * @param array<string, mixed> $rules
      *
      * @return array<string, mixed>
      *
@@ -292,10 +317,10 @@ class Sanitizer
     }
 
     /**
-     * @param array<string, int|string|array> $arrayToSanitize
-     * @param mixed $nameToSanitize
-     * @param mixed $initialValueToSanitize
-     * @param mixed $sanitizedValue
+     * @param array<string, mixed> $arrayToSanitize
+     * @param mixed                $nameToSanitize
+     * @param mixed                $initialValueToSanitize
+     * @param mixed                $sanitizedValue
      */
     private function handleLogging(
         array $arrayToSanitize,
@@ -327,10 +352,10 @@ class Sanitizer
     }
 
     /**
-     * @param array<string, int|string|array> $arrayToSanitize
-     * @param mixed $nameToSanitize
-     * @param mixed $initialValueToSanitize
-     * @param mixed $sanitizedValue
+     * @param array<string, mixed> $arrayToSanitize
+     * @param mixed                $nameToSanitize
+     * @param mixed                $initialValueToSanitize
+     * @param mixed                $sanitizedValue
      */
     private function handleDebugging(
         array $arrayToSanitize,

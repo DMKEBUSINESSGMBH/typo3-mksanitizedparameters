@@ -1,5 +1,30 @@
 <?php
 
+/*
+ * Copyright notice
+ *
+ * (c) DMK E-BUSINESS GmbH <dev@dmk-ebusiness.de>
+ * All rights reserved
+ *
+ * This file is part of the "mksanitizedparameters" Extension for TYPO3 CMS.
+ *
+ * This script is part of the TYPO3 project. The TYPO3 project is
+ * free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * GNU Lesser General Public License can be found at
+ * www.gnu.org/licenses/lgpl.html
+ *
+ * This script is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * This copyright notice MUST APPEAR in all copies of the script!
+ */
+
 namespace DMK\MkSanitizedParameters\Utility;
 
 /***************************************************************
@@ -39,10 +64,10 @@ use TYPO3\CMS\Core\Utility\ArrayUtility;
 class RulesUtility
 {
     /**
-     * @param array<string, int|string|array> $rules
-     * @param string $nameToSanitize
+     * @param array<string, mixed> $rules
+     * @param string               $nameToSanitize
      *
-     * @return array<string, int|string|array>
+     * @return array<string, mixed>
      */
     public function getRulesForValue(array $rules, string $nameToSanitize): array
     {
@@ -68,10 +93,10 @@ class RulesUtility
     }
 
     /**
-     * @param array<string, int|string|array> $rules
-     * @param string $nameToSanitize
+     * @param array<string, mixed> $rules
+     * @param string               $nameToSanitize
      *
-     * @return array<int|string, int|string|array>|null
+     * @return array<int|string, mixed>|null
      */
     private function getSpecialRulesByName(array $rules, string $nameToSanitize): ?array
     {
@@ -95,10 +120,10 @@ class RulesUtility
     }
 
     /**
-     * @param array<string, int|string|array> $rules
-     * @param string $nameToSanitize
+     * @param array<string, mixed> $rules
+     * @param string               $nameToSanitize
      *
-     * @return array<int|string, int|string|array>|null
+     * @return array<int|string, mixed>|null
      */
     private function getCommonRulesByName(array $rules, string $nameToSanitize): ?array
     {
@@ -125,10 +150,10 @@ class RulesUtility
     }
 
     /**
-     * @param array<string, int|string|array> $rulesFromCurrentLevel
-     * @param array<string, int|string|array> $rulesForNextLevel
+     * @param array<string, mixed> $rulesFromCurrentLevel
+     * @param array<string, mixed> $rulesForNextLevel
      *
-     * @return array<string, int|string|array>
+     * @return array<string, mixed>
      */
     public function injectFromCurrentIntoNextLevelIfNotSet(
         array $rulesFromCurrentLevel,
@@ -149,10 +174,10 @@ class RulesUtility
     }
 
     /**
-     * @param array<string, int|string|array> $rulesFromCurrentLevel
-     * @param array<string, int|string|array> $rulesForNextLevel
+     * @param array<string, mixed> $rulesFromCurrentLevel
+     * @param array<string, mixed> $rulesForNextLevel
      *
-     * @return array<string, int|string|array>
+     * @return array<string, mixed>
      */
     private function injectDefaultRulesFromCurrentIntoNextLevelIfNotSet(
         array $rulesFromCurrentLevel,
@@ -168,10 +193,10 @@ class RulesUtility
     }
 
     /**
-     * @param array<string, int|string|array> $rulesFromCurrentLevel
-     * @param array<string, int|string|array> $rulesForNextLevel
+     * @param array<string, mixed> $rulesFromCurrentLevel
+     * @param array<string, mixed> $rulesForNextLevel
      *
-     * @return array<string, int|string|array>
+     * @return array<string, mixed>
      */
     private function injectCommonRulesFromCurrentIntoNextLevelIfNotSet(
         array $rulesFromCurrentLevel,
@@ -199,11 +224,11 @@ class RulesUtility
     }
 
     /**
-     * @param array<string, int|string|array> $rulesForValue
-     * @param array<string, int|string|array> $allRules
-     * @param string $rulesKey
+     * @param array<string, mixed> $rulesForValue
+     * @param array<string, mixed> $allRules
+     * @param string               $rulesKey
      *
-     * @return array<string, int|string|array>
+     * @return array<string, mixed>
      */
     private function injectRulesByKey(
         array $rulesForValue,
