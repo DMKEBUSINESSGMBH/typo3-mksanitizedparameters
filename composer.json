@@ -61,6 +61,17 @@
             "phpstan/extension-installer": true
         }
     },
+    "extra": {
+        "branch-alias" : {
+            "dev-11.5": "11.0.x-dev"
+        },
+        "typo3/cms": {
+            "cms-package-dir": "{$vendor-dir}/typo3/cms",
+            "extension-key": "mksanitizedparameters",
+            "web-dir": ".Build/Web",
+            "app-dir": ".Build"
+        }
+    },
     "scripts": {
         "post-autoload-dump": [
             "mkdir -p .Build/Web/typo3conf/ext/",
@@ -108,13 +119,5 @@
         "fix": [
             "@fix:phpcs"
         ]
-    },
-    "extra": {
-        "typo3/cms": {
-            "cms-package-dir": "{$vendor-dir}/typo3/cms",
-            "extension-key": "mksanitizedparameters",
-            "web-dir": ".Build/Web",
-            "app-dir": ".Build"
-        }
     }
 }
