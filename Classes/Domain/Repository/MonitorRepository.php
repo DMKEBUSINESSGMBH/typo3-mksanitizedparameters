@@ -54,6 +54,7 @@ namespace DMK\MkSanitizedParameters\Domain\Repository;
 
 use DMK\MkSanitizedParameters\Factory;
 use DMK\MkSanitizedParameters\Input\InputInterface;
+use Doctrine\DBAL\Driver\Result;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
@@ -107,7 +108,7 @@ class MonitorRepository
     public function countByInput(InputInterface $input): int
     {
         $queryBuilder = $this->createQueryBuilder();
-        $query = $queryBuilder->count('uid')
+        $result = $queryBuilder->count('uid')
                 ->from('tx_mksanitizedparameters')
                 ->where(
                     $queryBuilder->expr()->eq(
@@ -119,7 +120,11 @@ class MonitorRepository
                 )
                 ->execute();
 
-        return $query->fetchColumn();
+        if (!$result instanceof Result) {
+            return 0;
+        }
+
+        return $result->fetchOne();
     }
 
     /**

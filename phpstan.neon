@@ -7,8 +7,6 @@ parameters:
         - %currentWorkingDirectory%/ext_localconf.php
         - %currentWorkingDirectory%/ext_emconf.php
     reportUnmatchedIgnoredErrors: false
-    excludePaths:
-        - %currentWorkingDirectory%/Classes/Legacy/*
     ignoreErrors:
         - '#Parameter \#[\d] \.\.\.\$predicates of method TYPO3\\CMS\\Core\\Database\\Query\\QueryBuilder::where\(\) expects array<int, mixed>\|Doctrine\\DBAL\\Query\\Expression\\CompositeExpression, string given\.#'
         - '#Constant TYPO3_MODE not found#'

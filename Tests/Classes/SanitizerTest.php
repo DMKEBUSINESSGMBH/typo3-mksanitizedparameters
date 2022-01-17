@@ -53,6 +53,7 @@ namespace DMK\MkSanitizedParameters;
  ***************************************************************/
 
 use DMK\MkSanitizedParameters\Input\ArrayInput;
+use DMK\MkSanitizedParameters\Sanitizer\AlphaSanitizer;
 
 /**
  * @author Michael Wagner
@@ -285,7 +286,7 @@ class SanitizerTest extends AbstractTestCase
                     'parameterNameToBeSanitized' => [
                         'filter' => FILTER_CALLBACK,
                         'options' => [
-                            'tx_mksanitizedparameters_sanitizer_Alpha', 'sanitizeValue',
+                            AlphaSanitizer::class, 'sanitizeValue',
                         ],
                     ],
                 ],
@@ -327,7 +328,7 @@ class SanitizerTest extends AbstractTestCase
                     Rules::DEFAULT_RULES_KEY => [
                         'filter' => FILTER_CALLBACK,
                         'options' => [
-                            'tx_mksanitizedparameters_sanitizer_Alpha', 'sanitizeValue',
+                            AlphaSanitizer::class, 'sanitizeValue',
                         ],
                     ],
                 ],
@@ -348,7 +349,7 @@ class SanitizerTest extends AbstractTestCase
                     Rules::DEFAULT_RULES_KEY => [
                         'filter' => FILTER_CALLBACK,
                         'options' => [
-                            'tx_mksanitizedparameters_sanitizer_Alpha', 'sanitizeValue',
+                            AlphaSanitizer::class, 'sanitizeValue',
                         ],
                     ],
                 ],
@@ -369,7 +370,7 @@ class SanitizerTest extends AbstractTestCase
                     Rules::DEFAULT_RULES_KEY => [
                         'filter' => FILTER_CALLBACK,
                         'options' => [
-                            'tx_mksanitizedparameters_sanitizer_Alpha', 'sanitizeValue',
+                            AlphaSanitizer::class, 'sanitizeValue',
                         ],
                     ],
                 ],
