@@ -55,7 +55,7 @@ class RulesUtility
         }
 
         if (!$rulesForValue) {
-            $rulesForValue = $rules[Rules::DEFAULT_RULES_KEY];
+            $rulesForValue = $rules[Rules::DEFAULT_RULES_KEY] ?? [];
         }
 
         if (empty($rulesForValue)) {
@@ -186,7 +186,7 @@ class RulesUtility
         );
 
         // we want to merge the common rules!
-        if ($rulesFromCurrentLevel[Rules::COMMON_RULES_KEY]) {
+        if (isset($rulesFromCurrentLevel[Rules::COMMON_RULES_KEY])) {
             // the first array for ArrayUtility is handled as reference, so we create a new one!
             $commonRules = [Rules::COMMON_RULES_KEY => $rulesFromCurrentLevel[Rules::COMMON_RULES_KEY]];
             ArrayUtility::mergeRecursiveWithOverrule(
@@ -213,7 +213,7 @@ class RulesUtility
         string $rulesKey
     ): array {
         if (!array_key_exists($rulesKey, $rulesForValue)) {
-            $rulesForValue[$rulesKey] = $allRules[$rulesKey];
+            $rulesForValue[$rulesKey] = $allRules[$rulesKey] ?? [];
         }
 
         return $rulesForValue;

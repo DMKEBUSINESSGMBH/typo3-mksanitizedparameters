@@ -32,7 +32,7 @@ if (!defined('TYPO3_MODE')) {
 // $rulesForFrontend
 \DMK\MkSanitizedParameters\Rules::addRulesForFrontend(
     [
-        \DMK\MkSanitizedParameters\Rules::DEFAULT_RULES_KEY => [FILTER_SANITIZE_STRING, FILTER_SANITIZE_MAGIC_QUOTES],
+        \DMK\MkSanitizedParameters\Rules::DEFAULT_RULES_KEY => [FILTER_SANITIZE_STRING, FILTER_SANITIZE_ADD_SLASHES],
         \DMK\MkSanitizedParameters\Rules::COMMON_RULES_KEY => [
             // Extbase request token für Formulare
             // JSON String

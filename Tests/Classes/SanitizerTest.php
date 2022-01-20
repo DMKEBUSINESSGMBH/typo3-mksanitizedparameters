@@ -230,7 +230,7 @@ class SanitizerTest extends AbstractTestCase
                     'parameterNameToBeSanitized' => [
                         'filter' => [
                             FILTER_SANITIZE_STRING,
-                            FILTER_SANITIZE_MAGIC_QUOTES,
+                            FILTER_SANITIZE_ADD_SLASHES,
                         ],
                         'flags' => FILTER_FLAG_ENCODE_AMP,
                     ],
@@ -247,7 +247,7 @@ class SanitizerTest extends AbstractTestCase
                 '$rules' => [
                     'parameterNameToBeSanitized' => [
                         FILTER_SANITIZE_STRING,
-                        FILTER_SANITIZE_MAGIC_QUOTES,
+                        FILTER_SANITIZE_ADD_SLASHES,
                     ],
                 ],
                 '$sanitizedData' => [

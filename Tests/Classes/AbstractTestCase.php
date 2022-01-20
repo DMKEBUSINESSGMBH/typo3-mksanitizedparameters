@@ -30,6 +30,7 @@ declare(strict_types=1);
 namespace DMK\MkSanitizedParameters;
 
 use DMK\MkSanitizedParameters\Utility\DebugUtility;
+use Prophecy\PhpUnit\ProphecyTrait;
 use ReflectionClass;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -40,6 +41,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 abstract class AbstractTestCase extends \PHPUnit\Framework\TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @var array<string, string|array>
      */

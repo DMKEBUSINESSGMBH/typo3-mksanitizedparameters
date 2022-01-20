@@ -94,7 +94,7 @@ class Sanitizer
      *      'uid' => FILTER_SANITIZE_NUMBER_INT
      *      'searchWord' => array(
      *          'filter' => array(
-     *              FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES
+     *              FILTER_SANITIZE_STRING,FILTER_SANITIZE_ADD_SLASHES
      *          ),
      *          'flags' => FILTER_FLAG_ENCODE_AMP
      *      ),
@@ -123,17 +123,17 @@ class Sanitizer
      *      // no matter at which position every parameter with the name someOtherValueToo
      *      // will be sanitized with the following configuration as long as there is no
      *      // special configuration
-     *      someOtherValueToo => array(FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES)
+     *      someOtherValueToo => array(FILTER_SANITIZE_STRING,FILTER_SANITIZE_ADD_SLASHES)
      *  ),
      *  'myExt' => array(
      *      // this will add the common rules for everything inside myExt
      *      // so the cmmon config for otherValueToo is availabe, too
      *      '__common' => array(
-     *          someOtherValueToo => array(FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES)
+     *          someOtherValueToo => array(FILTER_SANITIZE_STRING,FILTER_SANITIZE_ADD_SLASHES)
      *      ),
      *  ),
      *  '__common' => array(
-     *      otherValueToo => array(FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES)
+     *      otherValueToo => array(FILTER_SANITIZE_STRING,FILTER_SANITIZE_ADD_SLASHES)
      *  ),
      *
      *  // default parameters configuration
@@ -144,19 +144,19 @@ class Sanitizer
      *  //OR
      *  '__default' => array(
      *      'filter' => array(
-     *          FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES
+     *          FILTER_SANITIZE_STRING,FILTER_SANITIZE_ADD_SLASHES
      *      ),
      *      'flags' => FILTER_FLAG_ENCODE_AMP
      *  )
      *  //OR
      *  '__default' => array(
-     *      FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES
+     *      FILTER_SANITIZE_STRING,FILTER_SANITIZE_ADD_SLASHES
      *  ),
      *  //OR
      *  'myExt => array(
      *      // this will overwrite the default rules for everything inside myExt
      *      default' => array(
-     *          FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES
+     *          FILTER_SANITIZE_STRING,FILTER_SANITIZE_ADD_SLASHES
      *      ),
      *  ),
      * '__default' => FILTER_SANITIZE_STRING
@@ -204,7 +204,7 @@ class Sanitizer
      * '__common' => array(
      *      'commonValue' => array(
      *          'filter' => array(
-     *              FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES
+     *              FILTER_SANITIZE_STRING,FILTER_SANITIZE_ADD_SLASHES
      *          ),
      *          'flags' => FILTER_FLAG_ENCODE_AMP
      *      )
@@ -219,7 +219,7 @@ class Sanitizer
      * '__common' => array(
      *      'commonValue' => array(
      *          'filter' => array(
-     *              FILTER_SANITIZE_STRING,FILTER_SANITIZE_MAGIC_QUOTES
+     *              FILTER_SANITIZE_STRING,FILTER_SANITIZE_ADD_SLASHES
      *          ),
      *          'flags' => FILTER_FLAG_ENCODE_AMP
      *      )
