@@ -47,7 +47,7 @@ if (!defined('TYPO3_MODE')) {
             'uid' => FILTER_SANITIZE_NUMBER_INT,
             // JSON String
             '__trustedProperties' => FILTER_UNSAFE_RAW,
-            //for extbase since https://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2016-013/
+            // for extbase since https://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2016-013/
             '@request' => FILTER_UNSAFE_RAW,
             '@vendor' => FILTER_UNSAFE_RAW,
             // Passwörter sollten alles enthalten dürfen. Das sollte vor dem schreiben in die

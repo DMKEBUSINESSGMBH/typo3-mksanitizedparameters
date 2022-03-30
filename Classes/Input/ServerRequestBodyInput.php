@@ -46,7 +46,7 @@ class ServerRequestBodyInput extends ServerRequestQueryInput implements InputInt
         $body = $this->request->getParsedBody();
 
         if (!is_array($body)) {
-            //@TODO: sanitizing of objects not supported yet!
+            // @TODO: sanitizing of objects not supported yet!
             return false;
         }
 
