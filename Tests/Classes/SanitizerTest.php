@@ -141,8 +141,8 @@ class SanitizerTest extends AbstractTestCase
                     ],
                 ],
                 '$sanitizedData' => [
-                    'parameterInRange' => 'me&you',
-                    'parameterOutOfRange' => 'me&#38;you',
+                    'parameterInRange' => '&lt;span&gt;me&amp;you&lt;/span&gt;',
+                    'parameterOutOfRange' => '&lt;span&gt;me&amp;you&lt;/span&gt;',
                 ],
             ],
             // sanitize array by rules works correct with unconfigured values and no default rules
@@ -194,7 +194,7 @@ class SanitizerTest extends AbstractTestCase
                     ],
                     'secondExtensionQualifier' => [
                         'subArray' => [
-                            'parameterNameToBeSanitized' => 'me&#38;you',
+                            'parameterNameToBeSanitized' => '&lt;span&gt;me&amp;you&lt;/span&gt;',
                         ],
                     ],
                     'parameterNameToBeSanitizedByDefault' => 'libgd%3Cscript%3E',
@@ -236,7 +236,7 @@ class SanitizerTest extends AbstractTestCase
                     ],
                 ],
                 '$sanitizedData' => [
-                    'parameterNameToBeSanitized' => 'Is your name O&#39;reilly &#38; are sure about that?',
+                    'parameterNameToBeSanitized' => '&lt;span&gt;Is your name O&#039;reilly &amp; are sure about that?&lt;/span&gt;',
                 ],
             ],
             // sanitize array by rules works correct with several configured filters as list
@@ -251,7 +251,7 @@ class SanitizerTest extends AbstractTestCase
                     ],
                 ],
                 '$sanitizedData' => [
-                    'parameterNameToBeSanitized' => 'Is your name O&#39;reilly & are sure about that?',
+                    'parameterNameToBeSanitized' => '&lt;span&gt;Is your name O&#039;reilly &amp; are sure about that?&lt;/span&gt;',
                 ],
             ],
             // sanitize array by rules works correct with custom filter
@@ -310,7 +310,7 @@ class SanitizerTest extends AbstractTestCase
                     ],
                 ],
                 '$sanitizedData' => [
-                    'parameterNameToBeSanitized' => '&#34;1testValue&#34;',
+                    'parameterNameToBeSanitized' => '&quot;1testValue&quot;',
                 ],
             ],
             // sanitize array by rules uses default rules if no specials or commons
@@ -352,7 +352,7 @@ class SanitizerTest extends AbstractTestCase
                     ],
                 ],
                 '$sanitizedData' => [
-                    'myExt' => ['parameterNameToBeSanitized' => '&#34;1testValue&#34;'],
+                    'myExt' => ['parameterNameToBeSanitized' => '&quot;1testValue&quot;'],
                 ],
             ],
             // Sanitize Array By Rules Uses Common Rules In Sub Array Even If Common Rules In Main Array
@@ -410,7 +410,7 @@ class SanitizerTest extends AbstractTestCase
                 '$sanitizedData' => [
                     'myExt' => [
                         'parameterNameToBeSanitized' => '1',
-                        'anotherParameterNameToBeSanitized' => '&#34;1testValue&#34;',
+                        'anotherParameterNameToBeSanitized' => '&quot;1testValue&quot;',
                     ],
                 ],
             ],
