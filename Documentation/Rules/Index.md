@@ -14,7 +14,7 @@ The rules can be included/registered for example in the ext\_localconf.php like 
 \DMK\MkSanitizedParameters\Rules::addRulesForFrontend(
     [
         \DMK\MkSanitizedParameters\Rules::DEFAULT_RULES_KEY => [
-            FILTER_SANITIZE_STRING, 
+            FILTER_SANITIZE_FULL_SPECIAL_CHARS, 
             FILTER_SANITIZE_ADD_SLASHES
         ]
     ]
@@ -22,7 +22,7 @@ The rules can be included/registered for example in the ext\_localconf.php like 
 \DMK\MkSanitizedParameters\Rules::addRulesForBackend(
     [
         \DMK\MkSanitizedParameters\Rules::DEFAULT_RULES_KEY => [
-            FILTER_SANITIZE_STRING, 
+            FILTER_SANITIZE_FULL_SPECIAL_CHARS, 
             FILTER_SANITIZE_ADD_SLASHES
         ]
     ]

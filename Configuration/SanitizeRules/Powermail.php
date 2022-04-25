@@ -38,9 +38,9 @@ if (!defined('TYPO3_MODE')) {
             '__hmac' => FILTER_UNSAFE_RAW,
             '__trustedProperties' => FILTER_UNSAFE_RAW,
             '__referrer' => [
-                'extensionName' => FILTER_SANITIZE_STRING,
-                'controllerName' => FILTER_SANITIZE_STRING,
-                'actionName' => FILTER_SANITIZE_STRING,
+                'extensionName' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+                'controllerName' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+                'actionName' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             ],
             'form' => FILTER_SANITIZE_NUMBER_INT,
             'field' => [

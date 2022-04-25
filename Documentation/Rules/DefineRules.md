@@ -17,18 +17,18 @@ Filter can be defined as follows: (this is also the order in which filter config
 
 ```php
 array(
-   \DMK\MkSanitizedParameters\Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_STRING,
+   \DMK\MkSanitizedParameters\Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
    //OR
    \DMK\MkSanitizedParameters\Rules::DEFAULT_RULES_KEY => array(
       'filter' => array(
-         FILTER_SANITIZE_STRING,
+         FILTER_SANITIZE_FULL_SPECIAL_CHARS,
          FILTER_SANITIZE_ADD_SLASHES,
       ),
       'flags' => FILTER_FLAG_ENCODE_AMP,
    ),
    //OR
    \DMK\MkSanitizedParameters\Rules::DEFAULT_RULES_KEY => array(
-      FILTER_SANITIZE_STRING,
+      FILTER_SANITIZE_FULL_SPECIAL_CHARS,
       FILTER_SANITIZE_ADD_SLASHES,
    )
 );
@@ -62,7 +62,7 @@ array(
       'uid' => FILTER_SANITIZE_NUMBER_INT,
       'searchWord' => array(
          'filter' => array(
-            FILTER_SANITIZE_STRING,
+            FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             FILTER_SANITIZE_ADD_SLASHES   ,
          ),
          'flags' => FILTER_FLAG_ENCODE_AMP,
@@ -88,7 +88,7 @@ array(
       // will be sanitized with the following configuration as long as there is no
       // special configuration
       'someOtherValueToo' => array(
-          FILTER_SANITIZE_STRING,
+          FILTER_SANITIZE_FULL_SPECIAL_CHARS,
           FILTER_SANITIZE_ADD_SLASHES,
       ),
    ),
@@ -97,14 +97,14 @@ array(
       // the common config for otherValueToo is availabe, too
       \DMK\MkSanitizedParameters\Rules::COMMON_RULES_KEY => array(
          'someOtherValueToo' => array(
-             FILTER_SANITIZE_STRING,
+             FILTER_SANITIZE_FULL_SPECIAL_CHARS,
              FILTER_SANITIZE_ADD_SLASHES,
          ),
       ),
    ),
    \DMK\MkSanitizedParameters\Rules::COMMON_RULES_KEY => array(
       'otherValueToo' => array(
-          FILTER_SANITIZE_STRING,
+          FILTER_SANITIZE_FULL_SPECIAL_CHARS,
           FILTER_SANITIZE_ADD_SLASHES,
       ),
    ),
@@ -135,7 +135,7 @@ array(
     \DMK\MkSanitizedParameters\Rules::COMMON_RULES_KEY => array(
        'commonValue' => array(
           'filter' => array(
-             FILTER_SANITIZE_STRING,
+             FILTER_SANITIZE_FULL_SPECIAL_CHARS,
              FILTER_SANITIZE_ADD_SLASHES, 
           ),
           'flags'  => FILTER_FLAG_ENCODE_AMP,
@@ -163,7 +163,7 @@ array(
     \DMK\MkSanitizedParameters\Rules::COMMON_RULES_KEY => array(
        'commonValue' => array(
           'filter' => array(
-             FILTER_SANITIZE_STRING,
+             FILTER_SANITIZE_FULL_SPECIAL_CHARS,
              FILTER_SANITIZE_ADD_SLASHES,
           ),
           'flags' => FILTER_FLAG_ENCODE_AMP,
@@ -206,11 +206,11 @@ array(
    'myExt' => array(
       // this will overwrite the default rules for everything inside myExt
       'default' => array(
-         FILTER_SANITIZE_STRING,
+         FILTER_SANITIZE_FULL_SPECIAL_CHARS,
          FILTER_SANITIZE_ADD_SLASHES,
       ),
    ),
-   \DMK\MkSanitizedParameters\Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_STRING , 
+   \DMK\MkSanitizedParameters\Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_FULL_SPECIAL_CHARS , 
 );
 ```
 
@@ -242,7 +242,7 @@ array(
       'uid' => FILTER_SANITIZE_NUMBER_INT,
       'searchWord' => array(
          'filter' => array(
-            FILTER_SANITIZE_STRING,
+            FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             FILTER_SANITIZE_ADD_SLASHES,
          ),
          'flags' => FILTER_FLAG_ENCODE_AMP,
@@ -253,13 +253,13 @@ array(
          \DMK\MkSanitizedParameters\Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_NUMBER_INT,
       )
    ),
-   \DMK\MkSanitizedParameters\Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_STRING,
+   \DMK\MkSanitizedParameters\Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
    \DMK\MkSanitizedParameters\Rules::COMMON_RULES_KEY => array(
       // no matter at which position every parameter with the name someOtherValueToo
       // will be sanitized with the following configuration as long as there is no
       // special configuration
       'someOtherValueToo' => array(
-          FILTER_SANITIZE_STRING,
+          FILTER_SANITIZE_FULL_SPECIAL_CHARS,
           FILTER_SANITIZE_ADD_SLASHES,
       ),  
    ),

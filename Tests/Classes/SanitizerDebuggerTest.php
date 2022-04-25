@@ -50,7 +50,7 @@ class SanitizerDebuggerTest extends AbstractTestCase
         // enable debug mode
         $this->setExtConf(['debugMode' => 0]);
         // set common rule (all a string)
-        $this->addRules([Rules::COMMON_RULES_KEY => FILTER_SANITIZE_STRING]);
+        $this->addRules([Rules::COMMON_RULES_KEY => FILTER_SANITIZE_FULL_SPECIAL_CHARS]);
 
         $debugger = $this->prophesize(DebugUtility::class);
         $debugger->debug()->shouldNotBeCalled();
@@ -75,7 +75,7 @@ class SanitizerDebuggerTest extends AbstractTestCase
         // enable debug mode
         $this->setExtConf(['debugMode' => 0]);
         // set common rule (all a string)
-        $this->addRules([Rules::COMMON_RULES_KEY => FILTER_SANITIZE_STRING]);
+        $this->addRules([Rules::COMMON_RULES_KEY => FILTER_SANITIZE_FULL_SPECIAL_CHARS]);
 
         $debugger = $this->prophesize(DebugUtility::class);
         $debugger->debug()->shouldNotBeCalled();
@@ -100,7 +100,7 @@ class SanitizerDebuggerTest extends AbstractTestCase
         // enable debug mode
         $this->setExtConf(['debugMode' => 1]);
         // set common rule (all a string)
-        $this->addRules([Rules::COMMON_RULES_KEY => FILTER_SANITIZE_STRING]);
+        $this->addRules([Rules::COMMON_RULES_KEY => FILTER_SANITIZE_FULL_SPECIAL_CHARS]);
 
         $debugger = $this->prophesize(DebugUtility::class);
         $debugger->debug()->shouldNotBeCalled();
@@ -125,7 +125,7 @@ class SanitizerDebuggerTest extends AbstractTestCase
         // enable debug mode
         $this->setExtConf(['debugMode' => 1]);
         // set common rule (all a string)
-        $this->addRules([Rules::COMMON_RULES_KEY => FILTER_SANITIZE_STRING]);
+        $this->addRules([Rules::COMMON_RULES_KEY => FILTER_SANITIZE_FULL_SPECIAL_CHARS]);
 
         $debugger = $this->prophesize(DebugUtility::class);
         $debugger->debug(

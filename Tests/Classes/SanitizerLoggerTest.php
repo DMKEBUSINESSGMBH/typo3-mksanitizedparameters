@@ -50,7 +50,7 @@ class SanitizerLoggerTest extends AbstractTestCase
         // enable debug mode
         $this->setExtConf(['logMode' => 0]);
         // set common rule (all a string)
-        $this->addRules([Rules::COMMON_RULES_KEY => FILTER_SANITIZE_STRING]);
+        $this->addRules([Rules::COMMON_RULES_KEY => FILTER_SANITIZE_FULL_SPECIAL_CHARS]);
 
         $logger = $this->prophesize(Logger::class);
         $logger->warning()->shouldNotBeCalled();
@@ -75,7 +75,7 @@ class SanitizerLoggerTest extends AbstractTestCase
         // enable debug mode
         $this->setExtConf(['logMode' => 0]);
         // set common rule (all a string)
-        $this->addRules([Rules::COMMON_RULES_KEY => FILTER_SANITIZE_STRING]);
+        $this->addRules([Rules::COMMON_RULES_KEY => FILTER_SANITIZE_FULL_SPECIAL_CHARS]);
 
         $logger = $this->prophesize(Logger::class);
         $logger->warning()->shouldNotBeCalled();
@@ -100,7 +100,7 @@ class SanitizerLoggerTest extends AbstractTestCase
         // enable debug mode
         $this->setExtConf(['logMode' => 1]);
         // set common rule (all a string)
-        $this->addRules([Rules::COMMON_RULES_KEY => FILTER_SANITIZE_STRING]);
+        $this->addRules([Rules::COMMON_RULES_KEY => FILTER_SANITIZE_FULL_SPECIAL_CHARS]);
 
         $logger = $this->prophesize(Logger::class);
         $logger->warning()->shouldNotBeCalled();
@@ -125,7 +125,7 @@ class SanitizerLoggerTest extends AbstractTestCase
         // enable debug mode
         $this->setExtConf(['logMode' => 1]);
         // set common rule (all a string)
-        $this->addRules([Rules::COMMON_RULES_KEY => FILTER_SANITIZE_STRING]);
+        $this->addRules([Rules::COMMON_RULES_KEY => FILTER_SANITIZE_FULL_SPECIAL_CHARS]);
 
         $logger = $this->prophesize(Logger::class);
         $logger->warning(

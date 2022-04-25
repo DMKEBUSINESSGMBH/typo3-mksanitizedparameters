@@ -133,10 +133,10 @@ class SanitizerTest extends AbstractTestCase
                 ],
                 '$rules' => [
                     'parameterInRange' => [
-                        'filter' => FILTER_SANITIZE_STRING,
+                        'filter' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
                     ],
                     'parameterOutOfRange' => [
-                        'filter' => FILTER_SANITIZE_STRING,
+                        'filter' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
                         'flags' => FILTER_FLAG_ENCODE_AMP,
                     ],
                 ],
@@ -181,7 +181,7 @@ class SanitizerTest extends AbstractTestCase
                     'secondExtensionQualifier' => [
                         'subArray' => [
                             'parameterNameToBeSanitized' => [
-                                'filter' => FILTER_SANITIZE_STRING,
+                                'filter' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
                                 'flags' => FILTER_FLAG_ENCODE_AMP,
                             ],
                         ],
@@ -229,7 +229,7 @@ class SanitizerTest extends AbstractTestCase
                 '$rules' => [
                     'parameterNameToBeSanitized' => [
                         'filter' => [
-                            FILTER_SANITIZE_STRING,
+                            FILTER_SANITIZE_FULL_SPECIAL_CHARS,
                             FILTER_SANITIZE_ADD_SLASHES,
                         ],
                         'flags' => FILTER_FLAG_ENCODE_AMP,
@@ -246,7 +246,7 @@ class SanitizerTest extends AbstractTestCase
                 ],
                 '$rules' => [
                     'parameterNameToBeSanitized' => [
-                        FILTER_SANITIZE_STRING,
+                        FILTER_SANITIZE_FULL_SPECIAL_CHARS,
                         FILTER_SANITIZE_ADD_SLASHES,
                     ],
                 ],
@@ -279,7 +279,7 @@ class SanitizerTest extends AbstractTestCase
                 '$rules' => [
                     'parameterNameToBeSanitized' => FILTER_SANITIZE_NUMBER_INT,
                     Rules::COMMON_RULES_KEY => [
-                        'parameterNameToBeSanitized' => FILTER_SANITIZE_STRING,
+                        'parameterNameToBeSanitized' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
                     ],
                     Rules::DEFAULT_RULES_KEY => [
                         'filter' => FILTER_CALLBACK,
@@ -300,7 +300,7 @@ class SanitizerTest extends AbstractTestCase
                 '$rules' => [
                     'anotherParameterNameToBeSanitized' => FILTER_SANITIZE_NUMBER_INT,
                     Rules::COMMON_RULES_KEY => [
-                        'parameterNameToBeSanitized' => FILTER_SANITIZE_STRING,
+                        'parameterNameToBeSanitized' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
                     ],
                     Rules::DEFAULT_RULES_KEY => [
                         'filter' => FILTER_CALLBACK,
@@ -321,7 +321,7 @@ class SanitizerTest extends AbstractTestCase
                 '$rules' => [
                     'anotherParameterNameToBeSanitized' => FILTER_SANITIZE_NUMBER_INT,
                     Rules::COMMON_RULES_KEY => [
-                        'anotherParameterNameToBeSanitized' => FILTER_SANITIZE_STRING,
+                        'anotherParameterNameToBeSanitized' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
                     ],
                     Rules::DEFAULT_RULES_KEY => [
                         'filter' => FILTER_CALLBACK,
@@ -342,7 +342,7 @@ class SanitizerTest extends AbstractTestCase
                 '$rules' => [
                     'anotherParameterNameToBeSanitized' => FILTER_SANITIZE_NUMBER_INT,
                     Rules::COMMON_RULES_KEY => [
-                        'parameterNameToBeSanitized' => FILTER_SANITIZE_STRING,
+                        'parameterNameToBeSanitized' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
                     ],
                     Rules::DEFAULT_RULES_KEY => [
                         'filter' => FILTER_CALLBACK,
@@ -367,7 +367,7 @@ class SanitizerTest extends AbstractTestCase
                         ],
                     ],
                     Rules::COMMON_RULES_KEY => [
-                        'parameterNameToBeSanitized' => FILTER_SANITIZE_STRING,
+                        'parameterNameToBeSanitized' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
                     ],
                 ],
                 '$sanitizedData' => [
@@ -383,7 +383,7 @@ class SanitizerTest extends AbstractTestCase
                     'myExt' => [
                         Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_NUMBER_INT,
                     ],
-                    Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_STRING,
+                    Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
                 ],
                 '$sanitizedData' => [
                     'myExt' => ['parameterNameToBeSanitized' => '1'],
@@ -404,7 +404,7 @@ class SanitizerTest extends AbstractTestCase
                         ],
                     ],
                     Rules::COMMON_RULES_KEY => [
-                        'anotherParameterNameToBeSanitized' => FILTER_SANITIZE_STRING,
+                        'anotherParameterNameToBeSanitized' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
                     ],
                 ],
                 '$sanitizedData' => [
