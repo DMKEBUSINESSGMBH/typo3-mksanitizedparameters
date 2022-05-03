@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2022-05-03T08:32:42Z" product-name="mksanitizedparameters">
+		<header/>
+		<body>
+			<trans-unit id="tx_mksanitizedparameters" resname="tx_mksanitizedparameters"  approved="yes">
+				<source>Stored parameters which would be sanitized</source>
+				<target>Gespeicherte Parameter, welche bereingt werden würden</target>
+			</trans-unit>
+			<trans-unit id="tx_mksanitizedparameters.name" resname="tx_mksanitizedparameters.name"  approved="yes">
+				<source>Parameter name</source>
+				<target>Parameter Name</target>
+			</trans-unit>
+			<trans-unit id="tx_mksanitizedparameters.value" resname="tx_mksanitizedparameters.value"  approved="yes">
+				<source>Parameter value</source>
+				<target>Parameter Wert</target>
+			</trans-unit>
+			<trans-unit id="tx_mksanitizedparameters.hash" resname="tx_mksanitizedparameters.hash"  approved="yes">
+				<source>Parameter hash</source>
+				<target>Parameter Hash</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
