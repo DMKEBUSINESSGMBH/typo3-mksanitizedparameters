@@ -123,20 +123,4 @@ abstract class AbstractTestCase extends \PHPUnit\Framework\TestCase
         $debugStackReflection->setAccessible(true);
         $debugStackReflection->setValue(Factory::getDebugger(), []);
     }
-
-    /**
-     * @param array<string, int|string|array> $rules
-     */
-    protected static function addRules(array $rules)
-    {
-        switch (TYPO3_MODE) {
-            case 'FE':
-            default:
-                Rules::addRulesForFrontend($rules);
-                break;
-            case 'BE':
-                Rules::addRulesForBackend($rules);
-                break;
-        }
-    }
 }

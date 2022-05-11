@@ -29,6 +29,7 @@ declare(strict_types=1);
 
 namespace DMK\MkSanitizedParameters;
 
+use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
@@ -155,14 +156,12 @@ class Rules
      */
     public static function getRulesForCurrentEnvironment(): array
     {
-        switch (TYPO3_MODE) {
-            case 'FE':
-            default:
-                $rules = self::getRulesForFrontend();
-                break;
-            case 'BE':
-                $rules = self::getRulesForBackend();
-                break;
+        if (!(($GLOBALS['TYPO3_REQUEST'] ?? null) instanceof ServerRequestInterface)
+            || ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isFrontend()
+        ) {
+            $rules = self::getRulesForFrontend();
+        } else {
+            $rules = self::getRulesForBackend();
         }
 
         return $rules;

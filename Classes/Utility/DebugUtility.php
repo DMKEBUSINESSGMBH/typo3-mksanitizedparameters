@@ -28,6 +28,7 @@
 namespace DMK\MkSanitizedParameters\Utility;
 
 use DMK\MkSanitizedParameters\Factory;
+use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -87,7 +88,9 @@ class DebugUtility implements SingletonInterface
             $this->echoDebug(...$stackEntry);
         }
 
-        if (TYPO3_MODE == 'FE') {
+        if (($GLOBALS['TYPO3_REQUEST'] ?? null) instanceof ServerRequestInterface
+            && ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isFrontend()
+        ) {
             $GLOBALS['TYPO3_CONF_VARS']['FE']['compressionLevel'] = 0;
             ob_flush();
         }
