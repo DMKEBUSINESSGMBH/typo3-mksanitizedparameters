@@ -30,6 +30,7 @@ declare(strict_types=1);
 namespace DMK\MkSanitizedParameters;
 
 use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Core\Http\ApplicationType;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
@@ -41,6 +42,7 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
+ * @SuppressWarnings(PHPMD.Superglobals)
  */
 class Rules
 {
@@ -159,12 +161,10 @@ class Rules
         if (!(($GLOBALS['TYPO3_REQUEST'] ?? null) instanceof ServerRequestInterface)
             || ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isFrontend()
         ) {
-            $rules = self::getRulesForFrontend();
-        } else {
-            $rules = self::getRulesForBackend();
+            return self::getRulesForFrontend();
         }
 
-        return $rules;
+        return self::getRulesForBackend();
     }
 
     /**

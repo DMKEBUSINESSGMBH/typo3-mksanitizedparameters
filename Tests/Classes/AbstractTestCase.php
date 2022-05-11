@@ -123,4 +123,12 @@ abstract class AbstractTestCase extends \PHPUnit\Framework\TestCase
         $debugStackReflection->setAccessible(true);
         $debugStackReflection->setValue(Factory::getDebugger(), []);
     }
+
+    /**
+     * @param array<string, int|string|array> $rules
+     */
+    protected static function addRules(array $rules)
+    {
+        Rules::addRulesForFrontend($rules);
+    }
 }

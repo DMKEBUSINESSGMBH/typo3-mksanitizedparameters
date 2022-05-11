@@ -29,6 +29,7 @@ namespace DMK\MkSanitizedParameters\Utility;
 
 use DMK\MkSanitizedParameters\Factory;
 use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Core\Http\ApplicationType;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
