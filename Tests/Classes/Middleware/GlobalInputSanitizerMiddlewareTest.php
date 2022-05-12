@@ -37,14 +37,12 @@ use DMK\MkSanitizedParameters\Input\ServerRequestQueryInput;
 use DMK\MkSanitizedParameters\Monitor;
 use DMK\MkSanitizedParameters\Sanitizer;
 use DMK\MkSanitizedParameters\SanitizerTest;
-use DMK\MkSanitizedParameters\Utility\Typo3Utility;
 use Prophecy\Argument;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use TYPO3\CMS\Core\Http\ServerRequest;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 
 /**
  * @author Michael Wagner
@@ -53,29 +51,20 @@ use TYPO3\CMS\Core\Utility\VersionNumberUtility;
  */
 class GlobalInputSanitizerMiddlewareTest extends AbstractTestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        if (!Typo3Utility::isTypo3Version9OrHigher()) {
-            $this->markTestSkipped(
-                'Middleware support was added in TYPO3 9.'
-                .' We skip tests for '.VersionNumberUtility::getCurrentTypo3Version().'.'
-            );
-        }
-    }
-
     /**
      * @test
      * @group unit
      */
     public function processCallsMonitorCorrect()
     {
+        self::assertNull($GLOBALS['TYPO3_REQUEST'] ?? null);
+
         $this->setExtConf(['stealthMode' => '1', 'stealthModeStoragePid' => '14']);
 
         $middleware = new GlobalInputSanitizerMiddleware();
         $response = $this->prophesize(ResponseInterface::class);
         $request = $this->prophesize(ServerRequestInterface::class);
+        $request->getAttribute('applicationType')->willReturn(1);
         $handler = $this->prophesize(RequestHandlerInterface::class);
         $handler->handle($request->reveal())->shouldBeCalledOnce()->willReturn($response->reveal());
         $monitor = $this->prophesize(Monitor::class);
@@ -98,6 +87,8 @@ class GlobalInputSanitizerMiddlewareTest extends AbstractTestCase
             $response->reveal(),
             $middleware->process($request->reveal(), $handler->reveal())
         );
+
+        self::assertInstanceOf(ServerRequestInterface::class, $GLOBALS['TYPO3_REQUEST']);
     }
 
     /**
@@ -106,11 +97,14 @@ class GlobalInputSanitizerMiddlewareTest extends AbstractTestCase
      */
     public function processCallsSanitizerCorrect()
     {
+        self::assertNull($GLOBALS['TYPO3_REQUEST'] ?? null);
+
         $this->setExtConf(['stealthMode' => '0']);
 
         $middleware = new GlobalInputSanitizerMiddleware();
 
         $request = $this->prophesize(ServerRequestInterface::class);
+        $request->getAttribute('applicationType')->willReturn(1);
         $response = $this->prophesize(ResponseInterface::class);
         $handler = $this->prophesize(RequestHandlerInterface::class);
         $handler->handle($request->reveal())->shouldBeCalledOnce()->willReturn($response->reveal());
@@ -142,6 +136,8 @@ class GlobalInputSanitizerMiddlewareTest extends AbstractTestCase
             $response->reveal(),
             $middleware->process($request->reveal(), $handler->reveal())
         );
+
+        self::assertInstanceOf(ServerRequestInterface::class, $GLOBALS['TYPO3_REQUEST']);
     }
 
     /**
@@ -162,6 +158,7 @@ class GlobalInputSanitizerMiddlewareTest extends AbstractTestCase
         $request = new ServerRequest();
         $request = $request->withQueryParams($inputData);
         $request = $request->withParsedBody($inputData);
+        $request = $request->withAttribute('applicationType', 1);
 
         $response = $this->prophesize(ResponseInterface::class);
         $handler = $this->prophesize(RequestHandlerInterface::class);

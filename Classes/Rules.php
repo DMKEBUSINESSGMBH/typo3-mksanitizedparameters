@@ -42,7 +42,6 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
- * @SuppressWarnings(PHPMD.Superglobals)
  */
 class Rules
 {
@@ -155,6 +154,7 @@ class Rules
      * the default environment is Frontend.
      *
      * @return array<string, mixed>
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public static function getRulesForCurrentEnvironment(): array
     {

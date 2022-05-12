@@ -51,6 +51,7 @@ class GlobalInputSanitizerMiddleware implements MiddlewareInterface
      * @param RequestHandlerInterface $handler
      *
      * @return ResponseInterface
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -58,6 +59,10 @@ class GlobalInputSanitizerMiddleware implements MiddlewareInterface
             Factory::createInput(GlobalGetRequestInput::class),
             Factory::createInput(GlobalPostRequestInput::class),
         ];
+
+        if (!($GLOBALS['TYPO3_REQUEST'] ?? null)) {
+            $GLOBALS['TYPO3_REQUEST'] = $request;
+        }
 
         if (Factory::getMonitor()->isEnabled()) {
             Factory::getMonitor()->monitorInput(
