@@ -43,8 +43,8 @@ if (!defined('TYPO3')) {
             'id' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             // pid kann eine kommaseparierte Liste sein
             'pid' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-            // uid sollten immer zahlen sein
-            'uid' => FILTER_SANITIZE_NUMBER_INT,
+            // uid kann für sys_file auch eine Dateipfad sein.
+            'uid' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             // JSON String
             '__trustedProperties' => FILTER_UNSAFE_RAW,
             // for extbase since https://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2016-013/
