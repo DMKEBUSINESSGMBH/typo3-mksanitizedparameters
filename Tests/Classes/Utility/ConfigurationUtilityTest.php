@@ -31,7 +31,6 @@ namespace DMK\MkSanitizedParameters\Utility;
 
 use DMK\MkSanitizedParameters\AbstractTestCase;
 use DMK\MkSanitizedParameters\Factory;
-use ReflectionObject;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -44,6 +43,7 @@ class ConfigurationUtilityTest extends AbstractTestCase
 {
     /**
      * @test
+     *
      * @group unit
      */
     public function isDebugModeFalse()
@@ -54,6 +54,7 @@ class ConfigurationUtilityTest extends AbstractTestCase
 
     /**
      * @test
+     *
      * @group unit
      */
     public function isDebugModeTrue()
@@ -64,6 +65,7 @@ class ConfigurationUtilityTest extends AbstractTestCase
 
     /**
      * @test
+     *
      * @group unit
      */
     public function isLogModeFalse()
@@ -74,6 +76,7 @@ class ConfigurationUtilityTest extends AbstractTestCase
 
     /**
      * @test
+     *
      * @group unit
      */
     public function isLogModeModeTrue()
@@ -84,6 +87,7 @@ class ConfigurationUtilityTest extends AbstractTestCase
 
     /**
      * @test
+     *
      * @group unit
      */
     public function isStealthModeFalse()
@@ -94,6 +98,7 @@ class ConfigurationUtilityTest extends AbstractTestCase
 
     /**
      * @test
+     *
      * @group unit
      */
     public function isStealthModeTrue()
@@ -104,6 +109,7 @@ class ConfigurationUtilityTest extends AbstractTestCase
 
     /**
      * @test
+     *
      * @group unit
      */
     public function isStealthModeFive()
@@ -114,6 +120,7 @@ class ConfigurationUtilityTest extends AbstractTestCase
 
     /**
      * @test
+     *
      * @group unit
      */
     public function isStealthModeSeven()
@@ -124,7 +131,9 @@ class ConfigurationUtilityTest extends AbstractTestCase
 
     /**
      * @test
+     *
      * @group unit
+     *
      * @dataProvider getExtensionConfigurationLoadsCorrectData
      */
     public function getExtensionConfigurationLoadsCorrect(
@@ -136,7 +145,7 @@ class ConfigurationUtilityTest extends AbstractTestCase
     ) {
         $config = \DMK\MkSanitizedParameters\Factory::getConfiguration();
         // now override the extconf array property
-        $configReflection = new ReflectionObject($config);
+        $configReflection = new \ReflectionObject($config);
         $extensionConfigurationProperty = $configReflection->getProperty('extensionConfiguration');
         $extensionConfigurationProperty->setAccessible(true);
         $extensionConfigurationProperty->setValue($config, null);

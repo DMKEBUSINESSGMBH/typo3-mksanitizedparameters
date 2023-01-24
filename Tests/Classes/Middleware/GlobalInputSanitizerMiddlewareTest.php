@@ -53,6 +53,7 @@ class GlobalInputSanitizerMiddlewareTest extends AbstractTestCase
 {
     /**
      * @test
+     *
      * @group unit
      */
     public function processCallsMonitorCorrect()
@@ -93,6 +94,7 @@ class GlobalInputSanitizerMiddlewareTest extends AbstractTestCase
 
     /**
      * @test
+     *
      * @group unit
      */
     public function processCallsSanitizerCorrect()
@@ -142,7 +144,9 @@ class GlobalInputSanitizerMiddlewareTest extends AbstractTestCase
 
     /**
      * @test
+     *
      * @group unit
+     *
      * @dataProvider getProcessCallsSanitizerAndSanitizesCorrectByRulesData
      */
     public function processCallsSanitizerAndSanitizesCorrectByRules(

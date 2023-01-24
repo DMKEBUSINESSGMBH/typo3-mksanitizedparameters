@@ -42,6 +42,7 @@ class MonitorTest extends AbstractTestCase
 {
     /**
      * @test
+     *
      * @group unit
      */
     public function monitorInputChecksIsSanitizingNecessaryAndDoNotCallInsertInput()
@@ -61,6 +62,7 @@ class MonitorTest extends AbstractTestCase
 
     /**
      * @test
+     *
      * @group unit
      */
     public function monitorInputCallsInsertInput()

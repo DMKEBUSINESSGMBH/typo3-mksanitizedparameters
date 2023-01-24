@@ -31,7 +31,6 @@ namespace DMK\MkSanitizedParameters;
 
 use DMK\MkSanitizedParameters\Utility\DebugUtility;
 use Prophecy\PhpUnit\ProphecyTrait;
-use ReflectionClass;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -84,7 +83,7 @@ abstract class AbstractTestCase extends \PHPUnit\Framework\TestCase
     {
         $config = \DMK\MkSanitizedParameters\Factory::getConfiguration();
         // now override the extconf array property
-        $reflector = new ReflectionClass(get_class($config));
+        $reflector = new \ReflectionClass(get_class($config));
         $property = $reflector->getProperty('extensionConfiguration');
         $property->setAccessible(true);
         $property->setValue(
@@ -101,7 +100,7 @@ abstract class AbstractTestCase extends \PHPUnit\Framework\TestCase
      */
     protected static function resetRules()
     {
-        $rulesReflection = new ReflectionClass(Rules::class);
+        $rulesReflection = new \ReflectionClass(Rules::class);
 
         $rulesForFrontend = $rulesReflection->getProperty('rulesForFrontend');
         $rulesForFrontend->setAccessible(true);
@@ -118,7 +117,7 @@ abstract class AbstractTestCase extends \PHPUnit\Framework\TestCase
     protected static function resetDebugger()
     {
         // first remove all debugs
-        $debuggerReflection = new ReflectionClass(DebugUtility::class);
+        $debuggerReflection = new \ReflectionClass(DebugUtility::class);
         $debugStackReflection = $debuggerReflection->getProperty('debugStack');
         $debugStackReflection->setAccessible(true);
         $debugStackReflection->setValue(Factory::getDebugger(), []);

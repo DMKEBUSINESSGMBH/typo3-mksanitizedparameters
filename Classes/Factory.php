@@ -35,7 +35,6 @@ use DMK\MkSanitizedParameters\Utility\ConfigurationUtility;
 use DMK\MkSanitizedParameters\Utility\DebugUtility;
 use DMK\MkSanitizedParameters\Utility\FilterUtility;
 use DMK\MkSanitizedParameters\Utility\RulesUtility;
-use InvalidArgumentException;
 use TYPO3\CMS\Core\Log\Logger;
 use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -94,10 +93,10 @@ final class Factory
 
         if (!$input instanceof InputInterface) {
             $errorMessage = sprintf(
-                'The input "%1$s" '.'has to implement the "%2$s" interface',
+                'The input "%1$s" has to implement the "%2$s" interface',
                 ...[get_class($input), InputInterface::class]
             );
-            throw new InvalidArgumentException($errorMessage);
+            throw new \InvalidArgumentException($errorMessage);
         }
 
         return $input;

@@ -154,6 +154,7 @@ class Rules
      * the default environment is Frontend.
      *
      * @return array<string, mixed>
+     *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
     public static function getRulesForCurrentEnvironment(): array

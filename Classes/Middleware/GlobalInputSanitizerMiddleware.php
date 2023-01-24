@@ -51,6 +51,7 @@ class GlobalInputSanitizerMiddleware implements MiddlewareInterface
      * @param RequestHandlerInterface $handler
      *
      * @return ResponseInterface
+     *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface

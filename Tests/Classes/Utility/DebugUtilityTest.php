@@ -30,7 +30,6 @@ declare(strict_types=1);
 namespace DMK\MkSanitizedParameters\Utility;
 
 use DMK\MkSanitizedParameters\AbstractTestCase;
-use ReflectionObject;
 
 /**
  * @author Michael Wagner
@@ -41,6 +40,7 @@ class DebugUtilityTest extends AbstractTestCase
 {
     /**
      * @test
+     *
      * @group unit
      */
     public function debugDoesNotEchoButDesctructDoes()
@@ -102,7 +102,7 @@ class DebugUtilityTest extends AbstractTestCase
                 ]
             );
 
-        $debuggerReflection = new ReflectionObject($debugger);
+        $debuggerReflection = new \ReflectionObject($debugger);
         $debugStackReflection = $debuggerReflection->getProperty('debugStack');
         $debugStackReflection->setAccessible(true);
 

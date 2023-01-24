@@ -38,6 +38,7 @@ class RulesTest extends AbstractTestCase
 {
     /**
      * @test
+     *
      * @group unit
      */
     public function addingRulesInFrontend()
@@ -50,6 +51,7 @@ class RulesTest extends AbstractTestCase
 
     /**
      * @test
+     *
      * @group unit
      */
     public function addingRulesInBackend()
@@ -62,6 +64,7 @@ class RulesTest extends AbstractTestCase
 
     /**
      * @test
+     *
      * @group unit
      */
     public function getRulesForCurrentEnvironment()
@@ -76,6 +79,7 @@ class RulesTest extends AbstractTestCase
 
     /**
      * @test
+     *
      * @group unit
      */
     public function addRulesWithSeveralSubsequentCalls()
@@ -89,6 +93,7 @@ class RulesTest extends AbstractTestCase
 
     /**
      * @test
+     *
      * @group unit
      */
     public function addRulesWithSeveralSubsequentCallsOverwrittingCorrect()
@@ -102,6 +107,7 @@ class RulesTest extends AbstractTestCase
 
     /**
      * @test
+     *
      * @group unit
      */
     public function commonRulesAreMergedCorrectWhenAdded()

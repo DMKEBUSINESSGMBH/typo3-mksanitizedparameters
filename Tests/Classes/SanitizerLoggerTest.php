@@ -43,6 +43,7 @@ class SanitizerLoggerTest extends AbstractTestCase
 {
     /**
      * @test
+     *
      * @group unit
      */
     public function sanitizeInputDoesNotCallLoggerIfLoggerNotEnabledAndValueNotChanged()
@@ -68,6 +69,7 @@ class SanitizerLoggerTest extends AbstractTestCase
 
     /**
      * @test
+     *
      * @group unit
      */
     public function sanitizeInputDoesNotCallLoggerIfLoggingNotEnabledAndValueChanged()
@@ -93,6 +95,7 @@ class SanitizerLoggerTest extends AbstractTestCase
 
     /**
      * @test
+     *
      * @group unit
      */
     public function sanitizeInputDoesNotCallLoggerIfLoggingEnabledAndValueNotChanged()
@@ -118,6 +121,7 @@ class SanitizerLoggerTest extends AbstractTestCase
 
     /**
      * @test
+     *
      * @group unit
      */
     public function sanitizeInputCallsLoggerCorrectIfLoggingEnabledAndValueChanged()

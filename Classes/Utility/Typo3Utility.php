@@ -48,7 +48,7 @@ final class Typo3Utility
     public static function isTypo3Version9OrHigher()
     {
         return VersionNumberUtility::convertVersionNumberToInteger(
-                VersionNumberUtility::getNumericTypo3Version()
-            ) >= 9000000;
+            VersionNumberUtility::getNumericTypo3Version()
+        ) >= 9000000;
     }
 }

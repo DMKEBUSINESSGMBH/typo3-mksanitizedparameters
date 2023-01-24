@@ -117,7 +117,7 @@ class DebugUtility implements SingletonInterface
 
         return $remoteAddr === $devIpMask || GeneralUtility::cmpIP(
             $remoteAddr,
-                $devIpMask
+            $devIpMask
         );
     }
 }

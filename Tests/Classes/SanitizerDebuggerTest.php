@@ -43,6 +43,7 @@ class SanitizerDebuggerTest extends AbstractTestCase
 {
     /**
      * @test
+     *
      * @group unit
      */
     public function sanitizeInputDoesNotCallDebuggerIfDebuggingNotEnabledAndValueNotChanged()
@@ -68,6 +69,7 @@ class SanitizerDebuggerTest extends AbstractTestCase
 
     /**
      * @test
+     *
      * @group unit
      */
     public function sanitizeInputDoesNotCallDebuggerIfDebuggingNotEnabledAndValueChanged()
@@ -93,6 +95,7 @@ class SanitizerDebuggerTest extends AbstractTestCase
 
     /**
      * @test
+     *
      * @group unit
      */
     public function sanitizeInputDoesNotCallDebuggerIfDebuggingEnabledAndValueNotChanged()
@@ -118,6 +121,7 @@ class SanitizerDebuggerTest extends AbstractTestCase
 
     /**
      * @test
+     *
      * @group unit
      */
     public function sanitizeInputCallsDebuggerCorrectIfDebuggingEnabledAndValueChanged()

@@ -41,7 +41,9 @@ class SanitizerTest extends AbstractTestCase
 {
     /**
      * @test
+     *
      * @group unit
+     *
      * @dataProvider getSanitizeInputData
      */
     public function sanitizeInputSanitizesCorrectByRules(
