@@ -32,7 +32,7 @@ if (!defined('TYPO3')) {
 // $rulesForCaretaker
 \DMK\MkSanitizedParameters\Rules::addRulesForFrontend(
     [
-        'st' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+        'st' => FILTER_SANITIZE_SPECIAL_CHARS,
         'd' => FILTER_UNSAFE_RAW,
         's' => FILTER_UNSAFE_RAW,
     ]

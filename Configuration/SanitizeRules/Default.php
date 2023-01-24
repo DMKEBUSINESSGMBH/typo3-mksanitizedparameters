@@ -32,7 +32,7 @@ if (!defined('TYPO3')) {
 // $rulesForFrontend
 \DMK\MkSanitizedParameters\Rules::addRulesForFrontend(
     [
-        \DMK\MkSanitizedParameters\Rules::DEFAULT_RULES_KEY => [FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_SANITIZE_ADD_SLASHES],
+        \DMK\MkSanitizedParameters\Rules::DEFAULT_RULES_KEY => [FILTER_SANITIZE_SPECIAL_CHARS, FILTER_SANITIZE_ADD_SLASHES],
         \DMK\MkSanitizedParameters\Rules::COMMON_RULES_KEY => [
             // Extbase request token für Formulare
             // JSON String
@@ -40,9 +40,9 @@ if (!defined('TYPO3')) {
             // wird nur mkforms intern verwendet
             // JSON String
             'AMEOSFORMIDABLE_ADDPOSTVARS' => FILTER_UNSAFE_RAW,
-            'id' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'id' => FILTER_SANITIZE_SPECIAL_CHARS,
             // pid kann eine kommaseparierte Liste sein
-            'pid' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'pid' => FILTER_SANITIZE_SPECIAL_CHARS,
             // uid sollten immer zahlen sein
             'uid' => FILTER_SANITIZE_NUMBER_INT,
             // JSON String
@@ -62,7 +62,7 @@ if (!defined('TYPO3')) {
 \DMK\MkSanitizedParameters\Rules::addRulesForBackend(
     [
         \DMK\MkSanitizedParameters\Rules::COMMON_RULES_KEY => [
-            'pid' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'pid' => FILTER_SANITIZE_SPECIAL_CHARS,
         ],
     ]
 );

@@ -37,16 +37,16 @@ if (!defined('TYPO3')) {
             // JSON String
             '__hmac' => FILTER_UNSAFE_RAW,
             '__referrer' => [
-                'extensionName' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-                'controllerName' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-                'actionName' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+                'extensionName' => FILTER_SANITIZE_SPECIAL_CHARS,
+                'controllerName' => FILTER_SANITIZE_SPECIAL_CHARS,
+                'actionName' => FILTER_SANITIZE_SPECIAL_CHARS,
             ],
             'recommendation' => [
-                'receiverLastName' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+                'receiverLastName' => FILTER_SANITIZE_SPECIAL_CHARS,
                 'receiverMail' => FILTER_SANITIZE_EMAIL,
-                'senderLastName' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+                'senderLastName' => FILTER_SANITIZE_SPECIAL_CHARS,
                 'senderMail' => FILTER_SANITIZE_EMAIL,
-                'message' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+                'message' => FILTER_SANITIZE_SPECIAL_CHARS,
                 'url' => FILTER_SANITIZE_URL,
             ],
         ],
