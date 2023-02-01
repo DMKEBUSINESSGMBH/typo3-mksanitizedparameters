@@ -115,6 +115,13 @@ class Rules
                 'Configuration/SanitizeRules/Form.php'
             );
         }
+
+        if (ExtensionManagementUtility::isLoaded('webkitpdf')) {
+            require_once ExtensionManagementUtility::extPath(
+                'mksanitizedparameters',
+                'Configuration/SanitizeRules/Webkitpdf.php'
+            );
+        }
     }
 
     /**
