@@ -88,13 +88,6 @@ class Rules
             'Configuration/SanitizeRules/Default.php'
         );
 
-        if (ExtensionManagementUtility::isLoaded('caretaker_instance')) {
-            require_once ExtensionManagementUtility::extPath(
-                'mksanitizedparameters',
-                'Configuration/SanitizeRules/CaretakerInstance.php'
-            );
-        }
-
         if (ExtensionManagementUtility::isLoaded('mksearch')) {
             require_once ExtensionManagementUtility::extPath(
                 'mksanitizedparameters',

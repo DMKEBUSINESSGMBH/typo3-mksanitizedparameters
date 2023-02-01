@@ -41,16 +41,6 @@ Frontend
     -   mksearch[term]  
         -   Raw
 
--   caretaker (\_instance)  
-    -   st  
-        -   String
-
-    -   d  
-        -   Raw
-
-    -   s  
-        -   Raw
-
 -   fluid\_recommendation  
     -   tx\_fluidrecommendation\_pi1[url]  
         -   URL
