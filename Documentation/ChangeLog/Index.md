@@ -3,6 +3,9 @@ ChangeLog
 
 The following is a very high level overview of the changes in this extension.
 
+v11.0.7
+* drop support for obsolete caretaker_instance and add support for webkitpdf
+
 v11.0.1 - v11.0.6
 * bugfixes
 
