@@ -1,4 +1,4 @@
-MkSanitizedParameters
+MK Sanitized Parameters
 =====================
 
 ![TYPO3 compatibility](https://img.shields.io/badge/TYPO3-10.4%20%7C%2011.5-orange?maxAge=3600&style=flat-square&logo=typo3)
