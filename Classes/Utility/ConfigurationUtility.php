@@ -57,20 +57,10 @@ class ConfigurationUtility implements \TYPO3\CMS\Core\SingletonInterface
     protected function getExtensionConfiguration($key, $default = null)
     {
         if (null === $this->extensionConfiguration) {
-            $this->extensionConfiguration = [];
-
-            if (!empty($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mksanitizedparameters'])) {
-                $this->extensionConfiguration = unserialize(
-                    $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mksanitizedparameters']
-                );
-            }
-
-            if (Typo3Utility::isTypo3Version9OrHigher()) {
-                $this->extensionConfiguration = Factory::makeInstance(ExtensionConfiguration::class)->get(
-                    'mksanitizedparameters',
-                    ''
-                );
-            }
+            $this->extensionConfiguration = Factory::makeInstance(ExtensionConfiguration::class)->get(
+                'mksanitizedparameters',
+                ''
+            );
         }
 
         if (empty($this->extensionConfiguration[$key])) {

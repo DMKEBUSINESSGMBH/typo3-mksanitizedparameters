@@ -151,14 +151,12 @@ class ConfigurationUtilityTest extends AbstractTestCase
         $extensionConfigurationProperty->setValue($config, null);
 
         // config loading for typo3 9 or later
-        if (Typo3Utility::isTypo3Version9OrHigher()) {
-            $extensionConfiguration = $this->prophesize(ExtensionConfiguration::class);
-            $extensionConfiguration
-                ->get('mksanitizedparameters', '')
-                ->shouldBeCalledOnce()
-                ->willReturn($configuration);
-            GeneralUtility::addInstance(ExtensionConfiguration::class, $extensionConfiguration->reveal());
-        }
+        $extensionConfiguration = $this->prophesize(ExtensionConfiguration::class);
+        $extensionConfiguration
+            ->get('mksanitizedparameters', '')
+            ->shouldBeCalledOnce()
+            ->willReturn($configuration);
+        GeneralUtility::addInstance(ExtensionConfiguration::class, $extensionConfiguration->reveal());
 
         $extensionConfigurationMethod = $configReflection->getMethod('getExtensionConfiguration');
         $extensionConfigurationMethod->setAccessible(true);
