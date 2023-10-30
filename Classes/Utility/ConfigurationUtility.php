@@ -42,7 +42,7 @@ class ConfigurationUtility implements \TYPO3\CMS\Core\SingletonInterface
     /**
      * @var array<string, string>
      */
-    protected $extensionConfiguration = null;
+    protected $extensionConfiguration;
 
     /**
      * The extension configuration!

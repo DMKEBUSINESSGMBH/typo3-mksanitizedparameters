@@ -47,15 +47,10 @@ $EM_CONF['mksanitizedparameters'] = [
     'lockType' => '',
     'constraints' => [
         'depends' => [
-            'typo3' => '10.4.0-11.5.99',
+            'typo3' => '11.5.7-12.4.99',
         ],
         'conflicts' => [],
         'suggests' => [],
     ],
     'suggests' => [],
-    'autoload' => [
-        'psr-4' => [
-            'DMK\\MkSanitizedParameters\\' => 'Classes',
-        ],
-    ],
 ];

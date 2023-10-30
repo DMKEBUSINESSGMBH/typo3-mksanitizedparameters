@@ -79,13 +79,13 @@ class FilterUtility
     }
 
     /**
-     * @param mixed                         $valueToSanitize
-     * @param int|string                    $filter
-     * @param int|array<string, mixed>|null $filterConfig
+     * @param mixed                    $valueToSanitize
+     * @param int|string               $filter
+     * @param int|array<string, mixed> $filterConfig
      *
      * @return mixed
      */
-    private function filterValue($valueToSanitize, $filter = FILTER_DEFAULT, $filterConfig = null)
+    private function filterValue($valueToSanitize, $filter = FILTER_DEFAULT, $filterConfig = 0)
     {
         // for wrong filter we clear the value
         // @see testSanitizeArrayByRulesWithRulesForSubArrayButSubArrayParameterItSelfIsGivenCastsFilterArrayConfigToIntegerResultingInEmptiedValue
@@ -143,9 +143,9 @@ class FilterUtility
         // @TODO: remove after dropping support for php 7.2 and add support for php 8
         // @see https://wiki.php.net/rfc/deprecations_php_7_4#filter_sanitize_magic_quotes
         if (
-            defined('FILTER_SANITIZE_MAGIC_QUOTES') &&
-            constant('FILTER_SANITIZE_MAGIC_QUOTES') === $filter &&
-            defined('FILTER_SANITIZE_ADD_SLASHES')
+            defined('FILTER_SANITIZE_MAGIC_QUOTES')
+            && constant('FILTER_SANITIZE_MAGIC_QUOTES') === $filter
+            && defined('FILTER_SANITIZE_ADD_SLASHES')
         ) {
             $filter = (int) constant('FILTER_SANITIZE_ADD_SLASHES');
         }
@@ -156,7 +156,7 @@ class FilterUtility
     /**
      * @param array<int|string, mixed> $config
      *
-     * @return int|array<string, mixed>|null
+     * @return int|array<string, mixed>
      */
     protected function normalizeFilterConfig(array $config)
     {
@@ -171,10 +171,6 @@ class FilterUtility
         }
         if (isset($config['options'])) {
             $normalized['options'] = $config['options'];
-        }
-
-        if (empty($normalized)) {
-            return null;
         }
 
         return $normalized;

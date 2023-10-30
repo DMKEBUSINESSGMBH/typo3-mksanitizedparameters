@@ -48,13 +48,11 @@ class DebugUtilityTest extends AbstractTestCase
         $debugs = [
             [
                 ['data' => 'test'],
-                'Debug',
-                'MkSanitizedParameters',
+                'MkSanitizedParameters Debug',
             ],
             [
                 ['data' => 'another test'],
-                'Debugging',
-                'MkSanitizedParametersTestCase',
+                'MkSanitizedParameters Debugging',
             ],
         ];
 
@@ -67,7 +65,7 @@ class DebugUtilityTest extends AbstractTestCase
                 ...[
                     $this->callback(
                         function ($data) use ($debugs, &$echoDebugCall) {
-                            $echoDebugCall = $echoDebugCall + 1;
+                            ++$echoDebugCall;
                             $this->assertSame(
                                 $debugs[$echoDebugCall][0],
                                 $data,
@@ -83,17 +81,6 @@ class DebugUtilityTest extends AbstractTestCase
                                 $debugs[$echoDebugCall][1],
                                 $header,
                                 'Header of call '.($echoDebugCall + 1).' are wrong.'
-                            );
-
-                            return true;
-                        }
-                    ),
-                    $this->callback(
-                        function ($group) use ($debugs, &$echoDebugCall) {
-                            $this->assertSame(
-                                $debugs[$echoDebugCall][2],
-                                $group,
-                                'Group of call '.($echoDebugCall + 1).' are wrong.'
                             );
 
                             return true;

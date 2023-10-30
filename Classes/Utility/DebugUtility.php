@@ -55,11 +55,10 @@ class DebugUtility implements SingletonInterface
      *
      * @param array<string, mixed> $data
      * @param string               $header
-     * @param string               $group
      */
-    public function debug(array $data, string $header = 'Debug', string $group = 'MkSanitizedParameters'): void
+    public function debug(array $data, string $header = 'MkSanitizedParameters Debug'): void
     {
-        $this->debugStack[] = [$data, $header, $group];
+        $this->debugStack[] = [$data, $header];
     }
 
     /**
@@ -67,11 +66,10 @@ class DebugUtility implements SingletonInterface
      *
      * @param mixed  $data
      * @param string $header
-     * @param string $group
      */
-    public function echoDebug($data, string $header = 'Debug', string $group = 'MkSanitizedParameters'): void
+    public function echoDebug($data, string $header = 'MkSanitizedParameters Debug'): void
     {
-        \TYPO3\CMS\Core\Utility\DebugUtility::debug($data, $header, $group);
+        \TYPO3\CMS\Core\Utility\DebugUtility::debug($data, $header);
     }
 
     /**
