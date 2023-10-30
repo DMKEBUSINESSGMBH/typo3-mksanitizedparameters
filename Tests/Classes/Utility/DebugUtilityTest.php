@@ -112,7 +112,7 @@ class DebugUtilityTest extends AbstractTestCase
         );
 
         // now we simulate the php shutdown and the core debugger should be called twice
-        $debugger->__destruct();
+        $debugger->processDebugStack();
 
         // after shut down there should be no stack
         $this->assertCount(

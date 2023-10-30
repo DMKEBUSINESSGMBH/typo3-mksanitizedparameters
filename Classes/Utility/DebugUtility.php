@@ -28,8 +28,6 @@
 namespace DMK\MkSanitizedParameters\Utility;
 
 use DMK\MkSanitizedParameters\Factory;
-use Psr\Http\Message\ServerRequestInterface;
-use TYPO3\CMS\Core\Http\ApplicationType;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -73,25 +71,17 @@ class DebugUtility implements SingletonInterface
     }
 
     /**
-     * Echos out debug information as HTML (or plain in CLI context)
-     * after class destruction (after typo3 is ready and php shuts down).
+     * Echos out debug information as HTML (or plain in CLI context).
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    public function __destruct()
+    public function processDebugStack(): void
     {
         $debugStack = $this->debugStack;
         $this->debugStack = [];
 
         foreach ($debugStack as $stackEntry) {
             $this->echoDebug(...$stackEntry);
-        }
-
-        if (($GLOBALS['TYPO3_REQUEST'] ?? null) instanceof ServerRequestInterface
-            && ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isFrontend()
-        ) {
-            $GLOBALS['TYPO3_CONF_VARS']['FE']['compressionLevel'] = 0;
-            ob_flush();
         }
     }
 
