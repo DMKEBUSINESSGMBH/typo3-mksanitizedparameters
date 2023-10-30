@@ -159,8 +159,8 @@ class Rules
      */
     public static function getRulesForCurrentEnvironment(): array
     {
-        if (!(($GLOBALS['TYPO3_REQUEST'] ?? null) instanceof ServerRequestInterface)
-            || ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isFrontend()
+        if ((($GLOBALS['TYPO3_REQUEST'] ?? null) instanceof ServerRequestInterface)
+            && ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isFrontend()
         ) {
             return self::getRulesForFrontend();
         }

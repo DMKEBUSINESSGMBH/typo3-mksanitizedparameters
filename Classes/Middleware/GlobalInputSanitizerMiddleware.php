@@ -61,10 +61,6 @@ class GlobalInputSanitizerMiddleware implements MiddlewareInterface
             Factory::createInput(GlobalPostRequestInput::class),
         ];
 
-        if (!($GLOBALS['TYPO3_REQUEST'] ?? null)) {
-            $GLOBALS['TYPO3_REQUEST'] = $request;
-        }
-
         if (Factory::getMonitor()->isEnabled()) {
             Factory::getMonitor()->monitorInput(
                 ...array_merge(
