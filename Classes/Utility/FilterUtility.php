@@ -143,9 +143,9 @@ class FilterUtility
         // @TODO: remove after dropping support for php 7.2 and add support for php 8
         // @see https://wiki.php.net/rfc/deprecations_php_7_4#filter_sanitize_magic_quotes
         if (
-            defined('FILTER_SANITIZE_MAGIC_QUOTES') &&
-            constant('FILTER_SANITIZE_MAGIC_QUOTES') === $filter &&
-            defined('FILTER_SANITIZE_ADD_SLASHES')
+            defined('FILTER_SANITIZE_MAGIC_QUOTES')
+            && constant('FILTER_SANITIZE_MAGIC_QUOTES') === $filter
+            && defined('FILTER_SANITIZE_ADD_SLASHES')
         ) {
             $filter = (int) constant('FILTER_SANITIZE_ADD_SLASHES');
         }

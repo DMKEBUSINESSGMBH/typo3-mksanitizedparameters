@@ -67,7 +67,7 @@ class DebugUtilityTest extends AbstractTestCase
                 ...[
                     $this->callback(
                         function ($data) use ($debugs, &$echoDebugCall) {
-                            $echoDebugCall = $echoDebugCall + 1;
+                            ++$echoDebugCall;
                             $this->assertSame(
                                 $debugs[$echoDebugCall][0],
                                 $data,

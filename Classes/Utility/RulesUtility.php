@@ -107,8 +107,8 @@ class RulesUtility
         $commonRules = null;
 
         if (!(
-            isset($rules[Rules::COMMON_RULES_KEY]) &&
-            isset($rules[Rules::COMMON_RULES_KEY][$nameToSanitize])
+            isset($rules[Rules::COMMON_RULES_KEY])
+            && isset($rules[Rules::COMMON_RULES_KEY][$nameToSanitize])
         )) {
             return $commonRules;
         }
