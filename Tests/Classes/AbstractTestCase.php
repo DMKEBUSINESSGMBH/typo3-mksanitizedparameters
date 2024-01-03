@@ -128,6 +128,6 @@ abstract class AbstractTestCase extends \PHPUnit\Framework\TestCase
      */
     protected static function addRules(array $rules)
     {
-        Rules::addRulesForFrontend($rules);
+        Rules::addRulesForBackend($rules);
     }
 }

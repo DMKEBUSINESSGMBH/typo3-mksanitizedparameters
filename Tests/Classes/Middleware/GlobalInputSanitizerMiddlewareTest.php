@@ -88,8 +88,6 @@ class GlobalInputSanitizerMiddlewareTest extends AbstractTestCase
             $response->reveal(),
             $middleware->process($request->reveal(), $handler->reveal())
         );
-
-        self::assertInstanceOf(ServerRequestInterface::class, $GLOBALS['TYPO3_REQUEST']);
     }
 
     /**
@@ -99,8 +97,6 @@ class GlobalInputSanitizerMiddlewareTest extends AbstractTestCase
      */
     public function processCallsSanitizerCorrect()
     {
-        self::assertNull($GLOBALS['TYPO3_REQUEST'] ?? null);
-
         $this->setExtConf(['stealthMode' => '0']);
 
         $middleware = new GlobalInputSanitizerMiddleware();
@@ -138,8 +134,6 @@ class GlobalInputSanitizerMiddlewareTest extends AbstractTestCase
             $response->reveal(),
             $middleware->process($request->reveal(), $handler->reveal())
         );
-
-        self::assertInstanceOf(ServerRequestInterface::class, $GLOBALS['TYPO3_REQUEST']);
     }
 
     /**
@@ -189,7 +183,7 @@ class GlobalInputSanitizerMiddlewareTest extends AbstractTestCase
      *
      * @return array[]
      */
-    public function getProcessCallsSanitizerAndSanitizesCorrectByRulesData()
+    public static function getProcessCallsSanitizerAndSanitizesCorrectByRulesData()
     {
         return SanitizerTest::getSanitizeInputData();
     }

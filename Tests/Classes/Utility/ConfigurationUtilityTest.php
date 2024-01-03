@@ -176,7 +176,7 @@ class ConfigurationUtilityTest extends AbstractTestCase
      *
      * @return array[]
      */
-    public function getExtensionConfigurationLoadsCorrectData()
+    public static function getExtensionConfigurationLoadsCorrectData()
     {
         return [
             __LINE__.':1,1,0,14' => [

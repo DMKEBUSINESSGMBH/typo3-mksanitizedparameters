@@ -57,7 +57,7 @@ class DebugUtilityTest extends AbstractTestCase
         ];
 
         $echoDebugCall = -1;
-        $debugger = $this->getMockBuilder(DebugUtility::class)->setMethods(['echoDebug'])->getMock();
+        $debugger = $this->getMockBuilder(DebugUtility::class)->onlyMethods(['echoDebug'])->getMock();
         $debugger
             ->expects($this->exactly(2))
             ->method('echoDebug')
