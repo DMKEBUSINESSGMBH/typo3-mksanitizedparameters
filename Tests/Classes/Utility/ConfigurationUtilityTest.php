@@ -143,7 +143,7 @@ class ConfigurationUtilityTest extends AbstractTestCase
         bool $isStealthMode,
         int $stealthModeStoragePid
     ) {
-        $config = \DMK\MkSanitizedParameters\Factory::getConfiguration();
+        $config = Factory::getConfiguration();
         // now override the extconf array property
         $configReflection = new \ReflectionObject($config);
         $extensionConfigurationProperty = $configReflection->getProperty('extensionConfiguration');
