@@ -29,4 +29,4 @@ if (!defined('TYPO3')) {
     exit('Access denied.');
 }
 
-\DMK\MkSanitizedParameters\Rules::loadDefaults();
+DMK\MkSanitizedParameters\Rules::loadDefaults();

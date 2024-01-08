@@ -29,11 +29,11 @@ if (!defined('TYPO3')) {
     exit('Access denied.');
 }
 
-\DMK\MkSanitizedParameters\Rules::addRulesForFrontend(
+DMK\MkSanitizedParameters\Rules::addRulesForFrontend(
     [
         'tx_webkitpdf_pi1' => [
             'urls' => [
-                \DMK\MkSanitizedParameters\Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_URL,
+                DMK\MkSanitizedParameters\Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_URL,
             ],
         ],
     ]

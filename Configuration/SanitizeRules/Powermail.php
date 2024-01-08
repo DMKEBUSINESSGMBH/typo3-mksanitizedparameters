@@ -30,7 +30,7 @@ if (!defined('TYPO3')) {
 }
 
 // $rulesForFrontendVersion1
-\DMK\MkSanitizedParameters\Rules::addRulesForFrontend(
+DMK\MkSanitizedParameters\Rules::addRulesForFrontend(
     [
         'tx_powermail_pi1' => [
             'url' => FILTER_SANITIZE_URL,
@@ -44,7 +44,7 @@ if (!defined('TYPO3')) {
             ],
             'form' => FILTER_SANITIZE_NUMBER_INT,
             'field' => [
-                \DMK\MkSanitizedParameters\Rules::DEFAULT_RULES_KEY => FILTER_UNSAFE_RAW,
+                DMK\MkSanitizedParameters\Rules::DEFAULT_RULES_KEY => FILTER_UNSAFE_RAW,
             ],
         ],
     ]

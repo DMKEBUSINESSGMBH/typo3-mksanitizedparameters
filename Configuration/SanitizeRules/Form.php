@@ -30,10 +30,10 @@ if (!defined('TYPO3')) {
 }
 
 // $rulesForFrontend
-\DMK\MkSanitizedParameters\Rules::addRulesForFrontend(
+DMK\MkSanitizedParameters\Rules::addRulesForFrontend(
     [
         'tx_form_formframework' => [
-            \DMK\MkSanitizedParameters\Rules::COMMON_RULES_KEY => [
+            DMK\MkSanitizedParameters\Rules::COMMON_RULES_KEY => [
                 // internal parameter that needs no sanitizing
                 '__state' => FILTER_UNSAFE_RAW,
             ],

@@ -30,7 +30,7 @@ if (!defined('TYPO3')) {
 }
 
 // $rulesForMksearch
-\DMK\MkSanitizedParameters\Rules::addRulesForFrontend(
+DMK\MkSanitizedParameters\Rules::addRulesForFrontend(
     [
         'mksearch' => [
             // darum kümmert sich mksearch selbst
