@@ -28,7 +28,7 @@
 return [
     'frontend' => [
         'dmk/mksanitizedparameters/global-input-sanitizer' => [
-            'target' => \DMK\MkSanitizedParameters\Middleware\GlobalInputSanitizerMiddleware::class,
+            'target' => DMK\MkSanitizedParameters\Middleware\GlobalInputSanitizerMiddleware::class,
             'after' => [
                 'typo3/cms-core/normalized-params-attribute',
             ],
@@ -39,7 +39,7 @@ return [
     ],
     'backend' => [
         'dmk/mksanitizedparameters/global-input-sanitizer' => [
-            'target' => \DMK\MkSanitizedParameters\Middleware\GlobalInputSanitizerMiddleware::class,
+            'target' => DMK\MkSanitizedParameters\Middleware\GlobalInputSanitizerMiddleware::class,
             'after' => [
                 'typo3/cms-core/normalized-params-attribute',
             ],

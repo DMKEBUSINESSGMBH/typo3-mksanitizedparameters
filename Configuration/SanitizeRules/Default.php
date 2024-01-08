@@ -30,10 +30,10 @@ if (!defined('TYPO3')) {
 }
 
 // $rulesForFrontend
-\DMK\MkSanitizedParameters\Rules::addRulesForFrontend(
+DMK\MkSanitizedParameters\Rules::addRulesForFrontend(
     [
-        \DMK\MkSanitizedParameters\Rules::DEFAULT_RULES_KEY => [FILTER_SANITIZE_SPECIAL_CHARS, FILTER_SANITIZE_ADD_SLASHES],
-        \DMK\MkSanitizedParameters\Rules::COMMON_RULES_KEY => [
+        DMK\MkSanitizedParameters\Rules::DEFAULT_RULES_KEY => [FILTER_SANITIZE_SPECIAL_CHARS, FILTER_SANITIZE_ADD_SLASHES],
+        DMK\MkSanitizedParameters\Rules::COMMON_RULES_KEY => [
             // Extbase request token für Formulare
             // JSON String
             '__hmac' => FILTER_UNSAFE_RAW,
@@ -59,9 +59,9 @@ if (!defined('TYPO3')) {
 );
 
 // $rulesForBackend
-\DMK\MkSanitizedParameters\Rules::addRulesForBackend(
+DMK\MkSanitizedParameters\Rules::addRulesForBackend(
     [
-        \DMK\MkSanitizedParameters\Rules::COMMON_RULES_KEY => [
+        DMK\MkSanitizedParameters\Rules::COMMON_RULES_KEY => [
             'pid' => FILTER_SANITIZE_SPECIAL_CHARS,
         ],
     ]

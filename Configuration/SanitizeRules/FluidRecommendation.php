@@ -30,7 +30,7 @@ if (!defined('TYPO3')) {
 }
 
 // $rulesForFrontend
-\DMK\MkSanitizedParameters\Rules::addRulesForFrontend(
+DMK\MkSanitizedParameters\Rules::addRulesForFrontend(
     [
         'tx_fluidrecommendation_pi1' => [
             'url' => FILTER_SANITIZE_URL,
