@@ -3,6 +3,12 @@ ChangeLog
 
 The following is a very high level overview of the changes in this extension.
 
+v12.0.0
+* TYPO3 12.4 compatibility
+
+v11.0.8
+* new icon and unified extension naming
+
 v11.0.7
 * drop support for obsolete caretaker_instance and add support for webkitpdf
 
