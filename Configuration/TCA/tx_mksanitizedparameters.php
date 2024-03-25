@@ -87,7 +87,7 @@ return [
     ],
     'types' => [
         '0' => ['showitem' => 'hidden;;1;;1-1-1, name, value, hash',
-                    ],
+        ],
     ],
     'palettes' => [
         '1' => ['showitem' => ''],
