@@ -83,7 +83,6 @@ class GlobalInputSanitizerMiddleware implements MiddlewareInterface
 
         // sanitize  post and get
         Factory::getSanitizer()->sanitizeInput(...$globalInputs);
-        Factory::getDebugger()->processDebugStack();
 
         // sanitize request
         return $handler->handle($this->getCleanedServerRequest($request));

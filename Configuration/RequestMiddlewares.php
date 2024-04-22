@@ -36,6 +36,12 @@ return [
                 'typo3/cms-frontend/eid',
             ],
         ],
+        'dmk/mksanitizedparameters/process-debug-stack' => [
+            'target' => DMK\MkSanitizedParameters\Middleware\ProcessDebugStackMiddleware::class,
+            'after' => [
+                'typo3/cms-frontend/page-argument-validator',
+            ],
+        ],
     ],
     'backend' => [
         'dmk/mksanitizedparameters/global-input-sanitizer' => [
@@ -45,6 +51,14 @@ return [
             ],
             'before' => [
                 'typo3/cms-backend/locked-backend',
+            ],
+        ],
+        'dmk/mksanitizedparameters/process-debug-stack' => [
+            'target' => DMK\MkSanitizedParameters\Middleware\ProcessDebugStackMiddleware::class,
+            'after' => [
+                // This maybe an internal middleware that should be not referenced but there is no public middleware
+                // that can be referenced and making the debug output available.
+                'typo3/cms-core/response-propagation',
             ],
         ],
     ],
