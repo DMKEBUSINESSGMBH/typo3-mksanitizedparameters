@@ -1,5 +1,19 @@
 <?xml version="1.0"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" backupGlobals="true" bootstrap=".Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTestsBootstrap.php" colors="true" processIsolation="false" stopOnError="false" stopOnFailure="false" stopOnIncomplete="false" stopOnSkipped="false" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd" cacheDirectory=".phpunit.cache" backupStaticProperties="false" requireCoverageMetadata="false">
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
+    backupGlobals="true"
+    bootstrap=".Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTestsBootstrap.php"
+    colors="true"
+    processIsolation="false"
+    stopOnError="false"
+    stopOnFailure="false"
+    stopOnIncomplete="false"
+    stopOnSkipped="false"
+    cacheResultFile=".Build/.phpunit.result.cache"
+    backupStaticProperties="false"
+    requireCoverageMetadata="false"
+>
   <php>
     <env name="TYPO3_PATH_APP" value=".Build"/>
     <env name="TYPO3_PATH_WEB" value=".Build/Web"/>
