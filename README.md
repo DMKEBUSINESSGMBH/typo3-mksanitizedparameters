@@ -4,9 +4,8 @@ MK Sanitized Parameters
 ![TYPO3 compatibility](https://img.shields.io/badge/TYPO3-11.5%20%7C%2012.4-orange?maxAge=3600&style=flat-square&logo=typo3)
 [![Latest Stable Version](https://img.shields.io/packagist/v/dmk/mksanitizedparameters.svg?maxAge=3600&style=flat-square&logo=composer)](https://packagist.org/packages/dmk/mksanitizedparameters)
 [![Total Downloads](https://img.shields.io/packagist/dt/dmk/mksanitizedparameters.svg?maxAge=3600&style=flat-square)](https://packagist.org/packages/dmk/mksanitizedparameters)
-[![Build Status](https://img.shields.io/github/workflow/status/DMKEBUSINESSGMBH/typo3-mksanitizedparameters/PHP-CI.svg?maxAge=3600&style=flat-square&logo=github-actions)](https://github.com/DMKEBUSINESSGMBH/typo3-mksanitizedparameters/actions?query=workflow%3APHP-CI)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/DMKEBUSINESSGMBH/typo3-mksanitizedparameters/phpci.yml?branch=12.4&maxAge=3600&style=flat-square&logo=github-actions)](https://github.com/DMKEBUSINESSGMBH/typo3-mksanitizedparameters/actions?query=workflow%3APHP-CI)
 [![License](https://img.shields.io/packagist/l/dmk/mksanitizedparameters.svg?maxAge=3600&style=flat-square&logo=gnu)](https://packagist.org/packages/dmk/mksanitizedparameters)
-
 
 
 What does it do?
