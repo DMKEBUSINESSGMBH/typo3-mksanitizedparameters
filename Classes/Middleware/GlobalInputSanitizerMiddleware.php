@@ -61,6 +61,12 @@ class GlobalInputSanitizerMiddleware implements MiddlewareInterface
             Factory::createInput(GlobalPostRequestInput::class),
         ];
 
+        // we need to set the request into $GLOBALS['TYPO3_REQUEST'].
+        // typo3 does this in the PrepareTypoScriptFrontendRendering middleware later, too late for us.
+        if (!($GLOBALS['TYPO3_REQUEST'] ?? null)) {
+            $GLOBALS['TYPO3_REQUEST'] = $request;
+        }
+
         if (Factory::getMonitor()->isEnabled()) {
             Factory::getMonitor()->monitorInput(
                 ...array_merge(
