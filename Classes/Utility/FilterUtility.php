@@ -57,10 +57,8 @@ class FilterUtility
      *
      * @return mixed
      */
-    protected function sanitizeByConfig(
-        $valueToSanitize,
-        array $filterConfig,
-    ) {
+    protected function sanitizeByConfig($valueToSanitize, array $filterConfig)
+    {
         $filters = $filterConfig;
 
         if (isset($filterConfig['filter'])) {

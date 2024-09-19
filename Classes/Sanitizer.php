@@ -237,10 +237,8 @@ class Sanitizer
      *      'commonValue' => FILTER_SANITIZE_NUMBER_INT
      *  )
      */
-    protected function sanitizeArrayByRules(
-        array $arrayToSanitize,
-        array $rules,
-    ): array {
+    protected function sanitizeArrayByRules(array $arrayToSanitize, array $rules): array
+    {
         if (empty($rules)) {
             return $arrayToSanitize;
         }
@@ -299,12 +297,8 @@ class Sanitizer
      * @param mixed                $initialValueToSanitize
      * @param mixed                $sanitizedValue
      */
-    private function handleLogging(
-        array $arrayToSanitize,
-        $nameToSanitize,
-        $initialValueToSanitize,
-        $sanitizedValue,
-    ): void {
+    private function handleLogging(array $arrayToSanitize, $nameToSanitize, $initialValueToSanitize, $sanitizedValue): void
+    {
         if (!Factory::getConfiguration()->isLogMode()) {
             return;
         }
@@ -334,12 +328,8 @@ class Sanitizer
      * @param mixed                $initialValueToSanitize
      * @param mixed                $sanitizedValue
      */
-    private function handleDebugging(
-        array $arrayToSanitize,
-        $nameToSanitize,
-        $initialValueToSanitize,
-        $sanitizedValue,
-    ): void {
+    private function handleDebugging(array $arrayToSanitize, $nameToSanitize, $initialValueToSanitize, $sanitizedValue): void
+    {
         if (!DebugUtility::isDebugMode()) {
             return;
         }
