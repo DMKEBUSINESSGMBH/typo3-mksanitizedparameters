@@ -3,6 +3,9 @@ ChangeLog
 
 The following is a very high level overview of the changes in this extension.
 
+v12.0.3
+* Bugfixes
+
 v12.0.2
 * Bugfixes
 * Add rules for EXT:solr
