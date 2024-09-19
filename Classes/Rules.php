@@ -122,6 +122,13 @@ class Rules
                 'Configuration/SanitizeRules/Webkitpdf.php'
             );
         }
+
+        if (ExtensionManagementUtility::isLoaded('solr')) {
+            require_once ExtensionManagementUtility::extPath(
+                'mksanitizedparameters',
+                'Configuration/SanitizeRules/Solr.php'
+            );
+        }
     }
 
     /**
