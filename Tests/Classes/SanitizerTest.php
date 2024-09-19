@@ -46,11 +46,8 @@ class SanitizerTest extends AbstractTestCase
      *
      * @dataProvider getSanitizeInputData
      */
-    public function sanitizeInputSanitizesCorrectByRules(
-        array $inputData,
-        array $rules,
-        array $sanitizedData,
-    ) {
+    public function sanitizeInputSanitizesCorrectByRules(array $inputData, array $rules, array $sanitizedData)
+    {
         $this->addRules($rules);
 
         $input = Factory::createInput(ArrayInput::class, 'TestInput', $inputData);

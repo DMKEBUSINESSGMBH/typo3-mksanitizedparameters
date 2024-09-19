@@ -136,13 +136,8 @@ class ConfigurationUtilityTest extends AbstractTestCase
      *
      * @dataProvider getExtensionConfigurationLoadsCorrectData
      */
-    public function getExtensionConfigurationLoadsCorrect(
-        array $configuration,
-        bool $isDebugMode,
-        bool $isLogMode,
-        bool $isStealthMode,
-        int $stealthModeStoragePid,
-    ) {
+    public function getExtensionConfigurationLoadsCorrect(array $configuration, bool $isDebugMode, bool $isLogMode, bool $isStealthMode, int $stealthModeStoragePid)
+    {
         $config = Factory::getConfiguration();
         // now override the extconf array property
         $configReflection = new \ReflectionObject($config);

@@ -159,11 +159,8 @@ class GlobalInputSanitizerMiddlewareTest extends AbstractTestCase
      *
      * @dataProvider getProcessCallsSanitizerAndSanitizesCorrectByRulesData
      */
-    public function processCallsSanitizerAndSanitizesCorrectByRules(
-        array $inputData,
-        array $rules,
-        array $sanitizedData,
-    ) {
+    public function processCallsSanitizerAndSanitizesCorrectByRules(array $inputData, array $rules, array $sanitizedData)
+    {
         $this->setExtConf(['stealthMode' => '0']);
         Rules::addRulesForFrontend($rules);
 
