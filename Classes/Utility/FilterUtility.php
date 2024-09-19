@@ -59,7 +59,7 @@ class FilterUtility
      */
     protected function sanitizeByConfig(
         $valueToSanitize,
-        array $filterConfig
+        array $filterConfig,
     ) {
         $filters = $filterConfig;
 

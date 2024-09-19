@@ -49,7 +49,7 @@ class SanitizerTest extends AbstractTestCase
     public function sanitizeInputSanitizesCorrectByRules(
         array $inputData,
         array $rules,
-        array $sanitizedData
+        array $sanitizedData,
     ) {
         $this->addRules($rules);
 

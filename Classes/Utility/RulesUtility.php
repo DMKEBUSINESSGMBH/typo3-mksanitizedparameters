@@ -134,7 +134,7 @@ class RulesUtility
      */
     public function injectFromCurrentIntoNextLevelIfNotSet(
         array $rulesFromCurrentLevel,
-        array $rulesForNextLevel
+        array $rulesForNextLevel,
     ): array {
         $rulesForValue = $rulesForNextLevel;
 
@@ -158,7 +158,7 @@ class RulesUtility
      */
     private function injectDefaultRulesFromCurrentIntoNextLevelIfNotSet(
         array $rulesFromCurrentLevel,
-        array $rulesForNextLevel
+        array $rulesForNextLevel,
     ): array {
         $rulesForNextLevel = $this->injectRulesByKey(
             $rulesForNextLevel,
@@ -177,7 +177,7 @@ class RulesUtility
      */
     private function injectCommonRulesFromCurrentIntoNextLevelIfNotSet(
         array $rulesFromCurrentLevel,
-        array $rulesForNextLevel
+        array $rulesForNextLevel,
     ): array {
         $rulesForNextLevel = $this->injectRulesByKey(
             $rulesForNextLevel,
@@ -210,7 +210,7 @@ class RulesUtility
     private function injectRulesByKey(
         array $rulesForValue,
         array $allRules,
-        string $rulesKey
+        string $rulesKey,
     ): array {
         if (!array_key_exists($rulesKey, $rulesForValue)) {
             $rulesForValue[$rulesKey] = $allRules[$rulesKey] ?? [];

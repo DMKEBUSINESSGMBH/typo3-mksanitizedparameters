@@ -141,7 +141,7 @@ class ConfigurationUtilityTest extends AbstractTestCase
         bool $isDebugMode,
         bool $isLogMode,
         bool $isStealthMode,
-        int $stealthModeStoragePid
+        int $stealthModeStoragePid,
     ) {
         $config = Factory::getConfiguration();
         // now override the extconf array property

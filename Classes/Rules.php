@@ -139,7 +139,7 @@ class Rules
      * @param array<string, mixed> $rules
      */
     public static function addRulesForFrontend(
-        array $rules
+        array $rules,
     ): void {
         ArrayUtility::mergeRecursiveWithOverrule(self::$rulesForFrontend, $rules);
     }
@@ -152,7 +152,7 @@ class Rules
      * @param array<string, mixed> $rules
      */
     public static function addRulesForBackend(
-        array $rules
+        array $rules,
     ): void {
         ArrayUtility::mergeRecursiveWithOverrule(self::$rulesForBackend, $rules);
     }

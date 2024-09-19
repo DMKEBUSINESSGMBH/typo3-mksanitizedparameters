@@ -239,7 +239,7 @@ class Sanitizer
      */
     protected function sanitizeArrayByRules(
         array $arrayToSanitize,
-        array $rules
+        array $rules,
     ): array {
         if (empty($rules)) {
             return $arrayToSanitize;
@@ -303,7 +303,7 @@ class Sanitizer
         array $arrayToSanitize,
         $nameToSanitize,
         $initialValueToSanitize,
-        $sanitizedValue
+        $sanitizedValue,
     ): void {
         if (!Factory::getConfiguration()->isLogMode()) {
             return;
@@ -338,7 +338,7 @@ class Sanitizer
         array $arrayToSanitize,
         $nameToSanitize,
         $initialValueToSanitize,
-        $sanitizedValue
+        $sanitizedValue,
     ): void {
         if (!DebugUtility::isDebugMode()) {
             return;
