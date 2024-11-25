@@ -19,7 +19,6 @@ jobs:
         strategy:
             matrix:
                 php-version:
-                    - "7.3"
                     - "7.4"
                     - "8.0"
                     - "8.1"
@@ -72,7 +71,6 @@ jobs:
                     - "test:phpmd"
                     - "test:phpstan"
                 php-version:
-                    - "7.3"
                     - "7.4"
                     - "8.0"
                     - "8.1"
@@ -122,9 +120,6 @@ jobs:
             fail-fast: false
             matrix:
                 include:
-                    -
-                        typo3-version: "^10.4"
-                        php-version: "7.3"
                     -
                         typo3-version: "^10.4"
                         php-version: "7.4"

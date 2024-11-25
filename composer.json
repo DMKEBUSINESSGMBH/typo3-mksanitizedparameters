@@ -26,7 +26,7 @@
         "typo3-ter/mksanitizedparameters": "self.version"
     },
     "require": {
-        "php": "^7.3 || ^7.4 || ^8.0 || ^8.1",
+        "php": "^7.4 || ^8.0",
         "typo3/cms-core": "^10.4.23 || ^11.5.5"
     },
     "require-dev": {
@@ -98,14 +98,11 @@
             ".Build/bin/php-cs-fixer fix -v --dry-run --diff  --ansi"
         ],
         "test:phpcompatibility": [
-            "@test:phpcompatibility:7.3",
             "@test:phpcompatibility:7.4",
             "@test:phpcompatibility:8.0",
-            "@test:phpcompatibility:8.1"
-        ],
-        "test:phpcompatibility:7.3": [
-            "[ -e .Build/bin/phpcs ] || composer update",
-            ".Build/bin/phpcs --ignore=.Build/* -p . --standard=.Build/vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 7.3"
+            "@test:phpcompatibility:8.1",
+            "@test:phpcompatibility:8.2",
+            "@test:phpcompatibility:8.3"
         ],
         "test:phpcompatibility:7.4": [
             "[ -e .Build/bin/phpcs ] || composer update",
@@ -118,6 +115,14 @@
         "test:phpcompatibility:8.1": [
             "[ -e .Build/bin/phpcs ] || composer update",
             ".Build/bin/phpcs --ignore=.Build/* -p . --standard=.Build/vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 8.1"
+        ],
+        "test:phpcompatibility:8.2": [
+            "[ -e .Build/bin/phpcs ] || composer update",
+            ".Build/bin/phpcs --ignore=.Build/* -p . --standard=.Build/vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 8.2"
+        ],
+        "test:phpcompatibility:8.3": [
+            "[ -e .Build/bin/phpcs ] || composer update",
+            ".Build/bin/phpcs --ignore=.Build/* -p . --standard=.Build/vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 8.3"
         ],
         "test:phpmd": [
             "[ -e .Build/bin/phpmd ] || composer update --ansi",
