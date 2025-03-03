@@ -95,7 +95,7 @@ class MonitorRepository
                         )
                     )
                 )
-                ->execute();
+                ->executeQuery();
 
         if (!$result instanceof Result) {
             return 0;
@@ -120,13 +120,9 @@ class MonitorRepository
         ];
 
         $connection = $this->getConnection();
-        $query = $connection->createQueryBuilder()->insert($this->getTableName())->values($inputRecord);
+        $connection->createQueryBuilder()->insert($this->getTableName())->values($inputRecord)->executeStatement();
 
-        if (!$query->execute()) {
-            return null;
-        }
-
-        return $connection->lastInsertId($this->getTableName());
+        return $connection->lastInsertId();
     }
 
     /**
