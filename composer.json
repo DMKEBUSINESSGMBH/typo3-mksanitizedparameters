@@ -62,8 +62,9 @@
         }
     },
     "extra": {
-        "branch-alias" : {
-            "dev-12.4": "12.0.x-dev"
+        "branch-alias": {
+            "dev-12.4": "12.4.x-dev",
+            "dev-13.4": "13.4.x-dev"
         },
         "typo3/cms": {
             "cms-package-dir": "{$vendor-dir}/typo3/cms",
@@ -73,14 +74,17 @@
         }
     },
     "scripts": {
-        "runqs": [
+        "runqa": [
             "@fix",
             "@lint",
             "@test"
         ],
         "lint:php": [
             "[ -e .Build/bin/parallel-lint ] || composer update",
-            ".Build/bin/parallel-lint ./Classes"
+            "echo 'parallel-lint fails with a exception if executed inside the vendor/dmk/mksanitizedparameters folder'",
+            "[ ! -e ../../autoload.php ] || mv ../../autoload.php ../../autoload.php.bak",
+            ".Build/bin/parallel-lint ./Classes",
+            "[ ! -e ../../autoload.php.bak ] || mv ../../autoload.php.bak ../../autoload.php"
         ],
         "lint": [
             "@lint:php"
@@ -90,21 +94,11 @@
             ".Build/bin/php-cs-fixer fix -v --dry-run --diff  --ansi"
         ],
         "test:phpcompatibility": [
-            "@test:phpcompatibility:8.1",
-            "@test:phpcompatibility:8.2",
-            "@test:phpcompatibility:8.3"
+            "@test:phpcompatibility:8.x"
         ],
-        "test:phpcompatibility:8.1": [
+        "test:phpcompatibility:8.x": [
             "[ -e .Build/bin/phpcs ] || composer update",
-            ".Build/bin/phpcs --ignore=.Build/* -p . --standard=.Build/vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 8.1"
-        ],
-        "test:phpcompatibility:8.2": [
-            "[ -e .Build/bin/phpcs ] || composer update",
-            ".Build/bin/phpcs --ignore=.Build/* -p . --standard=.Build/vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 8.2"
-        ],
-        "test:phpcompatibility:8.3": [
-            "[ -e .Build/bin/phpcs ] || composer update",
-            ".Build/bin/phpcs --ignore=.Build/* -p . --standard=.Build/vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 8.3"
+            ".Build/bin/phpcs --ignore=.Build/*,Resources/Private/PHP/* -p . --standard=.Build/vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 8.1-8.4"
         ],
         "test:phpmd": [
             "[ -e .Build/bin/phpmd ] || composer update --ansi",
