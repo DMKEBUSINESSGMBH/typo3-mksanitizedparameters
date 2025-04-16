@@ -3,6 +3,9 @@ ChangeLog
 
 The following is a very high level overview of the changes in this extension.
 
+v13.0.0
+* TYPO3 13.4 compatibility
+
 v12.0.3
 * Bugfixes
 
