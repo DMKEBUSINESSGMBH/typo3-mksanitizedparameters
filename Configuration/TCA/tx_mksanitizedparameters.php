@@ -31,7 +31,7 @@ if (!defined('TYPO3')) {
 
 return [
     'ctrl' => [
-        'title' => 'LLL:EXT:mksanitizedparameters/locallang.xlf:tx_mksanitizedparameters',
+        'title' => 'LLL:EXT:mksanitizedparameters/Resources/Private/Language/locallang.xlf:tx_mksanitizedparameters',
         'label' => 'name',
         'label_alt' => 'value',
         'label_alt_force' => 1,
@@ -42,10 +42,6 @@ return [
         ],
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
-        'cruser_id' => 'cruser_id',
-    ],
-    'interface' => [
-        'showRecordFieldList' => 'hidden,name,value,hash',
     ],
     'columns' => [
         'hidden' => [
@@ -57,7 +53,7 @@ return [
             ],
         ],
         'name' => [
-            'label' => 'LLL:EXT:mksanitizedparameters/locallang.xlf:tx_mksanitizedparameters.name',
+            'label' => 'LLL:EXT:mksanitizedparameters/Resources/Private/Language/locallang.xlf:tx_mksanitizedparameters.name',
             'exclude' => 0,
             'config' => [
                 'type' => 'input',
@@ -67,7 +63,7 @@ return [
             'readOnly' => 1,
         ],
         'value' => [
-            'label' => 'LLL:EXT:mksanitizedparameters/locallang.xlf:tx_mksanitizedparameters.value',
+            'label' => 'LLL:EXT:mksanitizedparameters/Resources/Private/Language/locallang.xlf:tx_mksanitizedparameters.value',
             'exclude' => 1,
             'config' => [
                 'type' => 'text',
@@ -77,7 +73,7 @@ return [
             'readOnly' => 1,
         ],
         'hash' => [
-            'label' => 'LLL:EXT:mksanitizedparameters/locallang.xlf:tx_mksanitizedparameters.hash',
+            'label' => 'LLL:EXT:mksanitizedparameters/Resources/Private/Language/locallang.xlf:tx_mksanitizedparameters.hash',
             'exclude' => 1,
             'config' => [
                 'type' => 'text',

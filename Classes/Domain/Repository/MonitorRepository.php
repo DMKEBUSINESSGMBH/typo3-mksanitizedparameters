@@ -45,43 +45,26 @@ use TYPO3\CMS\Core\Database\Query\QueryBuilder;
  */
 class MonitorRepository
 {
-    /**
-     * @return string
-     */
     public function getTableName(): string
     {
         return 'tx_mksanitizedparameters';
     }
 
-    /**
-     * @return Connection
-     */
     protected function getConnection(): Connection
     {
         return Factory::makeInstance(ConnectionPool::class)->getConnectionForTable($this->getTableName());
     }
 
-    /**
-     * @return QueryBuilder
-     */
     protected function createQueryBuilder(): QueryBuilder
     {
         return $this->getConnection()->createQueryBuilder();
     }
 
-    /**
-     * @return QueryBuilder
-     */
     public function createSearchQueryBuilder(): QueryBuilder
     {
         return $this->createQueryBuilder()->select('*')->from($this->getTableName());
     }
 
-    /**
-     * @param InputInterface $input
-     *
-     * @return int
-     */
     public function countByInput(InputInterface $input): int
     {
         $queryBuilder = $this->createQueryBuilder();
@@ -104,11 +87,6 @@ class MonitorRepository
         return $result->fetchOne();
     }
 
-    /**
-     * @param InputInterface $input
-     *
-     * @return string|null
-     */
     public function insertInput(InputInterface $input): ?string
     {
         $inputRecord = [
@@ -125,11 +103,6 @@ class MonitorRepository
         return $connection->lastInsertId();
     }
 
-    /**
-     * @param InputInterface $input
-     *
-     * @return string
-     */
     private function createHashForInput(InputInterface $input): string
     {
         return md5($input->getName().$this->getValuesOutput($input->getInputArray()));
@@ -137,8 +110,6 @@ class MonitorRepository
 
     /**
      * @param array<string, mixed> $array
-     *
-     * @return string
      */
     private function getValuesOutput(array $array): string
     {

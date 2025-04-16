@@ -47,12 +47,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 class GlobalInputSanitizerMiddleware implements MiddlewareInterface
 {
     /**
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
-     *
-     * @SuppressWarnings(PHPMD.Superglobals)
+     * @SuppressWarnings("PHPMD.Superglobals")
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -88,11 +83,6 @@ class GlobalInputSanitizerMiddleware implements MiddlewareInterface
         return $handler->handle($this->getCleanedServerRequest($request));
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     *
-     * @return ServerRequestInterface
-     */
     protected function getCleanedServerRequest(ServerRequestInterface $request): ServerRequestInterface
     {
         return $this->sanitizeBodyInput(
@@ -100,11 +90,6 @@ class GlobalInputSanitizerMiddleware implements MiddlewareInterface
         );
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     *
-     * @return ServerRequestInterface
-     */
     protected function sanitizeQueryInput(ServerRequestInterface $request): ServerRequestInterface
     {
         /* @var $queryInput ServerRequestQueryInput */
@@ -121,11 +106,6 @@ class GlobalInputSanitizerMiddleware implements MiddlewareInterface
         return $request;
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     *
-     * @return ServerRequestInterface
-     */
     protected function sanitizeBodyInput(ServerRequestInterface $request): ServerRequestInterface
     {
         /* @var $bodyInput ServerRequestBodyInput */

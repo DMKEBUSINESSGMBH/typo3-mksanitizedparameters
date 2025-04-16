@@ -39,12 +39,6 @@ namespace DMK\MkSanitizedParameters\Utility;
  */
 final class RegularExpressionUtility
 {
-    /**
-     * @param string $pattern
-     * @param string $value
-     *
-     * @return string
-     */
     public static function remove(string $pattern, string $value): string
     {
         return preg_replace($pattern, '', $value);

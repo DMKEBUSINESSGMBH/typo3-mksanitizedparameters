@@ -34,7 +34,7 @@ namespace DMK\MkSanitizedParameters\Input;
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  *
- * @SuppressWarnings(PHPMD.Superglobals)
+ * @SuppressWarnings("PHPMD.Superglobals")
  */
 class GlobalPostRequestInput implements InputInterface
 {
@@ -45,7 +45,7 @@ class GlobalPostRequestInput implements InputInterface
 
     public function isSanitizingNecessary(): bool
     {
-        return !empty($_POST);
+        return [] !== $_POST;
     }
 
     public function getInputArray(): array

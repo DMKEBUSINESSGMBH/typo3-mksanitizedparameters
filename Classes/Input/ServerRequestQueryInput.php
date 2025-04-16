@@ -60,9 +60,7 @@ class ServerRequestQueryInput implements InputInterface
 
     public function isSanitizingNecessary(): bool
     {
-        $params = $this->request->getQueryParams();
-
-        return is_array($params) && !empty($params);
+        return [] !== $this->request->getQueryParams();
     }
 
     public function getInputArray(): array

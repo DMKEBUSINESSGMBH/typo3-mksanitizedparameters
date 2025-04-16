@@ -31,6 +31,7 @@ namespace DMK\MkSanitizedParameters\Utility;
 
 use DMK\MkSanitizedParameters\AbstractTestCase;
 use DMK\MkSanitizedParameters\Factory;
+use PHPUnit\Framework\Attributes\DataProvider;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -41,102 +42,56 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class ConfigurationUtilityTest extends AbstractTestCase
 {
-    /**
-     * @test
-     *
-     * @group unit
-     */
-    public function isDebugModeFalse()
+    public function testIsDebugModeFalse(): void
     {
         $this->setExtConf(['debugMode' => 0]);
         $this->assertFalse(Factory::getConfiguration()->isDebugMode());
     }
 
-    /**
-     * @test
-     *
-     * @group unit
-     */
-    public function isDebugModeTrue()
+    public function testIsDebugModeTrue(): void
     {
         $this->setExtConf(['debugMode' => 1]);
         $this->assertTrue(Factory::getConfiguration()->isDebugMode());
     }
 
-    /**
-     * @test
-     *
-     * @group unit
-     */
-    public function isLogModeFalse()
+    public function testIsLogModeFalse(): void
     {
         $this->setExtConf(['logMode' => 0]);
         $this->assertFalse(Factory::getConfiguration()->isLogMode());
     }
 
-    /**
-     * @test
-     *
-     * @group unit
-     */
-    public function isLogModeModeTrue()
+    public function testIsLogModeModeTrue(): void
     {
         $this->setExtConf(['logMode' => 1]);
         $this->assertTrue(Factory::getConfiguration()->isLogMode());
     }
 
-    /**
-     * @test
-     *
-     * @group unit
-     */
-    public function isStealthModeFalse()
+    public function testIsStealthModeFalse(): void
     {
         $this->setExtConf(['stealthMode' => 0]);
         $this->assertFalse(Factory::getConfiguration()->isStealthMode());
     }
 
-    /**
-     * @test
-     *
-     * @group unit
-     */
-    public function isStealthModeTrue()
+    public function testIsStealthModeTrue(): void
     {
         $this->setExtConf(['stealthMode' => 1]);
         $this->assertTrue(Factory::getConfiguration()->isStealthMode());
     }
 
-    /**
-     * @test
-     *
-     * @group unit
-     */
-    public function isStealthModeFive()
+    public function testIsStealthModeFive(): void
     {
         $this->setExtConf(['stealthModeStoragePid' => 5]);
         $this->assertSame(5, Factory::getConfiguration()->getStealthModeStoragePid());
     }
 
-    /**
-     * @test
-     *
-     * @group unit
-     */
-    public function isStealthModeSeven()
+    public function testIsStealthModeSeven(): void
     {
         $this->setExtConf(['stealthModeStoragePid' => 7]);
         $this->assertSame(7, Factory::getConfiguration()->getStealthModeStoragePid());
     }
 
-    /**
-     * @test
-     *
-     * @group unit
-     *
-     * @dataProvider getExtensionConfigurationLoadsCorrectData
-     */
-    public function getExtensionConfigurationLoadsCorrect(array $configuration, bool $isDebugMode, bool $isLogMode, bool $isStealthMode, int $stealthModeStoragePid)
+    #[DataProvider('getExtensionConfigurationLoadsCorrectData')]
+    public function testGetExtensionConfigurationLoadsCorrect(array $configuration, bool $isDebugMode, bool $isLogMode, bool $isStealthMode, int $stealthModeStoragePid): void
     {
         $config = Factory::getConfiguration();
         // now override the extconf array property
@@ -171,7 +126,7 @@ class ConfigurationUtilityTest extends AbstractTestCase
      *
      * @return array[]
      */
-    public static function getExtensionConfigurationLoadsCorrectData()
+    public static function getExtensionConfigurationLoadsCorrectData(): array
     {
         return [
             __LINE__.':1,1,0,14' => [

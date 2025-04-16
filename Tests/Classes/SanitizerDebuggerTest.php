@@ -41,12 +41,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class SanitizerDebuggerTest extends AbstractTestCase
 {
-    /**
-     * @test
-     *
-     * @group unit
-     */
-    public function sanitizeInputDoesNotCallDebuggerIfDebuggingNotEnabledAndValueNotChanged()
+    public function testSanitizeInputDoesNotCallDebuggerIfDebuggingNotEnabledAndValueNotChanged(): void
     {
         // enable debug mode
         $this->setExtConf(['debugMode' => 0]);
@@ -67,12 +62,7 @@ class SanitizerDebuggerTest extends AbstractTestCase
         $this->assertSame(['foo' => 'bar'], $input->getInputArray());
     }
 
-    /**
-     * @test
-     *
-     * @group unit
-     */
-    public function sanitizeInputDoesNotCallDebuggerIfDebuggingNotEnabledAndValueChanged()
+    public function testSanitizeInputDoesNotCallDebuggerIfDebuggingNotEnabledAndValueChanged(): void
     {
         // enable debug mode
         $this->setExtConf(['debugMode' => 0]);
@@ -93,12 +83,7 @@ class SanitizerDebuggerTest extends AbstractTestCase
         $this->assertSame(['foo' => 'bar'], $input->getInputArray());
     }
 
-    /**
-     * @test
-     *
-     * @group unit
-     */
-    public function sanitizeInputDoesNotCallDebuggerIfDebuggingEnabledAndValueNotChanged()
+    public function testSanitizeInputDoesNotCallDebuggerIfDebuggingEnabledAndValueNotChanged(): void
     {
         // enable debug mode
         $this->setExtConf(['debugMode' => 1]);
@@ -119,12 +104,7 @@ class SanitizerDebuggerTest extends AbstractTestCase
         $this->assertSame(['foo' => 'bar'], $input->getInputArray());
     }
 
-    /**
-     * @test
-     *
-     * @group unit
-     */
-    public function sanitizeInputCallsDebuggerCorrectIfDebuggingEnabledAndValueChanged()
+    public function testSanitizeInputCallsDebuggerCorrectIfDebuggingEnabledAndValueChanged(): void
     {
         // enable debug mode
         $this->setExtConf(['debugMode' => 1]);

@@ -239,7 +239,7 @@ class Sanitizer
      */
     protected function sanitizeArrayByRules(array $arrayToSanitize, array $rules): array
     {
-        if (empty($rules)) {
+        if ([] === $rules) {
             return $arrayToSanitize;
         }
 
@@ -264,7 +264,7 @@ class Sanitizer
                     $valueToSanitize,
                     $rulesForValue
                 );
-            } elseif (!empty($rulesForValue)) {
+            } elseif ([] !== $rulesForValue) {
                 $valueToSanitize = $filterUtil->sanitizeByRule(
                     $valueToSanitize,
                     $rulesForValue
@@ -293,11 +293,8 @@ class Sanitizer
 
     /**
      * @param array<string, mixed> $arrayToSanitize
-     * @param mixed                $nameToSanitize
-     * @param mixed                $initialValueToSanitize
-     * @param mixed                $sanitizedValue
      */
-    private function handleLogging(array $arrayToSanitize, $nameToSanitize, $initialValueToSanitize, $sanitizedValue): void
+    private function handleLogging(array $arrayToSanitize, int|string $nameToSanitize, mixed $initialValueToSanitize, mixed $sanitizedValue): void
     {
         if (!Factory::getConfiguration()->isLogMode()) {
             return;
@@ -314,21 +311,15 @@ class Sanitizer
         );
     }
 
-    /**
-     * @return Logger
-     */
     protected function getLogger(): Logger
     {
-        return Factory::getLogger(__CLASS__);
+        return Factory::getLogger(self::class);
     }
 
     /**
      * @param array<string, mixed> $arrayToSanitize
-     * @param mixed                $nameToSanitize
-     * @param mixed                $initialValueToSanitize
-     * @param mixed                $sanitizedValue
      */
-    private function handleDebugging(array $arrayToSanitize, $nameToSanitize, $initialValueToSanitize, $sanitizedValue): void
+    private function handleDebugging(array $arrayToSanitize, int|string $nameToSanitize, mixed $initialValueToSanitize, mixed $sanitizedValue): void
     {
         if (!DebugUtility::isDebugMode()) {
             return;
@@ -344,9 +335,6 @@ class Sanitizer
         );
     }
 
-    /**
-     * @return DebugUtility
-     */
     protected function getDebugger(): DebugUtility
     {
         return Factory::getDebugger();

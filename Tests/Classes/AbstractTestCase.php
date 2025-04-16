@@ -76,14 +76,12 @@ abstract class AbstractTestCase extends \PHPUnit\Framework\TestCase
 
     /**
      * Sets extension configuration to configuration utility.
-     *
-     * @param array $extConf
      */
     protected static function setExtConf(array $extConf)
     {
         $config = Factory::getConfiguration();
         // now override the extconf array property
-        $reflector = new \ReflectionClass(get_class($config));
+        $reflector = new \ReflectionClass($config::class);
         $property = $reflector->getProperty('extensionConfiguration');
         $property->setAccessible(true);
         $property->setValue(

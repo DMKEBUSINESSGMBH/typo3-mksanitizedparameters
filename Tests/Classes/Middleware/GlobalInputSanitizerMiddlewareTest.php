@@ -38,6 +38,7 @@ use DMK\MkSanitizedParameters\Monitor;
 use DMK\MkSanitizedParameters\Rules;
 use DMK\MkSanitizedParameters\Sanitizer;
 use DMK\MkSanitizedParameters\SanitizerTest;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Prophecy\Argument;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -65,12 +66,7 @@ class GlobalInputSanitizerMiddlewareTest extends AbstractTestCase
         parent::tearDown();
     }
 
-    /**
-     * @test
-     *
-     * @group unit
-     */
-    public function processCallsMonitorCorrect()
+    public function testProcessCallsMonitorCorrect(): void
     {
         $this->setExtConf(['stealthMode' => '1', 'stealthModeStoragePid' => '14']);
 
@@ -104,12 +100,7 @@ class GlobalInputSanitizerMiddlewareTest extends AbstractTestCase
         $this->assertInstanceOf(ServerRequestInterface::class, $GLOBALS['TYPO3_REQUEST']);
     }
 
-    /**
-     * @test
-     *
-     * @group unit
-     */
-    public function processCallsSanitizerCorrect()
+    public function testProcessCallsSanitizerCorrect(): void
     {
         $this->setExtConf(['stealthMode' => '0']);
 
@@ -152,14 +143,8 @@ class GlobalInputSanitizerMiddlewareTest extends AbstractTestCase
         $this->assertInstanceOf(ServerRequestInterface::class, $GLOBALS['TYPO3_REQUEST']);
     }
 
-    /**
-     * @test
-     *
-     * @group unit
-     *
-     * @dataProvider getProcessCallsSanitizerAndSanitizesCorrectByRulesData
-     */
-    public function processCallsSanitizerAndSanitizesCorrectByRules(array $inputData, array $rules, array $sanitizedData)
+    #[DataProvider('getProcessCallsSanitizerAndSanitizesCorrectByRulesData')]
+    public function testProcessCallsSanitizerAndSanitizesCorrectByRules(array $inputData, array $rules, array $sanitizedData): void
     {
         $this->setExtConf(['stealthMode' => '0']);
         Rules::addRulesForFrontend($rules);
@@ -176,7 +161,7 @@ class GlobalInputSanitizerMiddlewareTest extends AbstractTestCase
         // check if the right cleaned server request was handled
         $handler->handle(
             Argument::that(
-                function (ServerRequest $cleanedRequest) use ($sanitizedData) {
+                function (ServerRequest $cleanedRequest) use ($sanitizedData): bool {
                     $this->assertSame($sanitizedData, $cleanedRequest->getQueryParams());
                     $this->assertSame($sanitizedData, $cleanedRequest->getParsedBody());
 
@@ -198,7 +183,7 @@ class GlobalInputSanitizerMiddlewareTest extends AbstractTestCase
      *
      * @return array[]
      */
-    public static function getProcessCallsSanitizerAndSanitizesCorrectByRulesData()
+    public static function getProcessCallsSanitizerAndSanitizesCorrectByRulesData(): array
     {
         return SanitizerTest::getSanitizeInputData();
     }

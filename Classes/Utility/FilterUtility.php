@@ -37,12 +37,11 @@ namespace DMK\MkSanitizedParameters\Utility;
 class FilterUtility
 {
     /**
-     * @param mixed                                    $valueToSanitize
      * @param int|string|array<int|string, mixed>|null $filterOrFilterConfig
      *
      * @return mixed
      */
-    public function sanitizeByRule($valueToSanitize, $filterOrFilterConfig)
+    public function sanitizeByRule(mixed $valueToSanitize, $filterOrFilterConfig)
     {
         if (!is_array($filterOrFilterConfig)) {
             return $this->filterValue($valueToSanitize, $filterOrFilterConfig);
@@ -52,19 +51,18 @@ class FilterUtility
     }
 
     /**
-     * @param mixed                    $valueToSanitize
      * @param array<int|string, mixed> $filterConfig
      *
      * @return mixed
      */
-    protected function sanitizeByConfig($valueToSanitize, array $filterConfig)
+    protected function sanitizeByConfig(mixed $valueToSanitize, array $filterConfig)
     {
         $filters = $filterConfig;
 
         if (isset($filterConfig['filter'])) {
             $filters = $filterConfig['filter'];
             unset($filterConfig['filter']);
-            $filters = !is_array($filters) ? [$filters] : $filters;
+            $filters = is_array($filters) ? $filters : [$filters];
         }
 
         $filterConfig = $this->normalizeFilterConfig($filterConfig);
@@ -77,13 +75,12 @@ class FilterUtility
     }
 
     /**
-     * @param mixed                    $valueToSanitize
      * @param int|string               $filter
      * @param int|array<string, mixed> $filterConfig
      *
      * @return mixed
      */
-    private function filterValue($valueToSanitize, $filter = FILTER_DEFAULT, $filterConfig = 0)
+    private function filterValue(mixed $valueToSanitize, $filter = FILTER_DEFAULT, int|array $filterConfig = 0)
     {
         // for wrong filter we clear the value
         // @see testSanitizeArrayByRulesWithRulesForSubArrayButSubArrayParameterItSelfIsGivenCastsFilterArrayConfigToIntegerResultingInEmptiedValue
@@ -103,8 +100,6 @@ class FilterUtility
      * Ids normally between 257 - 1024.
      *
      * @param int|string $filter
-     *
-     * @return bool
      */
     protected function isValidFilter($filter): bool
     {
@@ -129,8 +124,6 @@ class FilterUtility
 
     /**
      * @param int|string $filter
-     *
-     * @return int
      */
     protected function normalizeFilter($filter): int
     {
@@ -145,7 +138,7 @@ class FilterUtility
             && constant('FILTER_SANITIZE_MAGIC_QUOTES') === $filter
             && defined('FILTER_SANITIZE_ADD_SLASHES')
         ) {
-            $filter = (int) constant('FILTER_SANITIZE_ADD_SLASHES');
+            $filter = constant('FILTER_SANITIZE_ADD_SLASHES');
         }
 
         return (int) $filter;
@@ -156,17 +149,14 @@ class FilterUtility
      *
      * @return int|array<string, mixed>
      */
-    protected function normalizeFilterConfig(array $config)
+    protected function normalizeFilterConfig(array $config): int|array
     {
-        if (!is_array($config)) {
-            return $this->normalizeFilter($config);
-        }
-
         $normalized = [];
 
         if (isset($config['flags'])) {
             $normalized['flags'] = $config['flags'];
         }
+
         if (isset($config['options'])) {
             $normalized['options'] = $config['options'];
         }
@@ -174,13 +164,7 @@ class FilterUtility
         return $normalized;
     }
 
-    /**
-     * @param mixed $initialValue
-     * @param mixed $sanitizedValue
-     *
-     * @return bool
-     */
-    public function isValueChanged($initialValue, $sanitizedValue): bool
+    public function isValueChanged(mixed $initialValue, mixed $sanitizedValue): bool
     {
         return $initialValue != $sanitizedValue;
     }

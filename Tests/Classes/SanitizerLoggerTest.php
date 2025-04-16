@@ -41,12 +41,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class SanitizerLoggerTest extends AbstractTestCase
 {
-    /**
-     * @test
-     *
-     * @group unit
-     */
-    public function sanitizeInputDoesNotCallLoggerIfLoggerNotEnabledAndValueNotChanged()
+    public function testSanitizeInputDoesNotCallLoggerIfLoggerNotEnabledAndValueNotChanged(): void
     {
         // enable debug mode
         $this->setExtConf(['logMode' => 0]);
@@ -67,12 +62,7 @@ class SanitizerLoggerTest extends AbstractTestCase
         $this->assertSame(['foo' => 'bar'], $input->getInputArray());
     }
 
-    /**
-     * @test
-     *
-     * @group unit
-     */
-    public function sanitizeInputDoesNotCallLoggerIfLoggingNotEnabledAndValueChanged()
+    public function testSanitizeInputDoesNotCallLoggerIfLoggingNotEnabledAndValueChanged(): void
     {
         // enable debug mode
         $this->setExtConf(['logMode' => 0]);
@@ -93,12 +83,7 @@ class SanitizerLoggerTest extends AbstractTestCase
         $this->assertSame(['foo' => 'bar'], $input->getInputArray());
     }
 
-    /**
-     * @test
-     *
-     * @group unit
-     */
-    public function sanitizeInputDoesNotCallLoggerIfLoggingEnabledAndValueNotChanged()
+    public function testSanitizeInputDoesNotCallLoggerIfLoggingEnabledAndValueNotChanged(): void
     {
         // enable debug mode
         $this->setExtConf(['logMode' => 1]);
@@ -119,12 +104,7 @@ class SanitizerLoggerTest extends AbstractTestCase
         $this->assertSame(['foo' => 'bar'], $input->getInputArray());
     }
 
-    /**
-     * @test
-     *
-     * @group unit
-     */
-    public function sanitizeInputCallsLoggerCorrectIfLoggingEnabledAndValueChanged()
+    public function testSanitizeInputCallsLoggerCorrectIfLoggingEnabledAndValueChanged(): void
     {
         // enable debug mode
         $this->setExtConf(['logMode' => 1]);

@@ -54,15 +54,13 @@ final class Factory
      *
      * @return object the created instance
      */
-    public static function makeInstance($className, ...$constructorArguments)
+    public static function makeInstance(string $className, ...$constructorArguments): object
     {
         return GeneralUtility::makeInstance($className, ...$constructorArguments);
     }
 
     /**
      * Returns the Sanitizer instance.
-     *
-     * @return Sanitizer
      */
     public static function getSanitizer(): Sanitizer
     {
@@ -71,8 +69,6 @@ final class Factory
 
     /**
      * Returns the Monitor instance.
-     *
-     * @return Monitor
      */
     public static function getMonitor(): Monitor
     {
@@ -81,20 +77,15 @@ final class Factory
 
     /**
      * Returns a input instance.
-     *
-     * @param string $inputClassName
-     * @param mixed  ...$arguments
-     *
-     * @return InputInterface
      */
-    public static function createInput(string $inputClassName, ...$arguments): InputInterface
+    public static function createInput(string $inputClassName, mixed ...$arguments): InputInterface
     {
         $input = Factory::makeInstance($inputClassName, ...$arguments);
 
         if (!$input instanceof InputInterface) {
             $errorMessage = sprintf(
                 'The input "%1$s" has to implement the "%2$s" interface',
-                ...[get_class($input), InputInterface::class]
+                ...[$input::class, InputInterface::class]
             );
             throw new \InvalidArgumentException($errorMessage);
         }
@@ -104,8 +95,6 @@ final class Factory
 
     /**
      * Returns the configuration utility.
-     *
-     * @return ConfigurationUtility
      */
     public static function getConfiguration(): ConfigurationUtility
     {
@@ -114,8 +103,6 @@ final class Factory
 
     /**
      * Returns the filter utility.
-     *
-     * @return FilterUtility
      */
     public static function getFilterUtility(): FilterUtility
     {
@@ -124,8 +111,6 @@ final class Factory
 
     /**
      * Returns the filter utility.
-     *
-     * @return RulesUtility
      */
     public static function getRulesUtility(): RulesUtility
     {
@@ -134,8 +119,6 @@ final class Factory
 
     /**
      * Returns a logger instance.
-     *
-     * @return Logger
      */
     public static function getLogger(string $name): Logger
     {
@@ -148,8 +131,6 @@ final class Factory
 
     /**
      * Returns the debug utility instance.
-     *
-     * @return DebugUtility
      */
     public static function getDebugger(): DebugUtility
     {
@@ -160,8 +141,6 @@ final class Factory
 
     /**
      * Returns the monitor repository.
-     *
-     * @return MonitorRepository
      */
     public static function getMonitorRepository(): MonitorRepository
     {

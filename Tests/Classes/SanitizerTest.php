@@ -31,6 +31,7 @@ namespace DMK\MkSanitizedParameters;
 
 use DMK\MkSanitizedParameters\Input\ArrayInput;
 use DMK\MkSanitizedParameters\Sanitizer\AlphaSanitizer;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * @author Michael Wagner
@@ -39,14 +40,8 @@ use DMK\MkSanitizedParameters\Sanitizer\AlphaSanitizer;
  */
 class SanitizerTest extends AbstractTestCase
 {
-    /**
-     * @test
-     *
-     * @group unit
-     *
-     * @dataProvider getSanitizeInputData
-     */
-    public function sanitizeInputSanitizesCorrectByRules(array $inputData, array $rules, array $sanitizedData)
+    #[DataProvider('getSanitizeInputData')]
+    public function testSanitizeInputSanitizesCorrectByRules(array $inputData, array $rules, array $sanitizedData): void
     {
         $this->addRules($rules);
 
@@ -61,11 +56,11 @@ class SanitizerTest extends AbstractTestCase
      *
      * @return array[]
      */
-    public static function getSanitizeInputData()
+    public static function getSanitizeInputData(): array
     {
         return [
-            // sanitize array by rules returns untouched array if rules empty
-            __LINE__.':SanitizeArrayByRulesReturnsUntouchedArrayIfRulesEmpty' => [
+            // sanitize array by rules works correct with unconfigured values but default rules
+            __LINE__.':SanitizeArrayByRulesWorksCorrectWithUnconfiguredValuesButDefaultRules1' => [
                 'inputData' => [
                     'get' => '4a',
                     'post' => '7b',
@@ -101,7 +96,7 @@ class SanitizerTest extends AbstractTestCase
                 ],
             ],
             // sanitize array by rules works correct with unconfigured values but default rules
-            __LINE__.':SanitizeArrayByRulesWorksCorrectWithUnconfiguredValuesButDefaultRules' => [
+            __LINE__.':SanitizeArrayByRulesWorksCorrectWithUnconfiguredValuesButDefaultRules2' => [
                 'inputData' => [
                     'parameterNameToBeSanitized' => '1testValue',
                 ],

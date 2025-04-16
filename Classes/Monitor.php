@@ -42,17 +42,11 @@ use DMK\MkSanitizedParameters\Input\InputInterface;
  */
 class Monitor
 {
-    /**
-     * @return bool
-     */
     public function isEnabled(): bool
     {
         return Factory::getConfiguration()->isStealthMode();
     }
 
-    /**
-     * @param InputInterface ...$inputs
-     */
     public function monitorInput(InputInterface ...$inputs): void
     {
         foreach ($inputs as $input) {
@@ -64,9 +58,6 @@ class Monitor
         }
     }
 
-    /**
-     * @param InputInterface $input
-     */
     protected function writeInput(InputInterface $input): void
     {
         if (!$input->isSanitizingNecessary()) {

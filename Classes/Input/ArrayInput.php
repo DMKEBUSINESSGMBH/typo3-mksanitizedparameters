@@ -37,40 +37,22 @@ namespace DMK\MkSanitizedParameters\Input;
 class ArrayInput implements InputInterface
 {
     /**
-     * @var string
-     */
-    private $name;
-    /**
-     * @var array<string, mixed>
-     */
-    private $data;
-
-    /**
      * ArrayInput constructor.
      *
-     * @param string               $name
      * @param array<string, mixed> $data
      */
-    public function __construct(string $name, array $data)
+    public function __construct(private string $name, private array $data)
     {
-        $this->name = $name;
-        $this->data = $data;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return bool
-     */
     public function isSanitizingNecessary(): bool
     {
-        return !empty($this->data);
+        return [] !== $this->data;
     }
 
     /**

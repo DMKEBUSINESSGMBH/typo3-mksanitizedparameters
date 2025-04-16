@@ -36,12 +36,7 @@ namespace DMK\MkSanitizedParameters;
  */
 class RulesTest extends AbstractTestCase
 {
-    /**
-     * @test
-     *
-     * @group unit
-     */
-    public function addingRulesInFrontend()
+    public function testAddingRulesInFrontend(): void
     {
         $rules = ['myParameterRule' => FILTER_SANITIZE_FULL_SPECIAL_CHARS];
         Rules::addRulesForFrontend($rules);
@@ -49,12 +44,7 @@ class RulesTest extends AbstractTestCase
         $this->assertEmpty(Rules::getRulesForBackend());
     }
 
-    /**
-     * @test
-     *
-     * @group unit
-     */
-    public function addingRulesInBackend()
+    public function testAddingRulesInBackend(): void
     {
         $rules = ['myParameterRule' => FILTER_SANITIZE_FULL_SPECIAL_CHARS];
         Rules::addRulesForBackend($rules);
@@ -62,12 +52,7 @@ class RulesTest extends AbstractTestCase
         $this->assertEmpty(Rules::getRulesForFrontend());
     }
 
-    /**
-     * @test
-     *
-     * @group unit
-     */
-    public function getRulesForCurrentEnvironment()
+    public function testGetRulesForCurrentEnvironment(): void
     {
         $rules = ['myParameterRule' => FILTER_SANITIZE_FULL_SPECIAL_CHARS];
         $this->addRules($rules);
@@ -77,12 +62,7 @@ class RulesTest extends AbstractTestCase
         );
     }
 
-    /**
-     * @test
-     *
-     * @group unit
-     */
-    public function addRulesWithSeveralSubsequentCalls()
+    public function testAddRulesWithSeveralSubsequentCalls(): void
     {
         $rulesSet1 = ['myParameterRule' => FILTER_SANITIZE_FULL_SPECIAL_CHARS];
         Rules::addRulesForFrontend($rulesSet1);
@@ -91,12 +71,7 @@ class RulesTest extends AbstractTestCase
         $this->assertSame(array_merge($rulesSet1, $rulesSet2), Rules::getRulesForFrontend());
     }
 
-    /**
-     * @test
-     *
-     * @group unit
-     */
-    public function addRulesWithSeveralSubsequentCallsOverwrittingCorrect()
+    public function testAddRulesWithSeveralSubsequentCallsOverwrittingCorrect(): void
     {
         $rules = ['myParameterRule' => FILTER_SANITIZE_FULL_SPECIAL_CHARS];
         Rules::addRulesForFrontend($rules);
@@ -105,12 +80,7 @@ class RulesTest extends AbstractTestCase
         $this->assertSame($rulesOverridden, Rules::getRulesForFrontend());
     }
 
-    /**
-     * @test
-     *
-     * @group unit
-     */
-    public function commonRulesAreMergedCorrectWhenAdded()
+    public function testCommonRulesAreMergedCorrectWhenAdded(): void
     {
         Rules::addRulesForFrontend(
             [

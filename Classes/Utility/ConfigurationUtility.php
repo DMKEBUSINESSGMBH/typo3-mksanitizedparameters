@@ -48,13 +48,12 @@ class ConfigurationUtility implements \TYPO3\CMS\Core\SingletonInterface
      * The extension configuration!
      *
      * @param string $key
-     * @param mixed  $default
      *
      * @return int|string|mixed|null
      *
-     * @SuppressWarnings(PHPMD.Superglobals)
+     * @SuppressWarnings("PHPMD.Superglobals")
      */
-    protected function getExtensionConfiguration($key, $default = null)
+    protected function getExtensionConfiguration($key, mixed $default = null)
     {
         if (null === $this->extensionConfiguration) {
             $this->extensionConfiguration = Factory::makeInstance(ExtensionConfiguration::class)->get(
@@ -72,8 +71,6 @@ class ConfigurationUtility implements \TYPO3\CMS\Core\SingletonInterface
 
     /**
      * Is the debug mode enabled?
-     *
-     * @return bool
      */
     public function isDebugMode(): bool
     {
@@ -82,8 +79,6 @@ class ConfigurationUtility implements \TYPO3\CMS\Core\SingletonInterface
 
     /**
      * Is the log mode enabled?
-     *
-     * @return bool
      */
     public function isLogMode(): bool
     {
@@ -92,8 +87,6 @@ class ConfigurationUtility implements \TYPO3\CMS\Core\SingletonInterface
 
     /**
      * Is the stealth mode enabled?
-     *
-     * @return bool
      */
     public function isStealthMode(): bool
     {
@@ -102,8 +95,6 @@ class ConfigurationUtility implements \TYPO3\CMS\Core\SingletonInterface
 
     /**
      * Is the stealth mode enabled?
-     *
-     * @return int
      */
     public function getStealthModeStoragePid(): int
     {

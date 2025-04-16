@@ -38,12 +38,7 @@ use DMK\MkSanitizedParameters\AbstractTestCase;
  */
 class DebugUtilityTest extends AbstractTestCase
 {
-    /**
-     * @test
-     *
-     * @group unit
-     */
-    public function debugDoesNotEchoButDesctructDoes()
+    public function testDebugDoesNotEchoButDesctructDoes(): void
     {
         $debugs = [
             [
@@ -64,7 +59,7 @@ class DebugUtilityTest extends AbstractTestCase
             ->with(
                 ...[
                     $this->callback(
-                        function ($data) use ($debugs, &$echoDebugCall) {
+                        function ($data) use ($debugs, &$echoDebugCall): bool {
                             ++$echoDebugCall;
                             $this->assertSame(
                                 $debugs[$echoDebugCall][0],
@@ -76,7 +71,7 @@ class DebugUtilityTest extends AbstractTestCase
                         }
                     ),
                     $this->callback(
-                        function ($header) use ($debugs, &$echoDebugCall) {
+                        function ($header) use ($debugs, &$echoDebugCall): bool {
                             $this->assertSame(
                                 $debugs[$echoDebugCall][1],
                                 $header,

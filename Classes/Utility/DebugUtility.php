@@ -52,7 +52,6 @@ class DebugUtility implements SingletonInterface
      * mksanitizedparameters runs bevor typo3 has send any headers.
      *
      * @param array<string, mixed> $data
-     * @param string               $header
      */
     public function debug(array $data, string $header = 'MkSanitizedParameters Debug'): void
     {
@@ -61,11 +60,8 @@ class DebugUtility implements SingletonInterface
 
     /**
      * Directly echos out debug information as HTML (or plain in CLI context).
-     *
-     * @param mixed  $data
-     * @param string $header
      */
-    public function echoDebug($data, string $header = 'MkSanitizedParameters Debug'): void
+    public function echoDebug(mixed $data, string $header = 'MkSanitizedParameters Debug'): void
     {
         \TYPO3\CMS\Core\Utility\DebugUtility::debug($data, $header);
     }
@@ -73,7 +69,7 @@ class DebugUtility implements SingletonInterface
     /**
      * Echos out debug information as HTML (or plain in CLI context).
      *
-     * @SuppressWarnings(PHPMD.Superglobals)
+     * @SuppressWarnings("PHPMD.Superglobals")
      */
     public function processDebugStack(): void
     {
@@ -85,18 +81,13 @@ class DebugUtility implements SingletonInterface
         }
     }
 
-    /**
-     * @return bool
-     */
     public static function isDebugMode(): bool
     {
         return Factory::getConfiguration()->isDebugMode() && DebugUtility::isDevelopmentIp();
     }
 
     /**
-     * @return bool
-     *
-     * @SuppressWarnings(PHPMD.Superglobals)
+     * @SuppressWarnings("PHPMD.Superglobals")
      */
     public static function isDevelopmentIp(): bool
     {

@@ -38,14 +38,8 @@ namespace DMK\MkSanitizedParameters\Input;
  */
 interface InputInterface
 {
-    /**
-     * @return string
-     */
     public function getName(): string;
 
-    /**
-     * @return bool
-     */
     public function isSanitizingNecessary(): bool;
 
     /**

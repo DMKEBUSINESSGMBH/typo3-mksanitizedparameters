@@ -42,19 +42,18 @@ class RulesUtility
 {
     /**
      * @param array<string, mixed> $rules
-     * @param string               $nameToSanitize
      *
-     * @return array<string, mixed>
+     * @return array<string|int, mixed>
      */
     public function getRulesForValue(array $rules, string $nameToSanitize): array
     {
         $rulesForValue = $this->getSpecialRulesByName($rules, $nameToSanitize);
 
-        if (!$rulesForValue) {
+        if (null === $rulesForValue || [] === $rulesForValue) {
             $rulesForValue = $this->getCommonRulesByName($rules, $nameToSanitize);
         }
 
-        if (!$rulesForValue) {
+        if (null === $rulesForValue || [] === $rulesForValue) {
             $rulesForValue = $rules[Rules::DEFAULT_RULES_KEY] ?? [];
         }
 
@@ -63,7 +62,7 @@ class RulesUtility
         }
 
         if (!is_array($rulesForValue)) {
-            $rulesForValue = [$rulesForValue];
+            return [$rulesForValue];
         }
 
         return $rulesForValue;
@@ -71,7 +70,6 @@ class RulesUtility
 
     /**
      * @param array<string, mixed> $rules
-     * @param string               $nameToSanitize
      *
      * @return array<int|string, mixed>|null
      */
@@ -90,7 +88,7 @@ class RulesUtility
         }
 
         if (!is_array($specialRules)) {
-            $specialRules = [$specialRules];
+            return [$specialRules];
         }
 
         return $specialRules;
@@ -98,7 +96,6 @@ class RulesUtility
 
     /**
      * @param array<string, mixed> $rules
-     * @param string               $nameToSanitize
      *
      * @return array<int|string, mixed>|null
      */
@@ -120,7 +117,7 @@ class RulesUtility
         }
 
         if (!is_array($commonRules)) {
-            $commonRules = [$commonRules];
+            return [$commonRules];
         }
 
         return $commonRules;
@@ -140,12 +137,11 @@ class RulesUtility
             $rulesFromCurrentLevel,
             $rulesForValue
         );
-        $rulesForValue = $this->injectCommonRulesFromCurrentIntoNextLevelIfNotSet(
+
+        return $this->injectCommonRulesFromCurrentIntoNextLevelIfNotSet(
             $rulesFromCurrentLevel,
             $rulesForValue
         );
-
-        return $rulesForValue;
     }
 
     /**
@@ -156,13 +152,11 @@ class RulesUtility
      */
     private function injectDefaultRulesFromCurrentIntoNextLevelIfNotSet(array $rulesFromCurrentLevel, array $rulesForNextLevel): array
     {
-        $rulesForNextLevel = $this->injectRulesByKey(
+        return $this->injectRulesByKey(
             $rulesForNextLevel,
             $rulesFromCurrentLevel,
             Rules::DEFAULT_RULES_KEY
         );
-
-        return $rulesForNextLevel;
     }
 
     /**
@@ -197,7 +191,6 @@ class RulesUtility
     /**
      * @param array<string, mixed> $rulesForValue
      * @param array<string, mixed> $allRules
-     * @param string               $rulesKey
      *
      * @return array<string, mixed>
      */

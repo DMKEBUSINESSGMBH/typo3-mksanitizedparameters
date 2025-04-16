@@ -50,7 +50,7 @@ class ServerRequestBodyInput extends ServerRequestQueryInput implements InputInt
             return false;
         }
 
-        return !empty($body);
+        return [] !== $body;
     }
 
     public function getInputArray(): array

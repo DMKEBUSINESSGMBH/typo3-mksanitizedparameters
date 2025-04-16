@@ -81,6 +81,7 @@ class Rules
         if (self::$defaultsLoaded) {
             return;
         }
+
         self::$defaultsLoaded = true;
 
         require_once ExtensionManagementUtility::extPath(
@@ -160,7 +161,7 @@ class Rules
      *
      * @return array<string, mixed>
      *
-     * @SuppressWarnings(PHPMD.Superglobals)
+     * @SuppressWarnings("PHPMD.Superglobals")
      */
     public static function getRulesForCurrentEnvironment(): array
     {

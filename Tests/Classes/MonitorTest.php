@@ -40,12 +40,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class MonitorTest extends AbstractTestCase
 {
-    /**
-     * @test
-     *
-     * @group unit
-     */
-    public function monitorInputChecksIsSanitizingNecessaryAndDoNotCallInsertInput()
+    public function testMonitorInputChecksIsSanitizingNecessaryAndDoNotCallInsertInput(): void
     {
         $input1 = $this->prophesize(ArrayInput::class);
         $input1->isSanitizingNecessary()->shouldBeCalled()->willReturn(true);
@@ -60,12 +55,7 @@ class MonitorTest extends AbstractTestCase
         Factory::getMonitor()->monitorInput($input1->reveal(), $input2->reveal());
     }
 
-    /**
-     * @test
-     *
-     * @group unit
-     */
-    public function monitorInputCallsInsertInput()
+    public function testMonitorInputCallsInsertInput(): void
     {
         $input = $this->prophesize(ArrayInput::class);
         $input->isSanitizingNecessary()->shouldBeCalled()->willReturn(true);

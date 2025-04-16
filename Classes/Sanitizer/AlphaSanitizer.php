@@ -39,10 +39,7 @@ use DMK\MkSanitizedParameters\Utility\RegularExpressionUtility;
  */
 class AlphaSanitizer implements SanitizerInterface
 {
-    /**
-     * @return string
-     */
-    protected static function getRegularExpressionForLetters()
+    protected static function getRegularExpressionForLetters(): string
     {
         return 'a-zA-Z-äöüÄÖÜéàèÉÈß';
     }
