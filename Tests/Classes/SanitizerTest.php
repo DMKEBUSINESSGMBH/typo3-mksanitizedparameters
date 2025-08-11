@@ -256,9 +256,7 @@ class SanitizerTest extends AbstractTestCase
                 'rules' => [
                     'parameterNameToBeSanitized' => [
                         'filter' => FILTER_CALLBACK,
-                        'options' => [
-                            AlphaSanitizer::class, 'sanitizeValue',
-                        ],
+                        'options' => AlphaSanitizer::sanitizeValue(...),
                     ],
                 ],
                 'sanitizedData' => [
@@ -277,9 +275,7 @@ class SanitizerTest extends AbstractTestCase
                     ],
                     Rules::DEFAULT_RULES_KEY => [
                         'filter' => FILTER_CALLBACK,
-                        'options' => [
-                            AlphaSanitizer::class, 'sanitizeValue',
-                        ],
+                        'options' => AlphaSanitizer::sanitizeValue(...),
                     ],
                 ],
                 'sanitizedData' => [
@@ -298,9 +294,7 @@ class SanitizerTest extends AbstractTestCase
                     ],
                     Rules::DEFAULT_RULES_KEY => [
                         'filter' => FILTER_CALLBACK,
-                        'options' => [
-                            AlphaSanitizer::class, 'sanitizeValue',
-                        ],
+                        'options' => AlphaSanitizer::sanitizeValue(...),
                     ],
                 ],
                 'sanitizedData' => [
@@ -319,9 +313,7 @@ class SanitizerTest extends AbstractTestCase
                     ],
                     Rules::DEFAULT_RULES_KEY => [
                         'filter' => FILTER_CALLBACK,
-                        'options' => [
-                            AlphaSanitizer::class, 'sanitizeValue',
-                        ],
+                        'options' => AlphaSanitizer::sanitizeValue(...),
                     ],
                 ],
                 'sanitizedData' => [
@@ -340,9 +332,7 @@ class SanitizerTest extends AbstractTestCase
                     ],
                     Rules::DEFAULT_RULES_KEY => [
                         'filter' => FILTER_CALLBACK,
-                        'options' => [
-                            AlphaSanitizer::class, 'sanitizeValue',
-                        ],
+                        'options' => AlphaSanitizer::sanitizeValue(...),
                     ],
                 ],
                 'sanitizedData' => [

@@ -41,7 +41,7 @@ class ArrayInput implements InputInterface
      *
      * @param array<string, mixed> $data
      */
-    public function __construct(private string $name, private array $data)
+    public function __construct(private readonly string $name, private array $data)
     {
     }
 
