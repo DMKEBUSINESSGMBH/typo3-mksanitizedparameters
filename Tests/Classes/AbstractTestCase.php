@@ -83,7 +83,6 @@ abstract class AbstractTestCase extends \PHPUnit\Framework\TestCase
         // now override the extconf array property
         $reflector = new \ReflectionClass($config::class);
         $property = $reflector->getProperty('extensionConfiguration');
-        $property->setAccessible(true);
         $property->setValue(
             $config,
             array_merge(
@@ -101,11 +100,9 @@ abstract class AbstractTestCase extends \PHPUnit\Framework\TestCase
         $rulesReflection = new \ReflectionClass(Rules::class);
 
         $rulesForFrontend = $rulesReflection->getProperty('rulesForFrontend');
-        $rulesForFrontend->setAccessible(true);
         $rulesForFrontend->setValue(null, []);
 
         $rulesForBackend = $rulesReflection->getProperty('rulesForBackend');
-        $rulesForBackend->setAccessible(true);
         $rulesForBackend->setValue(null, []);
     }
 
@@ -117,7 +114,6 @@ abstract class AbstractTestCase extends \PHPUnit\Framework\TestCase
         // first remove all debugs
         $debuggerReflection = new \ReflectionClass(DebugUtility::class);
         $debugStackReflection = $debuggerReflection->getProperty('debugStack');
-        $debugStackReflection->setAccessible(true);
         $debugStackReflection->setValue(Factory::getDebugger(), []);
     }
 

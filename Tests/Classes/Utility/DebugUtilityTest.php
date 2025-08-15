@@ -86,7 +86,6 @@ class DebugUtilityTest extends AbstractTestCase
 
         $debuggerReflection = new \ReflectionObject($debugger);
         $debugStackReflection = $debuggerReflection->getProperty('debugStack');
-        $debugStackReflection->setAccessible(true);
 
         // there should be no stack if there was no debug call!
         $this->assertCount(

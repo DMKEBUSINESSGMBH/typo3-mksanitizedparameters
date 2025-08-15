@@ -97,7 +97,6 @@ class ConfigurationUtilityTest extends AbstractTestCase
         // now override the extconf array property
         $configReflection = new \ReflectionObject($config);
         $extensionConfigurationProperty = $configReflection->getProperty('extensionConfiguration');
-        $extensionConfigurationProperty->setAccessible(true);
         $extensionConfigurationProperty->setValue($config, null);
 
         // config loading for typo3 9 or later
@@ -109,7 +108,6 @@ class ConfigurationUtilityTest extends AbstractTestCase
         GeneralUtility::addInstance(ExtensionConfiguration::class, $extensionConfiguration->reveal());
 
         $extensionConfigurationMethod = $configReflection->getMethod('getExtensionConfiguration');
-        $extensionConfigurationMethod->setAccessible(true);
         $this->assertSame(
             'leer',
             $extensionConfigurationMethod->invokeArgs($config, ['gibtEsNicht', 'leer'])
