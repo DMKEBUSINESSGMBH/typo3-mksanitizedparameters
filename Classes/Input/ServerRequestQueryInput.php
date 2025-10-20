@@ -38,14 +38,8 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 class ServerRequestQueryInput implements InputInterface
 {
-    /**
-     * @var ServerRequestInterface
-     */
-    protected $request;
-
-    public function __construct(ServerRequestInterface $request)
+    public function __construct(protected ServerRequestInterface $request)
     {
-        $this->request = $request;
     }
 
     public function getServerRequest(): ServerRequestInterface
