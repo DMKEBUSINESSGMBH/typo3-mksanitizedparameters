@@ -115,7 +115,7 @@ class FilterUtility
 
         if (null === $filters) {
             $filters = filter_list();
-            $filters = array_combine($filters, array_map('filter_id', $filters));
+            $filters = array_combine($filters, array_map(filter_id(...), $filters));
             $filters = array_flip($filters);
         }
 
