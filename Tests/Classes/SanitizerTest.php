@@ -218,7 +218,7 @@ class SanitizerTest extends AbstractTestCase
             // sanitize array by rules works correct with several configured filters as filter array
             __LINE__.':SanitizeArrayByRulesWorksCorrectWithSeveralConfiguredFiltersAsFilterArray' => [
                 'inputData' => [
-                    'parameterNameToBeSanitized' => '<span>Is your name O\'reilly & are sure about that?</span>',
+                    'parameterNameToBeSanitized' => "<span>Is your name O'reilly & are sure about that?</span>",
                 ],
                 'rules' => [
                     'parameterNameToBeSanitized' => [
@@ -236,7 +236,7 @@ class SanitizerTest extends AbstractTestCase
             // sanitize array by rules works correct with several configured filters as list
             __LINE__.':SanitizeArrayByRulesWorksCorrectWithSeveralConfiguredFiltersAsList' => [
                 'inputData' => [
-                    'parameterNameToBeSanitized' => '<span>Is your name O\'reilly & are sure about that?</span>',
+                    'parameterNameToBeSanitized' => "<span>Is your name O'reilly & are sure about that?</span>",
                 ],
                 'rules' => [
                     'parameterNameToBeSanitized' => [
