@@ -60,6 +60,24 @@
             "typo3/cms-composer-installers": true,
             "typo3/class-alias-loader": true,
             "phpstan/extension-installer": true
+        },
+        "audit": {
+            "ignore": {
+                "CVE-2025-59020": "TYPO3 11.5 advisory",
+                "CVE-2025-59017": "TYPO3 11.5 advisory",
+                "CVE-2025-59014": "TYPO3 11.5 advisory",
+                "CVE-2025-55166": "TYPO3 11.5 advisory",
+                "CVE-2026-0859": "TYPO3 11.5 advisory",
+                "CVE-2025-59016": "TYPO3 11.5 advisory",
+                "CVE-2025-59013": "TYPO3 11.5 advisory",
+                "CVE-2025-47940": "TYPO3 11.5 advisory",
+                "CVE-2025-47938": "TYPO3 11.5 advisory",
+                "CVE-2025-47937": "TYPO3 11.5 advisory",
+                "CVE-2024-55892": "TYPO3 11.5 advisory",
+                "CVE-2024-55921": "TYPO3 11.5 advisory",
+                "CVE-2025-59019": "TYPO3 11.5 advisory",
+                "CVE-2025-47939": "TYPO3 11.5 advisory"
+            }
         }
     },
     "extra": {
