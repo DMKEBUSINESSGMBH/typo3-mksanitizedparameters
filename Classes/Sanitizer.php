@@ -58,7 +58,7 @@ class Sanitizer
             $input->setCleanedInputArray($sanitizedInput);
 
             if (Factory::getFilterUtility()->isValueChanged($initialInput, $sanitizedInput)) {
-                $this->handleLogging($input::class, $initialInput, $sanitizedInput);
+                $this->handleLogging(get_class($input), $initialInput, $sanitizedInput);
             }
         }
     }
