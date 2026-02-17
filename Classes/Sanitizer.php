@@ -53,12 +53,13 @@ class Sanitizer
                 return;
             }
 
-            $input->setCleanedInputArray(
-                $this->sanitizeArrayByRules(
-                    $input->getInputArray(),
-                    $this->getRules()
-                )
-            );
+            $initialInput = $input->getInputArray();
+            $sanitizedInput = $this->sanitizeArrayByRules($initialInput, $this->getRules());
+            $input->setCleanedInputArray($sanitizedInput);
+
+            if (Factory::getFilterUtility()->isValueChanged($initialInput, $sanitizedInput)) {
+                $this->handleLogging($input::class, $initialInput, $sanitizedInput);
+            }
         }
     }
 
@@ -249,37 +250,18 @@ class Sanitizer
         foreach ($arrayToSanitize as $nameToSanitize => &$valueToSanitize) {
             $initialValueToSanitize = $valueToSanitize;
 
-            $rulesForValue = $rulesUtil->getRulesForValue(
-                $rules,
-                (string) $nameToSanitize
-            );
+            $rulesForValue = $rulesUtil->getRulesForValue($rules, (string) $nameToSanitize);
 
             if (is_array($valueToSanitize)) {
                 // so we have them on the next level, too
-                $rulesForValue = $rulesUtil->injectFromCurrentIntoNextLevelIfNotSet(
-                    $rules,
-                    $rulesForValue
-                );
-                $valueToSanitize = $this->sanitizeArrayByRules(
-                    $valueToSanitize,
-                    $rulesForValue
-                );
+                $rulesForValue = $rulesUtil->injectFromCurrentIntoNextLevelIfNotSet($rules, $rulesForValue);
+                $valueToSanitize = $this->sanitizeArrayByRules($valueToSanitize, $rulesForValue);
             } elseif ([] !== $rulesForValue) {
-                $valueToSanitize = $filterUtil->sanitizeByRule(
-                    $valueToSanitize,
-                    $rulesForValue
-                );
+                $valueToSanitize = $filterUtil->sanitizeByRule($valueToSanitize, $rulesForValue);
             }
 
             if ($filterUtil->isValueChanged($initialValueToSanitize, $valueToSanitize)) {
                 $this->handleDebugging(
-                    $arrayToSanitize,
-                    $nameToSanitize,
-                    $initialValueToSanitize,
-                    $valueToSanitize
-                );
-
-                $this->handleLogging(
                     $arrayToSanitize,
                     $nameToSanitize,
                     $initialValueToSanitize,
@@ -293,8 +275,9 @@ class Sanitizer
 
     /**
      * @param array<string, mixed> $arrayToSanitize
+     * @param array<string, mixed> $sanitizedArray
      */
-    private function handleLogging(array $arrayToSanitize, int|string $nameToSanitize, mixed $initialValueToSanitize, mixed $sanitizedValue): void
+    private function handleLogging(string $inputClass, array $arrayToSanitize, array $sanitizedArray): void
     {
         if (!Factory::getConfiguration()->isLogMode()) {
             return;
@@ -303,10 +286,9 @@ class Sanitizer
         $this->getLogger()->warning(
             self::MESSAGE_VALUE_HAS_CHANGED,
             [
-                'Parameter Name:' => $nameToSanitize,
-                'initialer Wert:' => $initialValueToSanitize,
-                'Wert nach Bereinigung:' => $sanitizedValue,
-                'komplettes Parameter Array' => $arrayToSanitize,
+                'input type' => $inputClass,
+                'initial value' => $arrayToSanitize,
+                'sanitized value' => $sanitizedArray,
             ]
         );
     }
@@ -319,18 +301,22 @@ class Sanitizer
     /**
      * @param array<string, mixed> $arrayToSanitize
      */
-    private function handleDebugging(array $arrayToSanitize, int|string $nameToSanitize, mixed $initialValueToSanitize, mixed $sanitizedValue): void
-    {
+    private function handleDebugging(
+        array $arrayToSanitize,
+        int|string $nameToSanitize,
+        mixed $initialValueToSanitize,
+        mixed $sanitizedValue,
+    ): void {
         if (!DebugUtility::isDebugMode()) {
             return;
         }
 
         $this->getDebugger()->debug(
             [
-                'Parameter Name:' => $nameToSanitize,
-                'initialer Wert:' => $initialValueToSanitize,
-                'Wert nach Bereinigung:' => $sanitizedValue,
-                'komplettes Parameter Array' => $arrayToSanitize,
+                'parameter name' => $nameToSanitize,
+                'initial value' => $initialValueToSanitize,
+                'sanitized value' => $sanitizedValue,
+                'complete parameter array' => $arrayToSanitize,
             ]
         );
     }

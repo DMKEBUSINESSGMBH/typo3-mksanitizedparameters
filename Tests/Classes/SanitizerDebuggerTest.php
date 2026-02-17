@@ -109,26 +109,22 @@ class SanitizerDebuggerTest extends AbstractTestCase
         // enable debug mode
         $this->setExtConf(['debugMode' => 1]);
         // set common rule (all a string)
-        $this->addRules([Rules::COMMON_RULES_KEY => FILTER_SANITIZE_FULL_SPECIAL_CHARS]);
+        $this->addRules([Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_FULL_SPECIAL_CHARS]);
 
         $debugger = $this->prophesize(DebugUtility::class);
         $debugger->debug(
             [
-                'Parameter Name:' => 'foo',
-                'initialer Wert:' => 'bar',
-                'Wert nach Bereinigung:' => 'bar',
-                'komplettes Parameter Array' => ['foo' => 'bar'],
+                'parameter name' => 'foo',
+                'initial value' => '"bar',
+                'sanitized value' => '&quot;bar',
+                'complete parameter array' => ['foo' => '&quot;bar'],
             ]
-        );
+        )->shouldBeCalled();
         GeneralUtility::setSingletonInstance(DebugUtility::class, $debugger->reveal());
 
-        $filter = $this->prophesize(FilterUtility::class);
-        $filter->isValueChanged('bar', 'bar')->willReturn(true);
-        GeneralUtility::addInstance(FilterUtility::class, $filter->reveal());
-
-        $input = Factory::createInput(ArrayInput::class, 'TestInput', ['foo' => 'bar']);
+        $input = Factory::createInput(ArrayInput::class, 'TestInput', ['foo' => '"bar']);
         Factory::getSanitizer()->sanitizeInput($input);
 
-        $this->assertSame(['foo' => 'bar'], $input->getInputArray());
+        $this->assertSame(['foo' => '&quot;bar'], $input->getInputArray());
     }
 }

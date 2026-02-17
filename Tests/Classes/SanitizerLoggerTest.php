@@ -32,6 +32,7 @@ namespace DMK\MkSanitizedParameters;
 use DMK\MkSanitizedParameters\Input\ArrayInput;
 use DMK\MkSanitizedParameters\Utility\FilterUtility;
 use TYPO3\CMS\Core\Log\Logger;
+use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -109,27 +110,26 @@ class SanitizerLoggerTest extends AbstractTestCase
         // enable debug mode
         $this->setExtConf(['logMode' => 1]);
         // set common rule (all a string)
-        $this->addRules([Rules::COMMON_RULES_KEY => FILTER_SANITIZE_FULL_SPECIAL_CHARS]);
+        $this->addRules([Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_FULL_SPECIAL_CHARS]);
 
         $logger = $this->prophesize(Logger::class);
         $logger->warning(
             Sanitizer::MESSAGE_VALUE_HAS_CHANGED,
             [
-                'Parameter Name:' => 'foo',
-                'initialer Wert:' => 'bar',
-                'Wert nach Bereinigung:' => 'bar',
-                'komplettes Parameter Array' => ['foo' => 'bar'],
+                'input type' => ArrayInput::class,
+                'initial value' => ['foo' => '"bar'],
+                'sanitized value' => ['foo' => '&quot;bar'],
             ]
-        );
-        GeneralUtility::addInstance(Logger::class, $logger->reveal());
+        )->shouldBeCalled();
 
-        $filter = $this->prophesize(FilterUtility::class);
-        $filter->isValueChanged('bar', 'bar')->willReturn(true);
-        GeneralUtility::addInstance(FilterUtility::class, $filter->reveal());
+        $logManager = $this->prophesize(LogManager::class);
+        $logManager->getLogger(Sanitizer::class)->willReturn($logger->reveal());
 
-        $input = Factory::createInput(ArrayInput::class, 'TestInput', ['foo' => 'bar']);
+        GeneralUtility::setSingletonInstance(LogManager::class, $logManager->reveal());
+
+        $input = Factory::createInput(ArrayInput::class, 'TestLoggingInput', ['foo' => '"bar']);
         Factory::getSanitizer()->sanitizeInput($input);
 
-        $this->assertSame(['foo' => 'bar'], $input->getInputArray());
+        $this->assertSame(['foo' => '&quot;bar'], $input->getInputArray());
     }
 }
