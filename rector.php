@@ -53,7 +53,7 @@ return static function (RectorConfig $rectorConfig): void {
         SetList::TYPE_DECLARATION,
         SetList::EARLY_RETURN,
         SetList::INSTANCEOF,
-        Typo3LevelSetList::UP_TO_TYPO3_13,
+        Typo3LevelSetList::UP_TO_TYPO3_14,
     ]);
 
     $rectorConfig->rule(InlineConstructorDefaultToPropertyRector::class);
@@ -61,7 +61,7 @@ return static function (RectorConfig $rectorConfig): void {
         ExtEmConfRector::class,
         [
             ExtEmConfRector::PHP_VERSION_CONSTRAINT => '8.1.0-8.4.99',
-            ExtEmConfRector::TYPO3_VERSION_CONSTRAINT => '12.4.0-13.4.99',
+            ExtEmConfRector::TYPO3_VERSION_CONSTRAINT => '13.4.0-14.3.99',
             ExtEmConfRector::ADDITIONAL_VALUES_TO_BE_REMOVED => [],
         ]
     );

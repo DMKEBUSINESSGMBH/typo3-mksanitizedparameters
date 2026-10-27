@@ -25,6 +25,9 @@
     "replace": {
         "typo3-ter/mksanitizedparameters": "self.version"
     },
+    "require": {
+        "typo3/cms-core": "^13.4 || ^14.3"
+    },
     "require-dev": {
         "captainhook/captainhook": "^5.10",
         "friendsofphp/php-cs-fixer": "^3.8",
@@ -63,8 +66,8 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-12.4": "12.4.x-dev",
-            "dev-13.4": "13.4.x-dev"
+            "dev-13.4": "13.4.x-dev",
+            "dev-14.3": "14.3.x-dev"
         },
         "typo3/cms": {
             "cms-package-dir": "{$vendor-dir}/typo3/cms",

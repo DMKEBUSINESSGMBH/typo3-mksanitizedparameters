@@ -34,11 +34,11 @@ $EM_CONF['mksanitizedparameters'] = [
     'author' => 'Hannes Bochmann',
     'author_email' => 'dev@dmk-ebusiness.de',
     'author_company' => 'DMK E-BUSINESS GmbH',
-    'version' => '13.0.1',
+    'version' => '14.0.0',
     'state' => 'stable',
     'constraints' => [
         'depends' => [
-            'typo3' => '12.4.0-13.4.99',
+            'typo3' => '13.4.0-14.3.99',
         ],
         'conflicts' => [],
         'suggests' => [],

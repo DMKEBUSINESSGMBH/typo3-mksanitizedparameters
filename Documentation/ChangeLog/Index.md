@@ -3,6 +3,10 @@ ChangeLog
 
 The following is a very high level overview of the changes in this extension.
 
+v14.0.0
+* TYPO3 14.3 compatibility
+* Drop TYPO3 12 support
+
 v13.0.0
 * TYPO3 13.4 compatibility
 
