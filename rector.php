@@ -39,9 +39,9 @@ use Ssch\TYPO3Rector\Set\Typo3LevelSetList;
 
 return RectorConfig::configure()
     ->withPaths([__DIR__])
-    ->withPhpVersion(PhpVersion::PHP_81)
+    ->withPhpVersion(PhpVersion::PHP_82)
     ->withSets([
-        LevelSetList::UP_TO_PHP_84,
+        LevelSetList::UP_TO_PHP_85,
         SetList::CODE_QUALITY,
         SetList::CODING_STYLE,
         SetList::DEAD_CODE,
@@ -58,7 +58,7 @@ return RectorConfig::configure()
     ->withConfiguredRule(
         ExtEmConfRector::class,
         [
-            ExtEmConfRector::PHP_VERSION_CONSTRAINT => '8.1.0-8.4.99',
+            ExtEmConfRector::PHP_VERSION_CONSTRAINT => '8.2.0-8.5.99',
             ExtEmConfRector::TYPO3_VERSION_CONSTRAINT => '13.4.0-14.3.99',
             ExtEmConfRector::ADDITIONAL_VALUES_TO_BE_REMOVED => [],
         ]

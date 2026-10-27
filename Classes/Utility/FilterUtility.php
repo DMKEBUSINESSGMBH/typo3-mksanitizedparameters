@@ -80,7 +80,7 @@ class FilterUtility
      *
      * @return mixed
      */
-    private function filterValue(mixed $valueToSanitize, $filter = FILTER_DEFAULT, int|array $filterConfig = 0)
+    private function filterValue(mixed $valueToSanitize, $filter = FILTER_UNSAFE_RAW, int|array $filterConfig = 0)
     {
         // for wrong filter we clear the value
         // @see testSanitizeArrayByRulesWithRulesForSubArrayButSubArrayParameterItSelfIsGivenCastsFilterArrayConfigToIntegerResultingInEmptiedValue

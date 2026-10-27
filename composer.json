@@ -26,6 +26,7 @@
         "typo3-ter/mksanitizedparameters": "self.version"
     },
     "require": {
+        "php": ">=8.2",
         "typo3/cms-core": "^13.4 || ^14.3"
     },
     "require-dev": {
@@ -105,7 +106,7 @@
         ],
         "test:phpcompatibility": [
             "[ -e .Build/bin/phpcs ] || composer update",
-            ".Build/bin/phpcs --ignore=.Build/*,Resources/Private/PHP/* -p . --standard=.Build/vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 8.1-8.4"
+            ".Build/bin/phpcs --ignore=.Build/*,Resources/Private/PHP/* -p . --standard=.Build/vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 8.2-8.5"
         ],
         "test:phpmd": [
             "[ -e .Build/bin/phpmd ] || composer update --ansi",
