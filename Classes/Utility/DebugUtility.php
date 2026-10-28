@@ -28,6 +28,7 @@
 namespace DMK\MkSanitizedParameters\Utility;
 
 use DMK\MkSanitizedParameters\Factory;
+use TYPO3\CMS\Core\Http\NormalizedParams;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -91,7 +92,7 @@ class DebugUtility implements SingletonInterface
      */
     public static function isDevelopmentIp(): bool
     {
-        $remoteAddr = GeneralUtility::getIndpEnv('REMOTE_ADDR');
+        $remoteAddr = NormalizedParams::createFromServerParams($_SERVER)->getRemoteAddress();
         $devIpMask = $GLOBALS['TYPO3_CONF_VARS']['SYS']['devIPmask'];
 
         return $remoteAddr === $devIpMask || GeneralUtility::cmpIP(
