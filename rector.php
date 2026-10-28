@@ -38,7 +38,13 @@ use Ssch\TYPO3Rector\Configuration\Typo3Option;
 use Ssch\TYPO3Rector\Set\Typo3LevelSetList;
 
 return RectorConfig::configure()
-    ->withPaths([__DIR__])
+    ->withPaths([
+        __DIR__.'/Classes',
+        __DIR__.'/Configuration',
+        __DIR__.'/Resources',
+        __DIR__.'/Tests',
+        __DIR__.'/ext_*.php',
+    ])
     ->withPhpVersion(PhpVersion::PHP_82)
     ->withSets([
         LevelSetList::UP_TO_PHP_85,
