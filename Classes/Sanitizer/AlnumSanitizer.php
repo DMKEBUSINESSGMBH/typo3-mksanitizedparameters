@@ -42,7 +42,7 @@ class AlnumSanitizer extends AlphaSanitizer implements SanitizerInterface
     public static function sanitizeValue(string $value): string
     {
         return RegularExpressionUtility::remove(
-            '/[^'.static::getRegularExpressionForLetters().'[:digit:]]/',
+            '/[^'.static::getRegularExpressionForLetters().'0-9]/u',
             $value
         );
     }

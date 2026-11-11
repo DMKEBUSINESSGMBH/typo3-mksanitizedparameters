@@ -50,7 +50,7 @@ class Sanitizer
     {
         foreach ($inputs as $input) {
             if (!$input->isSanitizingNecessary()) {
-                return;
+                continue;
             }
 
             $initialInput = $input->getInputArray();

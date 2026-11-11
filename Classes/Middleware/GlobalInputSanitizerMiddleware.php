@@ -32,6 +32,7 @@ namespace DMK\MkSanitizedParameters\Middleware;
 use DMK\MkSanitizedParameters\Factory;
 use DMK\MkSanitizedParameters\Input\GlobalGetRequestInput;
 use DMK\MkSanitizedParameters\Input\GlobalPostRequestInput;
+use DMK\MkSanitizedParameters\Input\GlobalRequestInput;
 use DMK\MkSanitizedParameters\Input\ServerRequestBodyInput;
 use DMK\MkSanitizedParameters\Input\ServerRequestQueryInput;
 use Psr\Http\Message\ResponseInterface;
@@ -54,13 +55,12 @@ class GlobalInputSanitizerMiddleware implements MiddlewareInterface
         $globalInputs = [
             Factory::createInput(GlobalGetRequestInput::class),
             Factory::createInput(GlobalPostRequestInput::class),
+            Factory::createInput(GlobalRequestInput::class),
         ];
 
         // we need to set the request into $GLOBALS['TYPO3_REQUEST'].
         // typo3 does this in the PrepareTypoScriptFrontendRendering middleware later, too late for us.
-        if (!($GLOBALS['TYPO3_REQUEST'] ?? null)) {
-            $GLOBALS['TYPO3_REQUEST'] = $request;
-        }
+        $GLOBALS['TYPO3_REQUEST'] = $request;
 
         if (Factory::getMonitor()->isEnabled()) {
             Factory::getMonitor()->monitorInput(
@@ -76,11 +76,13 @@ class GlobalInputSanitizerMiddleware implements MiddlewareInterface
             return $handler->handle($request);
         }
 
-        // sanitize  post and get
+        // Sanitize each global independently to preserve PHP's request precedence.
         Factory::getSanitizer()->sanitizeInput(...$globalInputs);
 
-        // sanitize request
-        return $handler->handle($this->getCleanedServerRequest($request));
+        $cleanedRequest = $this->getCleanedServerRequest($request);
+        $GLOBALS['TYPO3_REQUEST'] = $cleanedRequest;
+
+        return $handler->handle($cleanedRequest);
     }
 
     protected function getCleanedServerRequest(ServerRequestInterface $request): ServerRequestInterface

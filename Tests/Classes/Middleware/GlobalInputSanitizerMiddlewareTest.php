@@ -32,6 +32,7 @@ namespace DMK\MkSanitizedParameters\Middleware;
 use DMK\MkSanitizedParameters\AbstractTestCase;
 use DMK\MkSanitizedParameters\Input\GlobalGetRequestInput;
 use DMK\MkSanitizedParameters\Input\GlobalPostRequestInput;
+use DMK\MkSanitizedParameters\Input\GlobalRequestInput;
 use DMK\MkSanitizedParameters\Input\ServerRequestBodyInput;
 use DMK\MkSanitizedParameters\Input\ServerRequestQueryInput;
 use DMK\MkSanitizedParameters\Monitor;
@@ -57,11 +58,20 @@ class GlobalInputSanitizerMiddlewareTest extends AbstractTestCase
     protected function setUp(): void
     {
         parent::setUp();
+        $this->backup['_GET'] = $_GET;
+        $this->backup['_POST'] = $_POST;
+        $this->backup['_REQUEST'] = $_REQUEST;
+        $_GET = [];
+        $_POST = [];
+        $_REQUEST = [];
         $this->assertNull($GLOBALS['TYPO3_REQUEST'] ?? null);
     }
 
     protected function tearDown(): void
     {
+        $_GET = $this->backup['_GET'];
+        $_POST = $this->backup['_POST'];
+        $_REQUEST = $this->backup['_REQUEST'];
         unset($GLOBALS['TYPO3_REQUEST']);
         parent::tearDown();
     }
@@ -81,6 +91,7 @@ class GlobalInputSanitizerMiddlewareTest extends AbstractTestCase
         $monitor->monitorInput(
             Argument::type(GlobalGetRequestInput::class),
             Argument::type(GlobalPostRequestInput::class),
+            Argument::type(GlobalRequestInput::class),
             Argument::type(ServerRequestQueryInput::class),
             Argument::type(ServerRequestBodyInput::class)
         )->shouldBeCalledOnce();
@@ -121,7 +132,8 @@ class GlobalInputSanitizerMiddlewareTest extends AbstractTestCase
         // first call is to sanitize globals
         $sanitizer->sanitizeInput(
             Argument::type(GlobalGetRequestInput::class),
-            Argument::type(GlobalPostRequestInput::class)
+            Argument::type(GlobalPostRequestInput::class),
+            Argument::type(GlobalRequestInput::class)
         )->shouldBeCalled();
         // second is to sanitize get request
         $sanitizer->sanitizeInput(
@@ -164,6 +176,7 @@ class GlobalInputSanitizerMiddlewareTest extends AbstractTestCase
                 function (ServerRequest $cleanedRequest) use ($sanitizedData): bool {
                     $this->assertSame($sanitizedData, $cleanedRequest->getQueryParams());
                     $this->assertSame($sanitizedData, $cleanedRequest->getParsedBody());
+                    $this->assertSame($cleanedRequest, $GLOBALS['TYPO3_REQUEST']);
 
                     return true;
                 }
@@ -186,5 +199,45 @@ class GlobalInputSanitizerMiddlewareTest extends AbstractTestCase
     public static function getProcessCallsSanitizerAndSanitizesCorrectByRulesData(): array
     {
         return SanitizerTest::getSanitizeInputData();
+    }
+
+    #[DataProvider('applicationTypes')]
+    public function testSanitizesPostAndRequestWithEmptyGet(int $applicationType, bool $existingRequest): void
+    {
+        $this->setExtConf(['stealthMode' => '0']);
+        $rules = [Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_NUMBER_INT];
+        Rules::addRulesForFrontend($rules);
+        Rules::addRulesForBackend($rules);
+        $_POST = ['value' => '4a'];
+        $_REQUEST = ['value' => '9c', 'cookieOnly' => ['value' => '8d']];
+        $request = (new ServerRequest())->withParsedBody($_POST)
+            ->withAttribute('applicationType', $applicationType);
+        if ($existingRequest) {
+            $GLOBALS['TYPO3_REQUEST'] = $request;
+        }
+
+        $response = $this->prophesize(ResponseInterface::class)->reveal();
+        $handler = $this->prophesize(RequestHandlerInterface::class);
+        $handler->handle(Argument::that(function (ServerRequestInterface $cleaned): bool {
+            $this->assertSame([], $cleaned->getQueryParams());
+            $this->assertSame(['value' => '4'], $cleaned->getParsedBody());
+            $this->assertSame($cleaned, $GLOBALS['TYPO3_REQUEST']);
+            $this->assertSame(['value' => '4'], $_POST);
+            $this->assertSame(['value' => '9', 'cookieOnly' => ['value' => '8']], $_REQUEST);
+
+            return true;
+        }))->shouldBeCalledOnce()->willReturn($response);
+
+        $this->assertSame($response, (new GlobalInputSanitizerMiddleware())->process($request, $handler->reveal()));
+    }
+
+    public static function applicationTypes(): array
+    {
+        return [
+            'frontend without global request' => [SystemEnvironmentBuilder::REQUESTTYPE_FE, false],
+            'frontend with global request' => [SystemEnvironmentBuilder::REQUESTTYPE_FE, true],
+            'backend without global request' => [SystemEnvironmentBuilder::REQUESTTYPE_BE, false],
+            'backend with global request' => [SystemEnvironmentBuilder::REQUESTTYPE_BE, true],
+        ];
     }
 }

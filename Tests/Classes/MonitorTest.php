@@ -40,6 +40,18 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class MonitorTest extends AbstractTestCase
 {
+    public function testMonitorsInputsAfterEmptyInputs(): void
+    {
+        $empty = new ArrayInput('empty', []);
+        $input = new ArrayInput('post', ['value' => '4a']);
+        $repository = $this->prophesize(MonitorRepository::class);
+        $repository->countByInput($input)->willReturn(0);
+        $repository->insertInput($input)->shouldBeCalledOnce();
+        GeneralUtility::addInstance(MonitorRepository::class, $repository->reveal());
+
+        Factory::getMonitor()->monitorInput($empty, $input);
+    }
+
     public function testMonitorInputChecksIsSanitizingNecessaryAndDoNotCallInsertInput(): void
     {
         $input1 = $this->prophesize(ArrayInput::class);

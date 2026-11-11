@@ -31,7 +31,6 @@ namespace DMK\MkSanitizedParameters\Domain\Repository;
 
 use DMK\MkSanitizedParameters\Factory;
 use DMK\MkSanitizedParameters\Input\InputInterface;
-use Doctrine\DBAL\Driver\Result;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
@@ -80,11 +79,7 @@ class MonitorRepository
                 )
                 ->executeQuery();
 
-        if (!$result instanceof Result) {
-            return 0;
-        }
-
-        return $result->fetchOne();
+        return (int) $result->fetchOne();
     }
 
     public function insertInput(InputInterface $input): ?string
@@ -113,6 +108,28 @@ class MonitorRepository
      */
     private function getValuesOutput(array $array): string
     {
-        return var_export($array, true);
+        return var_export($this->redactSensitiveValues($array), true);
+    }
+
+    /**
+     * @param array<string|int, mixed> $values
+     *
+     * @return array<string|int, mixed>
+     */
+    private function redactSensitiveValues(array $values): array
+    {
+        foreach ($values as $key => $value) {
+            $normalizedKey = preg_replace('/[^a-z0-9]/i', '', (string) $key);
+            if (preg_match('/pass|pwd|token|secret|auth|credential|apikey|session|cookie|creditcard|cardnumber|cvv|cvc|otp|mfacode|^pin$/i', $normalizedKey)) {
+                $values[$key] = '[REDACTED]';
+                continue;
+            }
+
+            if (is_array($value)) {
+                $values[$key] = $this->redactSensitiveValues($value);
+            }
+        }
+
+        return $values;
     }
 }

@@ -41,13 +41,13 @@ class AlphaSanitizer implements SanitizerInterface
 {
     protected static function getRegularExpressionForLetters(): string
     {
-        return 'a-zA-Z-äöüÄÖÜéàèÉÈß';
+        return 'a-zA-Z\-äöüÄÖÜéàèÉÈß';
     }
 
     public static function sanitizeValue(string $value): string
     {
         return RegularExpressionUtility::remove(
-            '/[^'.static::getRegularExpressionForLetters().']/',
+            '/[^'.static::getRegularExpressionForLetters().']/u',
             $value
         );
     }

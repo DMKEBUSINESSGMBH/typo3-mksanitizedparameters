@@ -30,6 +30,7 @@ declare(strict_types=1);
 namespace DMK\MkSanitizedParameters;
 
 use DMK\MkSanitizedParameters\Input\ArrayInput;
+use DMK\MkSanitizedParameters\Sanitizer\AlnumSanitizer;
 use DMK\MkSanitizedParameters\Sanitizer\AlphaSanitizer;
 use PHPUnit\Framework\Attributes\DataProvider;
 
@@ -40,6 +41,36 @@ use PHPUnit\Framework\Attributes\DataProvider;
  */
 class SanitizerTest extends AbstractTestCase
 {
+    public function testSanitizesInputsAfterEmptyInputs(): void
+    {
+        $this->addRules([Rules::DEFAULT_RULES_KEY => FILTER_SANITIZE_NUMBER_INT]);
+        $first = new ArrayInput('empty', []);
+        $second = new ArrayInput('post', ['value' => '4a']);
+        $third = new ArrayInput('empty', []);
+        $fourth = new ArrayInput('body', ['value' => '7b']);
+
+        Factory::getSanitizer()->sanitizeInput($first, $second, $third, $fourth);
+
+        $this->assertSame(['value' => '4'], $second->getInputArray());
+        $this->assertSame(['value' => '7'], $fourth->getInputArray());
+    }
+
+    #[DataProvider('unicodeInputData')]
+    public function testCharacterSanitizersPreserveValidUtf8(string $input, string $alpha, string $alnum): void
+    {
+        $this->assertSame($alpha, AlphaSanitizer::sanitizeValue($input));
+        $this->assertSame($alnum, AlnumSanitizer::sanitizeValue($input));
+    }
+
+    public static function unicodeInputData(): array
+    {
+        return [
+            'allowed letters and hyphen' => ['a-äöüÄÖÜéàèÉÈß09!', 'a-äöüÄÖÜéàèÉÈß', 'a-äöüÄÖÜéàèÉÈß09'],
+            'remove whole unsupported characters' => ['ÀÁÅâñ€😀a1', 'a', 'a1'],
+            'malformed UTF-8 fails closed' => ["a\xC3\x281", '', ''],
+        ];
+    }
+
     #[DataProvider('getSanitizeInputData')]
     public function testSanitizeInputSanitizesCorrectByRules(array $inputData, array $rules, array $sanitizedData): void
     {

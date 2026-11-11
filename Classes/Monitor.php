@@ -51,7 +51,7 @@ class Monitor
     {
         foreach ($inputs as $input) {
             if (!$input->isSanitizingNecessary()) {
-                return;
+                continue;
             }
 
             $this->writeInput($input);

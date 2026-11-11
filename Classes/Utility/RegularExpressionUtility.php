@@ -41,6 +41,6 @@ final class RegularExpressionUtility
 {
     public static function remove(string $pattern, string $value): string
     {
-        return preg_replace($pattern, '', $value);
+        return preg_replace($pattern, '', $value) ?? '';
     }
 }
